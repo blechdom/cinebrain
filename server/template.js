@@ -5,7 +5,7 @@ export default function template(body, initialState) {
   <meta charset="UTF-8" />
   <title>CINEBRAIN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" >
+  <link rel="stylesheet" href="../node_modules/bootstrap/css/bootstrap.min.css" >
 <link rel="stylesheet" href="/css/react-grid-layout-styles.css" >
   <link rel="stylesheet" href="/css/react-resizable-styles.css" >
     <link rel="stylesheet" href="/css/slider.css" />
