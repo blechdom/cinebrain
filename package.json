@@ -11,6 +11,7 @@
     "compile": "webpack",
     "watch": "webpack-dev-server --hot --inline",
     "dev-all": "npm run watch & npm run watch-server & npm start",
+    "run-all": "npm run compile & npm run compile-server & npm start",
     "dev-all-hook": "npm run watch & npm run start-hook",
     "lint": "eslint --ext js,jsx src server webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -36,6 +37,7 @@
     "react-bootstrap-native-slider": "^2.0.1",
     "react-dom": "^15.3.1",
     "react-grid-layout": "^0.16.0",
+    "react-icons": "^2.2.7",
     "react-router": "^2.7.0",
     "react-router-bootstrap": "^0.23.1",
     "source-map-support": "^0.4.2"

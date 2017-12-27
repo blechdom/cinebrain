@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(864);
+	var _ContextWrapper = __webpack_require__(867);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -92,7 +92,7 @@ webpackJsonp([0],{
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(863);
+	var _Help = __webpack_require__(866);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -2903,25 +2903,14 @@ webpackJsonp([0],{
 	      w: 2,
 	      h: y,
 	      i: i.toString(),
-	      static: false
+	      static: false,
+	      sliderValue: 50
 	    };
 	  });
 	}
 	
 	var ControllerSetup = function (_React$Component) {
 	  _inherits(ControllerSetup, _React$Component);
-	
-	  // static propTypes = {
-	  //   //   onLayoutChange: PropTypes.func.isRequired
-	  //     // }
-	  /* 
-	  static defaultProps = {
-	      className: "layout",
-	      rowHeight: 30,
-	      cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-	      initialLayout: generateLayout()
-	    }
-	  */
 	
 	  function ControllerSetup(props, context) {
 	    _classCallCheck(this, ControllerSetup);
@@ -2939,6 +2928,13 @@ webpackJsonp([0],{
 	  }
 	
 	  _createClass(ControllerSetup, [{
+	    key: 'handleSliderChange',
+	    value: function handleSliderChange(event) {
+	
+	      // this.setState({sliderValue: event.target.value});
+	      // console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.setState({
@@ -2948,6 +2944,7 @@ webpackJsonp([0],{
 	  }, {
 	    key: 'generateDOM',
 	    value: function generateDOM() {
+	      var _this2 = this;
 	
 	      var styles = {
 	        background: "#eee"
@@ -2966,6 +2963,11 @@ webpackJsonp([0],{
 	            'span',
 	            { className: 'text' },
 	            i
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: _this2.state.sliderValue, className: 'slider', id: i, ref: i, onChange: _this2.handleSliderChange })
 	          )
 	        );
 	      });
@@ -2980,7 +2982,6 @@ webpackJsonp([0],{
 	  }, {
 	    key: 'onLayoutChange',
 	    value: function onLayoutChange(layout, layouts) {
-	      // this.props.onLayoutChange(layout, layouts)
 	      console.log(layout, layouts);
 	    }
 	  }, {
@@ -3010,7 +3011,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: this.onNewLayout },
-	          'Generate New Layout'
+	          'Randomize Layout'
 	        ),
 	        _react2.default.createElement(
 	          ResponsiveReactGridLayout,
@@ -3033,6 +3034,7 @@ webpackJsonp([0],{
 	
 	ControllerSetup.defaultProps = {
 	  className: "layout",
+	  isResizable: true,
 	  rowHeight: 30,
 	  onLayoutChange: function onLayoutChange() {},
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
@@ -14480,6 +14482,14 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
+	var _lock = __webpack_require__(863);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(865);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14489,6 +14499,7 @@ webpackJsonp([0],{
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	
 	var NewControllers = function (_React$Component) {
 	  _inherits(NewControllers, _React$Component);
@@ -14507,28 +14518,42 @@ webpackJsonp([0],{
 	          y: 0,
 	          w: 2,
 	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          isDraggable: false
+	          add: i === (list.length - 1).toString()
 	        };
 	      }),
 	      buttonCounter: 0,
 	      sliderCounter: 0,
 	      xyCounter: 0,
-	      sliderValue: 0
+	      sliderValue: 0,
+	      lock: true
 	    };
 	    _this.onAddButton = _this.onAddButton.bind(_this);
 	    _this.onAddSlider = _this.onAddSlider.bind(_this);
 	    _this.onAddXY = _this.onAddXY.bind(_this);
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleSliderChange = _this.handleSliderChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(NewControllers, [{
 	    key: 'handleSliderChange',
 	    value: function handleSliderChange(event) {
+	
 	      this.setState({ sliderValue: event.target.value });
-	      console.log(event.target.id + ': ' + this.state.sliderValue);
+	      console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+	    }
+	  }, {
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        this.setState({ lock: false });
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      } else {
+	        this.setState({ lock: true });
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	      }
+	      console.log("handle on lock : " + this.state.lock);
 	    }
 	  }, {
 	    key: 'createElement',
@@ -14637,8 +14662,7 @@ webpackJsonp([0],{
 	          x: this.state.items.length * 2 % (this.state.cols || 12),
 	          y: Infinity,
 	          w: 2,
-	          h: 2,
-	          isDraggable: false
+	          h: 2
 	        }),
 	        sliderCounter: this.state.sliderCounter + 1
 	      });
@@ -14702,10 +14726,16 @@ webpackJsonp([0],{
 	          'Add X/Y Area'
 	        ),
 	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.handleOnLock },
+	          lockIcon
+	        ),
+	        _react2.default.createElement(
 	          ResponsiveReactGridLayout,
 	          _extends({
 	            onBreakpointChange: this.onBreakpointChange,
-	            onLayoutChange: this.onLayoutChange
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock
 	          }, this.props),
 	          _lodash2.default.map(this.state.items, function (el) {
 	            return _this2.createElement(el);
@@ -31826,6 +31856,150 @@ webpackJsonp([0],{
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactIconBase = __webpack_require__(864);
+	
+	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var FaLock = function FaLock(props) {
+	    return _react2.default.createElement(
+	        _reactIconBase2.default,
+	        _extends({ viewBox: '0 0 40 40' }, props),
+	        _react2.default.createElement(
+	            'g',
+	            null,
+	            _react2.default.createElement('path', { d: 'm14.1 17.1h11.5v-4.2q0-2.4-1.7-4.1t-4-1.7-4.1 1.7-1.7 4.1v4.2z m18.6 2.2v12.8q0 0.9-0.6 1.6t-1.5 0.6h-21.5q-0.8 0-1.5-0.6t-0.6-1.6v-12.8q0-0.9 0.6-1.5t1.5-0.7h0.8v-4.2q0-4.1 2.9-7.1t7.1-2.9 7 2.9 3 7.1v4.2h0.7q0.9 0 1.5 0.7t0.6 1.5z' })
+	        )
+	    );
+	};
+	
+	exports.default = FaLock;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 864:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(661);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	var IconBase = function IconBase(_ref, _ref2) {
+	  var children = _ref.children;
+	  var color = _ref.color;
+	  var size = _ref.size;
+	  var style = _ref.style;
+	  var width = _ref.width;
+	  var height = _ref.height;
+	
+	  var props = _objectWithoutProperties(_ref, ['children', 'color', 'size', 'style', 'width', 'height']);
+	
+	  var _ref2$reactIconBase = _ref2.reactIconBase;
+	  var reactIconBase = _ref2$reactIconBase === undefined ? {} : _ref2$reactIconBase;
+	
+	  var computedSize = size || reactIconBase.size || '1em';
+	  return _react2.default.createElement('svg', _extends({
+	    children: children,
+	    fill: 'currentColor',
+	    preserveAspectRatio: 'xMidYMid meet',
+	    height: height || computedSize,
+	    width: width || computedSize
+	  }, reactIconBase, props, {
+	    style: _extends({
+	      verticalAlign: 'middle',
+	      color: color || reactIconBase.color
+	    }, reactIconBase.style || {}, style)
+	  }));
+	};
+	
+	IconBase.propTypes = {
+	  color: _propTypes2.default.string,
+	  size: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  width: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  height: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  style: _propTypes2.default.object
+	};
+	
+	IconBase.contextTypes = {
+	  reactIconBase: _propTypes2.default.shape(IconBase.propTypes)
+	};
+	
+	exports.default = IconBase;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 865:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactIconBase = __webpack_require__(864);
+	
+	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var FaUnlock = function FaUnlock(props) {
+	    return _react2.default.createElement(
+	        _reactIconBase2.default,
+	        _extends({ viewBox: '0 0 40 40' }, props),
+	        _react2.default.createElement(
+	            'g',
+	            null,
+	            _react2.default.createElement('path', { d: 'm38.6 12.9v5.7q0 0.6-0.4 1t-1 0.4h-1.4q-0.6 0-1-0.4t-0.4-1v-5.7q0-2.4-1.7-4.1t-4.1-1.7-4 1.7-1.7 4.1v4.2h2.2q0.9 0 1.5 0.7t0.6 1.5v12.8q0 0.9-0.6 1.6t-1.5 0.6h-21.5q-0.8 0-1.5-0.6t-0.6-1.6v-12.8q0-0.9 0.6-1.5t1.5-0.7h15v-4.2q0-4.2 3-7.1t7-2.9 7.1 2.9 2.9 7.1z' })
+	        )
+	    );
+	};
+	
+	exports.default = FaUnlock;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 866:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
@@ -31876,7 +32050,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 864:
+/***/ 867:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

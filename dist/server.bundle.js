@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7c1b4488acbea79d18ac"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "103d6c8427ebb4ece82a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(42);
+	module.exports = __webpack_require__(44);
 
 
 /***/ }),
@@ -1028,7 +1028,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(41);
+	var _ContextWrapper = __webpack_require__(43);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1169,7 +1169,7 @@
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(40);
+	var _Help = __webpack_require__(42);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -3616,24 +3616,13 @@
 	      w: 2,
 	      h: y,
 	      i: i.toString(),
-	      static: false
+	      static: false,
+	      sliderValue: 50
 	    };
 	  });
 	}
 	
 	class ControllerSetup extends _react2.default.Component {
-	
-	  // static propTypes = {
-	  //   //   onLayoutChange: PropTypes.func.isRequired
-	  //     // }
-	  /* 
-	  static defaultProps = {
-	      className: "layout",
-	      rowHeight: 30,
-	      cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
-	      initialLayout: generateLayout()
-	    }
-	  */
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -3645,7 +3634,11 @@
 	    };
 	    this.onNewLayout = this.onNewLayout.bind(this);
 	  }
+	  handleSliderChange(event) {
 	
+	    // this.setState({sliderValue: event.target.value});
+	    // console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+	  }
 	  componentDidMount() {
 	    this.setState({
 	      mounted: true
@@ -3671,6 +3664,11 @@
 	          'span',
 	          { className: 'text' },
 	          i
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: this.state.sliderValue, className: 'slider', id: i, ref: i, onChange: this.handleSliderChange })
 	        )
 	      );
 	    });
@@ -3683,7 +3681,6 @@
 	  }
 	
 	  onLayoutChange(layout, layouts) {
-	    // this.props.onLayoutChange(layout, layouts)
 	    console.log(layout, layouts);
 	  }
 	
@@ -3711,7 +3708,7 @@
 	      _react2.default.createElement(
 	        'button',
 	        { onClick: this.onNewLayout },
-	        'Generate New Layout'
+	        'Randomize Layout'
 	      ),
 	      _react2.default.createElement(
 	        ResponsiveReactGridLayout,
@@ -3720,7 +3717,8 @@
 	          onBreakpointChange: this.onBreakpointChange,
 	          onLayoutChange: this.onLayoutChange,
 	          measureBeforeMount: false,
-	          useCSSTransforms: this.state.mounted }),
+	          useCSSTransforms: this.state.mounted,
+	          isDraggable: false }),
 	        this.generateDOM()
 	      )
 	    );
@@ -3729,6 +3727,8 @@
 	exports.default = ControllerSetup;
 	ControllerSetup.defaultProps = {
 	  className: "layout",
+	  isDraggable: false,
+	  isResizable: true,
 	  rowHeight: 30,
 	  onLayoutChange: function onLayoutChange() {},
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
@@ -3809,9 +3809,18 @@
 	
 	var _reactBootstrap = __webpack_require__(18);
 	
+	var _lock = __webpack_require__(40);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(41);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	
 	class NewControllers extends _react2.default.Component {
 	
@@ -3833,19 +3842,39 @@
 	      buttonCounter: 0,
 	      sliderCounter: 0,
 	      xyCounter: 0,
-	      sliderValue: 0
+	      sliderValue: 0,
+	      lock: 1
 	    };
 	    this.onAddButton = this.onAddButton.bind(this);
 	    this.onAddSlider = this.onAddSlider.bind(this);
 	    this.onAddXY = this.onAddXY.bind(this);
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleSliderChange = this.handleSliderChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
 	  }
 	  handleSliderChange(event) {
-	    this.setState({ sliderValue: event.target.value });
-	    console.log(event.target.id + ': ' + this.state.sliderValue);
-	  }
 	
+	    this.setState({ sliderValue: event.target.value });
+	    console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == 0) {
+	      this.setState({ lock: 1 });
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.state.items.map((item, index) => {
+	        item.isDraggable = true;
+	        console.log("isDraggable: " + item.i + " well? " + item.isDraggable);
+	      });
+	    } else {
+	      this.setState({ lock: 0 });
+	      this.state.items.map((item, index) => {
+	        item.isDraggable = false;
+	        console.log("isDraggable: " + item.i + " well? " + item.isDraggable);
+	      });
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	    }
+	    console.log("handle on lock : " + this.state.lock);
+	  }
 	  createElement(el) {
 	    const removeStyle = {
 	      position: "absolute",
@@ -4002,6 +4031,11 @@
 	        'Add X/Y Area'
 	      ),
 	      _react2.default.createElement(
+	        'button',
+	        { onClick: this.handleOnLock },
+	        lockIcon
+	      ),
+	      _react2.default.createElement(
 	        ResponsiveReactGridLayout,
 	        _extends({
 	          onBreakpointChange: this.onBreakpointChange,
@@ -4027,6 +4061,18 @@
 
 /***/ }),
 /* 40 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/fa/lock");
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/fa/unlock");
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4059,7 +4105,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4095,7 +4141,7 @@
 	};
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -4126,7 +4172,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(43)(updatedModules, updatedModules);
+					__webpack_require__(45)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -4139,7 +4185,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	/*

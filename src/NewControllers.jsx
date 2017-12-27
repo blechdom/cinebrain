@@ -8,8 +8,11 @@ import lorandom from 'lodash.random'
 import 'isomorphic-fetch';
 import { Link } from 'react-router';
 import { Button, AddGlyphicon, Table, Panel } from 'react-bootstrap';
+import FaLock from 'react-icons/lib/fa/lock';
+import FaUnlock from 'react-icons/lib/fa/unlock';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+var lockIcon = <FaLock />;
 
 export default class NewControllers extends React.Component {
 
@@ -25,25 +28,37 @@ export default class NewControllers extends React.Component {
           w: 2,
           h: 2,
           add: i === (list.length - 1).toString(),
-	  isDraggable: false
         };
       }),
       buttonCounter: 0, 
       sliderCounter: 0,
       xyCounter: 0,
       sliderValue: 0,
+      lock: true,
   };
   this.onAddButton = this.onAddButton.bind(this);
   this.onAddSlider = this.onAddSlider.bind(this);
   this.onAddXY = this.onAddXY.bind(this);
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleSliderChange = this.handleSliderChange.bind(this);
+  this.handleOnLock = this.handleOnLock.bind(this);
 }
-   handleSliderChange(event) {
-    this.setState({sliderValue: event.target.value});
-    console.log(event.target.id + ': ' + this.state.sliderValue);
-  }
+ handleSliderChange (event)  {
 
+    this.setState({sliderValue: event.target.value});
+    console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+  }
+handleOnLock(){
+ if (this.state.lock == true) {
+	this.setState({lock: false});
+	lockIcon = <FaUnlock />;
+ }	
+ else { 
+	this.setState({lock: true});
+	lockIcon = <FaLock />;
+  }
+  console.log("handle on lock : " + this.state.lock);
+}
  createElement(el) {
     const removeStyle = {
       position: "absolute",
@@ -111,7 +126,7 @@ export default class NewControllers extends React.Component {
         x: (this.state.items.length * 2) % (this.state.cols || 12),
         y: Infinity, 
         w: 2,
-        h: 2
+        h: 2,
       }),
  buttonCounter: this.state.buttonCounter + 1
     });
@@ -126,7 +141,6 @@ onAddSlider() {
         y: Infinity,
         w: 2,
         h: 2,
-        isDraggable: false
       }),
  sliderCounter: this.state.sliderCounter + 1
     });
@@ -140,7 +154,7 @@ onAddXY() {
         x: (this.state.items.length * 2) % (this.state.cols || 12),
         y: Infinity,
         w: 2,
-        h: 2
+        h: 2,
       }),
  xyCounter: this.state.xyCounter + 1
     });
@@ -164,10 +178,12 @@ render() {
       <div>
  	<button onClick={this.onAddButton}>Add Button</button>  
       	<button onClick={this.onAddSlider}>Add Slider</button>
-	<button onClick={this.onAddXY}>Add X/Y Area</button> 
+	<button onClick={this.onAddXY}>Add X/Y Area</button>
+	<button onClick={this.handleOnLock}>{lockIcon}</button>
 	<ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
+	  isDraggable={!this.state.lock}
 	{...this.props}
 	>
   {_.map(this.state.items, el => this.createElement(el))}
