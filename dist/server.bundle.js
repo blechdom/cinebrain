@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "dea09bbd5ae9752fd4d7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0e681e45b8ee7dbeb3a6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(45);
+	module.exports = __webpack_require__(48);
 
 
 /***/ }),
@@ -1028,7 +1028,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(44);
+	var _ContextWrapper = __webpack_require__(47);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1169,7 +1169,7 @@
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(43);
+	var _Help = __webpack_require__(46);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -3795,27 +3795,7 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(35);
-	
-	var _lodash4 = _interopRequireDefault(_lodash3);
-	
-	var _lodash5 = __webpack_require__(36);
-	
-	var _lodash6 = _interopRequireDefault(_lodash5);
-	
-	var _lodash7 = __webpack_require__(37);
-	
-	var _lodash8 = _interopRequireDefault(_lodash7);
-	
-	var _lodash9 = __webpack_require__(38);
-	
-	var _lodash10 = _interopRequireDefault(_lodash9);
-	
 	__webpack_require__(24);
-	
-	var _reactRouter = __webpack_require__(14);
-	
-	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 	
 	var _reactBootstrap = __webpack_require__(18);
 	
@@ -3829,10 +3809,22 @@
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
+	var _fileUpload = __webpack_require__(43);
+	
+	var _fileUpload2 = _interopRequireDefault(_fileUpload);
+	
+	var _fileDownload = __webpack_require__(44);
+	
+	var _fileDownload2 = _interopRequireDefault(_fileDownload);
+	
+	var _edit = __webpack_require__(45);
+	
+	var _edit2 = _interopRequireDefault(_edit);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	
 	class NewControllers extends _react2.default.Component {
 	
@@ -3847,26 +3839,29 @@
 	          y: 0,
 	          w: 2,
 	          h: 2,
-	          add: i === (list.length - 1).toString()
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
 	        };
 	      }),
 	      buttonCounter: 0,
 	      sliderCounter: 0,
 	      xyCounter: 0,
-	      sliderValue: 0,
 	      lock: true
 	    };
 	    this.onAddButton = this.onAddButton.bind(this);
 	    this.onAddSlider = this.onAddSlider.bind(this);
 	    this.onAddXY = this.onAddXY.bind(this);
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.onEditItem = this.onEditItem.bind(this);
 	    this.handleSliderChange = this.handleSliderChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleOnDownload = this.handleOnDownload.bind(this);
+	    this.handleOnUpload = this.handleOnUpload.bind(this);
 	  }
-	  handleSliderChange(event) {
-	
+	  handleSliderChange(event, i) {
+	    //not updating correct object
 	    this.setState({ sliderValue: event.target.value });
-	    console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+	    console.log(event.target.i + ': ' + i + ' ' + this.state.sliderValue);
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -3878,6 +3873,12 @@
 	    }
 	    console.log("handle on lock : " + this.state.lock);
 	  }
+	  handleOnDownload() {
+	    console.log("download file with data to be loaded again later ");
+	  }
+	  handleOnUpload() {
+	    console.log("upload previously saved file to use");
+	  }
 	  createElement(el) {
 	    const removeStyle = {
 	      position: "absolute",
@@ -3885,35 +3886,27 @@
 	      top: 0,
 	      cursor: "pointer"
 	    };
+	    const editStyle = {
+	      position: "absolute",
+	      left: "2px",
+	      bottom: 0,
+	      cursor: "pointer"
+	    };
 	    const gridStyle = {
 	      background: "#EEE"
 	    };
 	    const i = el.add ? "+" : el.i;
-	    if (el.type == 0) {
-	      //type is button 
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          i
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'remove',
-	            style: removeStyle,
-	            onClick: this.onRemoveItem.bind(this, i)
-	          },
-	          'x'
-	        )
-	      );
-	    } else if (el.type == 1) {
+	    let typeCode = _react2.default.createElement(
+	      'button',
+	      null,
+	      i
+	    );
+	    if (el.type == 1) {
 	      //type is slider
-	      return _react2.default.createElement(
+	      typeCode = _react2.default.createElement(
 	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
+	        null,
+	        ' ',
 	        _react2.default.createElement(
 	          'span',
 	          { className: 'text' },
@@ -3922,39 +3915,39 @@
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'slidecontainer' },
-	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: this.state.sliderValue, className: 'slider', id: i, ref: i, onChange: this.handleSliderChange })
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'remove',
-	            style: removeStyle,
-	            onClick: this.onRemoveItem.bind(this, i)
-	          },
-	          'x'
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, className: 'slider', onChange: this.handleSliderChange.bind(this, i) })
 	        )
 	      );
-	    } else {
+	    } else if (el.type == 2) {
 	      //type is xy area
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        _react2.default.createElement(
-	          'span',
-	          { className: 'text' },
-	          i
-	        ),
-	        _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'remove',
-	            style: removeStyle,
-	            onClick: this.onRemoveItem.bind(this, i)
-	          },
-	          'x'
-	        )
+	      typeCode = _react2.default.createElement(
+	        'span',
+	        { className: 'text' },
+	        i
 	      );
 	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      typeCode,
+	      _react2.default.createElement(
+	        'span',
+	        {
+	          className: 'remove',
+	          style: removeStyle,
+	          onClick: this.onRemoveItem.bind(this, i)
+	        },
+	        'x'
+	      ),
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'edit',
+	          style: editStyle,
+	          onClick: this.onEditItem.bind(this, i)
+	        },
+	        _react2.default.createElement(_edit2.default, null)
+	      )
+	    );
 	  }
 	
 	  onAddButton() {
@@ -4012,7 +4005,9 @@
 	    console.log("removing", i);
 	    this.setState({ items: _lodash2.default.reject(this.state.items, { i: i }) });
 	  }
-	
+	  onEditItem(i) {
+	    console.log("edit item: " + i);
+	  }
 	  render() {
 	    return _react2.default.createElement(
 	      'div',
@@ -4034,8 +4029,18 @@
 	      ),
 	      _react2.default.createElement(
 	        'button',
-	        { className: 'float-right', onClick: this.handleOnLock },
+	        { className: 'pull-right', onClick: this.handleOnLock },
 	        lockIcon
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { className: 'pull-right', onClick: this.handleOnDownload },
+	        _react2.default.createElement(_fileDownload2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { className: 'pull-right', onClick: this.handleOnUpload },
+	        _react2.default.createElement(_fileUpload2.default, null)
 	      ),
 	      _react2.default.createElement(
 	        ResponsiveReactGridLayout,
@@ -4076,6 +4081,24 @@
 
 /***/ }),
 /* 43 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/md/file-upload");
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/md/file-download");
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/md/edit");
+
+/***/ }),
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4108,7 +4131,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4144,7 +4167,7 @@
 	};
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -4175,7 +4198,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(46)(updatedModules, updatedModules);
+					__webpack_require__(49)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -4188,7 +4211,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	/*

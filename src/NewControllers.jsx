@@ -1,18 +1,16 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import _ from "lodash";
-import lomap from 'lodash.map'
-import loresult from 'lodash.result'
-import lorange from 'lodash.range'
-import lorandom from 'lodash.random'
 import 'isomorphic-fetch';
-import Link from 'react-router';
 import Button from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
+import MdFileUpload from 'react-icons/lib/md/file-upload';
+import MdFileDownload from 'react-icons/lib/md/file-download';
+import MdEdit from 'react-icons/lib/md/edit';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
-var lockIcon = <FaLock />;
+let lockIcon = <FaLock />;
 
 export default class NewControllers extends React.Component {
 
@@ -28,37 +26,44 @@ export default class NewControllers extends React.Component {
           w: 2,
           h: 2,
           add: i === (list.length - 1).toString(),
+	  sliderValue: 0,
         };
       }),
       buttonCounter: 0, 
       sliderCounter: 0,
       xyCounter: 0,
-      sliderValue: 0,
       lock: true,
   };
   this.onAddButton = this.onAddButton.bind(this);
   this.onAddSlider = this.onAddSlider.bind(this);
   this.onAddXY = this.onAddXY.bind(this);
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
+  this.onEditItem = this.onEditItem.bind(this);
   this.handleSliderChange = this.handleSliderChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
-}
- handleSliderChange (event)  {
-
+  this.handleOnDownload = this.handleOnDownload.bind(this);
+  this.handleOnUpload = this.handleOnUpload.bind(this);
+ }
+ handleSliderChange (event)  { //not updating correct object
     this.setState({sliderValue: event.target.value});
-    console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
-  }
-handleOnLock(){
- if (this.state.lock == true) {
+    console.log(event.target.id + ': ' + this.state.sliderValue);
+ }
+ handleOnLock(){
+   if (this.state.lock == true) {
 	this.setState({lock: false});
 	lockIcon = <FaUnlock />;
- }	
- else { 
+   } else { 
 	this.setState({lock: true});
 	lockIcon = <FaLock />;
-  }
-  console.log("handle on lock : " + this.state.lock);
-}
+   }
+   console.log("handle on lock : " + this.state.lock);
+ }
+ handleOnDownload(){
+   console.log("download file with data to be loaded again later ");
+ }
+ handleOnUpload(){
+   console.log("upload previously saved file to use");
+ }
  createElement(el) {
     const removeStyle = {
       position: "absolute",
@@ -66,14 +71,29 @@ handleOnLock(){
       top: 0,
       cursor: "pointer"
     };
+   const editStyle = {
+     position: "absolute",
+     left: "2px",
+     bottom: 0,
+     cursor: "pointer"
+   };
    const gridStyle = {
       background: "#EEE"
     };
     const i = el.add ? "+" : el.i;
-    if (el.type==0) { //type is button 
+    let typeCode = <button>{i}</button>;
+    if (el.type==1) { //type is slider
+      typeCode = <div> <span className="text">{i}</span>
+                <div id="slidecontainer">
+                <input type="range" min="1" max="100" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliderChange}/></div>
+    		</div>;
+    }
+    else if (el.type==2) { //type is xy area
+       typeCode = <span className="text">{i}</span>;
+    }
 	return (
      		<div key={i} data-grid={el} style={gridStyle}>
-		<button>{i}</button>
+		{typeCode}
         	<span
        			className="remove"
           		style={removeStyle}
@@ -81,40 +101,14 @@ handleOnLock(){
         	>
           		x
         	</span>
+		<span className="edit"
+			style={editStyle}
+			onClick={this.onEditItem.bind(this, i)}
+		>
+			<MdEdit />
+		</span>
       		</div>
     	);
-    }
-    else if (el.type==1) { //type is slider
-	return (
-      		<div key={i} data-grid={el} style={gridStyle}>
-        	<span className="text">{i}</span>
-		<div id="slidecontainer">
-  		<input type="range" min="1" max="100" value={this.state.sliderValue} className="slider" id={i} ref={i} onChange={this.handleSliderChange}/>
-</div>
-		<span
-          		className="remove"
-          		style={removeStyle}
-          		onClick={this.onRemoveItem.bind(this, i)}
-        	>
-          	x
-        	</span>
-      		</div>
-    	);
-    }
-    else { //type is xy area
-        return (
-                <div key={i} data-grid={el} style={gridStyle}>
-                <span className="text">{i}</span>
-                <span
-                        className="remove"
-                        style={removeStyle}
-                        onClick={this.onRemoveItem.bind(this, i)}
-                >
-                x
-                </span>
-                </div>
-        );
-    }
 }
 
   onAddButton() {
@@ -172,14 +166,18 @@ onBreakpointChange(breakpoint, cols) {
     console.log("removing", i);
     this.setState({ items: _.reject(this.state.items, { i: i }) });
   }
-
+ onEditItem(i) {
+   console.log("edit item: " + i);
+ } 
 render() {
   return (
       <div>
  	<button onClick={this.onAddButton}>Add Button</button>  
       	<button onClick={this.onAddSlider}>Add Slider</button>
 	<button onClick={this.onAddXY}>Add X/Y Area</button>
-	<button className="pull-right" bsStyle="danger" bsSize="small" onClick={this.handleOnLock}>{lockIcon}</button>
+	<button className="pull-right" onClick={this.handleOnLock}>{lockIcon}</button>
+	<button className="pull-right" onClick={this.handleOnDownload}><MdFileDownload /></button>
+	<button className="pull-right" onClick={this.handleOnUpload}><MdFileUpload /></button>
 	<ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}

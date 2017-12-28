@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(868);
+	var _ContextWrapper = __webpack_require__(871);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -92,7 +92,7 @@ webpackJsonp([0],{
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(867);
+	var _Help = __webpack_require__(870);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -14570,27 +14570,7 @@ webpackJsonp([0],{
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(859);
-	
-	var _lodash4 = _interopRequireDefault(_lodash3);
-	
-	var _lodash5 = __webpack_require__(860);
-	
-	var _lodash6 = _interopRequireDefault(_lodash5);
-	
-	var _lodash7 = __webpack_require__(861);
-	
-	var _lodash8 = _interopRequireDefault(_lodash7);
-	
-	var _lodash9 = __webpack_require__(862);
-	
-	var _lodash10 = _interopRequireDefault(_lodash9);
-	
 	__webpack_require__(833);
-	
-	var _reactRouter = __webpack_require__(509);
-	
-	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
@@ -14603,6 +14583,18 @@ webpackJsonp([0],{
 	var _unlock = __webpack_require__(866);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _fileUpload = __webpack_require__(867);
+	
+	var _fileUpload2 = _interopRequireDefault(_fileUpload);
+	
+	var _fileDownload = __webpack_require__(868);
+	
+	var _fileDownload2 = _interopRequireDefault(_fileDownload);
+	
+	var _edit = __webpack_require__(869);
+	
+	var _edit2 = _interopRequireDefault(_edit);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -14632,30 +14624,33 @@ webpackJsonp([0],{
 	          y: 0,
 	          w: 2,
 	          h: 2,
-	          add: i === (list.length - 1).toString()
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
 	        };
 	      }),
 	      buttonCounter: 0,
 	      sliderCounter: 0,
 	      xyCounter: 0,
-	      sliderValue: 0,
 	      lock: true
 	    };
 	    _this.onAddButton = _this.onAddButton.bind(_this);
 	    _this.onAddSlider = _this.onAddSlider.bind(_this);
 	    _this.onAddXY = _this.onAddXY.bind(_this);
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.onEditItem = _this.onEditItem.bind(_this);
 	    _this.handleSliderChange = _this.handleSliderChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleOnDownload = _this.handleOnDownload.bind(_this);
+	    _this.handleOnUpload = _this.handleOnUpload.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(NewControllers, [{
 	    key: 'handleSliderChange',
 	    value: function handleSliderChange(event) {
-	
+	      //not updating correct object
 	      this.setState({ sliderValue: event.target.value });
-	      console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
+	      console.log(event.target.id + ': ' + this.state.sliderValue);
 	    }
 	  }, {
 	    key: 'handleOnLock',
@@ -14670,6 +14665,16 @@ webpackJsonp([0],{
 	      console.log("handle on lock : " + this.state.lock);
 	    }
 	  }, {
+	    key: 'handleOnDownload',
+	    value: function handleOnDownload() {
+	      console.log("download file with data to be loaded again later ");
+	    }
+	  }, {
+	    key: 'handleOnUpload',
+	    value: function handleOnUpload() {
+	      console.log("upload previously saved file to use");
+	    }
+	  }, {
 	    key: 'createElement',
 	    value: function createElement(el) {
 	      var removeStyle = {
@@ -14678,35 +14683,27 @@ webpackJsonp([0],{
 	        top: 0,
 	        cursor: "pointer"
 	      };
+	      var editStyle = {
+	        position: "absolute",
+	        left: "2px",
+	        bottom: 0,
+	        cursor: "pointer"
+	      };
 	      var gridStyle = {
 	        background: "#EEE"
 	      };
 	      var i = el.add ? "+" : el.i;
-	      if (el.type == 0) {
-	        //type is button 
-	        return _react2.default.createElement(
-	          'div',
-	          { key: i, 'data-grid': el, style: gridStyle },
-	          _react2.default.createElement(
-	            'button',
-	            null,
-	            i
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            {
-	              className: 'remove',
-	              style: removeStyle,
-	              onClick: this.onRemoveItem.bind(this, i)
-	            },
-	            'x'
-	          )
-	        );
-	      } else if (el.type == 1) {
+	      var typeCode = _react2.default.createElement(
+	        'button',
+	        null,
+	        i
+	      );
+	      if (el.type == 1) {
 	        //type is slider
-	        return _react2.default.createElement(
+	        typeCode = _react2.default.createElement(
 	          'div',
-	          { key: i, 'data-grid': el, style: gridStyle },
+	          null,
+	          ' ',
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'text' },
@@ -14715,39 +14712,39 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: this.state.sliderValue, className: 'slider', id: i, ref: i, onChange: this.handleSliderChange })
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            {
-	              className: 'remove',
-	              style: removeStyle,
-	              onClick: this.onRemoveItem.bind(this, i)
-	            },
-	            'x'
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliderChange })
 	          )
 	        );
-	      } else {
+	      } else if (el.type == 2) {
 	        //type is xy area
-	        return _react2.default.createElement(
-	          'div',
-	          { key: i, 'data-grid': el, style: gridStyle },
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            i
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            {
-	              className: 'remove',
-	              style: removeStyle,
-	              onClick: this.onRemoveItem.bind(this, i)
-	            },
-	            'x'
-	          )
+	        typeCode = _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          i
 	        );
 	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        typeCode,
+	        _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'remove',
+	            style: removeStyle,
+	            onClick: this.onRemoveItem.bind(this, i)
+	          },
+	          'x'
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'edit',
+	            style: editStyle,
+	            onClick: this.onEditItem.bind(this, i)
+	          },
+	          _react2.default.createElement(_edit2.default, null)
+	        )
+	      );
 	    }
 	  }, {
 	    key: 'onAddButton',
@@ -14817,6 +14814,11 @@ webpackJsonp([0],{
 	      this.setState({ items: _lodash2.default.reject(this.state.items, { i: i }) });
 	    }
 	  }, {
+	    key: 'onEditItem',
+	    value: function onEditItem(i) {
+	      console.log("edit item: " + i);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
@@ -14841,8 +14843,18 @@ webpackJsonp([0],{
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { className: 'pull-right', bsStyle: 'danger', bsSize: 'small', onClick: this.handleOnLock },
+	          { className: 'pull-right', onClick: this.handleOnLock },
 	          lockIcon
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'pull-right', onClick: this.handleOnDownload },
+	          _react2.default.createElement(_fileDownload2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'pull-right', onClick: this.handleOnUpload },
+	          _react2.default.createElement(_fileUpload2.default, null)
 	        ),
 	        _react2.default.createElement(
 	          ResponsiveReactGridLayout,
@@ -32046,6 +32058,120 @@ webpackJsonp([0],{
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactIconBase = __webpack_require__(836);
+	
+	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MdFileUpload = function MdFileUpload(props) {
+	    return _react2.default.createElement(
+	        _reactIconBase2.default,
+	        _extends({ viewBox: '0 0 40 40' }, props),
+	        _react2.default.createElement(
+	            'g',
+	            null,
+	            _react2.default.createElement('path', { d: 'm8.4 30h23.2v3.4h-23.2v-3.4z m6.6-3.4v-10h-6.6l11.6-11.6 11.6 11.6h-6.6v10h-10z' })
+	        )
+	    );
+	};
+	
+	exports.default = MdFileUpload;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 868:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactIconBase = __webpack_require__(836);
+	
+	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MdFileDownload = function MdFileDownload(props) {
+	    return _react2.default.createElement(
+	        _reactIconBase2.default,
+	        _extends({ viewBox: '0 0 40 40' }, props),
+	        _react2.default.createElement(
+	            'g',
+	            null,
+	            _react2.default.createElement('path', { d: 'm8.4 30h23.2v3.4h-23.2v-3.4z m23.2-15l-11.6 11.6-11.6-11.6h6.6v-10h10v10h6.6z' })
+	        )
+	    );
+	};
+	
+	exports.default = MdFileDownload;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 869:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactIconBase = __webpack_require__(836);
+	
+	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MdEdit = function MdEdit(props) {
+	    return _react2.default.createElement(
+	        _reactIconBase2.default,
+	        _extends({ viewBox: '0 0 40 40' }, props),
+	        _react2.default.createElement(
+	            'g',
+	            null,
+	            _react2.default.createElement('path', { d: 'm34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z' })
+	        )
+	    );
+	};
+	
+	exports.default = MdEdit;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 870:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
@@ -32096,7 +32222,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 868:
+/***/ 871:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
