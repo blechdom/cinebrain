@@ -1,19 +1,26 @@
 const validDeviceStatus = {
-  New: true,
-  Open: true,
-  Assigned: true,
-  Fixed: true,
-  Verified: true,
-  Closed: true,
+  _id: true,
+  device_id: true,
+  name: true,
+  core: true,
+  purpose: true,
+  protocol: true,
+  port: true,
+  specification: true,
+  control_types: true,
+  status: true,
+  who: true,
+  notes: true,
+  example_command: true,
+  manual_link: true,
 };
 
 const deviceFieldType = {
+  device_id: 'required',
+  name: 'required',
+  purpose: 'optional',
+  control_types: 'optional',
   status: 'required',
-  owner: 'required',
-  effort: 'optional',
-  created: 'required',
-  completionDate: 'optional',
-  title: 'required',
 };
 
 function cleanupDevice(device) {
@@ -25,7 +32,7 @@ function cleanupDevice(device) {
 }
 
 function convertDevice(device) {
-  if (device.created) device.created = new Date(device.created);
+  if (device.status) device.status = new Date(device.created);
   if (device.completionDate) device.completionDate = new Date(device.completionDate);
   return cleanupDevice(device);
 }

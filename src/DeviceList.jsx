@@ -6,6 +6,7 @@ import { Button, Glyphicon, Table, Panel } from 'react-bootstrap';
 import DeviceFilter from './DeviceFilter.jsx';
 import Toast from './Toast.jsx';
 
+
 const DeviceRow = (props) => {
   function onDeleteClick() {
     props.deleteDevice(props.device._id);
@@ -13,13 +14,13 @@ const DeviceRow = (props) => {
 
   return (
     <tr>
-      <td><Link to={`/devices/${props.device._id}`}>{props.device._id.substr(-4)}</Link></td>
+      <td>{props.device.device_number}</td>
       <td>{props.device.status}</td>
-      <td>{props.device.owner}</td>
-      <td>{props.device.created.toDateString()}</td>
-      <td>{props.device.effort}</td>
-      <td>{props.device.completionDate ? props.device.completionDate.toDateString() : ''}</td>
-      <td>{props.device.title}</td>
+      <td>{props.device.name}</td>
+      <td>{props.device.purpose}</td>
+      <td>{props.device.protocol}</td>
+      <td>{props.device.port}</td>
+      <td>{props.device.control_types}</td>
       <td>
         <Button bsSize="xsmall" onClick={onDeleteClick}><Glyphicon glyph="trash" /></Button>
       </td>
@@ -40,13 +41,13 @@ function DeviceTable(props) {
     <Table bordered condensed hover responsive>
       <thead>
         <tr>
-          <th>Id</th>
+          <th>Number</th>
           <th>Status</th>
-          <th>Owner</th>
-          <th>Created</th>
-          <th>Effort</th>
-          <th>Completion Date</th>
-          <th>Title</th>
+          <th>Name</th>
+          <th>Purpose</th>
+          <th>Protocol</th>
+          <th>Port</th>
+          <th>Control Types</th>
           <th></th>
         </tr>
       </thead>
