@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "103d6c8427ebb4ece82a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "dea09bbd5ae9752fd4d7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(44);
+	module.exports = __webpack_require__(45);
 
 
 /***/ }),
@@ -1028,7 +1028,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(43);
+	var _ContextWrapper = __webpack_require__(44);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1105,7 +1105,7 @@
 	  <meta charset="UTF-8" />
 	  <title>CINEBRAIN</title>
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" >
+	  <link rel="stylesheet" href="/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="/css/react-grid-layout-styles.css" >
 	  <link rel="stylesheet" href="/css/react-resizable-styles.css" >
 	    <link rel="stylesheet" href="/css/slider.css" />
@@ -1149,27 +1149,27 @@
 	
 	var _IssueList2 = _interopRequireDefault(_IssueList);
 	
-	var _IssueEdit = __webpack_require__(26);
+	var _IssueEdit = __webpack_require__(27);
 	
 	var _IssueEdit2 = _interopRequireDefault(_IssueEdit);
 	
-	var _DeviceList = __webpack_require__(29);
+	var _DeviceList = __webpack_require__(30);
 	
 	var _DeviceList2 = _interopRequireDefault(_DeviceList);
 	
-	var _DeviceEdit = __webpack_require__(31);
+	var _DeviceEdit = __webpack_require__(32);
 	
 	var _DeviceEdit2 = _interopRequireDefault(_DeviceEdit);
 	
-	var _ControllersSetup = __webpack_require__(32);
+	var _ControllersSetup = __webpack_require__(33);
 	
 	var _ControllersSetup2 = _interopRequireDefault(_ControllersSetup);
 	
-	var _NewControllers = __webpack_require__(38);
+	var _NewControllers = __webpack_require__(39);
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(42);
+	var _Help = __webpack_require__(43);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1730,7 +1730,11 @@
 	
 	var _reactBootstrap = __webpack_require__(18);
 	
-	var _IssueFilter = __webpack_require__(25);
+	var _trash = __webpack_require__(25);
+	
+	var _trash2 = _interopRequireDefault(_trash);
+	
+	var _IssueFilter = __webpack_require__(26);
 	
 	var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 	
@@ -1793,7 +1797,7 @@
 	      _react2.default.createElement(
 	        _reactBootstrap.Button,
 	        { bsSize: 'xsmall', onClick: onDeleteClick },
-	        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
+	        _react2.default.createElement(_trash2.default, null)
 	      )
 	    )
 	  );
@@ -1979,6 +1983,12 @@
 
 /***/ }),
 /* 25 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/fa/trash");
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2186,7 +2196,7 @@
 	};
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2203,11 +2213,11 @@
 	
 	var _reactRouterBootstrap = __webpack_require__(19);
 	
-	var _NumInput = __webpack_require__(27);
+	var _NumInput = __webpack_require__(28);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(28);
+	var _DateInput = __webpack_require__(29);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
@@ -2566,7 +2576,7 @@
 	};
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2629,7 +2639,7 @@
 	};
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2715,7 +2725,7 @@
 	};
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2734,7 +2744,7 @@
 	
 	var _reactBootstrap = __webpack_require__(18);
 	
-	var _DeviceFilter = __webpack_require__(30);
+	var _DeviceFilter = __webpack_require__(31);
 	
 	var _DeviceFilter2 = _interopRequireDefault(_DeviceFilter);
 	
@@ -2976,7 +2986,7 @@
 	};
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3184,7 +3194,7 @@
 	};
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3201,11 +3211,11 @@
 	
 	var _reactRouterBootstrap = __webpack_require__(19);
 	
-	var _NumInput = __webpack_require__(27);
+	var _NumInput = __webpack_require__(28);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(28);
+	var _DateInput = __webpack_require__(29);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
@@ -3564,7 +3574,7 @@
 	};
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3579,21 +3589,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(33);
+	var _reactGridLayout = __webpack_require__(34);
 	
-	var _lodash = __webpack_require__(34);
+	var _lodash = __webpack_require__(35);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(35);
+	var _lodash3 = __webpack_require__(36);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _lodash5 = __webpack_require__(36);
+	var _lodash5 = __webpack_require__(37);
 	
 	var _lodash6 = _interopRequireDefault(_lodash5);
 	
-	var _lodash7 = __webpack_require__(37);
+	var _lodash7 = __webpack_require__(38);
 	
 	var _lodash8 = _interopRequireDefault(_lodash7);
 	
@@ -3717,8 +3727,7 @@
 	          onBreakpointChange: this.onBreakpointChange,
 	          onLayoutChange: this.onLayoutChange,
 	          measureBeforeMount: false,
-	          useCSSTransforms: this.state.mounted,
-	          isDraggable: false }),
+	          useCSSTransforms: this.state.mounted }),
 	        this.generateDOM()
 	      )
 	    );
@@ -3727,7 +3736,6 @@
 	exports.default = ControllerSetup;
 	ControllerSetup.defaultProps = {
 	  className: "layout",
-	  isDraggable: false,
 	  isResizable: true,
 	  rowHeight: 30,
 	  onLayoutChange: function onLayoutChange() {},
@@ -3736,37 +3744,37 @@
 	};
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-grid-layout");
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.map");
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.result");
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.range");
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.random");
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3781,25 +3789,25 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(33);
+	var _reactGridLayout = __webpack_require__(34);
 	
-	var _lodash = __webpack_require__(39);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(34);
+	var _lodash3 = __webpack_require__(35);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _lodash5 = __webpack_require__(35);
+	var _lodash5 = __webpack_require__(36);
 	
 	var _lodash6 = _interopRequireDefault(_lodash5);
 	
-	var _lodash7 = __webpack_require__(36);
+	var _lodash7 = __webpack_require__(37);
 	
 	var _lodash8 = _interopRequireDefault(_lodash7);
 	
-	var _lodash9 = __webpack_require__(37);
+	var _lodash9 = __webpack_require__(38);
 	
 	var _lodash10 = _interopRequireDefault(_lodash9);
 	
@@ -3807,13 +3815,17 @@
 	
 	var _reactRouter = __webpack_require__(14);
 	
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+	
 	var _reactBootstrap = __webpack_require__(18);
 	
-	var _lock = __webpack_require__(40);
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _lock = __webpack_require__(41);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(41);
+	var _unlock = __webpack_require__(42);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
@@ -3835,15 +3847,14 @@
 	          y: 0,
 	          w: 2,
 	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          isDraggable: false
+	          add: i === (list.length - 1).toString()
 	        };
 	      }),
 	      buttonCounter: 0,
 	      sliderCounter: 0,
 	      xyCounter: 0,
 	      sliderValue: 0,
-	      lock: 1
+	      lock: true
 	    };
 	    this.onAddButton = this.onAddButton.bind(this);
 	    this.onAddSlider = this.onAddSlider.bind(this);
@@ -3858,20 +3869,12 @@
 	    console.log(event.target.id + ': ' + this.state.i + ' ' + this.state.sliderValue);
 	  }
 	  handleOnLock() {
-	    if (this.state.lock == 0) {
-	      this.setState({ lock: 1 });
-	      lockIcon = _react2.default.createElement(_lock2.default, null);
-	      this.state.items.map((item, index) => {
-	        item.isDraggable = true;
-	        console.log("isDraggable: " + item.i + " well? " + item.isDraggable);
-	      });
-	    } else {
-	      this.setState({ lock: 0 });
-	      this.state.items.map((item, index) => {
-	        item.isDraggable = false;
-	        console.log("isDraggable: " + item.i + " well? " + item.isDraggable);
-	      });
+	    if (this.state.lock == true) {
+	      this.setState({ lock: false });
 	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	    } else {
+	      this.setState({ lock: true });
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
 	    }
 	    console.log("handle on lock : " + this.state.lock);
 	  }
@@ -3977,8 +3980,7 @@
 	        x: this.state.items.length * 2 % (this.state.cols || 12),
 	        y: Infinity,
 	        w: 2,
-	        h: 2,
-	        isDraggable: false
+	        h: 2
 	      }),
 	      sliderCounter: this.state.sliderCounter + 1
 	    });
@@ -4032,14 +4034,15 @@
 	      ),
 	      _react2.default.createElement(
 	        'button',
-	        { onClick: this.handleOnLock },
+	        { className: 'float-right', onClick: this.handleOnLock },
 	        lockIcon
 	      ),
 	      _react2.default.createElement(
 	        ResponsiveReactGridLayout,
 	        _extends({
 	          onBreakpointChange: this.onBreakpointChange,
-	          onLayoutChange: this.onLayoutChange
+	          onLayoutChange: this.onLayoutChange,
+	          isDraggable: !this.state.lock
 	        }, this.props),
 	        _lodash2.default.map(this.state.items, el => this.createElement(el))
 	      )
@@ -4054,25 +4057,25 @@
 	};
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash");
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/lock");
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/unlock");
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4105,7 +4108,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4141,7 +4144,7 @@
 	};
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -4172,7 +4175,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(45)(updatedModules, updatedModules);
+					__webpack_require__(46)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -4185,7 +4188,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	/*

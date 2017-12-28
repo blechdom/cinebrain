@@ -2,6 +2,7 @@ import React from 'react';
 import 'isomorphic-fetch';
 import { Link } from 'react-router';
 import { Button, Glyphicon, Table, Panel } from 'react-bootstrap';
+import FaTrash from 'react-icons/lib/fa/trash';
 
 import IssueFilter from './IssueFilter.jsx';
 import Toast from './Toast.jsx';
@@ -21,7 +22,7 @@ const IssueRow = (props) => {
       <td>{props.issue.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
       <td>{props.issue.title}</td>
       <td>
-        <Button bsSize="xsmall" onClick={onDeleteClick}><Glyphicon glyph="trash" /></Button>
+        <Button bsSize="xsmall" onClick={onDeleteClick}><FaTrash /></Button>
       </td>
     </tr>
   );

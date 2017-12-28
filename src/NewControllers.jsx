@@ -6,8 +6,8 @@ import loresult from 'lodash.result'
 import lorange from 'lodash.range'
 import lorandom from 'lodash.random'
 import 'isomorphic-fetch';
-import { Link } from 'react-router';
-import { Button, AddGlyphicon, Table, Panel } from 'react-bootstrap';
+import Link from 'react-router';
+import Button from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 
@@ -179,7 +179,7 @@ render() {
  	<button onClick={this.onAddButton}>Add Button</button>  
       	<button onClick={this.onAddSlider}>Add Slider</button>
 	<button onClick={this.onAddXY}>Add X/Y Area</button>
-	<button onClick={this.handleOnLock}>{lockIcon}</button>
+	<button className="pull-right" bsStyle="danger" bsSize="small" onClick={this.handleOnLock}>{lockIcon}</button>
 	<ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}

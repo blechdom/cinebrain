@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(867);
+	var _ContextWrapper = __webpack_require__(868);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -72,27 +72,27 @@ webpackJsonp([0],{
 	
 	var _IssueList2 = _interopRequireDefault(_IssueList);
 	
-	var _IssueEdit = __webpack_require__(836);
+	var _IssueEdit = __webpack_require__(838);
 	
 	var _IssueEdit2 = _interopRequireDefault(_IssueEdit);
 	
-	var _DeviceList = __webpack_require__(839);
+	var _DeviceList = __webpack_require__(841);
 	
 	var _DeviceList2 = _interopRequireDefault(_DeviceList);
 	
-	var _DeviceEdit = __webpack_require__(841);
+	var _DeviceEdit = __webpack_require__(843);
 	
 	var _DeviceEdit2 = _interopRequireDefault(_DeviceEdit);
 	
-	var _ControllersSetup = __webpack_require__(842);
+	var _ControllersSetup = __webpack_require__(844);
 	
 	var _ControllersSetup2 = _interopRequireDefault(_ControllersSetup);
 	
-	var _NewControllers = __webpack_require__(861);
+	var _NewControllers = __webpack_require__(863);
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(866);
+	var _Help = __webpack_require__(867);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -731,7 +731,11 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _IssueFilter = __webpack_require__(835);
+	var _trash = __webpack_require__(835);
+	
+	var _trash2 = _interopRequireDefault(_trash);
+	
+	var _IssueFilter = __webpack_require__(837);
 	
 	var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 	
@@ -800,7 +804,7 @@ webpackJsonp([0],{
 	      _react2.default.createElement(
 	        _reactBootstrap.Button,
 	        { bsSize: 'xsmall', onClick: onDeleteClick },
-	        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
+	        _react2.default.createElement(_trash2.default, null)
 	      )
 	    )
 	  );
@@ -1014,6 +1018,112 @@ webpackJsonp([0],{
 /***/ }),
 
 /***/ 835:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactIconBase = __webpack_require__(836);
+	
+	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var FaTrash = function FaTrash(props) {
+	    return _react2.default.createElement(
+	        _reactIconBase2.default,
+	        _extends({ viewBox: '0 0 40 40' }, props),
+	        _react2.default.createElement(
+	            'g',
+	            null,
+	            _react2.default.createElement('path', { d: 'm15.9 30.7v-15.7q0-0.3-0.2-0.5t-0.5-0.2h-1.4q-0.3 0-0.5 0.2t-0.2 0.5v15.7q0 0.3 0.2 0.5t0.5 0.2h1.4q0.3 0 0.5-0.2t0.2-0.5z m5.7 0v-15.7q0-0.3-0.2-0.5t-0.5-0.2h-1.4q-0.3 0-0.5 0.2t-0.2 0.5v15.7q0 0.3 0.2 0.5t0.5 0.2h1.4q0.3 0 0.5-0.2t0.2-0.5z m5.8 0v-15.7q0-0.3-0.2-0.5t-0.6-0.2h-1.4q-0.3 0-0.5 0.2t-0.2 0.5v15.7q0 0.3 0.2 0.5t0.5 0.2h1.4q0.4 0 0.6-0.2t0.2-0.5z m-12.2-22.1h10l-1.1-2.6q-0.1-0.2-0.3-0.3h-7.1q-0.2 0.1-0.4 0.3z m20.7 0.7v1.4q0 0.3-0.2 0.5t-0.5 0.2h-2.1v21.2q0 1.8-1.1 3.2t-2.5 1.3h-18.6q-1.4 0-2.5-1.3t-1-3.1v-21.3h-2.2q-0.3 0-0.5-0.2t-0.2-0.5v-1.4q0-0.3 0.2-0.5t0.5-0.2h6.9l1.6-3.8q0.3-0.8 1.2-1.4t1.7-0.5h7.2q0.9 0 1.8 0.5t1.2 1.4l1.5 3.8h6.9q0.3 0 0.5 0.2t0.2 0.5z' })
+	        )
+	    );
+	};
+	
+	exports.default = FaTrash;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 836:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(661);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	var IconBase = function IconBase(_ref, _ref2) {
+	  var children = _ref.children;
+	  var color = _ref.color;
+	  var size = _ref.size;
+	  var style = _ref.style;
+	  var width = _ref.width;
+	  var height = _ref.height;
+	
+	  var props = _objectWithoutProperties(_ref, ['children', 'color', 'size', 'style', 'width', 'height']);
+	
+	  var _ref2$reactIconBase = _ref2.reactIconBase;
+	  var reactIconBase = _ref2$reactIconBase === undefined ? {} : _ref2$reactIconBase;
+	
+	  var computedSize = size || reactIconBase.size || '1em';
+	  return _react2.default.createElement('svg', _extends({
+	    children: children,
+	    fill: 'currentColor',
+	    preserveAspectRatio: 'xMidYMid meet',
+	    height: height || computedSize,
+	    width: width || computedSize
+	  }, reactIconBase, props, {
+	    style: _extends({
+	      verticalAlign: 'middle',
+	      color: color || reactIconBase.color
+	    }, reactIconBase.style || {}, style)
+	  }));
+	};
+	
+	IconBase.propTypes = {
+	  color: _propTypes2.default.string,
+	  size: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  width: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  height: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+	  style: _propTypes2.default.object
+	};
+	
+	IconBase.contextTypes = {
+	  reactIconBase: _propTypes2.default.shape(IconBase.propTypes)
+	};
+	
+	exports.default = IconBase;
+	module.exports = exports['default'];
+
+/***/ }),
+
+/***/ 837:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1250,7 +1360,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 836:
+/***/ 838:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1269,11 +1379,11 @@ webpackJsonp([0],{
 	
 	var _reactRouterBootstrap = __webpack_require__(826);
 	
-	var _NumInput = __webpack_require__(837);
+	var _NumInput = __webpack_require__(839);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(838);
+	var _DateInput = __webpack_require__(840);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
@@ -1674,7 +1784,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 837:
+/***/ 839:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1764,7 +1874,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 838:
+/***/ 840:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1879,7 +1989,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 839:
+/***/ 841:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1900,7 +2010,7 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _DeviceFilter = __webpack_require__(840);
+	var _DeviceFilter = __webpack_require__(842);
 	
 	var _DeviceFilter2 = _interopRequireDefault(_DeviceFilter);
 	
@@ -2182,7 +2292,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 840:
+/***/ 842:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2419,7 +2529,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 841:
+/***/ 843:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2438,11 +2548,11 @@ webpackJsonp([0],{
 	
 	var _reactRouterBootstrap = __webpack_require__(826);
 	
-	var _NumInput = __webpack_require__(837);
+	var _NumInput = __webpack_require__(839);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(838);
+	var _DateInput = __webpack_require__(840);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
@@ -2843,7 +2953,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 842:
+/***/ 844:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2860,21 +2970,21 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(843);
+	var _reactGridLayout = __webpack_require__(845);
 	
-	var _lodash = __webpack_require__(857);
+	var _lodash = __webpack_require__(859);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(858);
+	var _lodash3 = __webpack_require__(860);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _lodash5 = __webpack_require__(859);
+	var _lodash5 = __webpack_require__(861);
 	
 	var _lodash6 = _interopRequireDefault(_lodash5);
 	
-	var _lodash7 = __webpack_require__(860);
+	var _lodash7 = __webpack_require__(862);
 	
 	var _lodash8 = _interopRequireDefault(_lodash7);
 	
@@ -3043,19 +3153,19 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 843:
+/***/ 845:
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(844).default;
-	module.exports.utils = __webpack_require__(847);
-	module.exports.Responsive = __webpack_require__(854).default;
-	module.exports.Responsive.utils = __webpack_require__(855);
-	module.exports.WidthProvider = __webpack_require__(856).default;
+	module.exports = __webpack_require__(846).default;
+	module.exports.utils = __webpack_require__(849);
+	module.exports.Responsive = __webpack_require__(856).default;
+	module.exports.Responsive.utils = __webpack_require__(857);
+	module.exports.WidthProvider = __webpack_require__(858).default;
 
 
 /***/ }),
 
-/***/ 844:
+/***/ 846:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -3072,7 +3182,7 @@ webpackJsonp([0],{
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _lodash = __webpack_require__(845);
+	var _lodash = __webpack_require__(847);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -3080,9 +3190,9 @@ webpackJsonp([0],{
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _utils = __webpack_require__(847);
+	var _utils = __webpack_require__(849);
 	
-	var _GridItem = __webpack_require__(848);
+	var _GridItem = __webpack_require__(850);
 	
 	var _GridItem2 = _interopRequireDefault(_GridItem);
 	
@@ -3645,7 +3755,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 845:
+/***/ 847:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -5497,11 +5607,11 @@ webpackJsonp([0],{
 	
 	module.exports = isEqual;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(846)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(848)(module)))
 
 /***/ }),
 
-/***/ 846:
+/***/ 848:
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -5518,7 +5628,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 847:
+/***/ 849:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -5551,7 +5661,7 @@ webpackJsonp([0],{
 	exports.validateLayout = validateLayout;
 	exports.autoBindHandlers = autoBindHandlers;
 	
-	var _lodash = __webpack_require__(845);
+	var _lodash = __webpack_require__(847);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -6074,7 +6184,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 848:
+/***/ 850:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6091,11 +6201,11 @@ webpackJsonp([0],{
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _reactDraggable = __webpack_require__(849);
+	var _reactDraggable = __webpack_require__(851);
 	
-	var _reactResizable = __webpack_require__(850);
+	var _reactResizable = __webpack_require__(852);
 	
-	var _utils = __webpack_require__(847);
+	var _utils = __webpack_require__(849);
 	
 	var _classnames = __webpack_require__(660);
 	
@@ -6585,7 +6695,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 849:
+/***/ 851:
 /***/ (function(module, exports, __webpack_require__) {
 
 	(function webpackUniversalModuleDefinition(root, factory) {
@@ -9336,7 +9446,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 850:
+/***/ 852:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9344,13 +9454,13 @@ webpackJsonp([0],{
 	  throw new Error("Don't instantiate Resizable directly! Use require('react-resizable').Resizable");
 	};
 	
-	module.exports.Resizable = __webpack_require__(851).default;
-	module.exports.ResizableBox = __webpack_require__(853).default;
+	module.exports.Resizable = __webpack_require__(853).default;
+	module.exports.ResizableBox = __webpack_require__(855).default;
 
 
 /***/ }),
 
-/***/ 851:
+/***/ 853:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9367,9 +9477,9 @@ webpackJsonp([0],{
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _reactDraggable = __webpack_require__(849);
+	var _reactDraggable = __webpack_require__(851);
 	
-	var _cloneElement = __webpack_require__(852);
+	var _cloneElement = __webpack_require__(854);
 	
 	var _cloneElement2 = _interopRequireDefault(_cloneElement);
 	
@@ -9621,7 +9731,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 852:
+/***/ 854:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9647,7 +9757,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 853:
+/***/ 855:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9664,7 +9774,7 @@ webpackJsonp([0],{
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Resizable = __webpack_require__(851);
+	var _Resizable = __webpack_require__(853);
 	
 	var _Resizable2 = _interopRequireDefault(_Resizable);
 	
@@ -9771,7 +9881,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 854:
+/***/ 856:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9788,15 +9898,15 @@ webpackJsonp([0],{
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _lodash = __webpack_require__(845);
+	var _lodash = __webpack_require__(847);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _utils = __webpack_require__(847);
+	var _utils = __webpack_require__(849);
 	
-	var _responsiveUtils = __webpack_require__(855);
+	var _responsiveUtils = __webpack_require__(857);
 	
-	var _ReactGridLayout = __webpack_require__(844);
+	var _ReactGridLayout = __webpack_require__(846);
 	
 	var _ReactGridLayout2 = _interopRequireDefault(_ReactGridLayout);
 	
@@ -10005,7 +10115,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 855:
+/***/ 857:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10016,7 +10126,7 @@ webpackJsonp([0],{
 	exports.findOrGenerateResponsiveLayout = findOrGenerateResponsiveLayout;
 	exports.sortBreakpoints = sortBreakpoints;
 	
-	var _utils = __webpack_require__(847);
+	var _utils = __webpack_require__(849);
 	
 	/**
 	 * Given a width, find the highest breakpoint that matches is valid for it (width > breakpoint).
@@ -10098,7 +10208,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 856:
+/***/ 858:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10191,7 +10301,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 857:
+/***/ 859:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -12561,11 +12671,11 @@ webpackJsonp([0],{
 	
 	module.exports = map;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(846)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(848)(module)))
 
 /***/ }),
 
-/***/ 858:
+/***/ 860:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -13505,7 +13615,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 859:
+/***/ 861:
 /***/ (function(module, exports) {
 
 	/**
@@ -13974,7 +14084,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 860:
+/***/ 862:
 /***/ (function(module, exports) {
 
 	/**
@@ -14437,7 +14547,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 861:
+/***/ 863:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14454,25 +14564,25 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(843);
+	var _reactGridLayout = __webpack_require__(845);
 	
-	var _lodash = __webpack_require__(862);
+	var _lodash = __webpack_require__(864);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(857);
+	var _lodash3 = __webpack_require__(859);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _lodash5 = __webpack_require__(858);
+	var _lodash5 = __webpack_require__(860);
 	
 	var _lodash6 = _interopRequireDefault(_lodash5);
 	
-	var _lodash7 = __webpack_require__(859);
+	var _lodash7 = __webpack_require__(861);
 	
 	var _lodash8 = _interopRequireDefault(_lodash7);
 	
-	var _lodash9 = __webpack_require__(860);
+	var _lodash9 = __webpack_require__(862);
 	
 	var _lodash10 = _interopRequireDefault(_lodash9);
 	
@@ -14480,13 +14590,17 @@ webpackJsonp([0],{
 	
 	var _reactRouter = __webpack_require__(509);
 	
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _lock = __webpack_require__(863);
+	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
+	
+	var _lock = __webpack_require__(865);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(865);
+	var _unlock = __webpack_require__(866);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
@@ -14727,7 +14841,7 @@ webpackJsonp([0],{
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.handleOnLock },
+	          { className: 'pull-right', bsStyle: 'danger', bsSize: 'small', onClick: this.handleOnLock },
 	          lockIcon
 	        ),
 	        _react2.default.createElement(
@@ -14758,7 +14872,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 862:
+/***/ 864:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -31846,11 +31960,11 @@ webpackJsonp([0],{
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(846)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(848)(module)))
 
 /***/ }),
 
-/***/ 863:
+/***/ 865:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31865,7 +31979,7 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactIconBase = __webpack_require__(864);
+	var _reactIconBase = __webpack_require__(836);
 	
 	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
 	
@@ -31888,75 +32002,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 864:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(661);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	var IconBase = function IconBase(_ref, _ref2) {
-	  var children = _ref.children;
-	  var color = _ref.color;
-	  var size = _ref.size;
-	  var style = _ref.style;
-	  var width = _ref.width;
-	  var height = _ref.height;
-	
-	  var props = _objectWithoutProperties(_ref, ['children', 'color', 'size', 'style', 'width', 'height']);
-	
-	  var _ref2$reactIconBase = _ref2.reactIconBase;
-	  var reactIconBase = _ref2$reactIconBase === undefined ? {} : _ref2$reactIconBase;
-	
-	  var computedSize = size || reactIconBase.size || '1em';
-	  return _react2.default.createElement('svg', _extends({
-	    children: children,
-	    fill: 'currentColor',
-	    preserveAspectRatio: 'xMidYMid meet',
-	    height: height || computedSize,
-	    width: width || computedSize
-	  }, reactIconBase, props, {
-	    style: _extends({
-	      verticalAlign: 'middle',
-	      color: color || reactIconBase.color
-	    }, reactIconBase.style || {}, style)
-	  }));
-	};
-	
-	IconBase.propTypes = {
-	  color: _propTypes2.default.string,
-	  size: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
-	  width: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
-	  height: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
-	  style: _propTypes2.default.object
-	};
-	
-	IconBase.contextTypes = {
-	  reactIconBase: _propTypes2.default.shape(IconBase.propTypes)
-	};
-	
-	exports.default = IconBase;
-	module.exports = exports['default'];
-
-/***/ }),
-
-/***/ 865:
+/***/ 866:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31971,7 +32017,7 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactIconBase = __webpack_require__(864);
+	var _reactIconBase = __webpack_require__(836);
 	
 	var _reactIconBase2 = _interopRequireDefault(_reactIconBase);
 	
@@ -31994,7 +32040,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 866:
+/***/ 867:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32050,7 +32096,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 867:
+/***/ 868:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
