@@ -1,23 +1,65 @@
-import React from 'react'
+import React from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
+import ReactDOM from 'react-dom'
 import _ from "lodash";
 import 'isomorphic-fetch';
-import Button from 'react-bootstrap';
+import { Col, Row, FormGroup, FormControl, ControlLabel, Button, Table, Panel, Glyphicon } from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 import MdFileUpload from 'react-icons/lib/md/file-upload';
 import MdFileDownload from 'react-icons/lib/md/file-download';
 import MdEdit from 'react-icons/lib/md/edit';
+import MdClose from 'react-icons/lib/md/close';
+import Toast from './Toast.jsx';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 
+const DeviceRow = (props) => {
+  return (
+      <option value={props.device.device_number}>{props.device.name}</option>
+  );
+};
+
+DeviceRow.propTypes = {
+  device: React.PropTypes.object.isRequired,
+};
+
+function DeviceTable(props) {
+  const deviceRows = props.devices.map(device =>
+    <DeviceRow key={device._id} device={device} />
+  );
+  return (
+      	<FormControl componentClass="select"
+              onChange={props.onAddButton}>
+		{deviceRows}
+	</FormControl>
+  );
+}
+
+DeviceTable.propTypes = {
+  devices: React.PropTypes.array.isRequired,
+  onAddButton: React.PropTypes.func.isRequired,
+  };
+
 export default class NewControllers extends React.Component {
+
+  static dataFetcher({ urlBase, location }) {
+    return fetch(`${urlBase || ''}/api/devices${location.search}`).then(response => {
+      if (!response.ok) return response.json().then(error => Promise.reject(error));
+      return response.json().then(data => ({ NewControllers: data }));
+    });
+  }
 
   constructor(props, context){
     super(props, context);
-     this.state = {
-     items: [].map(function(i, key, list) {
+    const devices = context.initialState.NewControllers ? context.initialState.NewControllers.records : [];
+    this.state = {
+      devices,
+      toastVisible: false,
+      toastMessage: '',
+      toastType: 'success',
+      items: [].map(function(i, key, list) {
         return {
           type: 0,
           i: i.toString(),
@@ -43,20 +85,59 @@ export default class NewControllers extends React.Component {
   this.handleOnLock = this.handleOnLock.bind(this);
   this.handleOnDownload = this.handleOnDownload.bind(this);
   this.handleOnUpload = this.handleOnUpload.bind(this);
- }
+  this.showError = this.showError.bind(this);
+  this.dismissToast = this.dismissToast.bind(this); 
+}
+componentDidMount() {
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const oldQuery = prevProps.location.query;
+    const newQuery = this.props.location.query;
+    if (oldQuery.status === newQuery.status
+        && oldQuery.effort_gte === newQuery.effort_gte
+        && oldQuery.effort_lte === newQuery.effort_lte) {
+      return;
+    }
+    this.loadData();
+  }
+ showError(message) {
+    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+  }
+
+  dismissToast() {
+    this.setState({ toastVisible: false });
+  }
+
+  loadData() {
+    NewControllers.dataFetcher({ location: this.props.location })
+    .then(data => {
+      const devices = data.NewControllers.records;
+      devices.forEach(device => {
+        device.created = new Date(device.created);
+        if (device.completionDate) {
+          device.completionDate = new Date(device.completionDate);
+        }
+      });
+      this.setState({ devices });
+    }).catch(err => {
+      this.showError(`Error in fetching data from server: ${err}`);
+    });
+  }
+
  handleSliderChange (event)  { //not updating correct object
     this.setState({sliderValue: event.target.value});
     console.log(event.target.id + ': ' + this.state.sliderValue);
  }
  handleOnLock(){
    if (this.state.lock == true) {
-	this.setState({lock: false});
 	lockIcon = <FaUnlock />;
+  	this.setState({lock: false}); 
    } else { 
-	this.setState({lock: true});
 	lockIcon = <FaLock />;
-   }
-   console.log("handle on lock : " + this.state.lock);
+  	this.setState({lock: true});
+   } 
  }
  handleOnDownload(){
    console.log("download file with data to be loaded again later ");
@@ -73,10 +154,22 @@ export default class NewControllers extends React.Component {
     };
    const editStyle = {
      position: "absolute",
-     left: "2px",
+     right: "2px",
      bottom: 0,
      cursor: "pointer"
    };
+   let lockStyle = {
+     display: "none",
+   };
+   if (this.state.lock==false){
+	lockStyle = {
+		position: "absolute",
+		right: "2px",
+		top: 0,
+		cursor: "pointer",
+    		display: "inline",
+	};
+   }
    const gridStyle = {
       background: "#EEE"
     };
@@ -94,25 +187,21 @@ export default class NewControllers extends React.Component {
 	return (
      		<div key={i} data-grid={el} style={gridStyle}>
 		{typeCode}
-        	<span
-       			className="remove"
-          		style={removeStyle}
-          		onClick={this.onRemoveItem.bind(this, i)}
-        	>
-          		x
-        	</span>
-		<span className="edit"
-			style={editStyle}
-			onClick={this.onEditItem.bind(this, i)}
-		>
-			<MdEdit />
-		</span>
-      		</div>
+      		<span style={lockStyle}>
+			<span className="edit"
+                        onClick={this.onEditItem.bind(this, i)}>
+                        <MdEdit />
+                </span>
+		<span className="remove"
+                        onClick={this.onRemoveItem.bind(this, i)}>
+                        <MdClose />
+                </span></span>
+		</div>
     	);
 }
 
   onAddButton() {
-    console.log("adding ", "button " + this.state.buttonCounter);
+	 console.log("adding ", "button " + this.state.buttonCounter);
     this.setState({
  items: this.state.items.concat({
         type: 0,
@@ -172,21 +261,36 @@ onBreakpointChange(breakpoint, cols) {
 render() {
   return (
       <div>
- 	<button onClick={this.onAddButton}>Add Button</button>  
-      	<button onClick={this.onAddSlider}>Add Slider</button>
-	<button onClick={this.onAddXY}>Add X/Y Area</button>
-	<button className="pull-right" onClick={this.handleOnLock}>{lockIcon}</button>
-	<button className="pull-right" onClick={this.handleOnDownload}><MdFileDownload /></button>
-	<button className="pull-right" onClick={this.handleOnUpload}><MdFileUpload /></button>
+ 	<Row>
+          <Col xs={6} sm={3} md={2} lg={1}>
+	 <DeviceTable devices={this.state.devices} onAddButton={this.onAddButton}/>
+	 <Toast
+          showing={this.state.toastVisible} message={this.state.toastMessage}
+          onDismiss={this.dismissToast} bsStyle={this.state.toastType}
+        />
+  	  </Col>
+	  <Col xs={6} sm={3} md={2} lg={1}>
+      	    <button onClick={this.onAddSlider}>Add Slider</button>
+	  </Col>
+	  <Col xs={6} sm={3} md={2} lg={1}>
+	    <button onClick={this.onAddXY}>Add X/Y Area</button>
+	  </Col>
+	  <Col xs={6} sm={3} md={2} lg={1}>
+	    <button className="pull-right" onClick={this.handleOnLock}>{lockIcon}</button>
+	    <button className="pull-right" onClick={this.handleOnDownload}><MdFileDownload /></button>
+	    <button className="pull-right" onClick={this.handleOnUpload}><MdFileUpload /></button>
+	  </Col>
+	</Row>
 	<ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
 	  isDraggable={!this.state.lock}
+	isResizable={!this.state.lock}  
 	{...this.props}
 	>
-  {_.map(this.state.items, el => this.createElement(el))}
-        </ResponsiveReactGridLayout>
-      </div>
+  	 {_.map(this.state.items, el => this.createElement(el))}
+       </ResponsiveReactGridLayout>
+     </div>
     );
   }
 }
@@ -194,4 +298,12 @@ NewControllers.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
+};
+NewControllers.propTypes = {
+  location: React.PropTypes.object.isRequired,
+  router: React.PropTypes.object,
+};
+
+NewControllers.contextTypes = {
+  initialState: React.PropTypes.object,
 }; 

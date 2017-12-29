@@ -8,9 +8,6 @@ import Toast from './Toast.jsx';
 
 
 const DeviceRow = (props) => {
-  function onDeleteClick() {
-    props.deleteDevice(props.device._id);
-  }
 
   return (
     <tr>
@@ -21,21 +18,18 @@ const DeviceRow = (props) => {
       <td>{props.device.protocol}</td>
       <td>{props.device.port}</td>
       <td>{props.device.control_types}</td>
-      <td>
-        <Button bsSize="xsmall" onClick={onDeleteClick}><Glyphicon glyph="trash" /></Button>
-      </td>
     </tr>
   );
 };
 
 DeviceRow.propTypes = {
   device: React.PropTypes.object.isRequired,
-  deleteDevice: React.PropTypes.func.isRequired,
+  //deleteDevice: React.PropTypes.func.isRequired,
 };
 
 function DeviceTable(props) {
   const deviceRows = props.devices.map(device =>
-    <DeviceRow key={device._id} device={device} deleteDevice={props.deleteDevice} />
+    <DeviceRow key={device._id} device={device} /> //deleteDevice={props.deleteDevice} />
   );
   return (
     <Table bordered condensed hover responsive>
@@ -48,7 +42,6 @@ function DeviceTable(props) {
           <th>Protocol</th>
           <th>Port</th>
           <th>Control Types</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>{deviceRows}</tbody>
@@ -58,7 +51,7 @@ function DeviceTable(props) {
 
 DeviceTable.propTypes = {
   devices: React.PropTypes.array.isRequired,
-  deleteDevice: React.PropTypes.func.isRequired,
+ // deleteDevice: React.PropTypes.func.isRequired,
 };
 
 export default class DeviceList extends React.Component {
@@ -84,7 +77,7 @@ export default class DeviceList extends React.Component {
     };
 
     this.setFilter = this.setFilter.bind(this);
-    this.deleteDevice = this.deleteDevice.bind(this);
+    //this.deleteDevice = this.deleteDevice.bind(this);
     this.showError = this.showError.bind(this);
     this.dismissToast = this.dismissToast.bind(this);
   }
@@ -132,12 +125,12 @@ export default class DeviceList extends React.Component {
     });
   }
 
-  deleteDevice(id) {
+ /* deleteDevice(id) {
     fetch(`/api/devices/${id}`, { method: 'DELETE' }).then(response => {
       if (!response.ok) this.showError('Failed to delete device');
       else this.loadData();
     });
-  }
+  }*/
 
   render() {
     return (
@@ -145,7 +138,7 @@ export default class DeviceList extends React.Component {
         <Panel collapsible header="Filter">
           <DeviceFilter setFilter={this.setFilter} initFilter={this.props.location.query} />
         </Panel>
-        <DeviceTable devices={this.state.devices} deleteDevice={this.deleteDevice} />
+        <DeviceTable devices={this.state.devices} /> 
         <Toast
           showing={this.state.toastVisible} message={this.state.toastMessage}
           onDismiss={this.dismissToast} bsStyle={this.state.toastType}

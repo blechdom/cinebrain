@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0e681e45b8ee7dbeb3a6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e555f28e80cd0c8ac149"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(48);
+	module.exports = __webpack_require__(50);
 
 
 /***/ }),
@@ -946,21 +946,28 @@
 	  value: true
 	});
 	const validDeviceStatus = {
-	  New: true,
-	  Open: true,
-	  Assigned: true,
-	  Fixed: true,
-	  Verified: true,
-	  Closed: true
+	  _id: true,
+	  device_id: true,
+	  name: true,
+	  core: true,
+	  purpose: true,
+	  protocol: true,
+	  port: true,
+	  specification: true,
+	  control_types: true,
+	  status: true,
+	  who: true,
+	  notes: true,
+	  example_command: true,
+	  manual_link: true
 	};
 	
 	const deviceFieldType = {
-	  status: 'required',
-	  owner: 'required',
-	  effort: 'optional',
-	  created: 'required',
-	  completionDate: 'optional',
-	  title: 'required'
+	  device_id: 'required',
+	  name: 'required',
+	  purpose: 'optional',
+	  control_types: 'optional',
+	  status: 'required'
 	};
 	
 	function cleanupDevice(device) {
@@ -972,7 +979,7 @@
 	}
 	
 	function convertDevice(device) {
-	  if (device.created) device.created = new Date(device.created);
+	  if (device.status) device.status = new Date(device.created);
 	  if (device.completionDate) device.completionDate = new Date(device.completionDate);
 	  return cleanupDevice(device);
 	}
@@ -1028,7 +1035,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(47);
+	var _ContextWrapper = __webpack_require__(49);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1169,7 +1176,7 @@
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(46);
+	var _Help = __webpack_require__(48);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -2755,9 +2762,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	const DeviceRow = props => {
-	  function onDeleteClick() {
-	    props.deleteDevice(props.device._id);
-	  }
 	
 	  return _react2.default.createElement(
 	    'tr',
@@ -2765,11 +2769,7 @@
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { to: `/devices/${props.device._id}` },
-	        props.device._id.substr(-4)
-	      )
+	      props.device.device_number
 	    ),
 	    _react2.default.createElement(
 	      'td',
@@ -2779,47 +2779,39 @@
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.device.owner
+	      props.device.name
 	    ),
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.device.created.toDateString()
+	      props.device.purpose
 	    ),
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.device.effort
+	      props.device.protocol
 	    ),
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.device.completionDate ? props.device.completionDate.toDateString() : ''
+	      props.device.port
 	    ),
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.device.title
-	    ),
-	    _react2.default.createElement(
-	      'td',
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { bsSize: 'xsmall', onClick: onDeleteClick },
-	        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'trash' })
-	      )
+	      props.device.control_types
 	    )
 	  );
 	};
 	
 	DeviceRow.propTypes = {
-	  device: _react2.default.PropTypes.object.isRequired,
-	  deleteDevice: _react2.default.PropTypes.func.isRequired
+	  device: _react2.default.PropTypes.object.isRequired
+	  //deleteDevice: React.PropTypes.func.isRequired,
 	};
 	
 	function DeviceTable(props) {
-	  const deviceRows = props.devices.map(device => _react2.default.createElement(DeviceRow, { key: device._id, device: device, deleteDevice: props.deleteDevice }));
+	  const deviceRows = props.devices.map(device => _react2.default.createElement(DeviceRow, { key: device._id, device: device }) //deleteDevice={props.deleteDevice} />
+	  );
 	  return _react2.default.createElement(
 	    _reactBootstrap.Table,
 	    { bordered: true, condensed: true, hover: true, responsive: true },
@@ -2832,7 +2824,7 @@
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Id'
+	          'Number'
 	        ),
 	        _react2.default.createElement(
 	          'th',
@@ -2842,29 +2834,28 @@
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Owner'
+	          'Name'
 	        ),
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Created'
+	          'Purpose'
 	        ),
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Effort'
+	          'Protocol'
 	        ),
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Completion Date'
+	          'Port'
 	        ),
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Title'
-	        ),
-	        _react2.default.createElement('th', null)
+	          'Control Types'
+	        )
 	      )
 	    ),
 	    _react2.default.createElement(
@@ -2876,8 +2867,8 @@
 	}
 	
 	DeviceTable.propTypes = {
-	  devices: _react2.default.PropTypes.array.isRequired,
-	  deleteDevice: _react2.default.PropTypes.func.isRequired
+	  devices: _react2.default.PropTypes.array.isRequired
+	  // deleteDevice: React.PropTypes.func.isRequired,
 	};
 	
 	class DeviceList extends _react2.default.Component {
@@ -2906,7 +2897,7 @@
 	    };
 	
 	    this.setFilter = this.setFilter.bind(this);
-	    this.deleteDevice = this.deleteDevice.bind(this);
+	    //this.deleteDevice = this.deleteDevice.bind(this);
 	    this.showError = this.showError.bind(this);
 	    this.dismissToast = this.dismissToast.bind(this);
 	  }
@@ -2951,11 +2942,12 @@
 	    });
 	  }
 	
-	  deleteDevice(id) {
-	    fetch(`/api/devices/${id}`, { method: 'DELETE' }).then(response => {
-	      if (!response.ok) this.showError('Failed to delete device');else this.loadData();
-	    });
-	  }
+	  /* deleteDevice(id) {
+	     fetch(`/api/devices/${id}`, { method: 'DELETE' }).then(response => {
+	       if (!response.ok) this.showError('Failed to delete device');
+	       else this.loadData();
+	     });
+	   }*/
 	
 	  render() {
 	    return _react2.default.createElement(
@@ -2966,7 +2958,7 @@
 	        { collapsible: true, header: 'Filter' },
 	        _react2.default.createElement(_DeviceFilter2.default, { setFilter: this.setFilter, initFilter: this.props.location.query })
 	      ),
-	      _react2.default.createElement(DeviceTable, { devices: this.state.devices, deleteDevice: this.deleteDevice }),
+	      _react2.default.createElement(DeviceTable, { devices: this.state.devices }),
 	      _react2.default.createElement(_Toast2.default, {
 	        showing: this.state.toastVisible, message: this.state.toastMessage,
 	        onDismiss: this.dismissToast, bsStyle: this.state.toastType
@@ -3791,7 +3783,11 @@
 	
 	var _reactGridLayout = __webpack_require__(34);
 	
-	var _lodash = __webpack_require__(40);
+	var _reactDom = __webpack_require__(40);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(41);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -3799,38 +3795,86 @@
 	
 	var _reactBootstrap = __webpack_require__(18);
 	
-	var _reactBootstrap2 = _interopRequireDefault(_reactBootstrap);
-	
-	var _lock = __webpack_require__(41);
+	var _lock = __webpack_require__(42);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(42);
+	var _unlock = __webpack_require__(43);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
-	var _fileUpload = __webpack_require__(43);
+	var _fileUpload = __webpack_require__(44);
 	
 	var _fileUpload2 = _interopRequireDefault(_fileUpload);
 	
-	var _fileDownload = __webpack_require__(44);
+	var _fileDownload = __webpack_require__(45);
 	
 	var _fileDownload2 = _interopRequireDefault(_fileDownload);
 	
-	var _edit = __webpack_require__(45);
+	var _edit = __webpack_require__(46);
 	
 	var _edit2 = _interopRequireDefault(_edit);
+	
+	var _close = __webpack_require__(47);
+	
+	var _close2 = _interopRequireDefault(_close);
+	
+	var _Toast = __webpack_require__(21);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	
+	const DeviceRow = props => {
+	  return _react2.default.createElement(
+	    'option',
+	    { value: props.device.device_number },
+	    props.device.name
+	  );
+	};
+	
+	DeviceRow.propTypes = {
+	  device: _react2.default.PropTypes.object.isRequired
+	};
+	
+	function DeviceTable(props) {
+	  const deviceRows = props.devices.map(device => _react2.default.createElement(DeviceRow, { key: device._id, device: device }));
+	  return _react2.default.createElement(
+	    _reactBootstrap.FormControl,
+	    { componentClass: 'select',
+	      onChange: props.onAddButton },
+	    deviceRows
+	  );
+	}
+	
+	DeviceTable.propTypes = {
+	  devices: _react2.default.PropTypes.array.isRequired,
+	  onAddButton: _react2.default.PropTypes.func.isRequired
+	};
+	
 	class NewControllers extends _react2.default.Component {
+	
+	  static dataFetcher(_ref) {
+	    let urlBase = _ref.urlBase,
+	        location = _ref.location;
+	
+	    return fetch(`${urlBase || ''}/api/devices${location.search}`).then(response => {
+	      if (!response.ok) return response.json().then(error => Promise.reject(error));
+	      return response.json().then(data => ({ NewControllers: data }));
+	    });
+	  }
 	
 	  constructor(props, context) {
 	    super(props, context);
+	    const devices = context.initialState.NewControllers ? context.initialState.NewControllers.records : [];
 	    this.state = {
+	      devices: devices,
+	      toastVisible: false,
+	      toastMessage: '',
+	      toastType: 'success',
 	      items: [].map(function (i, key, list) {
 	        return {
 	          type: 0,
@@ -3857,21 +3901,57 @@
 	    this.handleOnLock = this.handleOnLock.bind(this);
 	    this.handleOnDownload = this.handleOnDownload.bind(this);
 	    this.handleOnUpload = this.handleOnUpload.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
 	  }
-	  handleSliderChange(event, i) {
+	  componentDidMount() {
+	    this.loadData();
+	  }
+	
+	  componentDidUpdate(prevProps) {
+	    const oldQuery = prevProps.location.query;
+	    const newQuery = this.props.location.query;
+	    if (oldQuery.status === newQuery.status && oldQuery.effort_gte === newQuery.effort_gte && oldQuery.effort_lte === newQuery.effort_lte) {
+	      return;
+	    }
+	    this.loadData();
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	
+	  loadData() {
+	    NewControllers.dataFetcher({ location: this.props.location }).then(data => {
+	      const devices = data.NewControllers.records;
+	      devices.forEach(device => {
+	        device.created = new Date(device.created);
+	        if (device.completionDate) {
+	          device.completionDate = new Date(device.completionDate);
+	        }
+	      });
+	      this.setState({ devices: devices });
+	    }).catch(err => {
+	      this.showError(`Error in fetching data from server: ${err}`);
+	    });
+	  }
+	
+	  handleSliderChange(event) {
 	    //not updating correct object
 	    this.setState({ sliderValue: event.target.value });
-	    console.log(event.target.i + ': ' + i + ' ' + this.state.sliderValue);
+	    console.log(event.target.id + ': ' + this.state.sliderValue);
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
-	      this.setState({ lock: false });
 	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
 	    } else {
-	      this.setState({ lock: true });
 	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
 	    }
-	    console.log("handle on lock : " + this.state.lock);
 	  }
 	  handleOnDownload() {
 	    console.log("download file with data to be loaded again later ");
@@ -3888,10 +3968,22 @@
 	    };
 	    const editStyle = {
 	      position: "absolute",
-	      left: "2px",
+	      right: "2px",
 	      bottom: 0,
 	      cursor: "pointer"
 	    };
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
 	    const gridStyle = {
 	      background: "#EEE"
 	    };
@@ -3915,7 +4007,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'slidecontainer' },
-	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, className: 'slider', onChange: this.handleSliderChange.bind(this, i) })
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliderChange })
 	        )
 	      );
 	    } else if (el.type == 2) {
@@ -3932,20 +4024,19 @@
 	      typeCode,
 	      _react2.default.createElement(
 	        'span',
-	        {
-	          className: 'remove',
-	          style: removeStyle,
-	          onClick: this.onRemoveItem.bind(this, i)
-	        },
-	        'x'
-	      ),
-	      _react2.default.createElement(
-	        'span',
-	        { className: 'edit',
-	          style: editStyle,
-	          onClick: this.onEditItem.bind(this, i)
-	        },
-	        _react2.default.createElement(_edit2.default, null)
+	        { style: lockStyle },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'edit',
+	            onClick: this.onEditItem.bind(this, i) },
+	          _react2.default.createElement(_edit2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'remove',
+	            onClick: this.onRemoveItem.bind(this, i) },
+	          _react2.default.createElement(_close2.default, null)
+	        )
 	      )
 	    );
 	  }
@@ -4013,41 +4104,62 @@
 	      'div',
 	      null,
 	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.onAddButton },
-	        'Add Button'
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.onAddSlider },
-	        'Add Slider'
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: this.onAddXY },
-	        'Add X/Y Area'
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { className: 'pull-right', onClick: this.handleOnLock },
-	        lockIcon
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { className: 'pull-right', onClick: this.handleOnDownload },
-	        _react2.default.createElement(_fileDownload2.default, null)
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { className: 'pull-right', onClick: this.handleOnUpload },
-	        _react2.default.createElement(_fileUpload2.default, null)
+	        _reactBootstrap.Row,
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(DeviceTable, { devices: this.state.devices, onAddButton: this.onAddButton }),
+	          _react2.default.createElement(_Toast2.default, {
+	            showing: this.state.toastVisible, message: this.state.toastMessage,
+	            onDismiss: this.dismissToast, bsStyle: this.state.toastType
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.onAddSlider },
+	            'Add Slider'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.onAddXY },
+	            'Add X/Y Area'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'pull-right', onClick: this.handleOnLock },
+	            lockIcon
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'pull-right', onClick: this.handleOnDownload },
+	            _react2.default.createElement(_fileDownload2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'pull-right', onClick: this.handleOnUpload },
+	            _react2.default.createElement(_fileUpload2.default, null)
+	          )
+	        )
 	      ),
 	      _react2.default.createElement(
 	        ResponsiveReactGridLayout,
 	        _extends({
 	          onBreakpointChange: this.onBreakpointChange,
 	          onLayoutChange: this.onLayoutChange,
-	          isDraggable: !this.state.lock
+	          isDraggable: !this.state.lock,
+	          isResizable: !this.state.lock
 	        }, this.props),
 	        _lodash2.default.map(this.state.items, el => this.createElement(el))
 	      )
@@ -4060,45 +4172,65 @@
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
 	};
+	NewControllers.propTypes = {
+	  location: _react2.default.PropTypes.object.isRequired,
+	  router: _react2.default.PropTypes.object
+	};
+	
+	NewControllers.contextTypes = {
+	  initialState: _react2.default.PropTypes.object
+	};
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports) {
 
-	module.exports = require("lodash");
+	module.exports = require("react-dom");
 
 /***/ }),
 /* 41 */
 /***/ (function(module, exports) {
 
-	module.exports = require("react-icons/lib/fa/lock");
+	module.exports = require("lodash");
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports) {
 
-	module.exports = require("react-icons/lib/fa/unlock");
+	module.exports = require("react-icons/lib/fa/lock");
 
 /***/ }),
 /* 43 */
 /***/ (function(module, exports) {
 
-	module.exports = require("react-icons/lib/md/file-upload");
+	module.exports = require("react-icons/lib/fa/unlock");
 
 /***/ }),
 /* 44 */
 /***/ (function(module, exports) {
 
-	module.exports = require("react-icons/lib/md/file-download");
+	module.exports = require("react-icons/lib/md/file-upload");
 
 /***/ }),
 /* 45 */
 /***/ (function(module, exports) {
 
-	module.exports = require("react-icons/lib/md/edit");
+	module.exports = require("react-icons/lib/md/file-download");
 
 /***/ }),
 /* 46 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/md/edit");
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-icons/lib/md/close");
+
+/***/ }),
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4131,7 +4263,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4167,7 +4299,7 @@
 	};
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -4198,7 +4330,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(49)(updatedModules, updatedModules);
+					__webpack_require__(51)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -4211,7 +4343,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	/*
