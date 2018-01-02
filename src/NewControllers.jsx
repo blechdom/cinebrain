@@ -11,6 +11,8 @@ import MdFileDownload from 'react-icons/lib/md/file-download';
 import MdEdit from 'react-icons/lib/md/edit';
 import MdClose from 'react-icons/lib/md/close';
 import Toast from './Toast.jsx';
+import AddController from './AddController.jsx';
+
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
@@ -31,7 +33,7 @@ function DeviceTable(props) {
   );
   return (
       	<FormControl componentClass="select"
-              onChange={props.onAddButton}>
+              onChange={props.onDeviceSelect}>
 		{deviceRows}
 	</FormControl>
   );
@@ -39,7 +41,7 @@ function DeviceTable(props) {
 
 DeviceTable.propTypes = {
   devices: React.PropTypes.array.isRequired,
-  onAddButton: React.PropTypes.func.isRequired,
+  onDeviceSelect: React.PropTypes.func.isRequired,
   };
 
 export default class NewControllers extends React.Component {
@@ -201,6 +203,7 @@ componentDidMount() {
 }
 
   onAddButton() {
+
 	 console.log("adding ", "button " + this.state.buttonCounter);
     this.setState({
  items: this.state.items.concat({
@@ -263,7 +266,8 @@ render() {
       <div>
  	<Row>
           <Col xs={6} sm={3} md={2} lg={1}>
-	 <DeviceTable devices={this.state.devices} onAddButton={this.onAddButton}/>
+	<AddController />
+	 <DeviceTable devices={this.state.devices} onDeviceSelect={this.onAddButton} />
 	 <Toast
           showing={this.state.toastVisible} message={this.state.toastMessage}
           onDismiss={this.dismissToast} bsStyle={this.state.toastType}
@@ -271,10 +275,10 @@ render() {
   	  </Col>
 	  <Col xs={6} sm={3} md={2} lg={1}>
       	    <button onClick={this.onAddSlider}>Add Slider</button>
-	  </Col>
-	  <Col xs={6} sm={3} md={2} lg={1}>
 	    <button onClick={this.onAddXY}>Add X/Y Area</button>
-	  </Col>
+	</Col>
+          <Col xs={6} sm={3} md={2} lg={1}>
+ 	</Col>
 	  <Col xs={6} sm={3} md={2} lg={1}>
 	    <button className="pull-right" onClick={this.handleOnLock}>{lockIcon}</button>
 	    <button className="pull-right" onClick={this.handleOnDownload}><MdFileDownload /></button>

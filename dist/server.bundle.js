@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e555f28e80cd0c8ac149"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0091c122b16ade172588"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(50);
+	module.exports = __webpack_require__(55);
 
 
 /***/ }),
@@ -567,14 +567,19 @@
 	
 	var _mongodb = __webpack_require__(5);
 	
+	var _socket = __webpack_require__(6);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_sourceMapSupport2.default.install();
 	
 	
-	let appModule = __webpack_require__(6);
+	let appModule = __webpack_require__(7);
 	let db;
 	let server;
+	let websocket;
 	
 	_mongodb.MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
 	  db = connection;
@@ -584,14 +589,25 @@
 	  server.listen(3000, () => {
 	    console.log('App started on port 3000');
 	  });
+	  websocket = (0, _socket2.default)(server);
+	  websocket.on('connection', socket => {
+	    console.log("user connected from: " + socket.id);
+	
+	    socket.on('diagnostics-button', message => {
+	      console.log("and the message is: " + message);
+	    });
+	    socket.on('disconnect', () => {
+	      console.log('user disconnected');
+	    });
+	  });
 	}).catch(error => {
 	  console.log('ERROR:', error);
 	});
 	
 	if (true) {
-	  module.hot.accept(6, () => {
+	  module.hot.accept(7, () => {
 	    server.removeListener('request', appModule.app);
-	    appModule = __webpack_require__(6); // eslint-disable-line
+	    appModule = __webpack_require__(7); // eslint-disable-line
 	    appModule.setDb(db);
 	    server.on('request', appModule.app);
 	  });
@@ -623,6 +639,12 @@
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+	module.exports = require("socket.io");
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -632,31 +654,32 @@
 	});
 	exports.setDb = exports.app = undefined;
 	
-	var _express = __webpack_require__(7);
+	var _express = __webpack_require__(8);
 	
 	var _express2 = _interopRequireDefault(_express);
 	
-	var _bodyParser = __webpack_require__(8);
+	var _bodyParser = __webpack_require__(9);
 	
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 	
 	var _mongodb = __webpack_require__(5);
 	
-	var _issue = __webpack_require__(9);
+	var _issue = __webpack_require__(10);
 	
 	var _issue2 = _interopRequireDefault(_issue);
 	
-	var _device = __webpack_require__(10);
+	var _device = __webpack_require__(11);
 	
 	var _device2 = _interopRequireDefault(_device);
 	
-	var _renderedPageRouter = __webpack_require__(11);
+	var _renderedPageRouter = __webpack_require__(12);
 	
 	var _renderedPageRouter2 = _interopRequireDefault(_renderedPageRouter);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	const app = (0, _express2.default)();
+	
 	app.use(_express2.default.static('static'));
 	app.use(_bodyParser2.default.json());
 	
@@ -863,19 +886,19 @@
 	exports.setDb = setDb;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -937,7 +960,7 @@
 	};
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1006,7 +1029,7 @@
 	};
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1015,27 +1038,27 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _server = __webpack_require__(13);
+	var _server = __webpack_require__(14);
 	
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(15);
 	
-	var _express = __webpack_require__(7);
+	var _express = __webpack_require__(8);
 	
 	var _express2 = _interopRequireDefault(_express);
 	
-	var _template = __webpack_require__(15);
+	var _template = __webpack_require__(16);
 	
 	var _template2 = _interopRequireDefault(_template);
 	
-	var _Routes = __webpack_require__(16);
+	var _Routes = __webpack_require__(17);
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(49);
+	var _ContextWrapper = __webpack_require__(54);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1078,25 +1101,25 @@
 	exports.default = renderedPageRouter;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react");
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-dom/server");
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router");
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1133,7 +1156,7 @@
 	}
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1142,17 +1165,17 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(15);
 	
-	var _App = __webpack_require__(17);
+	var _App = __webpack_require__(18);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _IssueList = __webpack_require__(23);
+	var _IssueList = __webpack_require__(22);
 	
 	var _IssueList2 = _interopRequireDefault(_IssueList);
 	
@@ -1176,7 +1199,15 @@
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _Help = __webpack_require__(48);
+	var _DeviceMenu = __webpack_require__(49);
+	
+	var _DeviceMenu2 = _interopRequireDefault(_DeviceMenu);
+	
+	var _Diagnostics = __webpack_require__(50);
+	
+	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
+	
+	var _Help = __webpack_require__(53);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1192,18 +1223,20 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/controllers' }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'controllers', component: _ControllersSetup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'device_menu', component: _DeviceMenu2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'randomizer', component: _ControllersSetup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues', component: (0, _reactRouter.withRouter)(_IssueList2.default) }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues/:id', component: _IssueEdit2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'devices', component: (0, _reactRouter.withRouter)(_DeviceList2.default) }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'devices/:id', component: _DeviceEdit2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'diagnostics', component: _Diagnostics2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'help', component: (0, _reactRouter.withRouter)(_Help2.default) }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
 	);
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1214,21 +1247,17 @@
 	
 	__webpack_require__(3);
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
-	var _reactRouterBootstrap = __webpack_require__(19);
+	var _reactRouterBootstrap = __webpack_require__(20);
 	
-	var _IssueAddNavItem = __webpack_require__(20);
+	var _moreVert = __webpack_require__(21);
 	
-	var _IssueAddNavItem2 = _interopRequireDefault(_IssueAddNavItem);
-	
-	var _DeviceAddNavItem = __webpack_require__(22);
-	
-	var _DeviceAddNavItem2 = _interopRequireDefault(_DeviceAddNavItem);
+	var _moreVert2 = _interopRequireDefault(_moreVert);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1249,11 +1278,20 @@
 	    null,
 	    _react2.default.createElement(
 	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/controllers' },
+	      { to: '/device_menu' },
 	      _react2.default.createElement(
 	        _reactBootstrap.NavItem,
 	        null,
-	        'Controllers'
+	        'DeviceMenu'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/randomizer' },
+	      _react2.default.createElement(
+	        _reactBootstrap.NavItem,
+	        null,
+	        'Randomizer'
 	      )
 	    ),
 	    _react2.default.createElement(
@@ -1282,16 +1320,23 @@
 	        null,
 	        'Issues'
 	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/diagnostics' },
+	      _react2.default.createElement(
+	        _reactBootstrap.NavItem,
+	        null,
+	        'Diagnostics'
+	      )
 	    )
 	  ),
 	  _react2.default.createElement(
 	    _reactBootstrap.Nav,
 	    { pullRight: true },
-	    _react2.default.createElement(_IssueAddNavItem2.default, null),
-	    _react2.default.createElement(_DeviceAddNavItem2.default, null),
 	    _react2.default.createElement(
 	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'option-horizontal' }), noCaret: true },
+	      { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
 	        { to: '/help' },
@@ -1324,238 +1369,22 @@
 	exports.default = App;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-bootstrap");
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router-bootstrap");
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(14);
-	
-	var _reactBootstrap = __webpack_require__(18);
-	
-	var _Toast = __webpack_require__(21);
-	
-	var _Toast2 = _interopRequireDefault(_Toast);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	class IssueAddNavItem extends _react2.default.Component {
-	  constructor(props) {
-	    super(props);
-	    this.state = {
-	      showing: false,
-	      toastVisible: false, toastMessage: '', toastType: 'success'
-	    };
-	    this.showModal = this.showModal.bind(this);
-	    this.hideModal = this.hideModal.bind(this);
-	    this.submit = this.submit.bind(this);
-	    this.showError = this.showError.bind(this);
-	    this.dismissToast = this.dismissToast.bind(this);
-	  }
-	
-	  showModal() {
-	    this.setState({ showing: true });
-	  }
-	
-	  hideModal() {
-	    this.setState({ showing: false });
-	  }
-	
-	  showError(message) {
-	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
-	  }
-	
-	  dismissToast() {
-	    this.setState({ toastVisible: false });
-	  }
-	
-	  submit(e) {
-	    e.preventDefault();
-	    this.hideModal();
-	    const form = document.forms.issueAdd;
-	    const newIssue = {
-	      owner: form.owner.value, title: form.title.value,
-	      status: 'New', created: new Date()
-	    };
-	    fetch('/api/issues', {
-	      method: 'POST',
-	      headers: { 'Content-Type': 'application/json' },
-	      body: JSON.stringify(newIssue)
-	    }).then(response => {
-	      if (response.ok) {
-	        response.json().then(updatedIssue => {
-	          this.props.router.push(`/issues/${updatedIssue._id}`);
-	        });
-	      } else {
-	        response.json().then(error => {
-	          this.showError(`Failed to add issue: ${error.message}`);
-	        });
-	      }
-	    }).catch(err => {
-	      this.showError(`Error in sending data to server: ${err.message}`);
-	    });
-	  }
-	
-	  render() {
-	    return _react2.default.createElement(
-	      _reactBootstrap.NavItem,
-	      { onClick: this.showModal },
-	      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
-	      ' Create Interface Control',
-	      _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { keyboard: true, show: this.state.showing, onHide: this.hideModal },
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Header,
-	          { closeButton: true },
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Title,
-	            null,
-	            'Create Interface Control'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Body,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Form,
-	            { name: 'issueAdd' },
-	            _react2.default.createElement(
-	              _reactBootstrap.FormGroup,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.ControlLabel,
-	                null,
-	                'Label'
-	              ),
-	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'title', autoFocus: true })
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.FormGroup,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.ControlLabel,
-	                null,
-	                'Type'
-	              ),
-	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'owner' })
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Footer,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.ButtonToolbar,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { type: 'button', bsStyle: 'primary', onClick: this.submit },
-	              'Submit'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { bsStyle: 'link', onClick: this.hideModal },
-	              'Cancel'
-	            )
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(_Toast2.default, {
-	        showing: this.state.toastVisible, message: this.state.toastMessage,
-	        onDismiss: this.dismissToast, bsStyle: this.state.toastType
-	      })
-	    );
-	  }
-	}
-	
-	IssueAddNavItem.propTypes = {
-	  router: _react2.default.PropTypes.object
-	};
-	
-	exports.default = (0, _reactRouter.withRouter)(IssueAddNavItem);
-
-/***/ }),
 /* 21 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactBootstrap = __webpack_require__(18);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	class Toast extends _react2.default.Component {
-	  componentDidUpdate() {
-	    if (this.props.showing) {
-	      clearTimeout(this.dismissTimer);
-	      this.dismissTimer = setTimeout(this.props.onDismiss, 5000);
-	    }
-	  }
-	
-	  componentWillUnmount() {
-	    clearTimeout(this.dismissTimer);
-	  }
-	
-	  render() {
-	    return _react2.default.createElement(
-	      _reactBootstrap.Collapse,
-	      { 'in': this.props.showing },
-	      _react2.default.createElement(
-	        'div',
-	        { style: { position: 'fixed', top: 30, left: 0, right: 0, textAlign: 'center' } },
-	        _react2.default.createElement(
-	          _reactBootstrap.Alert,
-	          {
-	            style: { display: 'inline-block', width: 500 }, bsStyle: this.props.bsStyle,
-	            onDismiss: this.props.onDismiss
-	          },
-	          this.props.message
-	        )
-	      )
-	    );
-	  }
-	}
-	
-	exports.default = Toast;
-	Toast.propTypes = {
-	  showing: _react2.default.PropTypes.bool.isRequired,
-	  onDismiss: _react2.default.PropTypes.func.isRequired,
-	  bsStyle: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.any.isRequired
-	};
-	
-	Toast.defaultProps = {
-	  bsStyle: 'success'
-	};
+	module.exports = require("react-icons/lib/md/more-vert");
 
 /***/ }),
 /* 22 */
@@ -1567,185 +1396,25 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(14);
+	__webpack_require__(23);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactRouter = __webpack_require__(15);
 	
-	var _Toast = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(19);
 	
-	var _Toast2 = _interopRequireDefault(_Toast);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	class DeviceAddNavItem extends _react2.default.Component {
-	  constructor(props) {
-	    super(props);
-	    this.state = {
-	      showing: false,
-	      toastVisible: false, toastMessage: '', toastType: 'success'
-	    };
-	    this.showModal = this.showModal.bind(this);
-	    this.hideModal = this.hideModal.bind(this);
-	    this.submit = this.submit.bind(this);
-	    this.showError = this.showError.bind(this);
-	    this.dismissToast = this.dismissToast.bind(this);
-	  }
-	
-	  showModal() {
-	    this.setState({ showing: true });
-	  }
-	
-	  hideModal() {
-	    this.setState({ showing: false });
-	  }
-	
-	  showError(message) {
-	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
-	  }
-	
-	  dismissToast() {
-	    this.setState({ toastVisible: false });
-	  }
-	
-	  submit(e) {
-	    e.preventDefault();
-	    this.hideModal();
-	    const form = document.forms.deviceAdd;
-	    const newDevice = {
-	      owner: form.owner.value, title: form.title.value,
-	      status: 'New', created: new Date()
-	    };
-	    fetch('/api/devices', {
-	      method: 'POST',
-	      headers: { 'Content-Type': 'application/json' },
-	      body: JSON.stringify(newDevice)
-	    }).then(response => {
-	      if (response.ok) {
-	        response.json().then(updatedDevice => {
-	          this.props.router.push(`/devices/${updatedDevice._id}`);
-	        });
-	      } else {
-	        response.json().then(error => {
-	          this.showError(`Failed to add device: ${error.message}`);
-	        });
-	      }
-	    }).catch(err => {
-	      this.showError(`Error in sending data to server: ${err.message}`);
-	    });
-	  }
-	
-	  render() {
-	    return _react2.default.createElement(
-	      _reactBootstrap.NavItem,
-	      { onClick: this.showModal },
-	      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
-	      ' Create Device',
-	      _react2.default.createElement(
-	        _reactBootstrap.Modal,
-	        { keyboard: true, show: this.state.showing, onHide: this.hideModal },
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Header,
-	          { closeButton: true },
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Title,
-	            null,
-	            'Create Device'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Body,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Form,
-	            { name: 'deviceAdd' },
-	            _react2.default.createElement(
-	              _reactBootstrap.FormGroup,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.ControlLabel,
-	                null,
-	                'Label'
-	              ),
-	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'title', autoFocus: true })
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.FormGroup,
-	              null,
-	              _react2.default.createElement(
-	                _reactBootstrap.ControlLabel,
-	                null,
-	                'Type'
-	              ),
-	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'owner' })
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal.Footer,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.ButtonToolbar,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { type: 'button', bsStyle: 'primary', onClick: this.submit },
-	              'Submit'
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { bsStyle: 'link', onClick: this.hideModal },
-	              'Cancel'
-	            )
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(_Toast2.default, {
-	        showing: this.state.toastVisible, message: this.state.toastMessage,
-	        onDismiss: this.dismissToast, bsStyle: this.state.toastType
-	      })
-	    );
-	  }
-	}
-	
-	DeviceAddNavItem.propTypes = {
-	  router: _react2.default.PropTypes.object
-	};
-	
-	exports.default = (0, _reactRouter.withRouter)(DeviceAddNavItem);
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(24);
-	
-	var _reactRouter = __webpack_require__(14);
-	
-	var _reactBootstrap = __webpack_require__(18);
-	
-	var _trash = __webpack_require__(25);
+	var _trash = __webpack_require__(24);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _IssueFilter = __webpack_require__(26);
+	var _IssueFilter = __webpack_require__(25);
 	
 	var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 	
-	var _Toast = __webpack_require__(21);
+	var _Toast = __webpack_require__(26);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -1983,19 +1652,19 @@
 	};
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 	module.exports = require("isomorphic-fetch");
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/trash");
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2004,11 +1673,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2203,6 +1872,68 @@
 	};
 
 /***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(13);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(19);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	class Toast extends _react2.default.Component {
+	  componentDidUpdate() {
+	    if (this.props.showing) {
+	      clearTimeout(this.dismissTimer);
+	      this.dismissTimer = setTimeout(this.props.onDismiss, 5000);
+	    }
+	  }
+	
+	  componentWillUnmount() {
+	    clearTimeout(this.dismissTimer);
+	  }
+	
+	  render() {
+	    return _react2.default.createElement(
+	      _reactBootstrap.Collapse,
+	      { 'in': this.props.showing },
+	      _react2.default.createElement(
+	        'div',
+	        { style: { position: 'fixed', top: 30, left: 0, right: 0, textAlign: 'center' } },
+	        _react2.default.createElement(
+	          _reactBootstrap.Alert,
+	          {
+	            style: { display: 'inline-block', width: 500 }, bsStyle: this.props.bsStyle,
+	            onDismiss: this.props.onDismiss
+	          },
+	          this.props.message
+	        )
+	      )
+	    );
+	  }
+	}
+	
+	exports.default = Toast;
+	Toast.propTypes = {
+	  showing: _react2.default.PropTypes.bool.isRequired,
+	  onDismiss: _react2.default.PropTypes.func.isRequired,
+	  bsStyle: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.any.isRequired
+	};
+	
+	Toast.defaultProps = {
+	  bsStyle: 'success'
+	};
+
+/***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2212,13 +1943,13 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
-	var _reactRouterBootstrap = __webpack_require__(19);
+	var _reactRouterBootstrap = __webpack_require__(20);
 	
 	var _NumInput = __webpack_require__(28);
 	
@@ -2228,7 +1959,7 @@
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _Toast = __webpack_require__(21);
+	var _Toast = __webpack_require__(26);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -2594,7 +2325,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2657,7 +2388,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2741,21 +2472,21 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(24);
+	__webpack_require__(23);
 	
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(15);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
 	var _DeviceFilter = __webpack_require__(31);
 	
 	var _DeviceFilter2 = _interopRequireDefault(_DeviceFilter);
 	
-	var _Toast = __webpack_require__(21);
+	var _Toast = __webpack_require__(26);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -2987,11 +2718,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3195,13 +2926,13 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
-	var _reactRouterBootstrap = __webpack_require__(19);
+	var _reactRouterBootstrap = __webpack_require__(20);
 	
 	var _NumInput = __webpack_require__(28);
 	
@@ -3211,7 +2942,7 @@
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _Toast = __webpack_require__(21);
+	var _Toast = __webpack_require__(26);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -3577,7 +3308,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -3599,11 +3330,11 @@
 	
 	var _lodash8 = _interopRequireDefault(_lodash7);
 	
-	__webpack_require__(24);
+	__webpack_require__(23);
 	
-	var _reactRouter = __webpack_require__(14);
+	var _reactRouter = __webpack_require__(15);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3777,7 +3508,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -3791,9 +3522,9 @@
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(24);
+	__webpack_require__(23);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _reactBootstrap = __webpack_require__(19);
 	
 	var _lock = __webpack_require__(42);
 	
@@ -3819,9 +3550,13 @@
 	
 	var _close2 = _interopRequireDefault(_close);
 	
-	var _Toast = __webpack_require__(21);
+	var _Toast = __webpack_require__(26);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _AddController = __webpack_require__(48);
+	
+	var _AddController2 = _interopRequireDefault(_AddController);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3845,14 +3580,14 @@
 	  return _react2.default.createElement(
 	    _reactBootstrap.FormControl,
 	    { componentClass: 'select',
-	      onChange: props.onAddButton },
+	      onChange: props.onDeviceSelect },
 	    deviceRows
 	  );
 	}
 	
 	DeviceTable.propTypes = {
 	  devices: _react2.default.PropTypes.array.isRequired,
-	  onAddButton: _react2.default.PropTypes.func.isRequired
+	  onDeviceSelect: _react2.default.PropTypes.func.isRequired
 	};
 	
 	class NewControllers extends _react2.default.Component {
@@ -4042,6 +3777,7 @@
 	  }
 	
 	  onAddButton() {
+	
 	    console.log("adding ", "button " + this.state.buttonCounter);
 	    this.setState({
 	      items: this.state.items.concat({
@@ -4109,7 +3845,8 @@
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { xs: 6, sm: 3, md: 2, lg: 1 },
-	          _react2.default.createElement(DeviceTable, { devices: this.state.devices, onAddButton: this.onAddButton }),
+	          _react2.default.createElement(_AddController2.default, null),
+	          _react2.default.createElement(DeviceTable, { devices: this.state.devices, onDeviceSelect: this.onAddButton }),
 	          _react2.default.createElement(_Toast2.default, {
 	            showing: this.state.toastVisible, message: this.state.toastMessage,
 	            onDismiss: this.dismissToast, bsStyle: this.state.toastType
@@ -4122,17 +3859,14 @@
 	            'button',
 	            { onClick: this.onAddSlider },
 	            'Add Slider'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          ),
 	          _react2.default.createElement(
 	            'button',
 	            { onClick: this.onAddXY },
 	            'Add X/Y Area'
 	          )
 	        ),
+	        _react2.default.createElement(_reactBootstrap.Col, { xs: 6, sm: 3, md: 2, lg: 1 }),
 	        _react2.default.createElement(
 	          _reactBootstrap.Col,
 	          { xs: 6, sm: 3, md: 2, lg: 1 },
@@ -4239,15 +3973,683 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(24);
+	var _reactRouter = __webpack_require__(15);
 	
-	var _reactRouter = __webpack_require__(14);
+	var _reactBootstrap = __webpack_require__(19);
 	
-	var _reactBootstrap = __webpack_require__(18);
+	var _Toast = __webpack_require__(26);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	class AddController extends _react2.default.Component {
+	  constructor(props) {
+	    super(props);
+	    this.state = {
+	      showing: false,
+	      toastVisible: false, toastMessage: '', toastType: 'success'
+	    };
+	    this.showModal = this.showModal.bind(this);
+	    this.hideModal = this.hideModal.bind(this);
+	    this.submit = this.submit.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	
+	  showModal() {
+	    this.setState({ showing: true });
+	  }
+	
+	  hideModal() {
+	    this.setState({ showing: false });
+	  }
+	
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	
+	  submit(e) {
+	    e.preventDefault();
+	    this.hideModal();
+	    const form = document.forms.issueAdd;
+	    const newIssue = {
+	      owner: form.owner.value, title: form.title.value,
+	      status: 'New', created: new Date()
+	    };
+	    fetch('/api/issues', {
+	      method: 'POST',
+	      headers: { 'Content-Type': 'application/json' },
+	      body: JSON.stringify(newIssue)
+	    }).then(response => {
+	      if (response.ok) {
+	        response.json().then(updatedIssue => {
+	          this.props.router.push(`/issues/${updatedIssue._id}`);
+	        });
+	      } else {
+	        response.json().then(error => {
+	          this.showError(`Failed to add issue: ${error.message}`);
+	        });
+	      }
+	    }).catch(err => {
+	      this.showError(`Error in sending data to server: ${err.message}`);
+	    });
+	  }
+	
+	  render() {
+	    return _react2.default.createElement(
+	      'span',
+	      { onClick: this.showModal },
+	      _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
+	      ' Add Controller',
+	      _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { keyboard: true, show: this.state.showing, onHide: this.hideModal },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            null,
+	            'Add Controller'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Form,
+	            { name: 'issueAdd' },
+	            _react2.default.createElement(
+	              _reactBootstrap.FormGroup,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.ControlLabel,
+	                null,
+	                'Label'
+	              ),
+	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'title', autoFocus: true })
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.FormGroup,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.ControlLabel,
+	                null,
+	                'Type'
+	              ),
+	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'owner' })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Footer,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.ButtonToolbar,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { type: 'button', bsStyle: 'primary', onClick: this.submit },
+	              'Submit'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Button,
+	              { bsStyle: 'link', onClick: this.hideModal },
+	              'Cancel'
+	            )
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(_Toast2.default, {
+	        showing: this.state.toastVisible, message: this.state.toastMessage,
+	        onDismiss: this.dismissToast, bsStyle: this.state.toastType
+	      })
+	    );
+	  }
+	}
+	
+	AddController.propTypes = {
+	  router: _react2.default.PropTypes.object
+	};
+	
+	exports.default = (0, _reactRouter.withRouter)(AddController);
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(13);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(34);
+	
+	var _reactDom = __webpack_require__(40);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(41);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(23);
+	
+	var _reactBootstrap = __webpack_require__(19);
+	
+	var _lock = __webpack_require__(42);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(43);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _fileUpload = __webpack_require__(44);
+	
+	var _fileUpload2 = _interopRequireDefault(_fileUpload);
+	
+	var _fileDownload = __webpack_require__(45);
+	
+	var _fileDownload2 = _interopRequireDefault(_fileDownload);
+	
+	var _edit = __webpack_require__(46);
+	
+	var _edit2 = _interopRequireDefault(_edit);
+	
+	var _close = __webpack_require__(47);
+	
+	var _close2 = _interopRequireDefault(_close);
+	
+	var _Toast = __webpack_require__(26);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _AddController = __webpack_require__(48);
+	
+	var _AddController2 = _interopRequireDefault(_AddController);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	
+	const DeviceRow = props => {
+	  return _react2.default.createElement(
+	    'option',
+	    { value: props.device.device_number },
+	    props.device.name
+	  );
+	};
+	
+	DeviceRow.propTypes = {
+	  device: _react2.default.PropTypes.object.isRequired
+	};
+	
+	function DeviceTable(props) {
+	  const deviceRows = props.devices.map(device => _react2.default.createElement(DeviceRow, { key: device._id, device: device }));
+	  return _react2.default.createElement(
+	    _reactBootstrap.FormControl,
+	    { componentClass: 'select',
+	      onChange: props.onDeviceSelect },
+	    deviceRows
+	  );
+	}
+	
+	DeviceTable.propTypes = {
+	  devices: _react2.default.PropTypes.array.isRequired,
+	  onDeviceSelect: _react2.default.PropTypes.func.isRequired
+	};
+	
+	class DeviceMenu extends _react2.default.Component {
+	
+	  static dataFetcher(_ref) {
+	    let urlBase = _ref.urlBase,
+	        location = _ref.location;
+	
+	    return fetch(`${urlBase || ''}/api/devices${location.search}`).then(response => {
+	      if (!response.ok) return response.json().then(error => Promise.reject(error));
+	      return response.json().then(data => ({ DeviceMenu: data }));
+	    });
+	  }
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    const devices = context.initialState.DeviceMenu ? context.initialState.DeviceMenu.records : [];
+	    this.state = {
+	      devices: devices,
+	      toastVisible: false,
+	      toastMessage: '',
+	      toastType: 'success',
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      buttonCounter: 0,
+	      sliderCounter: 0,
+	      xyCounter: 0,
+	      lock: true
+	    };
+	    this.onAddButton = this.onAddButton.bind(this);
+	    this.onAddSlider = this.onAddSlider.bind(this);
+	    this.onAddXY = this.onAddXY.bind(this);
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.onEditItem = this.onEditItem.bind(this);
+	    this.handleSliderChange = this.handleSliderChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleOnDownload = this.handleOnDownload.bind(this);
+	    this.handleOnUpload = this.handleOnUpload.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  componentDidMount() {
+	    this.loadData();
+	  }
+	
+	  componentDidUpdate(prevProps) {
+	    const oldQuery = prevProps.location.query;
+	    const newQuery = this.props.location.query;
+	    if (oldQuery.status === newQuery.status && oldQuery.effort_gte === newQuery.effort_gte && oldQuery.effort_lte === newQuery.effort_lte) {
+	      return;
+	    }
+	    this.loadData();
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	
+	  loadData() {
+	    DeviceMenu.dataFetcher({ location: this.props.location }).then(data => {
+	      const devices = data.DeviceMenu.records;
+	      devices.forEach(device => {
+	        device.created = new Date(device.created);
+	        if (device.completionDate) {
+	          device.completionDate = new Date(device.completionDate);
+	        }
+	      });
+	      this.setState({ devices: devices });
+	    }).catch(err => {
+	      this.showError(`Error in fetching data from server: ${err}`);
+	    });
+	  }
+	
+	  handleSliderChange(event) {
+	    //not updating correct object
+	    this.setState({ sliderValue: event.target.value });
+	    console.log(event.target.id + ': ' + this.state.sliderValue);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  handleOnDownload() {
+	    console.log("download file with data to be loaded again later ");
+	  }
+	  handleOnUpload() {
+	    console.log("upload previously saved file to use");
+	  }
+	  createElement(el) {
+	    const removeStyle = {
+	      position: "absolute",
+	      right: "2px",
+	      top: 0,
+	      cursor: "pointer"
+	    };
+	    const editStyle = {
+	      position: "absolute",
+	      right: "2px",
+	      bottom: 0,
+	      cursor: "pointer"
+	    };
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#EEE"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let typeCode = _react2.default.createElement(
+	      'button',
+	      null,
+	      i
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      typeCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          i
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliderChange })
+	        )
+	      );
+	    } else if (el.type == 2) {
+	      //type is xy area
+	      typeCode = _react2.default.createElement(
+	        'span',
+	        { className: 'text' },
+	        i
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      typeCode,
+	      _react2.default.createElement(
+	        'span',
+	        { style: lockStyle },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'edit',
+	            onClick: this.onEditItem.bind(this, i) },
+	          _react2.default.createElement(_edit2.default, null)
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'remove',
+	            onClick: this.onRemoveItem.bind(this, i) },
+	          _react2.default.createElement(_close2.default, null)
+	        )
+	      )
+	    );
+	  }
+	
+	  onAddButton() {
+	
+	    console.log("adding ", "button " + this.state.buttonCounter);
+	    this.setState({
+	      items: this.state.items.concat({
+	        type: 0,
+	        i: "button-" + this.state.buttonCounter,
+	        x: this.state.items.length * 2 % (this.state.cols || 12),
+	        y: Infinity,
+	        w: 2,
+	        h: 2
+	      }),
+	      buttonCounter: this.state.buttonCounter + 1
+	    });
+	  }
+	  onAddSlider() {
+	    console.log("adding ", "slider " + this.state.sliderCounter);
+	    this.setState({
+	      items: this.state.items.concat({
+	        type: 1,
+	        i: "slider-" + this.state.sliderCounter,
+	        x: this.state.items.length * 2 % (this.state.cols || 12),
+	        y: Infinity,
+	        w: 2,
+	        h: 2
+	      }),
+	      sliderCounter: this.state.sliderCounter + 1
+	    });
+	  }
+	  onAddXY() {
+	    console.log("adding ", "xy " + this.state.xyCounter);
+	    this.setState({
+	      items: this.state.items.concat({
+	        type: 2,
+	        i: "xy-" + this.state.xyCounter,
+	        x: this.state.items.length * 2 % (this.state.cols || 12),
+	        y: Infinity,
+	        w: 2,
+	        h: 2
+	      }),
+	      xyCounter: this.state.xyCounter + 1
+	    });
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  onRemoveItem(i) {
+	    console.log("removing", i);
+	    this.setState({ items: _lodash2.default.reject(this.state.items, { i: i }) });
+	  }
+	  onEditItem(i) {
+	    console.log("edit item: " + i);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(_AddController2.default, null),
+	          _react2.default.createElement(DeviceTable, { devices: this.state.devices, onDeviceSelect: this.onAddButton }),
+	          _react2.default.createElement(_Toast2.default, {
+	            showing: this.state.toastVisible, message: this.state.toastMessage,
+	            onDismiss: this.dismissToast, bsStyle: this.state.toastType
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.onAddSlider },
+	            'Add Slider'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.onAddXY },
+	            'Add X/Y Area'
+	          )
+	        ),
+	        _react2.default.createElement(_reactBootstrap.Col, { xs: 6, sm: 3, md: 2, lg: 1 }),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { xs: 6, sm: 3, md: 2, lg: 1 },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'pull-right', onClick: this.handleOnLock },
+	            lockIcon
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'pull-right', onClick: this.handleOnDownload },
+	            _react2.default.createElement(_fileDownload2.default, null)
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'pull-right', onClick: this.handleOnUpload },
+	            _react2.default.createElement(_fileUpload2.default, null)
+	          )
+	        )
+	      ),
+	      _react2.default.createElement(
+	        ResponsiveReactGridLayout,
+	        _extends({
+	          onBreakpointChange: this.onBreakpointChange,
+	          onLayoutChange: this.onLayoutChange,
+	          isDraggable: !this.state.lock,
+	          isResizable: !this.state.lock
+	        }, this.props),
+	        _lodash2.default.map(this.state.items, el => this.createElement(el))
+	      )
+	    );
+	  }
+	}
+	exports.default = DeviceMenu;
+	DeviceMenu.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+	DeviceMenu.propTypes = {
+	  location: _react2.default.PropTypes.object.isRequired,
+	  router: _react2.default.PropTypes.object
+	};
+	
+	DeviceMenu.contextTypes = {
+	  initialState: _react2.default.PropTypes.object
+	};
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(13);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(23);
+	
+	var _reactRouter = __webpack_require__(15);
+	
+	var _reactBootstrap = __webpack_require__(19);
+	
+	var _socket = __webpack_require__(51);
+	
+	var _socket2 = __webpack_require__(52);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var _React$PropTypes = _react2.default.PropTypes;
+	const string = _React$PropTypes.string,
+	      bool = _React$PropTypes.bool,
+	      object = _React$PropTypes.object;
+	
+	//const socket = SocketIOClient('http://localhost:3000');
+	let socket;
+	
+	class Diagnostics extends _react2.default.Component {
+	
+	  constructor(props) {
+	    super(props);
+	    this.state = {
+	      text: ''
+	      //this.sendSocketData = this.sendSocketData.bind(this); 
+	    };
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on(this.props.location.pathname, mesg => {
+	      this.setState({ text: mesg });
+	    });
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  sendSocketData() {
+	    console.log("socket button pressed");
+	    socket.emit('diagnostics-button', 'Hello world!');
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.text
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { onClick: this.sendSocketData },
+	        'Send Socket Data'
+	      )
+	    );
+	  }
+	}
+	exports.default = Diagnostics;
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
+
+	module.exports = require("socket.io-react");
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports) {
+
+	module.exports = require("socket.io-client");
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(13);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(23);
+	
+	var _reactRouter = __webpack_require__(15);
+	
+	var _reactBootstrap = __webpack_require__(19);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4263,7 +4665,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 49 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4272,7 +4674,7 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(12);
+	var _react = __webpack_require__(13);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -4299,7 +4701,7 @@
 	};
 
 /***/ }),
-/* 50 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -4330,7 +4732,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(51)(updatedModules, updatedModules);
+					__webpack_require__(56)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -4343,7 +4745,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 51 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	/*

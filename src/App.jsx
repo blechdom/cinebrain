@@ -2,8 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import IssueAddNavItem from './IssueAddNavItem.jsx';
-import DeviceAddNavItem from './DeviceAddNavItem.jsx';
+import MdMoreVert from 'react-icons/lib/md/more-vert';
 
 const Header = () => (
   <Navbar fluid>
@@ -11,8 +10,11 @@ const Header = () => (
       <Navbar.Brand>Cinebrain</Navbar.Brand>
     </Navbar.Header>
     <Nav>
-      <LinkContainer to="/controllers">
-        <NavItem>Controllers</NavItem>
+	<LinkContainer to="/device_menu">
+        <NavItem>DeviceMenu</NavItem>
+      </LinkContainer>
+      <LinkContainer to="/randomizer">
+        <NavItem>Randomizer</NavItem>
       </LinkContainer>
        <LinkContainer to="/new_controllers">
         <NavItem>New Controllers</NavItem>
@@ -23,11 +25,12 @@ const Header = () => (
  <LinkContainer to="/issues">
         <NavItem>Issues</NavItem>
       </LinkContainer>
+ <LinkContainer to="/diagnostics">
+        <NavItem>Diagnostics</NavItem>
+      </LinkContainer>
     </Nav>
     <Nav pullRight>
-      <IssueAddNavItem />
-	<DeviceAddNavItem />
-      <NavDropdown id="user-dropdown" title={<Glyphicon glyph="option-horizontal" />} noCaret>
+      <NavDropdown id="user-dropdown" title={<MdMoreVert size={18} />} noCaret>
 		<LinkContainer to="/help">
 			<MenuItem>Help</MenuItem>
       		</LinkContainer>

@@ -6,10 +6,13 @@ import Device from './device.js';
 import renderedPageRouter from './renderedPageRouter.jsx';
 
 const app = express();
+
 app.use(express.static('static'));
 app.use(bodyParser.json());
 
 let db;
+
+
 
 app.get('/api/issues', (req, res) => {
   const filter = {};
