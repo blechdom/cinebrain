@@ -30,6 +30,10 @@
     "express": "^4.14.0",
     "http": "0.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "lodash.map": "^4.6.0",
+    "lodash.random": "^3.2.0",
+    "lodash.range": "^3.2.0",
+    "lodash.result": "^4.5.2",
     "mongodb": "^2.2.6",
     "node-sass": "^4.7.2",
     "object-assign": "^4.1.0",
@@ -44,7 +48,9 @@
     "socket.io": "^2.0.4",
     "socket.io-client": "^1.4.5",
     "socket.io-react": "^1.2.0",
-    "source-map-support": "^0.4.2"
+    "source-map-support": "^0.4.2",
+    "telnet-client": "^0.15.5",
+    "telnet-stream": "^1.0.4"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",

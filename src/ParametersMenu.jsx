@@ -24,7 +24,7 @@ export default class ParametersMenu extends React.Component {
     };
   this.showParameters = this.showParameters.bind(this);
   this.hideParameters = this.hideParameters.bind(this);
-  this.parameterOptions = [<option key="0" value="0">Select a Parameter</option>]
+  this.parameterOptions = [<option key="0" value="play 1-0 amb.mp4">Select a Parameter</option>]
   this.onParameterSelect = this.onParameterSelect.bind(this);
 }
 showParameters(){

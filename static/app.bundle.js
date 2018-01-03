@@ -41096,7 +41096,7 @@ webpackJsonp([0],{
 	    _this.hideParameters = _this.hideParameters.bind(_this);
 	    _this.parameterOptions = [_react2.default.createElement(
 	      'option',
-	      { key: '0', value: '0' },
+	      { key: '0', value: 'play 1-0 amb.mp4' },
 	      'Select a Parameter'
 	    )];
 	    _this.onParameterSelect = _this.onParameterSelect.bind(_this);
