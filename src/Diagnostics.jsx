@@ -5,7 +5,6 @@ import { Button, Glyphicon, Table, Panel } from 'react-bootstrap';
 import { SocketProvider } from 'socket.io-react';
 const {string, bool, object} = React.PropTypes;
 import SocketIOClient from 'socket.io-client';
-//const socket = SocketIOClient('http://localhost:3000');
 let socket;
 
 export default class Diagnostics extends React.Component {
@@ -15,7 +14,6 @@ constructor(props){
 	this.state = {
 		text: '',
 	}
-    	//this.sendSocketData = this.sendSocketData.bind(this); 
 }
 componentDidMount() {
 	socket = SocketIOClient();

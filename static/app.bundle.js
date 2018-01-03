@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(929);
+	var _ContextWrapper = __webpack_require__(931);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -92,15 +92,15 @@ webpackJsonp([0],{
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _DeviceMenu = __webpack_require__(871);
+	var _ControlInterface = __webpack_require__(871);
 	
-	var _DeviceMenu2 = _interopRequireDefault(_DeviceMenu);
+	var _ControlInterface2 = _interopRequireDefault(_ControlInterface);
 	
-	var _Diagnostics = __webpack_require__(872);
+	var _Diagnostics = __webpack_require__(926);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(928);
+	var _Help = __webpack_require__(930);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -118,7 +118,7 @@ webpackJsonp([0],{
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/controllers' }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'device_menu', component: _DeviceMenu2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'randomizer', component: _ControllersSetup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues', component: (0, _reactRouter.withRouter)(_IssueList2.default) }),
@@ -175,11 +175,11 @@ webpackJsonp([0],{
 	      null,
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/device_menu' },
+	        { to: '/control_interface' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'DeviceMenu'
+	          'Control Interface'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -32243,15 +32243,93 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(326);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(844);
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _DeviceMenu = __webpack_require__(872);
+	
+	var _DeviceMenu2 = _interopRequireDefault(_DeviceMenu);
+	
+	var _ParametersMenu = __webpack_require__(925);
+	
+	var _ParametersMenu2 = _interopRequireDefault(_ParametersMenu);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ControlInterface = function (_React$Component) {
+	  _inherits(ControlInterface, _React$Component);
+	
+	  function ControlInterface(props, context) {
+	    _classCallCheck(this, ControlInterface);
+	
+	    return _possibleConstructorReturn(this, (ControlInterface.__proto__ || Object.getPrototypeOf(ControlInterface)).call(this, props, context));
+	  }
+	
+	  _createClass(ControlInterface, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            null,
+	            _react2.default.createElement(_DeviceMenu2.default, { location: this.props.location })
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            null,
+	            _react2.default.createElement(_ParametersMenu2.default, { location: this.props.location })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ControlInterface;
+	}(_react2.default.Component);
+	
+	exports.default = ControlInterface;
+	
+	ControlInterface.propTypes = {
+	  location: _react2.default.PropTypes.object.isRequired,
+	  router: _react2.default.PropTypes.object
+	};
+	
+	ControlInterface.contextTypes = {
+	  initialState: _react2.default.PropTypes.object
+	};
+
+/***/ }),
+
+/***/ 872:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
 	
 	var _reactDom = __webpack_require__(362);
 	
@@ -32265,37 +32343,9 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _lock = __webpack_require__(864);
+	var _socket = __webpack_require__(873);
 	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(865);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _fileUpload = __webpack_require__(866);
-	
-	var _fileUpload2 = _interopRequireDefault(_fileUpload);
-	
-	var _fileDownload = __webpack_require__(867);
-	
-	var _fileDownload2 = _interopRequireDefault(_fileDownload);
-	
-	var _edit = __webpack_require__(868);
-	
-	var _edit2 = _interopRequireDefault(_edit);
-	
-	var _close = __webpack_require__(869);
-	
-	var _close2 = _interopRequireDefault(_close);
-	
-	var _Toast = __webpack_require__(836);
-	
-	var _Toast2 = _interopRequireDefault(_Toast);
-	
-	var _AddController = __webpack_require__(870);
-	
-	var _AddController2 = _interopRequireDefault(_AddController);
+	var _socket2 = _interopRequireDefault(_socket);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -32305,37 +32355,7 @@ webpackJsonp([0],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	
-	var DeviceRow = function DeviceRow(props) {
-	  return _react2.default.createElement(
-	    'option',
-	    { value: props.device.device_number },
-	    props.device.name
-	  );
-	};
-	
-	DeviceRow.propTypes = {
-	  device: _react2.default.PropTypes.object.isRequired
-	};
-	
-	function DeviceTable(props) {
-	  var deviceRows = props.devices.map(function (device) {
-	    return _react2.default.createElement(DeviceRow, { key: device._id, device: device });
-	  });
-	  return _react2.default.createElement(
-	    _reactBootstrap.FormControl,
-	    { componentClass: 'select',
-	      onChange: props.onDeviceSelect },
-	    deviceRows
-	  );
-	}
-	
-	DeviceTable.propTypes = {
-	  devices: _react2.default.PropTypes.array.isRequired,
-	  onDeviceSelect: _react2.default.PropTypes.func.isRequired
-	};
+	var socket = void 0;
 	
 	var DeviceMenu = function (_React$Component) {
 	  _inherits(DeviceMenu, _React$Component);
@@ -32364,335 +32384,68 @@ webpackJsonp([0],{
 	
 	    var devices = context.initialState.DeviceMenu ? context.initialState.DeviceMenu.records : [];
 	    _this.state = {
-	      devices: devices,
-	      toastVisible: false,
-	      toastMessage: '',
-	      toastType: 'success',
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      buttonCounter: 0,
-	      sliderCounter: 0,
-	      xyCounter: 0,
-	      lock: true
+	      devices: devices
 	    };
-	    _this.onAddButton = _this.onAddButton.bind(_this);
-	    _this.onAddSlider = _this.onAddSlider.bind(_this);
-	    _this.onAddXY = _this.onAddXY.bind(_this);
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.onEditItem = _this.onEditItem.bind(_this);
-	    _this.handleSliderChange = _this.handleSliderChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleOnDownload = _this.handleOnDownload.bind(_this);
-	    _this.handleOnUpload = _this.handleOnUpload.bind(_this);
-	    _this.showError = _this.showError.bind(_this);
-	    _this.dismissToast = _this.dismissToast.bind(_this);
+	    _this.deviceOptions = [_react2.default.createElement(
+	      'option',
+	      { key: '0', value: '0' },
+	      'Select a Device'
+	    )];
+	    _this.onDeviceSelect = _this.onDeviceSelect.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(DeviceMenu, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      this.loadData();
+	      socket = (0, _socket2.default)();
+	      socket.on(this.props.location.pathname, function (mesg) {
+	        _this2.setState({ text: mesg });
+	      });
 	    }
 	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(prevProps) {
-	      var oldQuery = prevProps.location.query;
-	      var newQuery = this.props.location.query;
-	      if (oldQuery.status === newQuery.status && oldQuery.effort_gte === newQuery.effort_gte && oldQuery.effort_lte === newQuery.effort_lte) {
-	        return;
-	      }
-	      this.loadData();
-	    }
-	  }, {
-	    key: 'showError',
-	    value: function showError(message) {
-	      this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
-	    }
-	  }, {
-	    key: 'dismissToast',
-	    value: function dismissToast() {
-	      this.setState({ toastVisible: false });
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
 	    }
 	  }, {
 	    key: 'loadData',
 	    value: function loadData() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      DeviceMenu.dataFetcher({ location: this.props.location }).then(function (data) {
 	        var devices = data.DeviceMenu.records;
 	        devices.forEach(function (device) {
-	          device.created = new Date(device.created);
-	          if (device.completionDate) {
-	            device.completionDate = new Date(device.completionDate);
-	          }
+	          _this3.deviceOptions.push(_react2.default.createElement(
+	            'option',
+	            { key: device._id, value: device.device_number },
+	            device.name
+	          ));
 	        });
-	        _this2.setState({ devices: devices });
+	        _this3.setState({ devices: devices });
 	      }).catch(function (err) {
-	        _this2.showError('Error in fetching data from server: ' + err);
+	        _this3.showError('Error in fetching data from server: ' + err);
 	      });
 	    }
 	  }, {
-	    key: 'handleSliderChange',
-	    value: function handleSliderChange(event) {
-	      //not updating correct object
-	      this.setState({ sliderValue: event.target.value });
-	      console.log(event.target.id + ': ' + this.state.sliderValue);
-	    }
-	  }, {
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'handleOnDownload',
-	    value: function handleOnDownload() {
-	      console.log("download file with data to be loaded again later ");
-	    }
-	  }, {
-	    key: 'handleOnUpload',
-	    value: function handleOnUpload() {
-	      console.log("upload previously saved file to use");
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var removeStyle = {
-	        position: "absolute",
-	        right: "2px",
-	        top: 0,
-	        cursor: "pointer"
-	      };
-	      var editStyle = {
-	        position: "absolute",
-	        right: "2px",
-	        bottom: 0,
-	        cursor: "pointer"
-	      };
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#EEE"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var typeCode = _react2.default.createElement(
-	        'button',
-	        null,
-	        i
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        typeCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            i
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliderChange })
-	          )
-	        );
-	      } else if (el.type == 2) {
-	        //type is xy area
-	        typeCode = _react2.default.createElement(
-	          'span',
-	          { className: 'text' },
-	          i
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        typeCode,
-	        _react2.default.createElement(
-	          'span',
-	          { style: lockStyle },
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'edit',
-	              onClick: this.onEditItem.bind(this, i) },
-	            _react2.default.createElement(_edit2.default, null)
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'remove',
-	              onClick: this.onRemoveItem.bind(this, i) },
-	            _react2.default.createElement(_close2.default, null)
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'onAddButton',
-	    value: function onAddButton() {
-	
-	      console.log("adding ", "button " + this.state.buttonCounter);
-	      this.setState({
-	        items: this.state.items.concat({
-	          type: 0,
-	          i: "button-" + this.state.buttonCounter,
-	          x: this.state.items.length * 2 % (this.state.cols || 12),
-	          y: Infinity,
-	          w: 2,
-	          h: 2
-	        }),
-	        buttonCounter: this.state.buttonCounter + 1
-	      });
-	    }
-	  }, {
-	    key: 'onAddSlider',
-	    value: function onAddSlider() {
-	      console.log("adding ", "slider " + this.state.sliderCounter);
-	      this.setState({
-	        items: this.state.items.concat({
-	          type: 1,
-	          i: "slider-" + this.state.sliderCounter,
-	          x: this.state.items.length * 2 % (this.state.cols || 12),
-	          y: Infinity,
-	          w: 2,
-	          h: 2
-	        }),
-	        sliderCounter: this.state.sliderCounter + 1
-	      });
-	    }
-	  }, {
-	    key: 'onAddXY',
-	    value: function onAddXY() {
-	      console.log("adding ", "xy " + this.state.xyCounter);
-	      this.setState({
-	        items: this.state.items.concat({
-	          type: 2,
-	          i: "xy-" + this.state.xyCounter,
-	          x: this.state.items.length * 2 % (this.state.cols || 12),
-	          y: Infinity,
-	          w: 2,
-	          h: 2
-	        }),
-	        xyCounter: this.state.xyCounter + 1
-	      });
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'onRemoveItem',
-	    value: function onRemoveItem(i) {
-	      console.log("removing", i);
-	      this.setState({ items: _lodash2.default.reject(this.state.items, { i: i }) });
-	    }
-	  }, {
-	    key: 'onEditItem',
-	    value: function onEditItem(i) {
-	      console.log("edit item: " + i);
+	    key: 'onDeviceSelect',
+	    value: function onDeviceSelect(event) {
+	      console.log("device #" + event.target.value);
+	      socket.emit('device-menu', event.target.value);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
-	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { xs: 6, sm: 3, md: 2, lg: 1 },
-	            _react2.default.createElement(_AddController2.default, null),
-	            _react2.default.createElement(DeviceTable, { devices: this.state.devices, onDeviceSelect: this.onAddButton }),
-	            _react2.default.createElement(_Toast2.default, {
-	              showing: this.state.toastVisible, message: this.state.toastMessage,
-	              onDismiss: this.dismissToast, bsStyle: this.state.toastType
-	            })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { xs: 6, sm: 3, md: 2, lg: 1 },
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.onAddSlider },
-	              'Add Slider'
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.onAddXY },
-	              'Add X/Y Area'
-	            )
-	          ),
-	          _react2.default.createElement(_reactBootstrap.Col, { xs: 6, sm: 3, md: 2, lg: 1 }),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { xs: 6, sm: 3, md: 2, lg: 1 },
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'pull-right', onClick: this.handleOnLock },
-	              lockIcon
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'pull-right', onClick: this.handleOnDownload },
-	              _react2.default.createElement(_fileDownload2.default, null)
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'pull-right', onClick: this.handleOnUpload },
-	              _react2.default.createElement(_fileUpload2.default, null)
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          ResponsiveReactGridLayout,
-	          _extends({
-	            onBreakpointChange: this.onBreakpointChange,
-	            onLayoutChange: this.onLayoutChange,
-	            isDraggable: !this.state.lock,
-	            isResizable: !this.state.lock
-	          }, this.props),
-	          _lodash2.default.map(this.state.items, function (el) {
-	            return _this3.createElement(el);
-	          })
+	          _reactBootstrap.FormControl,
+	          { componentClass: 'select', onChange: this.onDeviceSelect },
+	          this.deviceOptions
 	        )
 	      );
 	    }
@@ -32703,11 +32456,6 @@ webpackJsonp([0],{
 	
 	exports.default = DeviceMenu;
 	
-	DeviceMenu.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
 	DeviceMenu.propTypes = {
 	  location: _react2.default.PropTypes.object.isRequired,
 	  router: _react2.default.PropTypes.object
@@ -32719,240 +32467,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 872:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(832);
-	
-	var _reactRouter = __webpack_require__(509);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _socket = __webpack_require__(873);
-	
-	var _socket2 = __webpack_require__(876);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _React$PropTypes = _react2.default.PropTypes,
-	    string = _React$PropTypes.string,
-	    bool = _React$PropTypes.bool,
-	    object = _React$PropTypes.object;
-	
-	//const socket = SocketIOClient('http://localhost:3000');
-	var socket = void 0;
-	
-	var Diagnostics = function (_React$Component) {
-	  _inherits(Diagnostics, _React$Component);
-	
-	  function Diagnostics(props) {
-	    _classCallCheck(this, Diagnostics);
-	
-	    var _this = _possibleConstructorReturn(this, (Diagnostics.__proto__ || Object.getPrototypeOf(Diagnostics)).call(this, props));
-	
-	    _this.state = {
-	      text: ''
-	      //this.sendSocketData = this.sendSocketData.bind(this); 
-	    };return _this;
-	  }
-	
-	  _createClass(Diagnostics, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on(this.props.location.pathname, function (mesg) {
-	        _this2.setState({ text: mesg });
-	      });
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'sendSocketData',
-	    value: function sendSocketData() {
-	      console.log("socket button pressed");
-	      socket.emit('diagnostics-button', 'Hello world!');
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.text
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { onClick: this.sendSocketData },
-	          'Send Socket Data'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Diagnostics;
-	}(_react2.default.Component);
-	
-	exports.default = Diagnostics;
-
-/***/ }),
-
 /***/ 873:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.socketConnect = exports.SocketProvider = undefined;
-	
-	var _SocketProvider = __webpack_require__(874);
-	
-	var _SocketProvider2 = _interopRequireDefault(_SocketProvider);
-	
-	var _socketConnect = __webpack_require__(875);
-	
-	var _socketConnect2 = _interopRequireDefault(_socketConnect);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.SocketProvider = _SocketProvider2.default;
-	exports.socketConnect = _socketConnect2.default;
-
-/***/ }),
-
-/***/ 874:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(661);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SocketProvider = function (_Component) {
-	  _inherits(SocketProvider, _Component);
-	
-	  function SocketProvider() {
-	    _classCallCheck(this, SocketProvider);
-	
-	    return _possibleConstructorReturn(this, (SocketProvider.__proto__ || Object.getPrototypeOf(SocketProvider)).apply(this, arguments));
-	  }
-	
-	  _createClass(SocketProvider, [{
-	    key: 'getChildContext',
-	    value: function getChildContext() {
-	      return {
-	        socket: this.props.socket
-	      };
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return this.props.children;
-	    }
-	  }]);
-	
-	  return SocketProvider;
-	}(_react.Component);
-	
-	SocketProvider.propTypes = {
-	  socket: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object])
-	};
-	SocketProvider.defaultProps = {
-	  socket: false
-	};
-	SocketProvider.childContextTypes = {
-	  socket: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object])
-	};
-	exports.default = SocketProvider;
-
-/***/ }),
-
-/***/ 875:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(661);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function socketConnect(Target) {
-	  function SocketConnect(props, context) {
-	    return (0, _react.createElement)(Target, Object.assign({}, props, {
-	      socket: context.socket
-	    }));
-	  }
-	
-	  SocketConnect.contextTypes = {
-	    socket: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object])
-	  };
-	
-	  return SocketConnect;
-	}
-	
-	exports.default = socketConnect;
-
-/***/ }),
-
-/***/ 876:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -32960,10 +32475,10 @@ webpackJsonp([0],{
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(877);
-	var parser = __webpack_require__(882);
-	var Manager = __webpack_require__(892);
-	var debug = __webpack_require__(879)('socket.io-client');
+	var url = __webpack_require__(874);
+	var parser = __webpack_require__(879);
+	var Manager = __webpack_require__(889);
+	var debug = __webpack_require__(876)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -33062,13 +32577,13 @@ webpackJsonp([0],{
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(892);
-	exports.Socket = __webpack_require__(923);
+	exports.Manager = __webpack_require__(889);
+	exports.Socket = __webpack_require__(920);
 
 
 /***/ }),
 
-/***/ 877:
+/***/ 874:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -33076,8 +32591,8 @@ webpackJsonp([0],{
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(878);
-	var debug = __webpack_require__(879)('socket.io-client:url');
+	var parseuri = __webpack_require__(875);
+	var debug = __webpack_require__(876)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -33151,7 +32666,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 878:
+/***/ 875:
 /***/ (function(module, exports) {
 
 	/**
@@ -33197,7 +32712,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 879:
+/***/ 876:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -33207,7 +32722,7 @@ webpackJsonp([0],{
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(880);
+	exports = module.exports = __webpack_require__(877);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -33382,7 +32897,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 880:
+/***/ 877:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -33398,7 +32913,7 @@ webpackJsonp([0],{
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(881);
+	exports.humanize = __webpack_require__(878);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -33589,7 +33104,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 881:
+/***/ 878:
 /***/ (function(module, exports) {
 
 	/**
@@ -33745,7 +33260,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 882:
+/***/ 879:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -33753,11 +33268,11 @@ webpackJsonp([0],{
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(883)('socket.io-parser');
-	var json = __webpack_require__(886);
-	var Emitter = __webpack_require__(888);
-	var binary = __webpack_require__(889);
-	var isBuf = __webpack_require__(891);
+	var debug = __webpack_require__(880)('socket.io-parser');
+	var json = __webpack_require__(883);
+	var Emitter = __webpack_require__(885);
+	var binary = __webpack_require__(886);
+	var isBuf = __webpack_require__(888);
 	
 	/**
 	 * Protocol version.
@@ -34156,7 +33671,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 883:
+/***/ 880:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -34166,7 +33681,7 @@ webpackJsonp([0],{
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(884);
+	exports = module.exports = __webpack_require__(881);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -34331,7 +33846,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 884:
+/***/ 881:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -34347,7 +33862,7 @@ webpackJsonp([0],{
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(885);
+	exports.humanize = __webpack_require__(882);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -34535,7 +34050,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 885:
+/***/ 882:
 /***/ (function(module, exports) {
 
 	/**
@@ -34667,14 +34182,14 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 886:
+/***/ 883:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(887);
+	  var isLoader = "function" === "function" && __webpack_require__(884);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -35577,7 +35092,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 887:
+/***/ 884:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -35586,7 +35101,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 888:
+/***/ 885:
 /***/ (function(module, exports) {
 
 	
@@ -35757,7 +35272,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 889:
+/***/ 886:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -35766,8 +35281,8 @@ webpackJsonp([0],{
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(890);
-	var isBuf = __webpack_require__(891);
+	var isArray = __webpack_require__(887);
+	var isBuf = __webpack_require__(888);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -35906,7 +35421,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 890:
+/***/ 887:
 /***/ (function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -35916,7 +35431,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 891:
+/***/ 888:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -35937,7 +35452,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 892:
+/***/ 889:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -35945,15 +35460,15 @@ webpackJsonp([0],{
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(893);
-	var Socket = __webpack_require__(923);
-	var Emitter = __webpack_require__(911);
-	var parser = __webpack_require__(882);
-	var on = __webpack_require__(925);
-	var bind = __webpack_require__(926);
-	var debug = __webpack_require__(879)('socket.io-client:manager');
-	var indexOf = __webpack_require__(921);
-	var Backoff = __webpack_require__(927);
+	var eio = __webpack_require__(890);
+	var Socket = __webpack_require__(920);
+	var Emitter = __webpack_require__(908);
+	var parser = __webpack_require__(879);
+	var on = __webpack_require__(922);
+	var bind = __webpack_require__(923);
+	var debug = __webpack_require__(876)('socket.io-client:manager');
+	var indexOf = __webpack_require__(918);
+	var Backoff = __webpack_require__(924);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -36504,20 +36019,20 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 893:
+/***/ 890:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(894);
+	module.exports = __webpack_require__(891);
 
 
 /***/ }),
 
-/***/ 894:
+/***/ 891:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(895);
+	module.exports = __webpack_require__(892);
 	
 	/**
 	 * Exports parser
@@ -36525,26 +36040,26 @@ webpackJsonp([0],{
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(902);
+	module.exports.parser = __webpack_require__(899);
 
 
 /***/ }),
 
-/***/ 895:
+/***/ 892:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(896);
-	var Emitter = __webpack_require__(911);
-	var debug = __webpack_require__(915)('engine.io-client:socket');
-	var index = __webpack_require__(921);
-	var parser = __webpack_require__(902);
-	var parseuri = __webpack_require__(878);
-	var parsejson = __webpack_require__(922);
-	var parseqs = __webpack_require__(912);
+	var transports = __webpack_require__(893);
+	var Emitter = __webpack_require__(908);
+	var debug = __webpack_require__(912)('engine.io-client:socket');
+	var index = __webpack_require__(918);
+	var parser = __webpack_require__(899);
+	var parseuri = __webpack_require__(875);
+	var parsejson = __webpack_require__(919);
+	var parseqs = __webpack_require__(909);
 	
 	/**
 	 * Module exports.
@@ -36676,9 +36191,9 @@ webpackJsonp([0],{
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(901);
-	Socket.transports = __webpack_require__(896);
-	Socket.parser = __webpack_require__(902);
+	Socket.Transport = __webpack_require__(898);
+	Socket.transports = __webpack_require__(893);
+	Socket.parser = __webpack_require__(899);
 	
 	/**
 	 * Creates transport of the given type.
@@ -37276,17 +36791,17 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 896:
+/***/ 893:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(897);
-	var XHR = __webpack_require__(899);
-	var JSONP = __webpack_require__(918);
-	var websocket = __webpack_require__(919);
+	var XMLHttpRequest = __webpack_require__(894);
+	var XHR = __webpack_require__(896);
+	var JSONP = __webpack_require__(915);
+	var websocket = __webpack_require__(916);
 	
 	/**
 	 * Export transports.
@@ -37337,12 +36852,12 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 897:
+/***/ 894:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(898);
+	var hasCORS = __webpack_require__(895);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -37382,7 +36897,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 898:
+/***/ 895:
 /***/ (function(module, exports) {
 
 	
@@ -37406,18 +36921,18 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 899:
+/***/ 896:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(897);
-	var Polling = __webpack_require__(900);
-	var Emitter = __webpack_require__(911);
-	var inherit = __webpack_require__(913);
-	var debug = __webpack_require__(915)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(894);
+	var Polling = __webpack_require__(897);
+	var Emitter = __webpack_require__(908);
+	var inherit = __webpack_require__(910);
+	var debug = __webpack_require__(912)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -37838,19 +37353,19 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 900:
+/***/ 897:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(901);
-	var parseqs = __webpack_require__(912);
-	var parser = __webpack_require__(902);
-	var inherit = __webpack_require__(913);
-	var yeast = __webpack_require__(914);
-	var debug = __webpack_require__(915)('engine.io-client:polling');
+	var Transport = __webpack_require__(898);
+	var parseqs = __webpack_require__(909);
+	var parser = __webpack_require__(899);
+	var inherit = __webpack_require__(910);
+	var yeast = __webpack_require__(911);
+	var debug = __webpack_require__(912)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -37863,7 +37378,7 @@ webpackJsonp([0],{
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(897);
+	  var XMLHttpRequest = __webpack_require__(894);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -38090,15 +37605,15 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 901:
+/***/ 898:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(902);
-	var Emitter = __webpack_require__(911);
+	var parser = __webpack_require__(899);
+	var Emitter = __webpack_require__(908);
 	
 	/**
 	 * Module exports.
@@ -38254,22 +37769,22 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 902:
+/***/ 899:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(903);
-	var hasBinary = __webpack_require__(904);
-	var sliceBuffer = __webpack_require__(906);
-	var after = __webpack_require__(907);
-	var utf8 = __webpack_require__(908);
+	var keys = __webpack_require__(900);
+	var hasBinary = __webpack_require__(901);
+	var sliceBuffer = __webpack_require__(903);
+	var after = __webpack_require__(904);
+	var utf8 = __webpack_require__(905);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(909);
+	  base64encoder = __webpack_require__(906);
 	}
 	
 	/**
@@ -38327,7 +37842,7 @@ webpackJsonp([0],{
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(910);
+	var Blob = __webpack_require__(907);
 	
 	/**
 	 * Encodes a packet.
@@ -38871,7 +38386,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 903:
+/***/ 900:
 /***/ (function(module, exports) {
 
 	
@@ -38897,7 +38412,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 904:
+/***/ 901:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -38905,7 +38420,7 @@ webpackJsonp([0],{
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(905);
+	var isArray = __webpack_require__(902);
 	
 	/**
 	 * Module exports.
@@ -38964,7 +38479,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 905:
+/***/ 902:
 /***/ (function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -38974,7 +38489,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 906:
+/***/ 903:
 /***/ (function(module, exports) {
 
 	/**
@@ -39010,7 +38525,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 907:
+/***/ 904:
 /***/ (function(module, exports) {
 
 	module.exports = after
@@ -39045,7 +38560,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 908:
+/***/ 905:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -39285,7 +38800,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 909:
+/***/ 906:
 /***/ (function(module, exports) {
 
 	/*
@@ -39359,7 +38874,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 910:
+/***/ 907:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -39463,7 +38978,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 911:
+/***/ 908:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -39633,7 +39148,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 912:
+/***/ 909:
 /***/ (function(module, exports) {
 
 	/**
@@ -39677,7 +39192,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 913:
+/***/ 910:
 /***/ (function(module, exports) {
 
 	
@@ -39690,7 +39205,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 914:
+/***/ 911:
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -39765,7 +39280,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 915:
+/***/ 912:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -39775,7 +39290,7 @@ webpackJsonp([0],{
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(916);
+	exports = module.exports = __webpack_require__(913);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -39950,7 +39465,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 916:
+/***/ 913:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -39966,7 +39481,7 @@ webpackJsonp([0],{
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(917);
+	exports.humanize = __webpack_require__(914);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -40157,7 +39672,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 917:
+/***/ 914:
 /***/ (function(module, exports) {
 
 	/**
@@ -40313,7 +39828,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 918:
+/***/ 915:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -40321,8 +39836,8 @@ webpackJsonp([0],{
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(900);
-	var inherit = __webpack_require__(913);
+	var Polling = __webpack_require__(897);
+	var inherit = __webpack_require__(910);
 	
 	/**
 	 * Module exports.
@@ -40552,24 +40067,24 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 919:
+/***/ 916:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(901);
-	var parser = __webpack_require__(902);
-	var parseqs = __webpack_require__(912);
-	var inherit = __webpack_require__(913);
-	var yeast = __webpack_require__(914);
-	var debug = __webpack_require__(915)('engine.io-client:websocket');
+	var Transport = __webpack_require__(898);
+	var parser = __webpack_require__(899);
+	var parseqs = __webpack_require__(909);
+	var inherit = __webpack_require__(910);
+	var yeast = __webpack_require__(911);
+	var debug = __webpack_require__(912)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(920);
+	    NodeWebSocket = __webpack_require__(917);
 	  } catch (e) { }
 	}
 	
@@ -40845,14 +40360,14 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 920:
+/***/ 917:
 /***/ (function(module, exports) {
 
 	/* (ignored) */
 
 /***/ }),
 
-/***/ 921:
+/***/ 918:
 /***/ (function(module, exports) {
 
 	
@@ -40868,7 +40383,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 922:
+/***/ 919:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -40907,7 +40422,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 923:
+/***/ 920:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -40915,13 +40430,13 @@ webpackJsonp([0],{
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(882);
-	var Emitter = __webpack_require__(911);
-	var toArray = __webpack_require__(924);
-	var on = __webpack_require__(925);
-	var bind = __webpack_require__(926);
-	var debug = __webpack_require__(879)('socket.io-client:socket');
-	var hasBin = __webpack_require__(904);
+	var parser = __webpack_require__(879);
+	var Emitter = __webpack_require__(908);
+	var toArray = __webpack_require__(921);
+	var on = __webpack_require__(922);
+	var bind = __webpack_require__(923);
+	var debug = __webpack_require__(876)('socket.io-client:socket');
+	var hasBin = __webpack_require__(901);
 	
 	/**
 	 * Module exports.
@@ -41333,7 +40848,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 924:
+/***/ 921:
 /***/ (function(module, exports) {
 
 	module.exports = toArray
@@ -41353,7 +40868,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 925:
+/***/ 922:
 /***/ (function(module, exports) {
 
 	
@@ -41384,7 +40899,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 926:
+/***/ 923:
 /***/ (function(module, exports) {
 
 	/**
@@ -41414,7 +40929,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 927:
+/***/ 924:
 /***/ (function(module, exports) {
 
 	
@@ -41506,7 +41021,407 @@ webpackJsonp([0],{
 
 /***/ }),
 
+/***/ 925:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(863);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _socket = __webpack_require__(873);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var socket = void 0;
+	
+	var ParametersMenu = function (_React$Component) {
+	  _inherits(ParametersMenu, _React$Component);
+	
+	  _createClass(ParametersMenu, null, [{
+	    key: 'dataFetcher',
+	    value: function dataFetcher(_ref) {
+	      var urlBase = _ref.urlBase,
+	          location = _ref.location;
+	
+	      return fetch((urlBase || '') + '/api/device_1_casparcg' + location.search).then(function (response) {
+	        if (!response.ok) return response.json().then(function (error) {
+	          return Promise.reject(error);
+	        });
+	        return response.json().then(function (data) {
+	          return { ParametersMenu: data };
+	        });
+	      });
+	    }
+	  }]);
+	
+	  function ParametersMenu(props, context) {
+	    _classCallCheck(this, ParametersMenu);
+	
+	    var _this = _possibleConstructorReturn(this, (ParametersMenu.__proto__ || Object.getPrototypeOf(ParametersMenu)).call(this, props, context));
+	
+	    var parameters = context.initialState.ParametersMenu ? context.initialState.ParametersMenu.records : [];
+	    _this.state = {
+	      parameters: parameters,
+	      showing: false
+	    };
+	    _this.showParameters = _this.showParameters.bind(_this);
+	    _this.hideParameters = _this.hideParameters.bind(_this);
+	    _this.parameterOptions = [_react2.default.createElement(
+	      'option',
+	      { key: '0', value: '0' },
+	      'Select a Parameter'
+	    )];
+	    _this.onParameterSelect = _this.onParameterSelect.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ParametersMenu, [{
+	    key: 'showParameters',
+	    value: function showParameters() {
+	      this.setState({ showing: true });
+	    }
+	  }, {
+	    key: 'hideParameters',
+	    value: function hideParameters() {
+	      this.setState({ showing: false });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      this.loadData();
+	      socket = (0, _socket2.default)();
+	      socket.on(this.props.location.pathname, function (mesg) {
+	        _this2.setState({ text: mesg });
+	      });
+	      socket.on("show-parameters", function (mesg) {
+	        console.log("show params " + mesg);
+	        _this2.setState({ showing: true });
+	      });
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'loadData',
+	    value: function loadData() {
+	      var _this3 = this;
+	
+	      ParametersMenu.dataFetcher({ location: this.props.location }).then(function (data) {
+	        var parameters = data.ParametersMenu.records;
+	        parameters.forEach(function (parameter) {
+	          _this3.parameterOptions.push(_react2.default.createElement(
+	            'option',
+	            { key: parameter.notes, value: parameter.notes },
+	            parameter.command
+	          ));
+	        });
+	        _this3.setState({ parameters: parameters });
+	      }).catch(function (err) {
+	        _this3.showError('Error in fetching data from server: ' + err);
+	      });
+	    }
+	  }, {
+	    key: 'onParameterSelect',
+	    value: function onParameterSelect(event) {
+	      console.log("parameter #" + event.target.value);
+	      socket.emit('parameter-menu', event.target.value);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.showing ? _react2.default.createElement(
+	          _reactBootstrap.FormControl,
+	          { componentClass: 'select', onChange: this.onParameterSelect },
+	          this.parameterOptions
+	        ) : null
+	      );
+	    }
+	  }]);
+	
+	  return ParametersMenu;
+	}(_react2.default.Component);
+	
+	exports.default = ParametersMenu;
+	
+	ParametersMenu.propTypes = {
+	  location: _react2.default.PropTypes.object.isRequired,
+	  router: _react2.default.PropTypes.object
+	};
+	
+	ParametersMenu.contextTypes = {
+	  initialState: _react2.default.PropTypes.object
+	};
+
+/***/ }),
+
+/***/ 926:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(832);
+	
+	var _reactRouter = __webpack_require__(509);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _socket = __webpack_require__(927);
+	
+	var _socket2 = __webpack_require__(873);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _React$PropTypes = _react2.default.PropTypes,
+	    string = _React$PropTypes.string,
+	    bool = _React$PropTypes.bool,
+	    object = _React$PropTypes.object;
+	
+	var socket = void 0;
+	
+	var Diagnostics = function (_React$Component) {
+		_inherits(Diagnostics, _React$Component);
+	
+		function Diagnostics(props) {
+			_classCallCheck(this, Diagnostics);
+	
+			var _this = _possibleConstructorReturn(this, (Diagnostics.__proto__ || Object.getPrototypeOf(Diagnostics)).call(this, props));
+	
+			_this.state = {
+				text: ''
+			};
+			return _this;
+		}
+	
+		_createClass(Diagnostics, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+	
+				socket = (0, _socket3.default)();
+				socket.on(this.props.location.pathname, function (mesg) {
+					_this2.setState({ text: mesg });
+				});
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				socket.off(this.props.page);
+			}
+		}, {
+			key: 'sendSocketData',
+			value: function sendSocketData() {
+				console.log("socket button pressed");
+				socket.emit('diagnostics-button', 'Hello world!');
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						null,
+						this.state.text
+					),
+					_react2.default.createElement(
+						_reactBootstrap.Button,
+						{ onClick: this.sendSocketData },
+						'Send Socket Data'
+					)
+				);
+			}
+		}]);
+	
+		return Diagnostics;
+	}(_react2.default.Component);
+	
+	exports.default = Diagnostics;
+
+/***/ }),
+
+/***/ 927:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.socketConnect = exports.SocketProvider = undefined;
+	
+	var _SocketProvider = __webpack_require__(928);
+	
+	var _SocketProvider2 = _interopRequireDefault(_SocketProvider);
+	
+	var _socketConnect = __webpack_require__(929);
+	
+	var _socketConnect2 = _interopRequireDefault(_socketConnect);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.SocketProvider = _SocketProvider2.default;
+	exports.socketConnect = _socketConnect2.default;
+
+/***/ }),
+
 /***/ 928:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(661);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SocketProvider = function (_Component) {
+	  _inherits(SocketProvider, _Component);
+	
+	  function SocketProvider() {
+	    _classCallCheck(this, SocketProvider);
+	
+	    return _possibleConstructorReturn(this, (SocketProvider.__proto__ || Object.getPrototypeOf(SocketProvider)).apply(this, arguments));
+	  }
+	
+	  _createClass(SocketProvider, [{
+	    key: 'getChildContext',
+	    value: function getChildContext() {
+	      return {
+	        socket: this.props.socket
+	      };
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return this.props.children;
+	    }
+	  }]);
+	
+	  return SocketProvider;
+	}(_react.Component);
+	
+	SocketProvider.propTypes = {
+	  socket: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object])
+	};
+	SocketProvider.defaultProps = {
+	  socket: false
+	};
+	SocketProvider.childContextTypes = {
+	  socket: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object])
+	};
+	exports.default = SocketProvider;
+
+/***/ }),
+
+/***/ 929:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(661);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function socketConnect(Target) {
+	  function SocketConnect(props, context) {
+	    return (0, _react.createElement)(Target, Object.assign({}, props, {
+	      socket: context.socket
+	    }));
+	  }
+	
+	  SocketConnect.contextTypes = {
+	    socket: _propTypes2.default.oneOfType([_propTypes2.default.bool, _propTypes2.default.object])
+	  };
+	
+	  return SocketConnect;
+	}
+	
+	exports.default = socketConnect;
+
+/***/ }),
+
+/***/ 930:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41562,7 +41477,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 929:
+/***/ 931:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

@@ -50,6 +50,24 @@ app.get('/api/devices', (req, res) => {
   });
 });
 
+app.get('/api/device_1_casparcg', (req, res) => {
+  const filter = {};
+  if (req.query.status) filter.status = req.query.status;
+  if (req.query.effort_lte || req.query.effort_gte) filter.effort = {};
+  if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
+  if (req.query.effort_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
+
+  db.collection('device_1_casparcg').find(filter).toArray()
+  .then(device_1_casparcg => {
+    const metadata = { total_count: device_1_casparcg.length };
+    res.json({ _metadata: metadata, records: device_1_casparcg });
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+});
+
 app.post('/api/issues', (req, res) => {
   const newIssue = req.body;
   newIssue.created = new Date();

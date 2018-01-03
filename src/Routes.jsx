@@ -7,7 +7,7 @@ import DeviceList from './DeviceList.jsx';
 import DeviceEdit from './DeviceEdit.jsx';
 import ControllersSetup from './ControllersSetup.jsx';
 import NewControllers from './NewControllers.jsx';
-import DeviceMenu from './DeviceMenu.jsx';
+import ControlInterface from './ControlInterface.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import Help from './Help.jsx';
 
@@ -16,7 +16,7 @@ const NoMatch = () => <p>Page Not Found</p>;
 export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/controllers" />
-    <Route path="device_menu" component={DeviceMenu} />
+    <Route path="control_interface" component={ControlInterface} />
     <Route path="randomizer" component={ControllersSetup} />
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />

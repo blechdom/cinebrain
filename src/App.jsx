@@ -10,8 +10,8 @@ const Header = () => (
       <Navbar.Brand>Cinebrain</Navbar.Brand>
     </Navbar.Header>
     <Nav>
-	<LinkContainer to="/device_menu">
-        <NavItem>DeviceMenu</NavItem>
+	<LinkContainer to="/control_interface">
+        <NavItem>Control Interface</NavItem>
       </LinkContainer>
       <LinkContainer to="/randomizer">
         <NavItem>Randomizer</NavItem>

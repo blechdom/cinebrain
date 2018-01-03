@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import _ from "lodash";
 import 'isomorphic-fetch';
-import { Col, Row, FormGroup, FormControl, ControlLabel, Button, Table, Panel, Glyphicon } from 'react-bootstrap';
+import FormControl from 'react-bootstrap';
 import SocketIOClient from 'socket.io-client';
 let socket;
 
@@ -18,28 +18,27 @@ export default class DeviceMenu extends React.Component {
   constructor(props, context){
     super(props, context);
     const devices = context.initialState.DeviceMenu ? context.initialState.DeviceMenu.records : [];
+    this.deviceOptions = [];
     this.state = {
       devices,
     };
-  this.deviceOptions = [<option key="0" value="0">Select a Device</option>];
-  this.onDeviceSelect = this.onDeviceSelect.bind(this);
+    this.onAddButton = this.onAddButton.bind(this);
 }
 componentDidMount() {
-    this.loadData();
-	socket = SocketIOClient();
+        socket = SocketIOClient();
         socket.on(this.props.location.pathname, (mesg) => {
                 this.setState({text: mesg});
         });
+    	this.loadData();
   }
-componentWillUnmount() {
-        socket.off(this.props.page);
-}
+
   loadData() {
     DeviceMenu.dataFetcher({ location: this.props.location })
     .then(data => {
       const devices = data.DeviceMenu.records;
       devices.forEach(device => {
-        this.deviceOptions.push(<option key={device._id} value={device.device_number}>{device.name}</option>);
+	this.deviceOptions.push(<option key={device._id} value={device.device_number}>{device.name}</option>);
+
       });
       this.setState({ devices });
     }).catch(err => {
@@ -47,16 +46,16 @@ componentWillUnmount() {
     });
   }
 
-  onDeviceSelect(event) {
-	console.log("device #" + event.target.value);
-	socket.emit('device-menu', event.target.value); 
+  onAddButton(event) {
+	 console.log("adding ", "button " + event.target.value);
+  	socket.emit("diagnostic-button", event.target.value);
   }
-render() {
-  return (
-      <div>
-      <FormControl componentClass="select" onChange={this.onDeviceSelect}>
-                        {this.deviceOptions}
-                </FormControl>
+  render() {
+    return (
+	<div>
+		<FormControl componentClass="select" onChange={this.onAddButton}>
+                	{this.deviceOptions}
+        	</FormControl>
 	</div>
     );
   }
