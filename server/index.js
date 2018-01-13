@@ -5,59 +5,17 @@ import http from 'http';
 import { MongoClient } from 'mongodb';
 import socketio from 'socket.io';
 import telnet from 'telnet-client';
-
-
-
-function runTelnet(command) {
-	var connection = new telnet();
-
-	var params = {
-  		host: '127.0.0.1',
-  		port: 5250,
-  		timeout: 1500,
-  		negotiationMandatory: false,
-  		ors: '\r\n', // mandatory for your 'send' to work
-  		waitfor: '\n' // mandatory for your 'send' to work (set those either here or in your exec_params!)
-	};
-	connection.on('connect', function() {
-  		connection.send(command, function(err, res) {
-    			if (err) return err
-
-    			console.log('first message:', res.trim())
-
-    			connection.send('', {
-      				ors: '\r\n',
-      				waitfor: '\n'
-    			}, function(err, res) {
-      			if (err) return err
-
-      				console.log('resp after cmd:', res)
-    			})
-  		})
-	})
-
-	connection.connect(params)
-}
-
-//let net = require("net");
-//({TelnetSocket} = require("telnet-stream"));
+import DMX from 'dmx';
 
 let appModule = require('./server.js');
 let db;
 let server;
 let websocket;
 
-//let telSocket = net.createConnection(5250, "localhost");
+let dmx = new DMX();
+let universe = dmx.addUniverse('demo', 'enttec-usb-dmx-pro', 'COM3')
 
-//let tSocket = new TelnetSocket(telSocket);
-
-//console.log("Telnet-Stream started on port 5250"); 
-
- // tSocket.on("close", function() {
- //   console.log("Telnet Socket Closed");
- //   return process.exit();
-  //});
-
+let on = false;
 
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   db = connection;
@@ -67,7 +25,6 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   server.listen(3000, () => {
     console.log('App started on port 3000');
   });
-
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
         console.log("user connected from: " + socket.id);
@@ -75,19 +32,70 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         socket.on('disconnect', () => {
                 console.log('user disconnected')
         });
-	socket.on('diagnostics-button', (message) => {
-                console.log("and the message is: " + message);
+        socket.on('diagnostics-send-telnet', function(data) {
+                console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+                runTelnet(data.host, data.port, data.command);
         });
-	socket.on('device-menu', (message) => {
-                console.log("the device number is: " + message);
-        	websocket.sockets.emit("show-parameters", message);
-	});
-    	socket.on('parameter-menu', (buffer) => {
+        socket.on('control-interface-send-telnet', function(data) {
+                console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+                runTelnet(data.host, data.port, data.command);
+        });
+        socket.on('device-menu', (message) => {
+          console.log("the device number is: " + message);
+          websocket.sockets.emit("show-parameters", message);
+        });
+        socket.on('parameter-menu', (buffer) => {
                 console.log("the parameter packet is: " + buffer);
-                
-              //runTelnet('play 1-0 amb.mp4');
-           	runTelnet('cls');
-	});			
+                websocket.sockets.emit("show-parameter-inputs", buffer);
+        }); 
+        socket.on('dmx-go', (buffer) => {
+                universe.update(buffer);
+        });     
+        socket.on('dmx-all', (buffer) => {
+                universe.updateAll(buffer);
+        });     
+
+
+
+        const telnetHost = '127.0.0.1';
+        const telnetPort = 5250;
+
+        function runTelnet(telnetHost, telnetPort, command) {
+          var connection = new telnet();
+
+          var params = {
+              host: telnetHost,
+              port: telnetPort,
+              timeout: 1500,
+              negotiationMandatory: false,
+              ors: '\r\n', 
+              waitfor: '\n' 
+          };
+          connection.on('connect', function() {
+              connection.send(command, function(err, res) {
+                  if (err) return err
+
+                  console.log('first message:', res.trim())
+
+                  telnetResponse(res);
+
+                  connection.send('', {
+                      ors: '\r\n',
+                      waitfor: '\n'
+                  }, function(err, res) {
+                    if (err) return err
+
+                      console.log('resp after cmd:', res)
+                  })
+              })
+          })
+
+          connection.connect(params)
+        }
+
+        function telnetResponse (res) {
+          websocket.sockets.emit("telnet-response", res);
+        }
   });
 }).catch(error => {
   console.log('ERROR:', error);
@@ -101,5 +109,13 @@ if (module.hot) {
     server.on('request', appModule.app);
   });
 }
+
+
+
+
+
+
+
+
 
 

@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3bf5ec4fb2484ec3ef51"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6e85ca4eebc5edf1eb19"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(58);
+	module.exports = __webpack_require__(63);
 
 
 /***/ }),
@@ -575,103 +575,114 @@
 	
 	var _telnetClient2 = _interopRequireDefault(_telnetClient);
 	
+	var _dmx = __webpack_require__(8);
+	
+	var _dmx2 = _interopRequireDefault(_dmx);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_sourceMapSupport2.default.install();
 	
 	
-	function runTelnet(command) {
-	  var connection = new _telnetClient2.default();
-	
-	  var params = {
-	    host: '127.0.0.1',
-	    port: 5250,
-	    timeout: 1500,
-	    negotiationMandatory: false,
-	    ors: '\r\n', // mandatory for your 'send' to work
-	    waitfor: '\n' // mandatory for your 'send' to work (set those either here or in your exec_params!)
-	  };
-	  connection.on('connect', function () {
-	    connection.send(command, function (err, res) {
-	      if (err) return err;
-	
-	      console.log('first message:', res.trim());
-	
-	      connection.send('', {
-	        ors: '\r\n',
-	        waitfor: '\n'
-	      }, function (err, res) {
-	        if (err) return err;
-	
-	        console.log('resp after cmd:', res);
-	      });
-	    });
-	  });
-	
-	  connection.connect(params);
-	}
-	
-	//let net = require("net");
-	//({TelnetSocket} = require("telnet-stream"));
-	
-	let appModule = __webpack_require__(8);
+	let appModule = __webpack_require__(9);
 	let db;
 	let server;
 	let websocket;
 	
-	//let telSocket = net.createConnection(5250, "localhost");
+	let dmx = new _dmx2.default();
+	let universe = dmx.addUniverse('demo', 'enttec-usb-dmx-pro', 'COM3');
 	
-	//let tSocket = new TelnetSocket(telSocket);
-	
-	//console.log("Telnet-Stream started on port 5250"); 
-	
-	// tSocket.on("close", function() {
-	//   console.log("Telnet Socket Closed");
-	//   return process.exit();
-	//});
-	
+	let on = false;
 	
 	_mongodb.MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
-	  db = connection;
-	  server = _http2.default.createServer();
-	  appModule.setDb(db);
-	  server.on('request', appModule.app);
-	  server.listen(3000, () => {
-	    console.log('App started on port 3000');
-	  });
+	        db = connection;
+	        server = _http2.default.createServer();
+	        appModule.setDb(db);
+	        server.on('request', appModule.app);
+	        server.listen(3000, () => {
+	                console.log('App started on port 3000');
+	        });
+	        websocket = (0, _socket2.default)(server);
+	        websocket.on('connection', socket => {
+	                console.log("user connected from: " + socket.id);
 	
-	  websocket = (0, _socket2.default)(server);
-	  websocket.on('connection', socket => {
-	    console.log("user connected from: " + socket.id);
+	                socket.on('disconnect', () => {
+	                        console.log('user disconnected');
+	                });
+	                socket.on('diagnostics-send-telnet', function (data) {
+	                        console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+	                        runTelnet(data.host, data.port, data.command);
+	                });
+	                socket.on('control-interface-send-telnet', function (data) {
+	                        console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+	                        runTelnet(data.host, data.port, data.command);
+	                });
+	                socket.on('device-menu', message => {
+	                        console.log("the device number is: " + message);
+	                        websocket.sockets.emit("show-parameters", message);
+	                });
+	                socket.on('parameter-menu', buffer => {
+	                        console.log("the parameter packet is: " + buffer);
+	                        websocket.sockets.emit("show-parameter-inputs", buffer);
+	                });
+	                socket.on('dmx-go', buffer => {
+	                        universe.update(buffer);
+	                });
+	                socket.on('dmx-all', buffer => {
+	                        universe.updateAll(buffer);
+	                });
 	
-	    socket.on('disconnect', () => {
-	      console.log('user disconnected');
-	    });
-	    socket.on('diagnostics-button', message => {
-	      console.log("and the message is: " + message);
-	    });
-	    socket.on('device-menu', message => {
-	      console.log("the device number is: " + message);
-	      websocket.sockets.emit("show-parameters", message);
-	    });
-	    socket.on('parameter-menu', buffer => {
-	      console.log("the parameter packet is: " + buffer);
+	                const telnetHost = '127.0.0.1';
+	                const telnetPort = 5250;
 	
-	      //runTelnet('play 1-0 amb.mp4');
-	      runTelnet('cls');
-	    });
-	  });
+	                function runTelnet(telnetHost, telnetPort, command) {
+	                        var connection = new _telnetClient2.default();
+	
+	                        var params = {
+	                                host: telnetHost,
+	                                port: telnetPort,
+	                                timeout: 1500,
+	                                negotiationMandatory: false,
+	                                ors: '\r\n',
+	                                waitfor: '\n'
+	                        };
+	                        connection.on('connect', function () {
+	                                connection.send(command, function (err, res) {
+	                                        if (err) return err;
+	
+	                                        console.log('first message:', res.trim());
+	
+	                                        telnetResponse(res);
+	
+	                                        connection.send('', {
+	                                                ors: '\r\n',
+	                                                waitfor: '\n'
+	                                        }, function (err, res) {
+	                                                if (err) return err;
+	
+	                                                console.log('resp after cmd:', res);
+	                                        });
+	                                });
+	                        });
+	
+	                        connection.connect(params);
+	                }
+	
+	                function telnetResponse(res) {
+	                        websocket.sockets.emit("telnet-response", res);
+	                }
+	        });
 	}).catch(error => {
-	  console.log('ERROR:', error);
+	        console.log('ERROR:', error);
 	});
 	
 	if (true) {
-	  module.hot.accept(8, () => {
-	    server.removeListener('request', appModule.app);
-	    appModule = __webpack_require__(8); // eslint-disable-line
-	    appModule.setDb(db);
-	    server.on('request', appModule.app);
-	  });
+	        module.hot.accept(9, () => {
+	                server.removeListener('request', appModule.app);
+	                appModule = __webpack_require__(9); // eslint-disable-line
+	                appModule.setDb(db);
+	                server.on('request', appModule.app);
+	        });
 	}
 
 /***/ }),
@@ -712,6 +723,12 @@
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports) {
+
+	module.exports = require("dmx");
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -721,25 +738,25 @@
 	});
 	exports.setDb = exports.app = undefined;
 	
-	var _express = __webpack_require__(9);
+	var _express = __webpack_require__(10);
 	
 	var _express2 = _interopRequireDefault(_express);
 	
-	var _bodyParser = __webpack_require__(10);
+	var _bodyParser = __webpack_require__(11);
 	
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 	
 	var _mongodb = __webpack_require__(5);
 	
-	var _issue = __webpack_require__(11);
+	var _issue = __webpack_require__(12);
 	
 	var _issue2 = _interopRequireDefault(_issue);
 	
-	var _device = __webpack_require__(12);
+	var _device = __webpack_require__(13);
 	
 	var _device2 = _interopRequireDefault(_device);
 	
-	var _renderedPageRouter = __webpack_require__(13);
+	var _renderedPageRouter = __webpack_require__(14);
 	
 	var _renderedPageRouter2 = _interopRequireDefault(_renderedPageRouter);
 	
@@ -969,19 +986,19 @@
 	exports.setDb = setDb;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1043,7 +1060,7 @@
 	};
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1112,7 +1129,7 @@
 	};
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1121,27 +1138,27 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _server = __webpack_require__(15);
+	var _server = __webpack_require__(16);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactRouter = __webpack_require__(17);
 	
-	var _express = __webpack_require__(9);
+	var _express = __webpack_require__(10);
 	
 	var _express2 = _interopRequireDefault(_express);
 	
-	var _template = __webpack_require__(17);
+	var _template = __webpack_require__(18);
 	
 	var _template2 = _interopRequireDefault(_template);
 	
-	var _Routes = __webpack_require__(18);
+	var _Routes = __webpack_require__(19);
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(57);
+	var _ContextWrapper = __webpack_require__(62);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1184,25 +1201,25 @@
 	exports.default = renderedPageRouter;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react");
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-dom/server");
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router");
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1239,7 +1256,7 @@
 	}
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1248,49 +1265,61 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactRouter = __webpack_require__(17);
 	
-	var _App = __webpack_require__(19);
+	var _App = __webpack_require__(20);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _IssueList = __webpack_require__(23);
+	var _IssueList = __webpack_require__(24);
 	
 	var _IssueList2 = _interopRequireDefault(_IssueList);
 	
-	var _IssueEdit = __webpack_require__(28);
+	var _IssueEdit = __webpack_require__(29);
 	
 	var _IssueEdit2 = _interopRequireDefault(_IssueEdit);
 	
-	var _DeviceList = __webpack_require__(31);
+	var _DeviceList = __webpack_require__(32);
 	
 	var _DeviceList2 = _interopRequireDefault(_DeviceList);
 	
-	var _DeviceEdit = __webpack_require__(33);
+	var _DeviceEdit = __webpack_require__(34);
 	
 	var _DeviceEdit2 = _interopRequireDefault(_DeviceEdit);
 	
-	var _ControllersSetup = __webpack_require__(34);
+	var _ControllersSetup = __webpack_require__(35);
 	
 	var _ControllersSetup2 = _interopRequireDefault(_ControllersSetup);
 	
-	var _NewControllers = __webpack_require__(40);
+	var _NewControllers = __webpack_require__(41);
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _ControlInterface = __webpack_require__(50);
+	var _ControlInterface = __webpack_require__(51);
 	
 	var _ControlInterface2 = _interopRequireDefault(_ControlInterface);
 	
-	var _Diagnostics = __webpack_require__(54);
+	var _Demo = __webpack_require__(57);
+	
+	var _Demo2 = _interopRequireDefault(_Demo);
+	
+	var _Group = __webpack_require__(58);
+	
+	var _Group2 = _interopRequireDefault(_Group);
+	
+	var _Group3 = __webpack_require__(59);
+	
+	var _Group4 = _interopRequireDefault(_Group3);
+	
+	var _Diagnostics = __webpack_require__(60);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(56);
+	var _Help = __webpack_require__(61);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1306,6 +1335,9 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/controllers' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'group1', component: _Group2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'group2', component: _Group4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'randomizer', component: _ControllersSetup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
@@ -1319,7 +1351,7 @@
 	);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1330,15 +1362,15 @@
 	
 	__webpack_require__(3);
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _reactRouterBootstrap = __webpack_require__(21);
+	var _reactRouterBootstrap = __webpack_require__(22);
 	
-	var _moreVert = __webpack_require__(22);
+	var _moreVert = __webpack_require__(23);
 	
 	var _moreVert2 = _interopRequireDefault(_moreVert);
 	
@@ -1361,56 +1393,20 @@
 	    null,
 	    _react2.default.createElement(
 	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/control_interface' },
+	      { to: '/group1' },
 	      _react2.default.createElement(
 	        _reactBootstrap.NavItem,
 	        null,
-	        'Control Interface'
+	        'Group 1'
 	      )
 	    ),
 	    _react2.default.createElement(
 	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/randomizer' },
+	      { to: '/group2' },
 	      _react2.default.createElement(
 	        _reactBootstrap.NavItem,
 	        null,
-	        'Randomizer'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/new_controllers' },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'New Controllers'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/devices' },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'Devices'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/issues' },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'Issues'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/diagnostics' },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'Diagnostics'
+	        'Group 2'
 	      )
 	    )
 	  ),
@@ -1420,6 +1416,69 @@
 	    _react2.default.createElement(
 	      _reactBootstrap.NavDropdown,
 	      { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/demo' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Demo'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/control_interface' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Control Interface'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/randomizer' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Randomizer'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/new_controllers' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'New Controllers'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/devices' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Devices'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/issues' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Issues'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/diagnostics' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Diagnostics'
+	        )
+	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
 	        { to: '/help' },
@@ -1452,25 +1511,25 @@
 	exports.default = App;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-bootstrap");
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router-bootstrap");
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/more-vert");
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1479,25 +1538,25 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactRouter = __webpack_require__(17);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _trash = __webpack_require__(25);
+	var _trash = __webpack_require__(26);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _IssueFilter = __webpack_require__(26);
+	var _IssueFilter = __webpack_require__(27);
 	
 	var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 	
-	var _Toast = __webpack_require__(27);
+	var _Toast = __webpack_require__(28);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -1735,19 +1794,19 @@
 	};
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 	module.exports = require("isomorphic-fetch");
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/trash");
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1756,11 +1815,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1955,7 +2014,7 @@
 	};
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1964,11 +2023,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2017,7 +2076,7 @@
 	};
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2026,23 +2085,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _reactRouterBootstrap = __webpack_require__(21);
+	var _reactRouterBootstrap = __webpack_require__(22);
 	
-	var _NumInput = __webpack_require__(29);
+	var _NumInput = __webpack_require__(30);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(30);
+	var _DateInput = __webpack_require__(31);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _Toast = __webpack_require__(27);
+	var _Toast = __webpack_require__(28);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -2397,7 +2456,7 @@
 	};
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2408,7 +2467,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2460,7 +2519,7 @@
 	};
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2471,7 +2530,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2546,7 +2605,7 @@
 	};
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2555,21 +2614,21 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactRouter = __webpack_require__(17);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _DeviceFilter = __webpack_require__(32);
+	var _DeviceFilter = __webpack_require__(33);
 	
 	var _DeviceFilter2 = _interopRequireDefault(_DeviceFilter);
 	
-	var _Toast = __webpack_require__(27);
+	var _Toast = __webpack_require__(28);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -2792,7 +2851,7 @@
 	};
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2801,11 +2860,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3000,7 +3059,7 @@
 	};
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3009,23 +3068,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _reactRouterBootstrap = __webpack_require__(21);
+	var _reactRouterBootstrap = __webpack_require__(22);
 	
-	var _NumInput = __webpack_require__(29);
+	var _NumInput = __webpack_require__(30);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(30);
+	var _DateInput = __webpack_require__(31);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _Toast = __webpack_require__(27);
+	var _Toast = __webpack_require__(28);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -3380,7 +3439,7 @@
 	};
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3391,33 +3450,33 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(35);
+	var _reactGridLayout = __webpack_require__(36);
 	
-	var _lodash = __webpack_require__(36);
+	var _lodash = __webpack_require__(37);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(37);
+	var _lodash3 = __webpack_require__(38);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _lodash5 = __webpack_require__(38);
+	var _lodash5 = __webpack_require__(39);
 	
 	var _lodash6 = _interopRequireDefault(_lodash5);
 	
-	var _lodash7 = __webpack_require__(39);
+	var _lodash7 = __webpack_require__(40);
 	
 	var _lodash8 = _interopRequireDefault(_lodash7);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactRouter = __webpack_require__(17);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3550,37 +3609,37 @@
 	};
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-grid-layout");
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.map");
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.result");
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.range");
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash.random");
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3591,53 +3650,53 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(35);
+	var _reactGridLayout = __webpack_require__(36);
 	
-	var _reactDom = __webpack_require__(41);
+	var _reactDom = __webpack_require__(42);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(42);
+	var _lodash = __webpack_require__(43);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _lock = __webpack_require__(43);
+	var _lock = __webpack_require__(44);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(44);
+	var _unlock = __webpack_require__(45);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
-	var _fileUpload = __webpack_require__(45);
+	var _fileUpload = __webpack_require__(46);
 	
 	var _fileUpload2 = _interopRequireDefault(_fileUpload);
 	
-	var _fileDownload = __webpack_require__(46);
+	var _fileDownload = __webpack_require__(47);
 	
 	var _fileDownload2 = _interopRequireDefault(_fileDownload);
 	
-	var _edit = __webpack_require__(47);
+	var _edit = __webpack_require__(48);
 	
 	var _edit2 = _interopRequireDefault(_edit);
 	
-	var _close = __webpack_require__(48);
+	var _close = __webpack_require__(49);
 	
 	var _close2 = _interopRequireDefault(_close);
 	
-	var _Toast = __webpack_require__(27);
+	var _Toast = __webpack_require__(28);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
-	var _AddController = __webpack_require__(49);
+	var _AddController = __webpack_require__(50);
 	
 	var _AddController2 = _interopRequireDefault(_AddController);
 	
@@ -3999,55 +4058,55 @@
 	};
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-dom");
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash");
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/lock");
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/unlock");
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/file-upload");
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/file-download");
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/edit");
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/close");
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4056,15 +4115,15 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactRouter = __webpack_require__(17);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _Toast = __webpack_require__(27);
+	var _Toast = __webpack_require__(28);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -4207,7 +4266,7 @@
 	exports.default = (0, _reactRouter.withRouter)(AddController);
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4216,19 +4275,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _DeviceMenu = __webpack_require__(51);
+	var _DeviceMenu = __webpack_require__(52);
 	
 	var _DeviceMenu2 = _interopRequireDefault(_DeviceMenu);
 	
-	var _ParametersMenu = __webpack_require__(53);
+	var _ParametersMenu = __webpack_require__(54);
 	
 	var _ParametersMenu2 = _interopRequireDefault(_ParametersMenu);
+	
+	var _ParameterInput = __webpack_require__(55);
+	
+	var _ParameterInput2 = _interopRequireDefault(_ParameterInput);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4241,20 +4304,9 @@
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.Row,
-	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          null,
-	          _react2.default.createElement(_DeviceMenu2.default, { location: this.props.location })
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Col,
-	          null,
-	          _react2.default.createElement(_ParametersMenu2.default, { location: this.props.location })
-	        )
-	      )
+	      _react2.default.createElement(_DeviceMenu2.default, { location: this.props.location }),
+	      _react2.default.createElement(_ParametersMenu2.default, { location: this.props.location }),
+	      _react2.default.createElement(_ParameterInput2.default, null)
 	    );
 	  }
 	}
@@ -4269,7 +4321,7 @@
 	};
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4278,23 +4330,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(41);
+	var _reactDom = __webpack_require__(42);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(42);
+	var _lodash = __webpack_require__(43);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _socket = __webpack_require__(52);
+	var _socket = __webpack_require__(53);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
@@ -4359,12 +4411,21 @@
 	  }
 	  render() {
 	    return _react2.default.createElement(
-	      'div',
+	      _reactBootstrap.FormGroup,
 	      null,
 	      _react2.default.createElement(
-	        _reactBootstrap.FormControl,
-	        { componentClass: 'select', onChange: this.onDeviceSelect },
-	        this.deviceOptions
+	        _reactBootstrap.Col,
+	        { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	        'Device'
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { sm: 9 },
+	        _react2.default.createElement(
+	          _reactBootstrap.FormControl,
+	          { componentClass: 'select', onChange: this.onDeviceSelect },
+	          this.deviceOptions
+	        )
 	      )
 	    );
 	  }
@@ -4380,13 +4441,13 @@
 	};
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	module.exports = require("socket.io-client");
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4395,23 +4456,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(41);
+	var _reactDom = __webpack_require__(42);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(42);
+	var _lodash = __webpack_require__(43);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _socket = __webpack_require__(52);
+	var _socket = __webpack_require__(53);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
@@ -4493,9 +4554,22 @@
 	      'div',
 	      null,
 	      this.state.showing ? _react2.default.createElement(
-	        _reactBootstrap.FormControl,
-	        { componentClass: 'select', onChange: this.onParameterSelect },
-	        this.parameterOptions
+	        _reactBootstrap.FormGroup,
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	          'Parameter'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { sm: 9 },
+	          _react2.default.createElement(
+	            _reactBootstrap.FormControl,
+	            { componentClass: 'select', onChange: this.onParameterSelect },
+	            this.parameterOptions
+	          )
+	        )
 	      ) : null
 	    );
 	  }
@@ -4511,88 +4585,7 @@
 	};
 
 /***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(14);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	__webpack_require__(24);
-	
-	var _reactRouter = __webpack_require__(16);
-	
-	var _reactBootstrap = __webpack_require__(20);
-	
-	var _socket = __webpack_require__(55);
-	
-	var _socket2 = __webpack_require__(52);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var _React$PropTypes = _react2.default.PropTypes;
-	const string = _React$PropTypes.string,
-	      bool = _React$PropTypes.bool,
-	      object = _React$PropTypes.object;
-	
-	let socket;
-	
-	class Diagnostics extends _react2.default.Component {
-	
-		constructor(props) {
-			super(props);
-			this.state = {
-				text: ''
-			};
-		}
-		componentDidMount() {
-			socket = (0, _socket3.default)();
-			socket.on(this.props.location.pathname, mesg => {
-				this.setState({ text: mesg });
-			});
-		}
-		componentWillUnmount() {
-			socket.off(this.props.page);
-		}
-		sendSocketData() {
-			console.log("socket button pressed");
-			socket.emit('diagnostics-button', 'Hello world!');
-		}
-		render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'div',
-					null,
-					this.state.text
-				),
-				_react2.default.createElement(
-					_reactBootstrap.Button,
-					{ onClick: this.sendSocketData },
-					'Send Socket Data'
-				)
-			);
-		}
-	}
-	exports.default = Diagnostics;
-
-/***/ }),
 /* 55 */
-/***/ (function(module, exports) {
-
-	module.exports = require("socket.io-react");
-
-/***/ }),
-/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4601,15 +4594,2106 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(24);
+	__webpack_require__(25);
 	
-	var _reactRouter = __webpack_require__(16);
+	var _reactBootstrap = __webpack_require__(21);
 	
-	var _reactBootstrap = __webpack_require__(20);
+	var _socket = __webpack_require__(56);
+	
+	var _socket2 = __webpack_require__(53);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	let socket;
+	
+	class ParameterInput extends _react2.default.Component {
+	
+	  constructor(props) {
+	    super(props);
+	    this.state = {
+	      text: '',
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      showing: false
+	    };
+	    this.showParameterInputs = this.showParameterInputs.bind(this);
+	    this.hideParameterInputs = this.hideParameterInputs.bind(this);
+	    this.onHostChange = this.onHostChange.bind(this);
+	    this.onPortChange = this.onPortChange.bind(this);
+	    this.onCommandChange = this.onCommandChange.bind(this);
+	    this.sendCommand = this.sendCommand.bind(this);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('show-parameter-inputs', mesg => {
+	      this.setState({ showing: true });
+	    });
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  showParameterInputs() {
+	    this.setState({ showing: true });
+	  }
+	  hideParameterInputs() {
+	    this.setState({ showing: false });
+	  }
+	  onPortChange(event) {
+	    this.setState({ port: event.target.value });
+	  }
+	  onHostChange(event) {
+	    this.setState({ host: event.target.value });
+	  }
+	  onCommandChange(event) {
+	    this.setState({ command: event.target.value });
+	  }
+	  sendCommand() {
+	    console.log("sending Telnet command");
+	    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: this.state.command });
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      this.state.showing ? _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.FormGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	            'Host'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { sm: 9 },
+	            _react2.default.createElement(_reactBootstrap.FormControl, { name: 'host', value: this.state.host, onChange: this.onHostChange })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.FormGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	            'Port'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { sm: 9 },
+	            _react2.default.createElement(_reactBootstrap.FormControl, { name: 'port', value: this.state.port, onChange: this.onPortChange })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.FormGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	            'Telnet Command'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { sm: 9 },
+	            _react2.default.createElement(_reactBootstrap.FormControl, { name: 'command', value: this.state.command, onChange: this.onCommandChange })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.FormGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { smOffset: 3, sm: 6 },
+	            _react2.default.createElement(
+	              _reactBootstrap.ButtonToolbar,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { onClick: this.sendCommand },
+	                'Send Telnet Command'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.FormGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { smOffset: 3, sm: 6 },
+	            this.state.response
+	          )
+	        )
+	      ) : null
+	    );
+	  }
+	}
+	exports.default = ParameterInput;
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+	module.exports = require("socket.io-react");
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(15);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(36);
+	
+	var _reactDom = __webpack_require__(42);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(43);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(25);
+	
+	var _reactBootstrap = __webpack_require__(21);
+	
+	var _lock = __webpack_require__(44);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(45);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(56);
+	
+	var _socket2 = __webpack_require__(53);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class Demo extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	      case 'vid_red':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FF0000' });
+	        break;
+	      case 'vid_white':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FFFFFF' });
+	        break;
+	      case 'vid_green':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #00FF00' });
+	        break;
+	      case 'vid_blue':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #0000FF' });
+	        break;
+	      case 'vid_play1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	        break;
+	      case 'vid_play2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 bbb.mp4 10 LEFT' });
+	        break;
+	      case 'vid_play3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ccc.mp4 PUSH 20 EASEINSINE' });
+	        break;
+	      case 'vid_play4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: '"PLAY 1-0 test_scroll SPEED 5 BLUR 50' });
+	        break;
+	      case 'vid_play5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ddd.mp4' });
+	        break;
+	      case 'vid_play6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 MOVIE SEEK 100 LOOP' });
+	        break;
+	      case 'vid_play7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	        break;
+	      case 'vid_play8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	        break;
+	      case 'vid_loop1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'spot_on':
+	        socket.emit('dmx-go', { 6: 216, 7: 255 });
+	        break;
+	      case 'spot_off':
+	        socket.emit('dmx-go', { 6: 0, 7: 0 });
+	        break;
+	      case 'spot_white':
+	        socket.emit('dmx-go', { 5: 0, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_red':
+	        socket.emit('dmx-go', { 5: 24, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_green':
+	        socket.emit('dmx-go', { 5: 18, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_blue':
+	        socket.emit('dmx-go', { 5: 42, 6: 216, 7: 255 });
+	        break;
+	      case 'wash_on':
+	        socket.emit('dmx-go', { 16: 255 });
+	        break;
+	      case 'wash_off':
+	        socket.emit('dmx-go', { 16: 0 });
+	        break;
+	      case 'wash_white':
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	        break;
+	      case 'wash_red':
+	        socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	        break;
+	      case 'wash_green':
+	        socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	        break;
+	      case 'wash_blue':
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	        break;
+	      case 'wash_yellow':
+	        socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	        break;
+	      case 'dmx_on':
+	        socket.emit('dmx-all', 255);
+	        break;
+	      case 'dmx_off':
+	        socket.emit('dmx-all', 0);
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value / 100.0 * 255.0;
+	    switch (event.target.id) {
+	      case 'spot_pan':
+	        console.log("in spot_pan " + slider_value);
+	        socket.emit('dmx-go', { 0: slider_value, 2: slider_value });
+	        break;
+	      case 'spot_tilt':
+	        console.log("in spot_tilt " + slider_value);
+	        socket.emit('dmx-go', { 1: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        socket.emit('dmx-go', { 7: slider_value });
+	        break;
+	      case 'wash_intensity':
+	        socket.emit('dmx-go', { 16: slider_value });
+	        break;
+	      case 'wash_pan':
+	        socket.emit('dmx-go', { 22: slider_value });
+	        break;
+	      case 'wash_tilt':
+	        socket.emit('dmx-go', { 23: slider_value });
+	        break;
+	      case 'wash_zoom':
+	        socket.emit('dmx-go', { 27: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "spot_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot On'
+	      }, {
+	        type: 0,
+	        i: "spot_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot Off'
+	      }, {
+	        type: 1,
+	        i: "spot_intensity",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Intensity'
+	      }, {
+	        type: 1,
+	        i: "spot_tilt",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_pan",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Pan'
+	      }, {
+	        type: 0,
+	        i: "spot_white",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Spot White'
+	      }, {
+	        type: 0,
+	        i: "spot_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Spot Red'
+	      }, {
+	        type: 0,
+	        i: "spot_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Spot Green'
+	      }, {
+	        type: 0,
+	        i: "spot_blue",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Spot Blue'
+	      }, {
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 2,
+	        h: 1
+	      }, {
+	        type: 0,
+	        i: "dmx_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'DMX ALL ON'
+	      }, {
+	        type: 0,
+	        i: "dmx_off",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'DMX ALL OFF'
+	      }, {
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 5,
+	        h: 1
+	      }, {
+	        type: 0,
+	        i: "wash_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash On'
+	      }, {
+	        type: 0,
+	        i: "wash_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash Off'
+	      }, {
+	        type: 1,
+	        i: "wash_intensity",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Intensity'
+	      }, {
+	        type: 1,
+	        i: "wash_pan",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_tilt",
+	        x: 5, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_zoom",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Zoom'
+	      }, {
+	        type: 0,
+	        i: "wash_white",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Wash White'
+	      }, {
+	        type: 0,
+	        i: "wash_red",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Wash Red'
+	      }, {
+	        type: 0,
+	        i: "wash_green",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Wash Green'
+	      }, {
+	        type: 0,
+	        i: "wash_blue",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Wash Blue'
+	      }, {
+	        type: 0,
+	        i: "wash_yellow",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Wash Yellow'
+	      }, {
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 2,
+	        h: 1
+	      }, {
+	        type: 0,
+	        i: "vid_play1",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play1'
+	      }, {
+	        type: 0,
+	        i: "vid_play2",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play2'
+	      }, {
+	        type: 0,
+	        i: "vid_play3",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play3'
+	      }, {
+	        type: 0,
+	        i: "vid_play4",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play4'
+	      }, {
+	        type: 0,
+	        i: "vid_play5",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play5'
+	      }, {
+	        type: 0,
+	        i: "vid_play6",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play6'
+	      }, {
+	        type: 0,
+	        i: "vid_play7",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play7'
+	      }, {
+	        type: 0,
+	        i: "vid_play8",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play8'
+	      }, {
+	        type: 0,
+	        i: "vid_loop1",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop1'
+	      }, {
+	        type: 0,
+	        i: "vid_loop2",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop2'
+	      }, {
+	        type: 0,
+	        i: "vid_loop3",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop3'
+	      }, {
+	        type: 0,
+	        i: "vid_loop4",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop4'
+	      }, {
+	        type: 0,
+	        i: "vid_white",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Vid White'
+	      }, {
+	        type: 0,
+	        i: "vid_red",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Vid Red'
+	      }, {
+	        type: 0,
+	        i: "vid_green",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Vid Green'
+	      }, {
+	        type: 0,
+	        i: "vid_blue",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Blue'
+	      }]
+	    });
+	  }
+	}
+	exports.default = Demo;
+	Demo.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(15);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(36);
+	
+	var _reactDom = __webpack_require__(42);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(43);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(25);
+	
+	var _reactBootstrap = __webpack_require__(21);
+	
+	var _lock = __webpack_require__(44);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(45);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(56);
+	
+	var _socket2 = __webpack_require__(53);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class Group1 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'spot_on':
+	        socket.emit('dmx-go', { 6: 216, 7: 255 });
+	        break;
+	      case 'spot_off':
+	        socket.emit('dmx-go', { 6: 0, 7: 0 });
+	        break;
+	      case 'spot_white':
+	        socket.emit('dmx-go', { 5: 0, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_yellow':
+	        socket.emit('dmx-go', { 5: 6, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_red':
+	        socket.emit('dmx-go', { 5: 24, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_green':
+	        socket.emit('dmx-go', { 5: 18, 6: 216, 7: 255 });
+	        break;
+	      case 'spot_blue':
+	        socket.emit('dmx-go', { 5: 42, 6: 216, 7: 255 });
+	        break;
+	      case 'wash_on':
+	        socket.emit('dmx-go', { 16: 255 });
+	        break;
+	      case 'wash_off':
+	        socket.emit('dmx-go', { 16: 0 });
+	        break;
+	      case 'wash_white':
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	        break;
+	      case 'wash_red':
+	        socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	        break;
+	      case 'wash_green':
+	        socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	        break;
+	      case 'wash_blue':
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	        break;
+	      case 'wash_yellow':
+	        socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	        break;
+	      case 'dmx_off':
+	        socket.emit('dmx-go', { 6: 0, 7: 0, 16: 0 });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value / 100.0 * 255.0;
+	    switch (event.target.id) {
+	      case 'spot_pan':
+	        socket.emit('dmx-go', { 0: slider_value });
+	        break;
+	      case 'spot_tilt':
+	        socket.emit('dmx-go', { 1: slider_value });
+	        break;
+	      case 'spot_fine_pan':
+	        socket.emit('dmx-go', { 2: slider_value });
+	        break;
+	      case 'spot_fine_tilt':
+	        socket.emit('dmx-go', { 3: slider_value });
+	        break;
+	      case 'all_intensity':
+	        socket.emit('dmx-go', { 6: 216, 7: slider_value, 16: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        socket.emit('dmx-go', { 7: slider_value });
+	        break;
+	      case 'wash_intensity':
+	        socket.emit('dmx-go', { 16: slider_value });
+	        break;
+	      case 'wash_pan':
+	        socket.emit('dmx-go', { 22: slider_value });
+	        break;
+	      case 'wash_tilt':
+	        socket.emit('dmx-go', { 23: slider_value });
+	        break;
+	      case 'wash_fine_pan':
+	        socket.emit('dmx-go', { 24: slider_value });
+	        break;
+	      case 'wash_fine_tilt':
+	        socket.emit('dmx-go', { 25: slider_value });
+	        break;
+	      case 'wash_zoom':
+	        socket.emit('dmx-go', { 27: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'text-center' },
+	              '  ',
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 1: 1&17'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "dmx_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        className: 'btn-block btn btn-danger',
+	        text: 'LIGHTS OUT'
+	      }, {
+	        type: 1,
+	        i: "all_intensity",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        text: 'Master Intensity'
+	      }, {
+	        type: 0,
+	        i: "spot_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot On'
+	      }, {
+	        type: 0,
+	        i: "spot_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot Off'
+	      }, {
+	        type: 1,
+	        i: "spot_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Intensity'
+	      }, {
+	        type: 1,
+	        i: "spot_tilt",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_tilt",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Fine Pan'
+	      }, {
+	        type: 0,
+	        i: "spot_white",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Spot White'
+	      }, {
+	        type: 0,
+	        i: "spot_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Spot Red'
+	      }, {
+	        type: 0,
+	        i: "spot_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Spot Green'
+	      }, {
+	        type: 0,
+	        i: "spot_blue",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Spot Blue'
+	      }, {
+	        type: 0,
+	        i: "spot_yellow",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Spot Yellow'
+	      }, {
+	        type: 0,
+	        i: "wash_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash On'
+	      }, {
+	        type: 0,
+	        i: "wash_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash Off'
+	      }, {
+	        type: 1,
+	        i: "wash_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Intensity'
+	      }, {
+	        type: 1,
+	        i: "wash_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_tilt",
+	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Fine Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_tilt",
+	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_zoom",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Zoom'
+	      }, {
+	        type: 0,
+	        i: "wash_white",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Wash White'
+	      }, {
+	        type: 0,
+	        i: "wash_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Wash Red'
+	      }, {
+	        type: 0,
+	        i: "wash_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Wash Green'
+	      }, {
+	        type: 0,
+	        i: "wash_blue",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Wash Blue'
+	      }, {
+	        type: 0,
+	        i: "wash_yellow",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Wash Yellow'
+	      }]
+	    });
+	  }
+	}
+	exports.default = Group1;
+	Group1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(15);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(36);
+	
+	var _reactDom = __webpack_require__(42);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(43);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(25);
+	
+	var _reactBootstrap = __webpack_require__(21);
+	
+	var _lock = __webpack_require__(44);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(45);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(56);
+	
+	var _socket2 = __webpack_require__(53);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class Group2 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'spot_on':
+	        socket.emit('dmx-go', { 46: 216, 47: 255 });
+	        break;
+	      case 'spot_off':
+	        socket.emit('dmx-go', { 46: 0, 47: 0 });
+	        break;
+	      case 'spot_white':
+	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_yellow':
+	        socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_red':
+	        socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_green':
+	        socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_blue':
+	        socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
+	        break;
+	      case 'wash_on':
+	        socket.emit('dmx-go', { 56: 255 });
+	        break;
+	      case 'wash_off':
+	        socket.emit('dmx-go', { 56: 0 });
+	        break;
+	      case 'wash_white':
+	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
+	        break;
+	      case 'wash_red':
+	        socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
+	        break;
+	      case 'wash_green':
+	        socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
+	        break;
+	      case 'wash_blue':
+	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
+	        break;
+	      case 'wash_yellow':
+	        socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	        break;
+	      case 'dmx_off':
+	        socket.emit('dmx-go', { 46: 0, 47: 0, 56: 0 });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value / 100.0 * 255.0;
+	    switch (event.target.id) {
+	      case 'spot_pan':
+	        socket.emit('dmx-go', { 40: slider_value });
+	        break;
+	      case 'spot_tilt':
+	        socket.emit('dmx-go', { 41: slider_value });
+	        break;
+	      case 'spot_fine_pan':
+	        socket.emit('dmx-go', { 42: slider_value });
+	        break;
+	      case 'spot_fine_tilt':
+	        socket.emit('dmx-go', { 43: slider_value });
+	        break;
+	      case 'all_intensity':
+	        socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        socket.emit('dmx-go', { 47: slider_value });
+	        break;
+	      case 'wash_intensity':
+	        socket.emit('dmx-go', { 56: slider_value });
+	        break;
+	      case 'wash_pan':
+	        socket.emit('dmx-go', { 62: slider_value });
+	        break;
+	      case 'wash_tilt':
+	        socket.emit('dmx-go', { 63: slider_value });
+	        break;
+	      case 'wash_fine_pan':
+	        socket.emit('dmx-go', { 64: slider_value });
+	        break;
+	      case 'wash_fine_tilt':
+	        socket.emit('dmx-go', { 65: slider_value });
+	        break;
+	      case 'wash_zoom':
+	        socket.emit('dmx-go', { 67: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'text-center' },
+	              '  ',
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 2: (41&57)'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "dmx_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Lights Out'
+	      }, {
+	        type: 1,
+	        i: "all_intensity",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        text: 'Master Intensity'
+	      }, {
+	        type: 0,
+	        i: "spot_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot On'
+	      }, {
+	        type: 0,
+	        i: "spot_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot Off'
+	      }, {
+	        type: 1,
+	        i: "spot_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Intensity'
+	      }, {
+	        type: 1,
+	        i: "spot_tilt",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_tilt",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Fine Pan'
+	      }, {
+	        type: 0,
+	        i: "spot_white",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Spot White'
+	      }, {
+	        type: 0,
+	        i: "spot_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Spot Red'
+	      }, {
+	        type: 0,
+	        i: "spot_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Spot Green'
+	      }, {
+	        type: 0,
+	        i: "spot_blue",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Spot Blue'
+	      }, {
+	        type: 0,
+	        i: "spot_yellow",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Spot Yellow'
+	      }, {
+	        type: 0,
+	        i: "wash_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash On'
+	      }, {
+	        type: 0,
+	        i: "wash_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash Off'
+	      }, {
+	        type: 1,
+	        i: "wash_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Intensity'
+	      }, {
+	        type: 1,
+	        i: "wash_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_tilt",
+	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Fine Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_tilt",
+	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_zoom",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Zoom'
+	      }, {
+	        type: 0,
+	        i: "wash_white",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Wash White'
+	      }, {
+	        type: 0,
+	        i: "wash_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Wash Red'
+	      }, {
+	        type: 0,
+	        i: "wash_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Wash Green'
+	      }, {
+	        type: 0,
+	        i: "wash_blue",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Wash Blue'
+	      }, {
+	        type: 0,
+	        i: "wash_yellow",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Wash Yellow'
+	      }]
+	    });
+	  }
+	}
+	exports.default = Group2;
+	Group2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(15);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(25);
+	
+	var _reactBootstrap = __webpack_require__(21);
+	
+	var _socket = __webpack_require__(56);
+	
+	var _socket2 = __webpack_require__(53);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	let socket;
+	
+	class Diagnostics extends _react2.default.Component {
+	
+		constructor(props) {
+			super(props);
+			this.state = {
+				text: '',
+				host: '127.0.0.1',
+				port: 5250,
+				command: "cls",
+				response: ''
+			};
+			this.onHostChange = this.onHostChange.bind(this);
+			this.onPortChange = this.onPortChange.bind(this);
+			this.onCommandChange = this.onCommandChange.bind(this);
+			this.sendTelnetTest = this.sendTelnetTest.bind(this);
+		}
+		componentDidMount() {
+			socket = (0, _socket3.default)();
+			socket.on(this.props.location.pathname, mesg => {
+				this.setState({ text: mesg });
+			});
+			socket.on('telnet-response', mesg => {
+				this.setState({ response: mesg });
+			});
+		}
+		componentWillUnmount() {
+			socket.off(this.props.page);
+		}
+		onPortChange(event) {
+			this.setState({ port: event.target.value });
+		}
+		onHostChange(event) {
+			this.setState({ host: event.target.value });
+		}
+		onCommandChange(event) {
+			this.setState({ command: event.target.value });
+		}
+		sendTelnetTest() {
+			console.log("sending Telnet Test");
+			socket.emit('diagnostics-send-telnet', { host: this.state.host, port: this.state.port, command: this.state.command });
+		}
+		render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Form,
+						{ horizontal: true, onSubmit: this.sendTelnetTest },
+						_react2.default.createElement(
+							_reactBootstrap.FormGroup,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+								'Host'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 9 },
+								_react2.default.createElement(_reactBootstrap.FormControl, { name: 'host', value: this.state.host, onChange: this.onHostChange })
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.FormGroup,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+								'Port'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 9 },
+								_react2.default.createElement(_reactBootstrap.FormControl, { name: 'port', value: this.state.port, onChange: this.onPortChange })
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.FormGroup,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+								'Telnet Command'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ sm: 9 },
+								_react2.default.createElement(_reactBootstrap.FormControl, { name: 'command', value: this.state.command, onChange: this.onCommandChange })
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.FormGroup,
+							null,
+							_react2.default.createElement(
+								_reactBootstrap.Col,
+								{ smOffset: 3, sm: 6 },
+								_react2.default.createElement(
+									_reactBootstrap.ButtonToolbar,
+									null,
+									_react2.default.createElement(
+										_reactBootstrap.Button,
+										{ bsStyle: 'primary', type: 'submit' },
+										'Send Telnet Command'
+									)
+								)
+							)
+						)
+					)
+				),
+				_react2.default.createElement(
+					'div',
+					null,
+					this.state.response
+				)
+			);
+		}
+	}
+	exports.default = Diagnostics;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(15);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(25);
+	
+	var _reactRouter = __webpack_require__(17);
+	
+	var _reactBootstrap = __webpack_require__(21);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -4625,7 +6709,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 57 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4634,7 +6718,7 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(14);
+	var _react = __webpack_require__(15);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -4661,7 +6745,7 @@
 	};
 
 /***/ }),
-/* 58 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -4692,7 +6776,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(59)(updatedModules, updatedModules);
+					__webpack_require__(64)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -4705,7 +6789,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 59 */
+/* 64 */
 /***/ (function(module, exports) {
 
 	/*

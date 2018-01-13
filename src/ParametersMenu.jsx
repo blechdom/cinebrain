@@ -70,9 +70,14 @@ render() {
       <div>
        { this.state.showing
                     ? 
+			<FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>Parameter</Col>
+              <Col sm={9}>
 			 <FormControl componentClass="select" onChange={this.onParameterSelect}>
                         	{this.parameterOptions}
                 	</FormControl>
+                </Col>
+              </FormGroup>
                     : null
                 }
 	</div>

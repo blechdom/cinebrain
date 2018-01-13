@@ -53,11 +53,16 @@ componentWillUnmount() {
   }
 render() {
   return (
-      <div>
-      <FormControl componentClass="select" onChange={this.onDeviceSelect}>
-                        {this.deviceOptions}
-                </FormControl>
-	</div>
+     
+        <FormGroup>
+            <Col componentClass={ControlLabel} sm={3}>Device</Col>
+            <Col sm={9}>
+              <FormControl componentClass="select" onChange={this.onDeviceSelect}>
+                  {this.deviceOptions}
+              </FormControl>
+            </Col>
+        </FormGroup>
+	
     );
   }
 }

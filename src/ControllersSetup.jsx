@@ -29,7 +29,7 @@ export default class ControllerSetup extends React.Component {
 
   constructor(props, context){
     super(props, context);
-	 this.state = {
+   this.state = {
       currentBreakpoint: 'lg',
       compactType: 'vertical',
       mounted: false,
@@ -56,7 +56,7 @@ export default class ControllerSetup extends React.Component {
 
 return lomap(this.state.layouts.lg, (l, i) => {
       return (
-		  
+      
 <div style={styles} key={i} className={l.static ? 'static': ''}>
           {
             l.static ? 
@@ -102,9 +102,9 @@ return lomap(this.state.layouts.lg, (l, i) => {
           layouts={this.state.layouts}
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
- 	  measureBeforeMount={false}
-    	  useCSSTransforms={this.state.mounted}>
-          	{this.generateDOM()}
+    measureBeforeMount={false}
+        useCSSTransforms={this.state.mounted}>
+            {this.generateDOM()}
         </ResponsiveReactGridLayout>
       </div>
     )

@@ -10,30 +10,39 @@ const Header = () => (
       <Navbar.Brand>Cinebrain</Navbar.Brand>
     </Navbar.Header>
     <Nav>
-	<LinkContainer to="/control_interface">
-        <NavItem>Control Interface</NavItem>
+    <LinkContainer to="/group1">
+        <NavItem>Group 1</NavItem>
       </LinkContainer>
-      <LinkContainer to="/randomizer">
-        <NavItem>Randomizer</NavItem>
-      </LinkContainer>
-       <LinkContainer to="/new_controllers">
-        <NavItem>New Controllers</NavItem>
-      </LinkContainer>
-      <LinkContainer to="/devices">
-        <NavItem>Devices</NavItem>
-      </LinkContainer>
- <LinkContainer to="/issues">
-        <NavItem>Issues</NavItem>
-      </LinkContainer>
- <LinkContainer to="/diagnostics">
-        <NavItem>Diagnostics</NavItem>
+	<LinkContainer to="/group2">
+        <NavItem>Group 2</NavItem>
       </LinkContainer>
     </Nav>
     <Nav pullRight>
       <NavDropdown id="user-dropdown" title={<MdMoreVert size={18} />} noCaret>
-		<LinkContainer to="/help">
-			<MenuItem>Help</MenuItem>
-      		</LinkContainer>
+        <LinkContainer to="/demo">
+        <MenuItem>Demo</MenuItem>
+      </LinkContainer>
+  <LinkContainer to="/control_interface">
+        <MenuItem>Control Interface</MenuItem>
+      </LinkContainer>
+      <LinkContainer to="/randomizer">
+        <MenuItem>Randomizer</MenuItem>
+      </LinkContainer>
+       <LinkContainer to="/new_controllers">
+        <MenuItem>New Controllers</MenuItem>
+      </LinkContainer>
+      <LinkContainer to="/devices">
+        <MenuItem>Devices</MenuItem>
+      </LinkContainer>
+ <LinkContainer to="/issues">
+        <MenuItem>Issues</MenuItem>
+      </LinkContainer>
+ <LinkContainer to="/diagnostics">
+        <MenuItem>Diagnostics</MenuItem>
+      </LinkContainer>
+		    <LinkContainer to="/help">
+			 <MenuItem>Help</MenuItem>
+      	</LinkContainer>
 	</NavDropdown>
     </Nav>
   </Navbar>

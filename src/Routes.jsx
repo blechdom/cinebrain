@@ -8,6 +8,9 @@ import DeviceEdit from './DeviceEdit.jsx';
 import ControllersSetup from './ControllersSetup.jsx';
 import NewControllers from './NewControllers.jsx';
 import ControlInterface from './ControlInterface.jsx';
+import Demo from './Demo.jsx';
+import Group1 from './Group1.jsx';
+import Group2 from './Group2.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import Help from './Help.jsx';
 
@@ -16,6 +19,9 @@ const NoMatch = () => <p>Page Not Found</p>;
 export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/controllers" />
+    <Route path="demo" component={Demo} />
+    <Route path="group1" component={Group1} />
+    <Route path="group2" component={Group2} />
     <Route path="control_interface" component={ControlInterface} />
     <Route path="randomizer" component={ControllersSetup} />
     <Route path="new_controllers" component={NewControllers} />

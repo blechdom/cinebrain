@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(931);
+	var _ContextWrapper = __webpack_require__(935);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -96,11 +96,23 @@ webpackJsonp([0],{
 	
 	var _ControlInterface2 = _interopRequireDefault(_ControlInterface);
 	
-	var _Diagnostics = __webpack_require__(926);
+	var _Demo = __webpack_require__(930);
+	
+	var _Demo2 = _interopRequireDefault(_Demo);
+	
+	var _Group = __webpack_require__(931);
+	
+	var _Group2 = _interopRequireDefault(_Group);
+	
+	var _Group3 = __webpack_require__(932);
+	
+	var _Group4 = _interopRequireDefault(_Group3);
+	
+	var _Diagnostics = __webpack_require__(933);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(930);
+	var _Help = __webpack_require__(934);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -118,6 +130,9 @@ webpackJsonp([0],{
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/controllers' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'group1', component: _Group2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'group2', component: _Group4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'randomizer', component: _ControllersSetup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
@@ -175,56 +190,20 @@ webpackJsonp([0],{
 	      null,
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/control_interface' },
+	        { to: '/group1' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Control Interface'
+	          'Group 1'
 	        )
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/randomizer' },
+	        { to: '/group2' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Randomizer'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/new_controllers' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'New Controllers'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/devices' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Devices'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/issues' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Issues'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/diagnostics' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Diagnostics'
+	          'Group 2'
 	        )
 	      )
 	    ),
@@ -234,6 +213,69 @@ webpackJsonp([0],{
 	      _react2.default.createElement(
 	        _reactBootstrap.NavDropdown,
 	        { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/demo' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Demo'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/control_interface' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Control Interface'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/randomizer' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Randomizer'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/new_controllers' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'New Controllers'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/devices' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Devices'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/issues' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Issues'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/diagnostics' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Diagnostics'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/help' },
@@ -32259,6 +32301,10 @@ webpackJsonp([0],{
 	
 	var _ParametersMenu2 = _interopRequireDefault(_ParametersMenu);
 	
+	var _ParameterInput = __webpack_require__(926);
+	
+	var _ParameterInput2 = _interopRequireDefault(_ParameterInput);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32282,20 +32328,9 @@ webpackJsonp([0],{
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            null,
-	            _react2.default.createElement(_DeviceMenu2.default, { location: this.props.location })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            null,
-	            _react2.default.createElement(_ParametersMenu2.default, { location: this.props.location })
-	          )
-	        )
+	        _react2.default.createElement(_DeviceMenu2.default, { location: this.props.location }),
+	        _react2.default.createElement(_ParametersMenu2.default, { location: this.props.location }),
+	        _react2.default.createElement(_ParameterInput2.default, null)
 	      );
 	    }
 	  }]);
@@ -32440,12 +32475,21 @@ webpackJsonp([0],{
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
+	        _reactBootstrap.FormGroup,
 	        null,
 	        _react2.default.createElement(
-	          _reactBootstrap.FormControl,
-	          { componentClass: 'select', onChange: this.onDeviceSelect },
-	          this.deviceOptions
+	          _reactBootstrap.Col,
+	          { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	          'Device'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { sm: 9 },
+	          _react2.default.createElement(
+	            _reactBootstrap.FormControl,
+	            { componentClass: 'select', onChange: this.onDeviceSelect },
+	            this.deviceOptions
+	          )
 	        )
 	      );
 	    }
@@ -41165,9 +41209,22 @@ webpackJsonp([0],{
 	        'div',
 	        null,
 	        this.state.showing ? _react2.default.createElement(
-	          _reactBootstrap.FormControl,
-	          { componentClass: 'select', onChange: this.onParameterSelect },
-	          this.parameterOptions
+	          _reactBootstrap.FormGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	            'Parameter'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { sm: 9 },
+	            _react2.default.createElement(
+	              _reactBootstrap.FormControl,
+	              { componentClass: 'select', onChange: this.onParameterSelect },
+	              this.parameterOptions
+	            )
+	          )
 	        ) : null
 	      );
 	    }
@@ -41195,7 +41252,7 @@ webpackJsonp([0],{
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -41205,8 +41262,6 @@ webpackJsonp([0],{
 	var _react2 = _interopRequireDefault(_react);
 	
 	__webpack_require__(832);
-	
-	var _reactRouter = __webpack_require__(509);
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
@@ -41224,72 +41279,168 @@ webpackJsonp([0],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _React$PropTypes = _react2.default.PropTypes,
-	    string = _React$PropTypes.string,
-	    bool = _React$PropTypes.bool,
-	    object = _React$PropTypes.object;
-	
 	var socket = void 0;
 	
-	var Diagnostics = function (_React$Component) {
-		_inherits(Diagnostics, _React$Component);
+	var ParameterInput = function (_React$Component) {
+	  _inherits(ParameterInput, _React$Component);
 	
-		function Diagnostics(props) {
-			_classCallCheck(this, Diagnostics);
+	  function ParameterInput(props) {
+	    _classCallCheck(this, ParameterInput);
 	
-			var _this = _possibleConstructorReturn(this, (Diagnostics.__proto__ || Object.getPrototypeOf(Diagnostics)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ParameterInput.__proto__ || Object.getPrototypeOf(ParameterInput)).call(this, props));
 	
-			_this.state = {
-				text: ''
-			};
-			return _this;
-		}
+	    _this.state = {
+	      text: '',
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      showing: false
+	    };
+	    _this.showParameterInputs = _this.showParameterInputs.bind(_this);
+	    _this.hideParameterInputs = _this.hideParameterInputs.bind(_this);
+	    _this.onHostChange = _this.onHostChange.bind(_this);
+	    _this.onPortChange = _this.onPortChange.bind(_this);
+	    _this.onCommandChange = _this.onCommandChange.bind(_this);
+	    _this.sendCommand = _this.sendCommand.bind(_this);
+	    return _this;
+	  }
 	
-		_createClass(Diagnostics, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var _this2 = this;
+	  _createClass(ParameterInput, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
 	
-				socket = (0, _socket3.default)();
-				socket.on(this.props.location.pathname, function (mesg) {
-					_this2.setState({ text: mesg });
-				});
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				socket.off(this.props.page);
-			}
-		}, {
-			key: 'sendSocketData',
-			value: function sendSocketData() {
-				console.log("socket button pressed");
-				socket.emit('diagnostics-button', 'Hello world!');
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'div',
-						null,
-						this.state.text
-					),
-					_react2.default.createElement(
-						_reactBootstrap.Button,
-						{ onClick: this.sendSocketData },
-						'Send Socket Data'
-					)
-				);
-			}
-		}]);
+	      socket = (0, _socket3.default)();
+	      socket.on('show-parameter-inputs', function (mesg) {
+	        _this2.setState({ showing: true });
+	      });
+	      socket.on('telnet-response', function (mesg) {
+	        _this2.setState({ response: mesg });
+	      });
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'showParameterInputs',
+	    value: function showParameterInputs() {
+	      this.setState({ showing: true });
+	    }
+	  }, {
+	    key: 'hideParameterInputs',
+	    value: function hideParameterInputs() {
+	      this.setState({ showing: false });
+	    }
+	  }, {
+	    key: 'onPortChange',
+	    value: function onPortChange(event) {
+	      this.setState({ port: event.target.value });
+	    }
+	  }, {
+	    key: 'onHostChange',
+	    value: function onHostChange(event) {
+	      this.setState({ host: event.target.value });
+	    }
+	  }, {
+	    key: 'onCommandChange',
+	    value: function onCommandChange(event) {
+	      this.setState({ command: event.target.value });
+	    }
+	  }, {
+	    key: 'sendCommand',
+	    value: function sendCommand() {
+	      console.log("sending Telnet command");
+	      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: this.state.command });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.showing ? _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	              'Host'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { sm: 9 },
+	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'host', value: this.state.host, onChange: this.onHostChange })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	              'Port'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { sm: 9 },
+	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'port', value: this.state.port, onChange: this.onPortChange })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+	              'Telnet Command'
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { sm: 9 },
+	              _react2.default.createElement(_reactBootstrap.FormControl, { name: 'command', value: this.state.command, onChange: this.onCommandChange })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { smOffset: 3, sm: 6 },
+	              _react2.default.createElement(
+	                _reactBootstrap.ButtonToolbar,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { onClick: this.sendCommand },
+	                  'Send Telnet Command'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.FormGroup,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { smOffset: 3, sm: 6 },
+	              this.state.response
+	            )
+	          )
+	        ) : null
+	      );
+	    }
+	  }]);
 	
-		return Diagnostics;
+	  return ParameterInput;
 	}(_react2.default.Component);
 	
-	exports.default = Diagnostics;
+	exports.default = ParameterInput;
 
 /***/ }),
 
@@ -41430,6 +41581,2096 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(863);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(864);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(865);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(927);
+	
+	var _socket2 = __webpack_require__(873);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var Demo = function (_React$Component) {
+	  _inherits(Demo, _React$Component);
+	
+	  function Demo(props, context) {
+	    _classCallCheck(this, Demo);
+	
+	    var _this = _possibleConstructorReturn(this, (Demo.__proto__ || Object.getPrototypeOf(Demo)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Demo, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	        case 'vid_red':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FF0000' });
+	          break;
+	        case 'vid_white':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FFFFFF' });
+	          break;
+	        case 'vid_green':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #00FF00' });
+	          break;
+	        case 'vid_blue':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #0000FF' });
+	          break;
+	        case 'vid_play1':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	          break;
+	        case 'vid_play2':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 bbb.mp4 10 LEFT' });
+	          break;
+	        case 'vid_play3':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ccc.mp4 PUSH 20 EASEINSINE' });
+	          break;
+	        case 'vid_play4':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: '"PLAY 1-0 test_scroll SPEED 5 BLUR 50' });
+	          break;
+	        case 'vid_play5':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ddd.mp4' });
+	          break;
+	        case 'vid_play6':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 MOVIE SEEK 100 LOOP' });
+	          break;
+	        case 'vid_play7':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	          break;
+	        case 'vid_play8':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	          break;
+	        case 'vid_loop1':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	          break;
+	        case 'vid_loop2':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	          break;
+	        case 'vid_loop3':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	          break;
+	        case 'vid_loop4':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	          break;
+	        case 'spot_on':
+	          socket.emit('dmx-go', { 6: 216, 7: 255 });
+	          break;
+	        case 'spot_off':
+	          socket.emit('dmx-go', { 6: 0, 7: 0 });
+	          break;
+	        case 'spot_white':
+	          socket.emit('dmx-go', { 5: 0, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_red':
+	          socket.emit('dmx-go', { 5: 24, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_green':
+	          socket.emit('dmx-go', { 5: 18, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_blue':
+	          socket.emit('dmx-go', { 5: 42, 6: 216, 7: 255 });
+	          break;
+	        case 'wash_on':
+	          socket.emit('dmx-go', { 16: 255 });
+	          break;
+	        case 'wash_off':
+	          socket.emit('dmx-go', { 16: 0 });
+	          break;
+	        case 'wash_white':
+	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	          break;
+	        case 'wash_red':
+	          socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	          break;
+	        case 'wash_green':
+	          socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	          break;
+	        case 'wash_blue':
+	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	          break;
+	        case 'wash_yellow':
+	          socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	          break;
+	        case 'dmx_on':
+	          socket.emit('dmx-all', 255);
+	          break;
+	        case 'dmx_off':
+	          socket.emit('dmx-all', 0);
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value / 100.0 * 255.0;
+	      switch (event.target.id) {
+	        case 'spot_pan':
+	          console.log("in spot_pan " + slider_value);
+	          socket.emit('dmx-go', { 0: slider_value, 2: slider_value });
+	          break;
+	        case 'spot_tilt':
+	          console.log("in spot_tilt " + slider_value);
+	          socket.emit('dmx-go', { 1: slider_value });
+	          break;
+	        case 'spot_intensity':
+	          socket.emit('dmx-go', { 7: slider_value });
+	          break;
+	        case 'wash_intensity':
+	          socket.emit('dmx-go', { 16: slider_value });
+	          break;
+	        case 'wash_pan':
+	          socket.emit('dmx-go', { 22: slider_value });
+	          break;
+	        case 'wash_tilt':
+	          socket.emit('dmx-go', { 23: slider_value });
+	          break;
+	        case 'wash_zoom':
+	          socket.emit('dmx-go', { 27: slider_value });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, sm: 3, md: 2, lg: 1 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "spot_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot On'
+	        }, {
+	          type: 0,
+	          i: "spot_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot Off'
+	        }, {
+	          type: 1,
+	          i: "spot_intensity",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Intensity'
+	        }, {
+	          type: 1,
+	          i: "spot_tilt",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_pan",
+	          x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Pan'
+	        }, {
+	          type: 0,
+	          i: "spot_white",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Spot White'
+	        }, {
+	          type: 0,
+	          i: "spot_red",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Spot Red'
+	        }, {
+	          type: 0,
+	          i: "spot_green",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Spot Green'
+	        }, {
+	          type: 0,
+	          i: "spot_blue",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Spot Blue'
+	        }, {
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 2,
+	          h: 1
+	        }, {
+	          type: 0,
+	          i: "dmx_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'DMX ALL ON'
+	        }, {
+	          type: 0,
+	          i: "dmx_off",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'DMX ALL OFF'
+	        }, {
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 5,
+	          h: 1
+	        }, {
+	          type: 0,
+	          i: "wash_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wash On'
+	        }, {
+	          type: 0,
+	          i: "wash_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 5, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wash Off'
+	        }, {
+	          type: 1,
+	          i: "wash_intensity",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Intensity'
+	        }, {
+	          type: 1,
+	          i: "wash_pan",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Pan'
+	        }, {
+	          type: 1,
+	          i: "wash_tilt",
+	          x: 5, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, // Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Tilt'
+	        }, {
+	          type: 1,
+	          i: "wash_zoom",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Zoom'
+	        }, {
+	          type: 0,
+	          i: "wash_white",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Wash White'
+	        }, {
+	          type: 0,
+	          i: "wash_red",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Wash Red'
+	        }, {
+	          type: 0,
+	          i: "wash_green",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Wash Green'
+	        }, {
+	          type: 0,
+	          i: "wash_blue",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Wash Blue'
+	        }, {
+	          type: 0,
+	          i: "wash_yellow",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Wash Yellow'
+	        }, {
+	          x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity, 
+	          w: 2,
+	          h: 1
+	        }, {
+	          type: 0,
+	          i: "vid_play1",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play1'
+	        }, {
+	          type: 0,
+	          i: "vid_play2",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play2'
+	        }, {
+	          type: 0,
+	          i: "vid_play3",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play3'
+	        }, {
+	          type: 0,
+	          i: "vid_play4",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play4'
+	        }, {
+	          type: 0,
+	          i: "vid_play5",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play5'
+	        }, {
+	          type: 0,
+	          i: "vid_play6",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play6'
+	        }, {
+	          type: 0,
+	          i: "vid_play7",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play7'
+	        }, {
+	          type: 0,
+	          i: "vid_play8",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Play8'
+	        }, {
+	          type: 0,
+	          i: "vid_loop1",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Loop1'
+	        }, {
+	          type: 0,
+	          i: "vid_loop2",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Loop2'
+	        }, {
+	          type: 0,
+	          i: "vid_loop3",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Loop3'
+	        }, {
+	          type: 0,
+	          i: "vid_loop4",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Vid Loop4'
+	        }, {
+	          type: 0,
+	          i: "vid_white",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Vid White'
+	        }, {
+	          type: 0,
+	          i: "vid_red",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Vid Red'
+	        }, {
+	          type: 0,
+	          i: "vid_green",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Vid Green'
+	        }, {
+	          type: 0,
+	          i: "vid_blue",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Vid Blue'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return Demo;
+	}(_react2.default.Component);
+	
+	exports.default = Demo;
+	
+	Demo.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 931:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(863);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(864);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(865);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(927);
+	
+	var _socket2 = __webpack_require__(873);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var Group1 = function (_React$Component) {
+	  _inherits(Group1, _React$Component);
+	
+	  function Group1(props, context) {
+	    _classCallCheck(this, Group1);
+	
+	    var _this = _possibleConstructorReturn(this, (Group1.__proto__ || Object.getPrototypeOf(Group1)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Group1, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'spot_on':
+	          socket.emit('dmx-go', { 6: 216, 7: 255 });
+	          break;
+	        case 'spot_off':
+	          socket.emit('dmx-go', { 6: 0, 7: 0 });
+	          break;
+	        case 'spot_white':
+	          socket.emit('dmx-go', { 5: 0, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_yellow':
+	          socket.emit('dmx-go', { 5: 6, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_red':
+	          socket.emit('dmx-go', { 5: 24, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_green':
+	          socket.emit('dmx-go', { 5: 18, 6: 216, 7: 255 });
+	          break;
+	        case 'spot_blue':
+	          socket.emit('dmx-go', { 5: 42, 6: 216, 7: 255 });
+	          break;
+	        case 'wash_on':
+	          socket.emit('dmx-go', { 16: 255 });
+	          break;
+	        case 'wash_off':
+	          socket.emit('dmx-go', { 16: 0 });
+	          break;
+	        case 'wash_white':
+	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	          break;
+	        case 'wash_red':
+	          socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	          break;
+	        case 'wash_green':
+	          socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	          break;
+	        case 'wash_blue':
+	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	          break;
+	        case 'wash_yellow':
+	          socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	          break;
+	        case 'dmx_off':
+	          socket.emit('dmx-go', { 6: 0, 7: 0, 16: 0 });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value / 100.0 * 255.0;
+	      switch (event.target.id) {
+	        case 'spot_pan':
+	          socket.emit('dmx-go', { 0: slider_value });
+	          break;
+	        case 'spot_tilt':
+	          socket.emit('dmx-go', { 1: slider_value });
+	          break;
+	        case 'spot_fine_pan':
+	          socket.emit('dmx-go', { 2: slider_value });
+	          break;
+	        case 'spot_fine_tilt':
+	          socket.emit('dmx-go', { 3: slider_value });
+	          break;
+	        case 'all_intensity':
+	          socket.emit('dmx-go', { 6: 216, 7: slider_value, 16: slider_value });
+	          break;
+	        case 'spot_intensity':
+	          socket.emit('dmx-go', { 7: slider_value });
+	          break;
+	        case 'wash_intensity':
+	          socket.emit('dmx-go', { 16: slider_value });
+	          break;
+	        case 'wash_pan':
+	          socket.emit('dmx-go', { 22: slider_value });
+	          break;
+	        case 'wash_tilt':
+	          socket.emit('dmx-go', { 23: slider_value });
+	          break;
+	        case 'wash_fine_pan':
+	          socket.emit('dmx-go', { 24: slider_value });
+	          break;
+	        case 'wash_fine_tilt':
+	          socket.emit('dmx-go', { 25: slider_value });
+	          break;
+	        case 'wash_zoom':
+	          socket.emit('dmx-go', { 27: slider_value });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, sm: 3, md: 2, lg: 1 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              ),
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'text-center' },
+	                '  ',
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Group 1: 1&17'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "dmx_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          className: 'btn-block btn btn-danger',
+	          text: 'LIGHTS OUT'
+	        }, {
+	          type: 1,
+	          i: "all_intensity",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          text: 'Master Intensity'
+	        }, {
+	          type: 0,
+	          i: "spot_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot On'
+	        }, {
+	          type: 0,
+	          i: "spot_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot Off'
+	        }, {
+	          type: 1,
+	          i: "spot_intensity",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Intensity'
+	        }, {
+	          type: 1,
+	          i: "spot_tilt",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Pan'
+	        }, {
+	          type: 1,
+	          i: "spot_fine_tilt",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Fine Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_fine_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Fine Pan'
+	        }, {
+	          type: 0,
+	          i: "spot_white",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Spot White'
+	        }, {
+	          type: 0,
+	          i: "spot_red",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Spot Red'
+	        }, {
+	          type: 0,
+	          i: "spot_green",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Spot Green'
+	        }, {
+	          type: 0,
+	          i: "spot_blue",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Spot Blue'
+	        }, {
+	          type: 0,
+	          i: "spot_yellow",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Spot Yellow'
+	        }, {
+	          type: 0,
+	          i: "wash_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wash On'
+	        }, {
+	          type: 0,
+	          i: "wash_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wash Off'
+	        }, {
+	          type: 1,
+	          i: "wash_intensity",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Intensity'
+	        }, {
+	          type: 1,
+	          i: "wash_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Pan'
+	        }, {
+	          type: 1,
+	          i: "wash_tilt",
+	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, // Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Tilt'
+	        }, {
+	          type: 1,
+	          i: "wash_fine_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Fine Pan'
+	        }, {
+	          type: 1,
+	          i: "wash_fine_tilt",
+	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, // Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Fine Tilt'
+	        }, {
+	          type: 1,
+	          i: "wash_zoom",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Zoom'
+	        }, {
+	          type: 0,
+	          i: "wash_white",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Wash White'
+	        }, {
+	          type: 0,
+	          i: "wash_red",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Wash Red'
+	        }, {
+	          type: 0,
+	          i: "wash_green",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Wash Green'
+	        }, {
+	          type: 0,
+	          i: "wash_blue",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Wash Blue'
+	        }, {
+	          type: 0,
+	          i: "wash_yellow",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Wash Yellow'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return Group1;
+	}(_react2.default.Component);
+	
+	exports.default = Group1;
+	
+	Group1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 932:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(863);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(864);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(865);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(927);
+	
+	var _socket2 = __webpack_require__(873);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var Group2 = function (_React$Component) {
+	  _inherits(Group2, _React$Component);
+	
+	  function Group2(props, context) {
+	    _classCallCheck(this, Group2);
+	
+	    var _this = _possibleConstructorReturn(this, (Group2.__proto__ || Object.getPrototypeOf(Group2)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Group2, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'spot_on':
+	          socket.emit('dmx-go', { 46: 216, 47: 255 });
+	          break;
+	        case 'spot_off':
+	          socket.emit('dmx-go', { 46: 0, 47: 0 });
+	          break;
+	        case 'spot_white':
+	          socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_yellow':
+	          socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_red':
+	          socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_green':
+	          socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_blue':
+	          socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
+	          break;
+	        case 'wash_on':
+	          socket.emit('dmx-go', { 56: 255 });
+	          break;
+	        case 'wash_off':
+	          socket.emit('dmx-go', { 56: 0 });
+	          break;
+	        case 'wash_white':
+	          socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
+	          break;
+	        case 'wash_red':
+	          socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
+	          break;
+	        case 'wash_green':
+	          socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
+	          break;
+	        case 'wash_blue':
+	          socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
+	          break;
+	        case 'wash_yellow':
+	          socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	          break;
+	        case 'dmx_off':
+	          socket.emit('dmx-go', { 46: 0, 47: 0, 56: 0 });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value / 100.0 * 255.0;
+	      switch (event.target.id) {
+	        case 'spot_pan':
+	          socket.emit('dmx-go', { 40: slider_value });
+	          break;
+	        case 'spot_tilt':
+	          socket.emit('dmx-go', { 41: slider_value });
+	          break;
+	        case 'spot_fine_pan':
+	          socket.emit('dmx-go', { 42: slider_value });
+	          break;
+	        case 'spot_fine_tilt':
+	          socket.emit('dmx-go', { 43: slider_value });
+	          break;
+	        case 'all_intensity':
+	          socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
+	          break;
+	        case 'spot_intensity':
+	          socket.emit('dmx-go', { 47: slider_value });
+	          break;
+	        case 'wash_intensity':
+	          socket.emit('dmx-go', { 56: slider_value });
+	          break;
+	        case 'wash_pan':
+	          socket.emit('dmx-go', { 62: slider_value });
+	          break;
+	        case 'wash_tilt':
+	          socket.emit('dmx-go', { 63: slider_value });
+	          break;
+	        case 'wash_fine_pan':
+	          socket.emit('dmx-go', { 64: slider_value });
+	          break;
+	        case 'wash_fine_tilt':
+	          socket.emit('dmx-go', { 65: slider_value });
+	          break;
+	        case 'wash_zoom':
+	          socket.emit('dmx-go', { 67: slider_value });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 6, sm: 3, md: 2, lg: 1 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              ),
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'text-center' },
+	                '  ',
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Group 2: (41&57)'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "dmx_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Lights Out'
+	        }, {
+	          type: 1,
+	          i: "all_intensity",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          text: 'Master Intensity'
+	        }, {
+	          type: 0,
+	          i: "spot_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot On'
+	        }, {
+	          type: 0,
+	          i: "spot_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot Off'
+	        }, {
+	          type: 1,
+	          i: "spot_intensity",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Intensity'
+	        }, {
+	          type: 1,
+	          i: "spot_tilt",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Pan'
+	        }, {
+	          type: 1,
+	          i: "spot_fine_tilt",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Fine Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_fine_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Spot Fine Pan'
+	        }, {
+	          type: 0,
+	          i: "spot_white",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Spot White'
+	        }, {
+	          type: 0,
+	          i: "spot_red",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Spot Red'
+	        }, {
+	          type: 0,
+	          i: "spot_green",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Spot Green'
+	        }, {
+	          type: 0,
+	          i: "spot_blue",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Spot Blue'
+	        }, {
+	          type: 0,
+	          i: "spot_yellow",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Spot Yellow'
+	        }, {
+	          type: 0,
+	          i: "wash_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wash On'
+	        }, {
+	          type: 0,
+	          i: "wash_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wash Off'
+	        }, {
+	          type: 1,
+	          i: "wash_intensity",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Intensity'
+	        }, {
+	          type: 1,
+	          i: "wash_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Pan'
+	        }, {
+	          type: 1,
+	          i: "wash_tilt",
+	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, // Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Tilt'
+	        }, {
+	          type: 1,
+	          i: "wash_fine_pan",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Fine Pan'
+	        }, {
+	          type: 1,
+	          i: "wash_fine_tilt",
+	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, // Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Fine Tilt'
+	        }, {
+	          type: 1,
+	          i: "wash_zoom",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Wash Zoom'
+	        }, {
+	          type: 0,
+	          i: "wash_white",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Wash White'
+	        }, {
+	          type: 0,
+	          i: "wash_red",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Wash Red'
+	        }, {
+	          type: 0,
+	          i: "wash_green",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Wash Green'
+	        }, {
+	          type: 0,
+	          i: "wash_blue",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'Wash Blue'
+	        }, {
+	          type: 0,
+	          i: "wash_yellow",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Wash Yellow'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return Group2;
+	}(_react2.default.Component);
+	
+	exports.default = Group2;
+	
+	Group2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 933:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _socket = __webpack_require__(927);
+	
+	var _socket2 = __webpack_require__(873);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var socket = void 0;
+	
+	var Diagnostics = function (_React$Component) {
+		_inherits(Diagnostics, _React$Component);
+	
+		function Diagnostics(props) {
+			_classCallCheck(this, Diagnostics);
+	
+			var _this = _possibleConstructorReturn(this, (Diagnostics.__proto__ || Object.getPrototypeOf(Diagnostics)).call(this, props));
+	
+			_this.state = {
+				text: '',
+				host: '127.0.0.1',
+				port: 5250,
+				command: "cls",
+				response: ''
+			};
+			_this.onHostChange = _this.onHostChange.bind(_this);
+			_this.onPortChange = _this.onPortChange.bind(_this);
+			_this.onCommandChange = _this.onCommandChange.bind(_this);
+			_this.sendTelnetTest = _this.sendTelnetTest.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Diagnostics, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+	
+				socket = (0, _socket3.default)();
+				socket.on(this.props.location.pathname, function (mesg) {
+					_this2.setState({ text: mesg });
+				});
+				socket.on('telnet-response', function (mesg) {
+					_this2.setState({ response: mesg });
+				});
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				socket.off(this.props.page);
+			}
+		}, {
+			key: 'onPortChange',
+			value: function onPortChange(event) {
+				this.setState({ port: event.target.value });
+			}
+		}, {
+			key: 'onHostChange',
+			value: function onHostChange(event) {
+				this.setState({ host: event.target.value });
+			}
+		}, {
+			key: 'onCommandChange',
+			value: function onCommandChange(event) {
+				this.setState({ command: event.target.value });
+			}
+		}, {
+			key: 'sendTelnetTest',
+			value: function sendTelnetTest() {
+				console.log("sending Telnet Test");
+				socket.emit('diagnostics-send-telnet', { host: this.state.host, port: this.state.port, command: this.state.command });
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Form,
+							{ horizontal: true, onSubmit: this.sendTelnetTest },
+							_react2.default.createElement(
+								_reactBootstrap.FormGroup,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+									'Host'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ sm: 9 },
+									_react2.default.createElement(_reactBootstrap.FormControl, { name: 'host', value: this.state.host, onChange: this.onHostChange })
+								)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.FormGroup,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+									'Port'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ sm: 9 },
+									_react2.default.createElement(_reactBootstrap.FormControl, { name: 'port', value: this.state.port, onChange: this.onPortChange })
+								)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.FormGroup,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ componentClass: _reactBootstrap.ControlLabel, sm: 3 },
+									'Telnet Command'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ sm: 9 },
+									_react2.default.createElement(_reactBootstrap.FormControl, { name: 'command', value: this.state.command, onChange: this.onCommandChange })
+								)
+							),
+							_react2.default.createElement(
+								_reactBootstrap.FormGroup,
+								null,
+								_react2.default.createElement(
+									_reactBootstrap.Col,
+									{ smOffset: 3, sm: 6 },
+									_react2.default.createElement(
+										_reactBootstrap.ButtonToolbar,
+										null,
+										_react2.default.createElement(
+											_reactBootstrap.Button,
+											{ bsStyle: 'primary', type: 'submit' },
+											'Send Telnet Command'
+										)
+									)
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						null,
+						this.state.response
+					)
+				);
+			}
+		}]);
+	
+		return Diagnostics;
+	}(_react2.default.Component);
+	
+	exports.default = Diagnostics;
+
+/***/ }),
+
+/***/ 934:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(326);
@@ -41477,7 +43718,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 931:
+/***/ 935:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

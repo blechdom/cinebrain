@@ -1,7 +1,7 @@
 {
   "name": "Cinebrain",
   "version": "0.0.0",
-  "description": "Cinebrain",
+  "description": "Cinebrain is a MERN/Socket/Telnet/Serial/Visca/DMX/MIDI hypervisor for live Audio Visual presentation hardware, software and more",
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.bundle.js",
@@ -9,7 +9,7 @@
     "watch-server": "webpack --config webpack.server-config.js --watch",
     "start-hook": "nodemon -e js,jsx -w server,src server/start_hook.js",
     "compile": "webpack",
-    "watch": "webpack-dev-server --hot --inline",
+    "watch": "webpack --watch",
     "dev-all": "npm run watch & npm run watch-server & npm start",
     "run-all": "npm run compile & npm run compile-server & npm start",
     "dev-all-hook": "npm run watch & npm run start-hook",
@@ -27,6 +27,7 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "body-parser": "^1.15.2",
+    "dmx": "0.0.5",
     "express": "^4.14.0",
     "http": "0.0.0",
     "isomorphic-fetch": "^2.2.1",
@@ -35,7 +36,9 @@
     "lodash.range": "^3.2.0",
     "lodash.result": "^4.5.2",
     "mongodb": "^2.2.6",
+    "node-hid": "^0.7.0",
     "node-sass": "^4.7.2",
+    "npm-run-all": "^4.1.2",
     "object-assign": "^4.1.0",
     "react": "^15.3.1",
     "react-bootstrap": "^0.30.6",

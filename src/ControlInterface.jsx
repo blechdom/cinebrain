@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import DeviceMenu from './DeviceMenu.jsx';
 import ParametersMenu from './ParametersMenu.jsx';
+import ParameterInput from './ParameterInput.jsx';
 
 export default class ControlInterface extends React.Component {
 
@@ -11,14 +12,9 @@ export default class ControlInterface extends React.Component {
 render() {
   return (
       <div>
-	<Row>
-	<Col>
-  	<DeviceMenu location={this.props.location} />  
-	</Col>
-	<Col>
-	<ParametersMenu location={this.props.location} />
-    	</Col>
-	</Row>
+  	        <DeviceMenu location={this.props.location} />  
+            <ParametersMenu location={this.props.location} />
+            <ParameterInput />
       </div>
     );
   }
