@@ -25,9 +25,6 @@ const Header = () => (
   <LinkContainer to="/control_interface">
         <MenuItem>Control Interface</MenuItem>
       </LinkContainer>
-      <LinkContainer to="/randomizer">
-        <MenuItem>Randomizer</MenuItem>
-      </LinkContainer>
        <LinkContainer to="/new_controllers">
         <MenuItem>New Controllers</MenuItem>
       </LinkContainer>
