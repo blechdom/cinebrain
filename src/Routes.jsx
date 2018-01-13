@@ -5,7 +5,6 @@ import IssueList from './IssueList.jsx';
 import IssueEdit from './IssueEdit.jsx';
 import DeviceList from './DeviceList.jsx';
 import DeviceEdit from './DeviceEdit.jsx';
-import ControllersSetup from './ControllersSetup.jsx';
 import NewControllers from './NewControllers.jsx';
 import ControlInterface from './ControlInterface.jsx';
 import Demo from './Demo.jsx';
@@ -23,7 +22,6 @@ export default (
     <Route path="group1" component={Group1} />
     <Route path="group2" component={Group2} />
     <Route path="control_interface" component={ControlInterface} />
-    <Route path="randomizer" component={ControllersSetup} />
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />
     <Route path="issues/:id" component={IssueEdit} />
