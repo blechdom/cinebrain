@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b9d01aeefcc4f8d46efb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c5eaf46410fcb4158526"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(58);
+	module.exports = __webpack_require__(61);
 
 
 /***/ }),
@@ -579,110 +579,164 @@
 	
 	var _dmx2 = _interopRequireDefault(_dmx);
 	
+	var _dgram = __webpack_require__(9);
+	
+	var _dgram2 = _interopRequireDefault(_dgram);
+	
+	var _emptyFunction = __webpack_require__(10);
+	
+	var _emptyFunction2 = _interopRequireDefault(_emptyFunction);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_sourceMapSupport2.default.install();
 	
 	
-	let appModule = __webpack_require__(9);
+	let appModule = __webpack_require__(11);
 	let db;
 	let server;
 	let websocket;
+	let UDPserver;
+	let UDPclient;
 	
 	let dmx = new _dmx2.default();
 	let universe = dmx.addUniverse('demo', 'enttec-usb-dmx-pro', 'COM3');
 	
 	let on = false;
 	
+	const PTZ_init = Buffer.from('020000010000000001', 'hex');
+	
+	const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
+	const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
+	
+	const PTZ_preset_1 = Buffer.from('01000007000000648101043f0200ff', 'hex');
+	const PTZ_preset_2 = Buffer.from('01000007000000648101043f0201ff', 'hex');
+	
 	_mongodb.MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
-	        db = connection;
-	        server = _http2.default.createServer();
-	        appModule.setDb(db);
-	        server.on('request', appModule.app);
-	        server.listen(3000, () => {
-	                console.log('App started on port 3000');
+	  db = connection;
+	  server = _http2.default.createServer();
+	  appModule.setDb(db);
+	  server.on('request', appModule.app);
+	  server.listen(3000, () => {
+	    console.log('App started on port 3000');
+	  });
+	
+	  UDPserver = _dgram2.default.createSocket('udp4');
+	  UDPclient = _dgram2.default.createSocket('udp4');
+	
+	  UDPserver.on('error', err => {
+	    console.log(`UDP server error:\n${err.stack}`);
+	    UDPserver.close();
+	  });
+	
+	  UDPserver.on('message', (msg, rinfo) => {
+	    console.log(`UDP server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+	  });
+	
+	  UDPserver.on('listening', () => {
+	    const address = '192.168.0.101';
+	    console.log(`UDP server listening ${address.address}:${address.port}`);
+	  });
+	
+	  UDPclient.send(PTZ_init, 52381, '192.168.0.100', err => {
+	    console.log("send message " + PTZ_init + " err: " + err);
+	    UDPclient.send(PTZ_camera_on, 52381, '192.168.0.100', err => {
+	      console.log("send message " + PTZ_camera_on + " err: " + err);
+	    });
+	  });
+	
+	  UDPserver.bind(62455);
+	
+	  websocket = (0, _socket2.default)(server);
+	  websocket.on('connection', socket => {
+	    console.log("user connected from: " + socket.id);
+	
+	    socket.on('disconnect', () => {
+	      console.log('user disconnected');
+	    });
+	    socket.on('diagnostics-send-telnet', function (data) {
+	      console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+	      runTelnet(data.host, data.port, data.command);
+	    });
+	    socket.on('control-interface-send-telnet', function (data) {
+	      console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+	      runTelnet(data.host, data.port, data.command);
+	    });
+	    socket.on('device-menu', message => {
+	      console.log("the device number is: " + message);
+	      websocket.sockets.emit("show-parameters", message);
+	    });
+	    socket.on('parameter-menu', buffer => {
+	      console.log("the parameter packet is: " + buffer);
+	      websocket.sockets.emit("show-parameter-inputs", buffer);
+	    });
+	    socket.on('dmx-go', buffer => {
+	      universe.update(buffer);
+	    });
+	    socket.on('dmx-all', buffer => {
+	      universe.updateAll(buffer);
+	    });
+	    socket.on('ptz-go', function (data) {
+	      let UDPmessage = Buffer.from(data.buffer, 'hex');
+	      UDPclient.send(PTZ_init, data.port, data.host, err => {
+	        console.log("send message " + PTZ_init + " err: " + err);
+	        UDPclient.send(UDPmessage, data.port, data.host, err => {
+	          console.log("send message " + UDPmessage + " err: " + err);
 	        });
-	        websocket = (0, _socket2.default)(server);
-	        websocket.on('connection', socket => {
-	                console.log("user connected from: " + socket.id);
+	      });
+	    });
 	
-	                socket.on('disconnect', () => {
-	                        console.log('user disconnected');
-	                });
-	                socket.on('diagnostics-send-telnet', function (data) {
-	                        console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
-	                        runTelnet(data.host, data.port, data.command);
-	                });
-	                socket.on('control-interface-send-telnet', function (data) {
-	                        console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
-	                        runTelnet(data.host, data.port, data.command);
-	                });
-	                socket.on('device-menu', message => {
-	                        console.log("the device number is: " + message);
-	                        websocket.sockets.emit("show-parameters", message);
-	                });
-	                socket.on('parameter-menu', buffer => {
-	                        console.log("the parameter packet is: " + buffer);
-	                        websocket.sockets.emit("show-parameter-inputs", buffer);
-	                });
-	                socket.on('dmx-go', buffer => {
-	                        universe.update(buffer);
-	                });
-	                socket.on('dmx-all', buffer => {
-	                        universe.updateAll(buffer);
-	                });
+	    const telnetHost = '127.0.0.1';
+	    const telnetPort = 5250;
 	
-	                const telnetHost = '127.0.0.1';
-	                const telnetPort = 5250;
+	    function runTelnet(telnetHost, telnetPort, command) {
+	      var connection = new _telnetClient2.default();
 	
-	                function runTelnet(telnetHost, telnetPort, command) {
-	                        var connection = new _telnetClient2.default();
+	      var params = {
+	        host: telnetHost,
+	        port: telnetPort,
+	        timeout: 1500,
+	        negotiationMandatory: false,
+	        ors: '\r\n',
+	        waitfor: '\n'
+	      };
+	      connection.on('connect', function () {
+	        connection.send(command, function (err, res) {
+	          if (err) return err;
 	
-	                        var params = {
-	                                host: telnetHost,
-	                                port: telnetPort,
-	                                timeout: 1500,
-	                                negotiationMandatory: false,
-	                                ors: '\r\n',
-	                                waitfor: '\n'
-	                        };
-	                        connection.on('connect', function () {
-	                                connection.send(command, function (err, res) {
-	                                        if (err) return err;
+	          console.log('first message:', res.trim());
 	
-	                                        console.log('first message:', res.trim());
+	          telnetResponse(res);
 	
-	                                        telnetResponse(res);
+	          connection.send('', {
+	            ors: '\r\n',
+	            waitfor: '\n'
+	          }, function (err, res) {
+	            if (err) return err;
 	
-	                                        connection.send('', {
-	                                                ors: '\r\n',
-	                                                waitfor: '\n'
-	                                        }, function (err, res) {
-	                                                if (err) return err;
-	
-	                                                console.log('resp after cmd:', res);
-	                                        });
-	                                });
-	                        });
-	
-	                        connection.connect(params);
-	                }
-	
-	                function telnetResponse(res) {
-	                        websocket.sockets.emit("telnet-response", res);
-	                }
+	            console.log('resp after cmd:', res);
+	          });
 	        });
+	      });
+	
+	      connection.connect(params);
+	    }
+	
+	    function telnetResponse(res) {
+	      websocket.sockets.emit("telnet-response", res);
+	    }
+	  });
 	}).catch(error => {
-	        console.log('ERROR:', error);
+	  console.log('ERROR:', error);
 	});
 	
 	if (true) {
-	        module.hot.accept(9, () => {
-	                server.removeListener('request', appModule.app);
-	                appModule = __webpack_require__(9); // eslint-disable-line
-	                appModule.setDb(db);
-	                server.on('request', appModule.app);
-	        });
+	  module.hot.accept(11, () => {
+	    server.removeListener('request', appModule.app);
+	    appModule = __webpack_require__(11); // eslint-disable-line
+	    appModule.setDb(db);
+	    server.on('request', appModule.app);
+	  });
 	}
 
 /***/ }),
@@ -729,6 +783,18 @@
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+	module.exports = require("dgram");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+	module.exports = require("fbjs/lib/emptyFunction");
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -738,25 +804,25 @@
 	});
 	exports.setDb = exports.app = undefined;
 	
-	var _express = __webpack_require__(10);
+	var _express = __webpack_require__(12);
 	
 	var _express2 = _interopRequireDefault(_express);
 	
-	var _bodyParser = __webpack_require__(11);
+	var _bodyParser = __webpack_require__(13);
 	
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 	
 	var _mongodb = __webpack_require__(5);
 	
-	var _issue = __webpack_require__(12);
+	var _issue = __webpack_require__(14);
 	
 	var _issue2 = _interopRequireDefault(_issue);
 	
-	var _device = __webpack_require__(13);
+	var _device = __webpack_require__(15);
 	
 	var _device2 = _interopRequireDefault(_device);
 	
-	var _renderedPageRouter = __webpack_require__(14);
+	var _renderedPageRouter = __webpack_require__(16);
 	
 	var _renderedPageRouter2 = _interopRequireDefault(_renderedPageRouter);
 	
@@ -986,19 +1052,19 @@
 	exports.setDb = setDb;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 	module.exports = require("express");
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1060,7 +1126,7 @@
 	};
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1129,7 +1195,7 @@
 	};
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1138,27 +1204,27 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _server = __webpack_require__(16);
+	var _server = __webpack_require__(18);
 	
-	var _reactRouter = __webpack_require__(17);
+	var _reactRouter = __webpack_require__(19);
 	
-	var _express = __webpack_require__(10);
+	var _express = __webpack_require__(12);
 	
 	var _express2 = _interopRequireDefault(_express);
 	
-	var _template = __webpack_require__(18);
+	var _template = __webpack_require__(20);
 	
 	var _template2 = _interopRequireDefault(_template);
 	
-	var _Routes = __webpack_require__(19);
+	var _Routes = __webpack_require__(21);
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(57);
+	var _ContextWrapper = __webpack_require__(60);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1201,25 +1267,25 @@
 	exports.default = renderedPageRouter;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react");
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-dom/server");
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router");
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1249,6 +1315,7 @@
 	  <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
 	  <script src="/vendor.bundle.js"></script>
 	  <script src="/app.bundle.js"></script>
+	
 	</body>
 	
 	</html>
@@ -1256,7 +1323,7 @@
 	}
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1265,57 +1332,61 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(17);
+	var _reactRouter = __webpack_require__(19);
 	
-	var _App = __webpack_require__(20);
+	var _App = __webpack_require__(22);
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _IssueList = __webpack_require__(24);
+	var _IssueList = __webpack_require__(26);
 	
 	var _IssueList2 = _interopRequireDefault(_IssueList);
 	
-	var _IssueEdit = __webpack_require__(29);
+	var _IssueEdit = __webpack_require__(31);
 	
 	var _IssueEdit2 = _interopRequireDefault(_IssueEdit);
 	
-	var _DeviceList = __webpack_require__(32);
+	var _DeviceList = __webpack_require__(34);
 	
 	var _DeviceList2 = _interopRequireDefault(_DeviceList);
 	
-	var _DeviceEdit = __webpack_require__(34);
+	var _DeviceEdit = __webpack_require__(36);
 	
 	var _DeviceEdit2 = _interopRequireDefault(_DeviceEdit);
 	
-	var _NewControllers = __webpack_require__(35);
+	var _NewControllers = __webpack_require__(37);
 	
 	var _NewControllers2 = _interopRequireDefault(_NewControllers);
 	
-	var _ControlInterface = __webpack_require__(46);
+	var _ControlInterface = __webpack_require__(48);
 	
 	var _ControlInterface2 = _interopRequireDefault(_ControlInterface);
 	
-	var _Demo = __webpack_require__(52);
+	var _Demo = __webpack_require__(54);
 	
 	var _Demo2 = _interopRequireDefault(_Demo);
 	
-	var _Group = __webpack_require__(53);
+	var _Group = __webpack_require__(55);
 	
 	var _Group2 = _interopRequireDefault(_Group);
 	
-	var _Group3 = __webpack_require__(54);
+	var _Group3 = __webpack_require__(56);
 	
 	var _Group4 = _interopRequireDefault(_Group3);
 	
-	var _Diagnostics = __webpack_require__(55);
+	var _PTZGroup = __webpack_require__(57);
+	
+	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
+	
+	var _Diagnostics = __webpack_require__(58);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(56);
+	var _Help = __webpack_require__(59);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1334,6 +1405,7 @@
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'group1', component: _Group2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'group2', component: _Group4.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues', component: (0, _reactRouter.withRouter)(_IssueList2.default) }),
@@ -1346,7 +1418,7 @@
 	);
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1357,15 +1429,15 @@
 	
 	__webpack_require__(3);
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _reactRouterBootstrap = __webpack_require__(22);
+	var _reactRouterBootstrap = __webpack_require__(24);
 	
-	var _moreVert = __webpack_require__(23);
+	var _moreVert = __webpack_require__(25);
 	
 	var _moreVert2 = _interopRequireDefault(_moreVert);
 	
@@ -1403,6 +1475,15 @@
 	        null,
 	        'Group 2'
 	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/ptz_group1' },
+	      _react2.default.createElement(
+	        _reactBootstrap.NavItem,
+	        null,
+	        'PTZ Group 1'
+	      )
 	    )
 	  ),
 	  _react2.default.createElement(
@@ -1427,15 +1508,6 @@
 	          _reactBootstrap.MenuItem,
 	          null,
 	          'Control Interface'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/randomizer' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Randomizer'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -1506,25 +1578,25 @@
 	exports.default = App;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-bootstrap");
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router-bootstrap");
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/more-vert");
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1533,25 +1605,25 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactRouter = __webpack_require__(17);
+	var _reactRouter = __webpack_require__(19);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _trash = __webpack_require__(26);
+	var _trash = __webpack_require__(28);
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
-	var _IssueFilter = __webpack_require__(27);
+	var _IssueFilter = __webpack_require__(29);
 	
 	var _IssueFilter2 = _interopRequireDefault(_IssueFilter);
 	
-	var _Toast = __webpack_require__(28);
+	var _Toast = __webpack_require__(30);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -1789,19 +1861,19 @@
 	};
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 	module.exports = require("isomorphic-fetch");
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/trash");
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1810,11 +1882,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2009,7 +2081,7 @@
 	};
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2018,11 +2090,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -2071,7 +2143,7 @@
 	};
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2080,23 +2152,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _reactRouterBootstrap = __webpack_require__(22);
+	var _reactRouterBootstrap = __webpack_require__(24);
 	
-	var _NumInput = __webpack_require__(30);
+	var _NumInput = __webpack_require__(32);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(31);
+	var _DateInput = __webpack_require__(33);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _Toast = __webpack_require__(28);
+	var _Toast = __webpack_require__(30);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -2451,7 +2523,7 @@
 	};
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2462,7 +2534,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2514,7 +2586,7 @@
 	};
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2525,7 +2597,7 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -2600,7 +2672,7 @@
 	};
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2609,21 +2681,21 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactRouter = __webpack_require__(17);
+	var _reactRouter = __webpack_require__(19);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _DeviceFilter = __webpack_require__(33);
+	var _DeviceFilter = __webpack_require__(35);
 	
 	var _DeviceFilter2 = _interopRequireDefault(_DeviceFilter);
 	
-	var _Toast = __webpack_require__(28);
+	var _Toast = __webpack_require__(30);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -2846,7 +2918,7 @@
 	};
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2855,11 +2927,11 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -3054,7 +3126,7 @@
 	};
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3063,23 +3135,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _reactRouterBootstrap = __webpack_require__(22);
+	var _reactRouterBootstrap = __webpack_require__(24);
 	
-	var _NumInput = __webpack_require__(30);
+	var _NumInput = __webpack_require__(32);
 	
 	var _NumInput2 = _interopRequireDefault(_NumInput);
 	
-	var _DateInput = __webpack_require__(31);
+	var _DateInput = __webpack_require__(33);
 	
 	var _DateInput2 = _interopRequireDefault(_DateInput);
 	
-	var _Toast = __webpack_require__(28);
+	var _Toast = __webpack_require__(30);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -3434,7 +3506,7 @@
 	};
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3444,58 +3516,61 @@
 	});
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	//import 'isomorphic-fetch';
 	
-	var _react = __webpack_require__(15);
+	
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(36);
+	var _reactGridLayout = __webpack_require__(38);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(39);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(38);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(25);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _reactBootstrap = __webpack_require__(21);
-	
-	var _lock = __webpack_require__(39);
+	var _lock = __webpack_require__(41);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(40);
+	var _unlock = __webpack_require__(42);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
-	var _fileUpload = __webpack_require__(41);
+	var _fileUpload = __webpack_require__(43);
 	
 	var _fileUpload2 = _interopRequireDefault(_fileUpload);
 	
-	var _fileDownload = __webpack_require__(42);
+	var _fileDownload = __webpack_require__(44);
 	
 	var _fileDownload2 = _interopRequireDefault(_fileDownload);
 	
-	var _edit = __webpack_require__(43);
+	var _edit = __webpack_require__(45);
 	
 	var _edit2 = _interopRequireDefault(_edit);
 	
-	var _close = __webpack_require__(44);
+	var _close = __webpack_require__(46);
 	
 	var _close2 = _interopRequireDefault(_close);
 	
-	var _Toast = __webpack_require__(28);
+	var _Toast = __webpack_require__(30);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
-	var _AddController = __webpack_require__(45);
+	var _AddController = __webpack_require__(47);
 	
 	var _AddController2 = _interopRequireDefault(_AddController);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//import Joystick from './Joystick.jsx';
+	
 	
 	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
@@ -3685,9 +3760,9 @@
 	    } else if (el.type == 2) {
 	      //type is xy area
 	      typeCode = _react2.default.createElement(
-	        'span',
-	        { className: 'text' },
-	        i
+	        'div',
+	        null,
+	        'xy joystick here'
 	      );
 	    }
 	    return _react2.default.createElement(
@@ -3776,6 +3851,8 @@
 	    return _react2.default.createElement(
 	      'div',
 	      null,
+	      'goobydooby',
+	      _react2.default.createElement(Joystick, null),
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
 	        null,
@@ -3853,61 +3930,61 @@
 	};
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-grid-layout");
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-dom");
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports) {
 
 	module.exports = require("lodash");
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/lock");
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/fa/unlock");
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/file-upload");
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/file-download");
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/edit");
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-icons/lib/md/close");
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3916,15 +3993,15 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRouter = __webpack_require__(17);
+	var _reactRouter = __webpack_require__(19);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _Toast = __webpack_require__(28);
+	var _Toast = __webpack_require__(30);
 	
 	var _Toast2 = _interopRequireDefault(_Toast);
 	
@@ -4067,7 +4144,7 @@
 	exports.default = (0, _reactRouter.withRouter)(AddController);
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4076,21 +4153,21 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _DeviceMenu = __webpack_require__(47);
+	var _DeviceMenu = __webpack_require__(49);
 	
 	var _DeviceMenu2 = _interopRequireDefault(_DeviceMenu);
 	
-	var _ParametersMenu = __webpack_require__(49);
+	var _ParametersMenu = __webpack_require__(51);
 	
 	var _ParametersMenu2 = _interopRequireDefault(_ParametersMenu);
 	
-	var _ParameterInput = __webpack_require__(50);
+	var _ParameterInput = __webpack_require__(52);
 	
 	var _ParameterInput2 = _interopRequireDefault(_ParameterInput);
 	
@@ -4122,7 +4199,7 @@
 	};
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4131,23 +4208,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(39);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(38);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _socket = __webpack_require__(48);
+	var _socket = __webpack_require__(50);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
@@ -4242,13 +4319,13 @@
 	};
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	module.exports = require("socket.io-client");
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4257,23 +4334,23 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(39);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(38);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _socket = __webpack_require__(48);
+	var _socket = __webpack_require__(50);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
@@ -4386,7 +4463,7 @@
 	};
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4395,17 +4472,17 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _socket = __webpack_require__(51);
+	var _socket = __webpack_require__(53);
 	
-	var _socket2 = __webpack_require__(48);
+	var _socket2 = __webpack_require__(50);
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
@@ -4545,13 +4622,13 @@
 	exports.default = ParameterInput;
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	module.exports = require("socket.io-react");
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4562,35 +4639,35 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(36);
+	var _reactGridLayout = __webpack_require__(38);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(39);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(38);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _lock = __webpack_require__(39);
+	var _lock = __webpack_require__(41);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(40);
+	var _unlock = __webpack_require__(42);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
-	var _socket = __webpack_require__(51);
+	var _socket = __webpack_require__(53);
 	
-	var _socket2 = __webpack_require__(48);
+	var _socket2 = __webpack_require__(50);
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
@@ -5237,7 +5314,7 @@
 	};
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5248,35 +5325,35 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(36);
+	var _reactGridLayout = __webpack_require__(38);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(39);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(38);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _lock = __webpack_require__(39);
+	var _lock = __webpack_require__(41);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(40);
+	var _unlock = __webpack_require__(42);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
-	var _socket = __webpack_require__(51);
+	var _socket = __webpack_require__(53);
 	
-	var _socket2 = __webpack_require__(48);
+	var _socket2 = __webpack_require__(50);
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
@@ -5782,7 +5859,7 @@
 	};
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5793,35 +5870,35 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactGridLayout = __webpack_require__(36);
+	var _reactGridLayout = __webpack_require__(38);
 	
-	var _reactDom = __webpack_require__(37);
+	var _reactDom = __webpack_require__(39);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _lodash = __webpack_require__(38);
+	var _lodash = __webpack_require__(40);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _lock = __webpack_require__(39);
+	var _lock = __webpack_require__(41);
 	
 	var _lock2 = _interopRequireDefault(_lock);
 	
-	var _unlock = __webpack_require__(40);
+	var _unlock = __webpack_require__(42);
 	
 	var _unlock2 = _interopRequireDefault(_unlock);
 	
-	var _socket = __webpack_require__(51);
+	var _socket = __webpack_require__(53);
 	
-	var _socket2 = __webpack_require__(48);
+	var _socket2 = __webpack_require__(50);
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
@@ -6327,7 +6404,554 @@
 	};
 
 /***/ }),
-/* 55 */
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(17);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(38);
+	
+	var _reactDom = __webpack_require__(39);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(40);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(27);
+	
+	var _reactBootstrap = __webpack_require__(23);
+	
+	var _lock = __webpack_require__(41);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(42);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(53);
+	
+	var _socket2 = __webpack_require__(50);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class Group1 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      PTZhost: '192.168.0.100',
+	      PTZport: 52381,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'ptz_on':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040002ff' });
+	        break;
+	      case 'ptz_off':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040003ff' });
+	        break;
+	      case 'ptz_preset_1':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0200ff' });
+	        break;
+	      case 'ptz_preset_2':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0201ff' });
+	        break;
+	      case 'ptz_preset_3':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0202ff' });
+	        break;
+	      case 'ptz_preset_4':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0203ff' });
+	        break;
+	      case 'ptz_preset_5':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
+	        break;
+	      case 'wash_on':
+	        socket.emit('dmx-go', { 16: 255 });
+	        break;
+	      case 'wash_off':
+	        socket.emit('dmx-go', { 16: 0 });
+	        break;
+	      case 'wash_white':
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	        break;
+	      case 'wash_red':
+	        socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	        break;
+	      case 'wash_green':
+	        socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	        break;
+	      case 'wash_blue':
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	        break;
+	      case 'wash_yellow':
+	        socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	        break;
+	      case 'dmx_off':
+	        socket.emit('dmx-go', { 6: 0, 7: 0, 16: 0 });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value / 100.0 * 255.0;
+	    switch (event.target.id) {
+	      case 'spot_pan':
+	        socket.emit('dmx-go', { 0: slider_value });
+	        break;
+	      case 'spot_tilt':
+	        socket.emit('dmx-go', { 1: slider_value });
+	        break;
+	      case 'spot_fine_pan':
+	        socket.emit('dmx-go', { 2: slider_value });
+	        break;
+	      case 'spot_fine_tilt':
+	        socket.emit('dmx-go', { 3: slider_value });
+	        break;
+	      case 'all_intensity':
+	        socket.emit('dmx-go', { 6: 216, 7: slider_value, 16: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        socket.emit('dmx-go', { 7: slider_value });
+	        break;
+	      case 'wash_intensity':
+	        socket.emit('dmx-go', { 16: slider_value });
+	        break;
+	      case 'wash_pan':
+	        socket.emit('dmx-go', { 22: slider_value });
+	        break;
+	      case 'wash_tilt':
+	        socket.emit('dmx-go', { 23: slider_value });
+	        break;
+	      case 'wash_fine_pan':
+	        socket.emit('dmx-go', { 24: slider_value });
+	        break;
+	      case 'wash_fine_tilt':
+	        socket.emit('dmx-go', { 25: slider_value });
+	        break;
+	      case 'wash_zoom':
+	        socket.emit('dmx-go', { 27: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'text-center' },
+	              '  ',
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 1: 1&17'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "dmx_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        className: 'btn-block btn btn-danger',
+	        text: 'LIGHTS OUT'
+	      }, {
+	        type: 1,
+	        i: "all_intensity",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        text: 'Master Intensity'
+	      }, {
+	        type: 0,
+	        i: "ptz_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ On'
+	      }, {
+	        type: 0,
+	        i: "ptz_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Off'
+	      }, {
+	        type: 1,
+	        i: "spot_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Intensity'
+	      }, {
+	        type: 1,
+	        i: "spot_tilt",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_tilt",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Fine Pan'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_3",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_4",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_5",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "wash_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash On'
+	      }, {
+	        type: 0,
+	        i: "wash_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wash Off'
+	      }, {
+	        type: 1,
+	        i: "wash_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Intensity'
+	      }, {
+	        type: 1,
+	        i: "wash_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_tilt",
+	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_pan",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Fine Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_tilt",
+	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, // Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_zoom",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Wash Zoom'
+	      }, {
+	        type: 0,
+	        i: "wash_white",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Wash White'
+	      }, {
+	        type: 0,
+	        i: "wash_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Wash Red'
+	      }, {
+	        type: 0,
+	        i: "wash_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Wash Green'
+	      }, {
+	        type: 0,
+	        i: "wash_blue",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Wash Blue'
+	      }, {
+	        type: 0,
+	        i: "wash_yellow",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Wash Yellow'
+	      }]
+	    });
+	  }
+	}
+	exports.default = Group1;
+	Group1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6336,17 +6960,17 @@
 		value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
-	var _socket = __webpack_require__(51);
+	var _socket = __webpack_require__(53);
 	
-	var _socket2 = __webpack_require__(48);
+	var _socket2 = __webpack_require__(50);
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
@@ -6477,7 +7101,7 @@
 	exports.default = Diagnostics;
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6486,15 +7110,15 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(25);
+	__webpack_require__(27);
 	
-	var _reactRouter = __webpack_require__(17);
+	var _reactRouter = __webpack_require__(19);
 	
-	var _reactBootstrap = __webpack_require__(21);
+	var _reactBootstrap = __webpack_require__(23);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -6510,7 +7134,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6519,7 +7143,7 @@
 	  value: true
 	});
 	
-	var _react = __webpack_require__(15);
+	var _react = __webpack_require__(17);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
@@ -6546,7 +7170,7 @@
 	};
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -6577,7 +7201,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(59)(updatedModules, updatedModules);
+					__webpack_require__(62)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -6590,7 +7214,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	/*

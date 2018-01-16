@@ -2,7 +2,7 @@ import React from 'react';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import ReactDOM from 'react-dom'
 import _ from "lodash";
-import 'isomorphic-fetch';
+//import 'isomorphic-fetch';
 import { Col, Row, FormGroup, FormControl, ControlLabel, Button, Table, Panel, Glyphicon } from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
@@ -12,6 +12,7 @@ import MdEdit from 'react-icons/lib/md/edit';
 import MdClose from 'react-icons/lib/md/close';
 import Toast from './Toast.jsx';
 import AddController from './AddController.jsx';
+//import Joystick from './Joystick.jsx';
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -89,6 +90,7 @@ export default class NewControllers extends React.Component {
   this.handleOnUpload = this.handleOnUpload.bind(this);
   this.showError = this.showError.bind(this);
   this.dismissToast = this.dismissToast.bind(this); 
+  
 }
 componentDidMount() {
     this.loadData();
@@ -184,7 +186,7 @@ componentDidMount() {
     		</div>;
     }
     else if (el.type==2) { //type is xy area
-       typeCode = <span className="text">{i}</span>;
+       typeCode = <div>xy joystick here</div>
     }
 	return (
      		<div key={i} data-grid={el} style={gridStyle}>
@@ -263,7 +265,8 @@ onBreakpointChange(breakpoint, cols) {
  } 
 render() {
   return (
-      <div>
+      <div>goobydooby
+<Joystick />
  	<Row>
           <Col xs={6} sm={3} md={2} lg={1}>
 	<AddController />

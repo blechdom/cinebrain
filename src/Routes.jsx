@@ -10,6 +10,7 @@ import ControlInterface from './ControlInterface.jsx';
 import Demo from './Demo.jsx';
 import Group1 from './Group1.jsx';
 import Group2 from './Group2.jsx';
+import PTZGroup1 from './PTZGroup1.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import Help from './Help.jsx';
 
@@ -21,6 +22,7 @@ export default (
     <Route path="demo" component={Demo} />
     <Route path="group1" component={Group1} />
     <Route path="group2" component={Group2} />
+    <Route path="ptz_group1" component={PTZGroup1} />
     <Route path="control_interface" component={ControlInterface} />
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />

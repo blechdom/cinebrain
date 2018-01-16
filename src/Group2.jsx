@@ -155,6 +155,9 @@ handleSliders(event) {
   case 'spot_fine_tilt':
       socket.emit('dmx-go', {43: slider_value});
       break;
+  case 'spot_speed':
+      socket.emit('dmx-go', {44: slider_value});
+      break;
   case 'all_intensity':
       socket.emit('dmx-go', {46:216, 47: slider_value, 56: slider_value});
       break;
@@ -293,6 +296,15 @@ render() {
                 w: 2,
                 h: 2,
                 text: 'Spot Pan',
+              },
+              {
+                type: 1,
+                i: "spot_speed",
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 6,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Spot Speed',
               },
               {
                 type: 1,

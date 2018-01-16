@@ -6,16 +6,33 @@ import { MongoClient } from 'mongodb';
 import socketio from 'socket.io';
 import telnet from 'telnet-client';
 import DMX from 'dmx';
+import dgram from 'dgram';
+import emptyFunction from 'fbjs/lib/emptyFunction';
 
 let appModule = require('./server.js');
 let db;
 let server;
 let websocket;
+let UDPserver;
+let UDPclient;
 
 let dmx = new DMX();
 let universe = dmx.addUniverse('demo', 'enttec-usb-dmx-pro', 'COM3')
 
 let on = false;
+
+
+
+const PTZ_init = Buffer.from('020000010000000001', 'hex');
+
+const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
+const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
+
+const PTZ_preset_1 = Buffer.from('01000007000000648101043f0200ff', 'hex');
+const PTZ_preset_2 = Buffer.from('01000007000000648101043f0201ff', 'hex');
+
+
+
 
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   db = connection;
@@ -25,6 +42,34 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   server.listen(3000, () => {
     console.log('App started on port 3000');
   });
+
+  UDPserver = dgram.createSocket('udp4');
+  UDPclient = dgram.createSocket('udp4');
+
+  UDPserver.on('error', (err) => {
+  console.log(`UDP server error:\n${err.stack}`);
+  UDPserver.close();
+  });
+
+  UDPserver.on('message', (msg, rinfo) => {
+    console.log(`UDP server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  });
+
+  UDPserver.on('listening', () => {
+    const address = '192.168.0.101';
+    console.log(`UDP server listening ${address.address}:${address.port}`);
+  });
+
+  UDPclient.send(PTZ_init, 52381, '192.168.0.100', (err) => {
+    console.log("send message " + PTZ_init + " err: " + err);
+    UDPclient.send(PTZ_camera_on, 52381, '192.168.0.100', (err) => {
+      console.log("send message " + PTZ_camera_on + " err: " + err);
+    });
+  });
+
+
+  UDPserver.bind(62455);
+
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
         console.log("user connected from: " + socket.id);
@@ -53,6 +98,15 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         });     
         socket.on('dmx-all', (buffer) => {
                 universe.updateAll(buffer);
+        });     
+        socket.on('ptz-go', function(data) {
+                let UDPmessage = Buffer.from(data.buffer, 'hex');
+                UDPclient.send(PTZ_init, data.port, data.host, (err) => {
+                  console.log("send message " + PTZ_init + " err: " + err);
+                  UDPclient.send(UDPmessage, data.port, data.host, (err) => {
+                  console.log("send message " + UDPmessage + " err: " + err);
+                  });
+                });
         });     
 
 

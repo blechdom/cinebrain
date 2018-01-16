@@ -16,6 +16,9 @@ const Header = () => (
 	<LinkContainer to="/group2">
         <NavItem>Group 2</NavItem>
       </LinkContainer>
+      <LinkContainer to="/ptz_group1">
+        <NavItem>PTZ Group 1</NavItem>
+      </LinkContainer>
     </Nav>
     <Nav pullRight>
       <NavDropdown id="user-dropdown" title={<MdMoreVert size={18} />} noCaret>

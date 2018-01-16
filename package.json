@@ -36,6 +36,7 @@
     "lodash.range": "^3.2.0",
     "lodash.result": "^4.5.2",
     "mongodb": "^2.2.6",
+    "nipplejs": "^0.6.8",
     "node-hid": "^0.7.0",
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
@@ -53,7 +54,8 @@
     "socket.io-react": "^1.2.0",
     "source-map-support": "^0.4.2",
     "telnet-client": "^0.15.5",
-    "telnet-stream": "^1.0.4"
+    "telnet-stream": "^1.0.4",
+    "udp": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
