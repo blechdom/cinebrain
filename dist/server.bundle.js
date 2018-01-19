@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c5eaf46410fcb4158526"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b421bcb58fa3a4c60c4e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(61);
+	module.exports = __webpack_require__(64);
 
 
 /***/ }),
@@ -609,16 +609,13 @@
 	const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 	const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
 	
-	const PTZ_preset_1 = Buffer.from('01000007000000648101043f0200ff', 'hex');
-	const PTZ_preset_2 = Buffer.from('01000007000000648101043f0201ff', 'hex');
-	
 	_mongodb.MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
 	  db = connection;
 	  server = _http2.default.createServer();
 	  appModule.setDb(db);
 	  server.on('request', appModule.app);
-	  server.listen(3000, () => {
-	    console.log('App started on port 3000');
+	  server.listen(80, () => {
+	    console.log('App started on port 80');
 	  });
 	
 	  UDPserver = _dgram2.default.createSocket('udp4');
@@ -634,7 +631,7 @@
 	  });
 	
 	  UDPserver.on('listening', () => {
-	    const address = '192.168.0.101';
+	    const address = '192.168.10.101';
 	    console.log(`UDP server listening ${address.address}:${address.port}`);
 	  });
 	
@@ -1224,7 +1221,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(60);
+	var _ContextWrapper = __webpack_require__(63);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1242,7 +1239,7 @@
 	      const componentsWithData = renderProps.components.filter(c => c.dataFetcher);
 	      const dataFetchers = componentsWithData.map(c => c.dataFetcher({
 	        params: renderProps.params, location: renderProps.location,
-	        urlBase: 'http://localhost:3000'
+	        urlBase: 'http://localhost'
 	      }));
 	      Promise.all(dataFetchers).then(dataList => {
 	        let initialState = {};
@@ -1370,23 +1367,35 @@
 	
 	var _Demo2 = _interopRequireDefault(_Demo);
 	
-	var _Group = __webpack_require__(55);
+	var _CasparGroup = __webpack_require__(55);
+	
+	var _CasparGroup2 = _interopRequireDefault(_CasparGroup);
+	
+	var _CasparGroup3 = __webpack_require__(56);
+	
+	var _CasparGroup4 = _interopRequireDefault(_CasparGroup3);
+	
+	var _Group = __webpack_require__(57);
 	
 	var _Group2 = _interopRequireDefault(_Group);
 	
-	var _Group3 = __webpack_require__(56);
+	var _Group3 = __webpack_require__(58);
 	
 	var _Group4 = _interopRequireDefault(_Group3);
 	
-	var _PTZGroup = __webpack_require__(57);
+	var _PTZGroup = __webpack_require__(59);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _Diagnostics = __webpack_require__(58);
+	var _PTZGroup3 = __webpack_require__(60);
+	
+	var _PTZGroup4 = _interopRequireDefault(_PTZGroup3);
+	
+	var _Diagnostics = __webpack_require__(61);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(59);
+	var _Help = __webpack_require__(62);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1402,10 +1411,13 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/controllers' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'caspar_group1', component: _CasparGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'caspar_group2', component: _CasparGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'group1', component: _Group2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'group2', component: _Group4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group2', component: _PTZGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues', component: (0, _reactRouter.withRouter)(_IssueList2.default) }),
@@ -1459,30 +1471,65 @@
 	    _reactBootstrap.Nav,
 	    null,
 	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/group1' },
+	      _reactBootstrap.NavDropdown,
+	      { id: 'user-dropdown', title: 'Group 1' },
 	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'Group 1'
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/group1' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Lights'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/ptz_group1' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Camera'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/caspar_group1' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Video'
+	        )
 	      )
 	    ),
 	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/group2' },
+	      _reactBootstrap.NavDropdown,
+	      { id: 'user-dropdown', title: 'Group 2' },
 	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'Group 2'
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactRouterBootstrap.LinkContainer,
-	      { to: '/ptz_group1' },
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/group2' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Lights'
+	        )
+	      ),
 	      _react2.default.createElement(
-	        _reactBootstrap.NavItem,
-	        null,
-	        'PTZ Group 1'
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/ptz_group2' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Camera'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/caspar_group2' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Video'
+	        )
 	      )
 	    )
 	  ),
@@ -3852,7 +3899,6 @@
 	      'div',
 	      null,
 	      'goobydooby',
-	      _react2.default.createElement(Joystick, null),
 	      _react2.default.createElement(
 	        _reactBootstrap.Row,
 	        null,
@@ -5363,6 +5409,854 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
+	class Caspar extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	      case 'vid_red':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FF0000' });
+	        break;
+	      case 'vid_white':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FFFFFF' });
+	        break;
+	      case 'vid_green':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #00FF00' });
+	        break;
+	      case 'vid_blue':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #0000FF' });
+	        break;
+	      case 'vid_play1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	        break;
+	      case 'vid_play2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 bbb.mp4 10 LEFT' });
+	        break;
+	      case 'vid_play3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ccc.mp4 PUSH 20 EASEINSINE' });
+	        break;
+	      case 'vid_play4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: '"PLAY 1-0 test_scroll SPEED 5 BLUR 50' });
+	        break;
+	      case 'vid_play5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ddd.mp4' });
+	        break;
+	      case 'vid_play6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 MOVIE SEEK 100 LOOP' });
+	        break;
+	      case 'vid_play7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	        break;
+	      case 'vid_play8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4' });
+	        break;
+	      case 'vid_loop1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_stop':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-0' });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 1: VIDEO'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "vid_play1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play1'
+	      }, {
+	        type: 0,
+	        i: "vid_play2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play2'
+	      }, {
+	        type: 0,
+	        i: "vid_play3",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play3'
+	      }, {
+	        type: 0,
+	        i: "vid_play4",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play4'
+	      }, {
+	        type: 0,
+	        i: "vid_play5",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play5'
+	      }, {
+	        type: 0,
+	        i: "vid_play6",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play6'
+	      }, {
+	        type: 0,
+	        i: "vid_play7",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play7'
+	      }, {
+	        type: 0,
+	        i: "vid_play8",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play8'
+	      }, {
+	        type: 0,
+	        i: "vid_loop1",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop1'
+	      }, {
+	        type: 0,
+	        i: "vid_loop2",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop2'
+	      }, {
+	        type: 0,
+	        i: "vid_loop3",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop3'
+	      }, {
+	        type: 0,
+	        i: "vid_loop4",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop4'
+	      }, {
+	        type: 0,
+	        i: "vid_white",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Vid White'
+	      }, {
+	        type: 0,
+	        i: "vid_red",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Vid Red'
+	      }, {
+	        type: 0,
+	        i: "vid_green",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Vid Green'
+	      }, {
+	        type: 0,
+	        i: "vid_blue",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Blue'
+	      }, {
+	        type: 0,
+	        i: "vid_stop",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Stop'
+	      }]
+	    });
+	  }
+	}
+	exports.default = Caspar;
+	Caspar.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(17);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(38);
+	
+	var _reactDom = __webpack_require__(39);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(40);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(27);
+	
+	var _reactBootstrap = __webpack_require__(23);
+	
+	var _lock = __webpack_require__(41);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(42);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(53);
+	
+	var _socket2 = __webpack_require__(50);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class CasparGroup2 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	      case 'vid_red':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #FF0000' });
+	        break;
+	      case 'vid_white':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #FFFFFF' });
+	        break;
+	      case 'vid_green':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #00FF00' });
+	        break;
+	      case 'vid_blue':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #0000FF' });
+	        break;
+	      case 'vid_play1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 aaa.mp4' });
+	        break;
+	      case 'vid_play2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 bbb.mp4 10 LEFT' });
+	        break;
+	      case 'vid_play3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 ccc.mp4 PUSH 20 EASEINSINE' });
+	        break;
+	      case 'vid_play4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: '"PLAY 2-0 test_scroll SPEED 5 BLUR 50' });
+	        break;
+	      case 'vid_play5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 ddd.mp4' });
+	        break;
+	      case 'vid_play6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 MOVIE SEEK 100 LOOP' });
+	        break;
+	      case 'vid_play7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 aaa.mp4' });
+	        break;
+	      case 'vid_play8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 aaa.mp4' });
+	        break;
+	      case 'vid_loop1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_loop4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP' });
+	        break;
+	      case 'vid_stop':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-0' });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 2: VIDEO'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "vid_play1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play1'
+	      }, {
+	        type: 0,
+	        i: "vid_play2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play2'
+	      }, {
+	        type: 0,
+	        i: "vid_play3",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play3'
+	      }, {
+	        type: 0,
+	        i: "vid_play4",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play4'
+	      }, {
+	        type: 0,
+	        i: "vid_play5",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play5'
+	      }, {
+	        type: 0,
+	        i: "vid_play6",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play6'
+	      }, {
+	        type: 0,
+	        i: "vid_play7",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play7'
+	      }, {
+	        type: 0,
+	        i: "vid_play8",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Play8'
+	      }, {
+	        type: 0,
+	        i: "vid_loop1",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop1'
+	      }, {
+	        type: 0,
+	        i: "vid_loop2",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop2'
+	      }, {
+	        type: 0,
+	        i: "vid_loop3",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop3'
+	      }, {
+	        type: 0,
+	        i: "vid_loop4",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop4'
+	      }, {
+	        type: 0,
+	        i: "vid_white",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Vid White'
+	      }, {
+	        type: 0,
+	        i: "vid_red",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Vid Red'
+	      }, {
+	        type: 0,
+	        i: "vid_green",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Vid Green'
+	      }, {
+	        type: 0,
+	        i: "vid_blue",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Blue'
+	      }, {
+	        type: 0,
+	        i: "vid_stop",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Stop'
+	      }]
+	    });
+	  }
+	}
+	exports.default = CasparGroup2;
+	CasparGroup2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(17);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(38);
+	
+	var _reactDom = __webpack_require__(39);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(40);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(27);
+	
+	var _reactBootstrap = __webpack_require__(23);
+	
+	var _lock = __webpack_require__(41);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(42);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(53);
+	
+	var _socket2 = __webpack_require__(50);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
 	class Group1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
@@ -5514,6 +6408,9 @@
 	      case 'spot_tilt':
 	        socket.emit('dmx-go', { 1: slider_value });
 	        break;
+	      case 'spot_speed':
+	        socket.emit('dmx-go', { 4: slider_value });
+	        break;
 	      case 'spot_fine_pan':
 	        socket.emit('dmx-go', { 2: slider_value });
 	        break;
@@ -5570,22 +6467,22 @@
 	          null,
 	          _react2.default.createElement(
 	            _reactBootstrap.Col,
-	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
 	            _react2.default.createElement(
 	              'button',
 	              { onClick: this.handleOnLock },
 	              lockIcon
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'text-center' },
-	              '  ',
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 1: 1&17'
-	              )
 	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 1: LIGHTS'
+	            ),
+	            ' DMX: 1 + 17'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -5675,6 +6572,14 @@
 	        w: 2,
 	        h: 2,
 	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_speed",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Speed'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_tilt",
@@ -5859,7 +6764,7 @@
 	};
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6065,6 +6970,9 @@
 	      case 'spot_fine_tilt':
 	        socket.emit('dmx-go', { 43: slider_value });
 	        break;
+	      case 'spot_speed':
+	        socket.emit('dmx-go', { 44: slider_value });
+	        break;
 	      case 'all_intensity':
 	        socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
 	        break;
@@ -6115,22 +7023,22 @@
 	          null,
 	          _react2.default.createElement(
 	            _reactBootstrap.Col,
-	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
 	            _react2.default.createElement(
 	              'button',
 	              { onClick: this.handleOnLock },
 	              lockIcon
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'text-center' },
-	              '  ',
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 2: (41&57)'
-	              )
 	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 2: LIGHTS'
+	            ),
+	            ' DMX: 41 + 57'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -6220,6 +7128,14 @@
 	        w: 2,
 	        h: 2,
 	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_speed",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Spot Speed'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_tilt",
@@ -6404,7 +7320,7 @@
 	};
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6453,7 +7369,7 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class Group1 extends _react2.default.Component {
+	class PTZGroup1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -6482,7 +7398,7 @@
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
 	    this.handleButtons = this.handleButtons.bind(this);
-	    this.handleSliders = this.handleSliders.bind(this);
+	    this.handleButtonRelease = this.handleButtonRelease.bind(this);
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -6512,7 +7428,7 @@
 	    const i = el.add ? "+" : el.i;
 	    let controllerCode = _react2.default.createElement(
 	      'button',
-	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      { className: el.className, value: el.i, onMouseDown: this.handleButtons, onMouseUp: this.handleButtonRelease },
 	      el.text
 	    );
 	    if (el.type == 1) {
@@ -6567,78 +7483,85 @@
 	      case 'ptz_preset_5':
 	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
 	        break;
-	      case 'wash_on':
-	        socket.emit('dmx-go', { 16: 255 });
+	      case 'ptz_preset_6':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0205ff' });
 	        break;
-	      case 'wash_off':
-	        socket.emit('dmx-go', { 16: 0 });
+	      case 'ptz_save_preset_1':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000108101043f0100ff' });
 	        break;
-	      case 'wash_white':
-	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	      case 'ptz_save_preset_2':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0101ff' });
 	        break;
-	      case 'wash_red':
-	        socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	      case 'ptz_save_preset_3':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0102ff' });
 	        break;
-	      case 'wash_green':
-	        socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	      case 'ptz_save_preset_4':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0103ff' });
 	        break;
-	      case 'wash_blue':
-	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	      case 'ptz_save_preset_5':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0104ff' });
 	        break;
-	      case 'wash_yellow':
-	        socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	      case 'ptz_save_preset_6':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0105ff' });
 	        break;
-	      case 'dmx_off':
-	        socket.emit('dmx-go', { 6: 0, 7: 0, 16: 0 });
+	      case 'ptz_up_left':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000900000099810106010c080101ff' });
+	        break;
+	      case 'ptz_up':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009b810106010c080301ff' });
+	        break;
+	      case 'ptz_up_right':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009d810106010c080201ff' });
+	        break;
+	      case 'ptz_left':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a3810106010c080103ff' });
+	        break;
+	      case 'ptz_right':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a5810106010c080203ff' });
+	        break;
+	      case 'ptz_down_left':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a7810106010c080102ff' });
+	        break;
+	      case 'ptz_down':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a9810106010c080302ff' });
+	        break;
+	      case 'ptz_down_right':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ab810106010c080202ff' });
+	        break;
+	      case 'ptz_zoom_in':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b78101040723ff' });
+	        break;
+	      case 'ptz_zoom_out':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b98101040733ff' });
+	        break;
+	      case 'ptz_iris_up':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040b02ff' });
+	        break;
+	      case 'ptz_iris_down':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
+	        break;
+	      case 'ptz_iris_reset':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b00ff' });
 	        break;
 	
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
 	  }
-	  handleSliders(event) {
-	    console.log(event.target.id + ': ' + event.target.value);
-	    let slider_value = event.target.value / 100.0 * 255.0;
-	    switch (event.target.id) {
-	      case 'spot_pan':
-	        socket.emit('dmx-go', { 0: slider_value });
-	        break;
-	      case 'spot_tilt':
-	        socket.emit('dmx-go', { 1: slider_value });
-	        break;
-	      case 'spot_fine_pan':
-	        socket.emit('dmx-go', { 2: slider_value });
-	        break;
-	      case 'spot_fine_tilt':
-	        socket.emit('dmx-go', { 3: slider_value });
-	        break;
-	      case 'all_intensity':
-	        socket.emit('dmx-go', { 6: 216, 7: slider_value, 16: slider_value });
-	        break;
-	      case 'spot_intensity':
-	        socket.emit('dmx-go', { 7: slider_value });
-	        break;
-	      case 'wash_intensity':
-	        socket.emit('dmx-go', { 16: slider_value });
-	        break;
-	      case 'wash_pan':
-	        socket.emit('dmx-go', { 22: slider_value });
-	        break;
-	      case 'wash_tilt':
-	        socket.emit('dmx-go', { 23: slider_value });
-	        break;
-	      case 'wash_fine_pan':
-	        socket.emit('dmx-go', { 24: slider_value });
-	        break;
-	      case 'wash_fine_tilt':
-	        socket.emit('dmx-go', { 25: slider_value });
-	        break;
-	      case 'wash_zoom':
-	        socket.emit('dmx-go', { 27: slider_value });
-	        break;
+	  handleButtonRelease(event) {
+	    console.log(event.target.id + " :mouse upped");
 	
+	    switch (event.target.value) {
+	
+	      case 'ptz_zoom_in':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
+	        break;
+	      case 'ptz_zoom_out':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
+	        break;
 	      default:
-	        console.log('ERROR: Slider does not exist');
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ac810106010c080303ff' });
+	
 	    }
 	  }
 	  onBreakpointChange(breakpoint, cols) {
@@ -6662,21 +7585,20 @@
 	          null,
 	          _react2.default.createElement(
 	            _reactBootstrap.Col,
-	            { xs: 6, sm: 3, md: 2, lg: 1 },
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
 	            _react2.default.createElement(
 	              'button',
 	              { onClick: this.handleOnLock },
 	              lockIcon
-	            ),
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
 	            _react2.default.createElement(
-	              'span',
-	              { className: 'text-center' },
-	              '  ',
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 1: 1&17'
-	              )
+	              'strong',
+	              null,
+	              'Group 1: CAMERA'
 	            )
 	          )
 	        ),
@@ -6710,26 +7632,9 @@
 	    this.setState({
 	      items: [{
 	        type: 0,
-	        i: "dmx_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 2,
-	        h: 2,
-	        className: 'btn-block btn btn-danger',
-	        text: 'LIGHTS OUT'
-	      }, {
-	        type: 1,
-	        i: "all_intensity",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 2,
-	        h: 2,
-	        text: 'Master Intensity'
-	      }, {
-	        type: 0,
 	        i: "ptz_on",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        y: 0, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
@@ -6738,74 +7643,34 @@
 	        type: 0,
 	        i: "ptz_off",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        y: 1, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
 	        text: 'PTZ Off'
 	      }, {
-	        type: 1,
-	        i: "spot_intensity",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Intensity'
-	      }, {
-	        type: 1,
-	        i: "spot_tilt",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Tilt'
-	      }, {
-	        type: 1,
-	        i: "spot_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Pan'
-	      }, {
-	        type: 1,
-	        i: "spot_fine_tilt",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Fine Tilt'
-	      }, {
-	        type: 1,
-	        i: "spot_fine_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Fine Pan'
-	      }, {
 	        type: 0,
 	        i: "ptz_preset_1",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        y: 0, //Infinity, 
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn btn-default',
+	        className: 'btn-block btn btn-success',
 	        text: 'Preset 1'
 	      }, {
 	        type: 0,
 	        i: "ptz_preset_2",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        y: 1, //Infinity, 
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn btn-danger',
+	        className: 'btn-block btn btn-success',
 	        text: 'Preset 2'
 	      }, {
 	        type: 0,
 	        i: "ptz_preset_3",
 	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        y: 0, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -6814,144 +7679,778 @@
 	        type: 0,
 	        i: "ptz_preset_4",
 	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        y: 1, //Infinity, 
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn btn-primary',
+	        className: 'btn-block btn btn-success',
 	        text: 'Preset 4'
 	      }, {
 	        type: 0,
 	        i: "ptz_preset_5",
 	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-warning',
-	        text: 'Preset 5'
-	      }, {
-	        type: 0,
-	        i: "wash_on",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Wash On'
-	      }, {
-	        type: 0,
-	        i: "wash_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Wash Off'
-	      }, {
-	        type: 1,
-	        i: "wash_intensity",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Intensity'
-	      }, {
-	        type: 1,
-	        i: "wash_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Pan'
-	      }, {
-	        type: 1,
-	        i: "wash_tilt",
-	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, // Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Tilt'
-	      }, {
-	        type: 1,
-	        i: "wash_fine_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Fine Pan'
-	      }, {
-	        type: 1,
-	        i: "wash_fine_tilt",
-	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, // Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Fine Tilt'
-	      }, {
-	        type: 1,
-	        i: "wash_zoom",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Zoom'
-	      }, {
-	        type: 0,
-	        i: "wash_white",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-default',
-	        text: 'Wash White'
-	      }, {
-	        type: 0,
-	        i: "wash_red",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-danger',
-	        text: 'Wash Red'
-	      }, {
-	        type: 0,
-	        i: "wash_green",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        y: 0, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
-	        text: 'Wash Green'
+	        text: 'Preset 5'
 	      }, {
 	        type: 0,
-	        i: "wash_blue",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        i: "ptz_preset_6",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Wash Blue'
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
 	      }, {
 	        type: 0,
-	        i: "wash_yellow",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        i: "ptz_zoom_in",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, // Infinity,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
-	        text: 'Wash Yellow'
+	        text: 'PTZ Zoom In'
+	      }, {
+	        type: 0,
+	        i: "ptz_zoom_out",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, // Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'PTZ Zoom Out'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 1'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 2'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_3",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 3'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_4",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 4'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_5",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 5'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_6",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 6'
+	      }, {
+	        type: 0,
+	        i: "ptz_up_left",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Up Left'
+	      }, {
+	        type: 0,
+	        i: "ptz_up",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Up'
+	      }, {
+	        type: 0,
+	        i: "ptz_up_right",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Up Right'
+	      }, {
+	        type: 0,
+	        i: "ptz_left",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, // Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Left'
+	      }, {
+	        type: 0,
+	        i: "ptz_right",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Right'
+	      }, {
+	        type: 0,
+	        i: "ptz_down_left",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Down Left'
+	      }, {
+	        type: 0,
+	        i: "ptz_down",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Down'
+	      }, {
+	        type: 0,
+	        i: "ptz_down_right",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Down Right'
+	      }, {
+	        type: 0,
+	        i: "ptz_iris_up",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'PTZ Iris Up'
+	      }, {
+	        type: 0,
+	        i: "ptz_iris_down",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'PTZ Iris Down'
+	      }, {
+	        type: 0,
+	        i: "ptz_iris_reset",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'PTZ Iris Reset'
 	      }]
 	    });
 	  }
 	}
-	exports.default = Group1;
-	Group1.defaultProps = {
+	exports.default = PTZGroup1;
+	PTZGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
 	};
 
 /***/ }),
-/* 58 */
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(17);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(38);
+	
+	var _reactDom = __webpack_require__(39);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(40);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(27);
+	
+	var _reactBootstrap = __webpack_require__(23);
+	
+	var _lock = __webpack_require__(41);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(42);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(53);
+	
+	var _socket2 = __webpack_require__(50);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class PTZGroup2 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      PTZhost: '192.168.0.100',
+	      PTZport: 52381,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleButtonRelease = this.handleButtonRelease.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onMouseDown: this.handleButtons, onMouseUp: this.handleButtonRelease },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'ptz_on':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040002ff' });
+	        break;
+	      case 'ptz_off':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040003ff' });
+	        break;
+	      case 'ptz_preset_1':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0200ff' });
+	        break;
+	      case 'ptz_preset_2':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0201ff' });
+	        break;
+	      case 'ptz_preset_3':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0202ff' });
+	        break;
+	      case 'ptz_preset_4':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0203ff' });
+	        break;
+	      case 'ptz_preset_5':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
+	        break;
+	      case 'ptz_preset_6':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0205ff' });
+	        break;
+	      case 'ptz_save_preset_1':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000108101043f0100ff' });
+	        break;
+	      case 'ptz_save_preset_2':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0101ff' });
+	        break;
+	      case 'ptz_save_preset_3':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0102ff' });
+	        break;
+	      case 'ptz_save_preset_4':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0103ff' });
+	        break;
+	      case 'ptz_save_preset_5':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0104ff' });
+	        break;
+	      case 'ptz_save_preset_6':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0105ff' });
+	        break;
+	      case 'ptz_up_left':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000900000099810106010c080101ff' });
+	        break;
+	      case 'ptz_up':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009b810106010c080301ff' });
+	        break;
+	      case 'ptz_up_right':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009d810106010c080201ff' });
+	        break;
+	      case 'ptz_left':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a3810106010c080103ff' });
+	        break;
+	      case 'ptz_right':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a5810106010c080203ff' });
+	        break;
+	      case 'ptz_down_left':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a7810106010c080102ff' });
+	        break;
+	      case 'ptz_down':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a9810106010c080302ff' });
+	        break;
+	      case 'ptz_down_right':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ab810106010c080202ff' });
+	        break;
+	      case 'ptz_zoom_in':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b78101040723ff' });
+	        break;
+	      case 'ptz_zoom_out':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b98101040733ff' });
+	        break;
+	      case 'ptz_iris_up':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040b02ff' });
+	        break;
+	      case 'ptz_iris_down':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
+	        break;
+	      case 'ptz_iris_reset':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b00ff' });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleButtonRelease(event) {
+	    console.log(event.target.id + " :mouse upped");
+	
+	    switch (event.target.value) {
+	
+	      case 'ptz_zoom_in':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
+	        break;
+	      case 'ptz_zoom_out':
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
+	        break;
+	      default:
+	        socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ac810106010c080303ff' });
+	
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 2: CAMERA'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "ptz_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ On'
+	      }, {
+	        type: 0,
+	        i: "ptz_off",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Off'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_3",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_4",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_5",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "ptz_preset_6",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "ptz_zoom_in",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, // Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'PTZ Zoom In'
+	      }, {
+	        type: 0,
+	        i: "ptz_zoom_out",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, // Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'PTZ Zoom Out'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 1'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 2'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_3",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 3'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_4",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 4'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_5",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 5'
+	      }, {
+	        type: 0,
+	        i: "ptz_save_preset_6",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Pset 6'
+	      }, {
+	        type: 0,
+	        i: "ptz_up_left",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Up Left'
+	      }, {
+	        type: 0,
+	        i: "ptz_up",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Up'
+	      }, {
+	        type: 0,
+	        i: "ptz_up_right",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Up Right'
+	      }, {
+	        type: 0,
+	        i: "ptz_left",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, // Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Left'
+	      }, {
+	        type: 0,
+	        i: "ptz_right",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Right'
+	      }, {
+	        type: 0,
+	        i: "ptz_down_left",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Down Left'
+	      }, {
+	        type: 0,
+	        i: "ptz_down",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Down'
+	      }, {
+	        type: 0,
+	        i: "ptz_down_right",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'PTZ Down Right'
+	      }, {
+	        type: 0,
+	        i: "ptz_iris_up",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'PTZ Iris Up'
+	      }, {
+	        type: 0,
+	        i: "ptz_iris_down",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'PTZ Iris Down'
+	      }, {
+	        type: 0,
+	        i: "ptz_iris_reset",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'PTZ Iris Reset'
+	      }]
+	    });
+	  }
+	}
+	exports.default = PTZGroup2;
+	PTZGroup2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7101,7 +8600,7 @@
 	exports.default = Diagnostics;
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7134,7 +8633,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7170,7 +8669,7 @@
 	};
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -7201,7 +8700,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(62)(updatedModules, updatedModules);
+					__webpack_require__(65)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -7214,7 +8713,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports) {
 
 	/*

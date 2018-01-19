@@ -21,17 +21,10 @@ let universe = dmx.addUniverse('demo', 'enttec-usb-dmx-pro', 'COM3')
 
 let on = false;
 
-
-
 const PTZ_init = Buffer.from('020000010000000001', 'hex');
 
 const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
-
-const PTZ_preset_1 = Buffer.from('01000007000000648101043f0200ff', 'hex');
-const PTZ_preset_2 = Buffer.from('01000007000000648101043f0201ff', 'hex');
-
-
 
 
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
@@ -39,8 +32,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   server = http.createServer();
   appModule.setDb(db);
   server.on('request', appModule.app);
-  server.listen(3000, () => {
-    console.log('App started on port 3000');
+  server.listen(80, () => {
+    console.log('App started on port 80');
   });
 
   UDPserver = dgram.createSocket('udp4');
@@ -56,7 +49,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   });
 
   UDPserver.on('listening', () => {
-    const address = '192.168.0.101';
+    const address = '192.168.10.101';
     console.log(`UDP server listening ${address.address}:${address.port}`);
   });
 

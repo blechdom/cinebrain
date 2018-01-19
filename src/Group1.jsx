@@ -201,9 +201,11 @@ render() {
   return (
       <div><div>
  	      <Row>
-      	  <Col xs={6} sm={3} md={2} lg={1}>
+      	  <Col xs={2} sm={2} md={2} lg={2}>
       	    <button onClick={this.handleOnLock}>{lockIcon}</button>
-            <span className="text-center">  <strong>Group 1: 1&17</strong></span>
+          </Col>
+          <Col xs={10} sm={10} md={10} lg={10}>
+           <strong>Group 1: LIGHTS</strong> DMX: 1 + 17
           </Col>
       	</Row>
 	     <ResponsiveReactGridLayout
@@ -304,7 +306,7 @@ render() {
                 y: 6,//Infinity,
                 w: 2,
                 h: 2,
-                text: 'Spot Intensity',
+                text: 'Spot Speed',
               },
               {
                 type: 1,

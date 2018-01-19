@@ -10,15 +10,28 @@ const Header = () => (
       <Navbar.Brand>Cinebrain</Navbar.Brand>
     </Navbar.Header>
     <Nav>
-    <LinkContainer to="/group1">
-        <NavItem>Group 1</NavItem>
+      <NavDropdown id="user-dropdown" title="Group 1">
+        <LinkContainer to="/group1">
+          <NavItem>Lights</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/ptz_group1">
+          <NavItem>Camera</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/caspar_group1">
+          <MenuItem>Video</MenuItem>
+        </LinkContainer>
+	    </NavDropdown>
+      <NavDropdown id="user-dropdown" title="Group 2">
+       <LinkContainer to="/group2">
+        <NavItem>Lights</NavItem>
       </LinkContainer>
-	<LinkContainer to="/group2">
-        <NavItem>Group 2</NavItem>
+       <LinkContainer to="/ptz_group2">
+        <NavItem>Camera</NavItem>
       </LinkContainer>
-      <LinkContainer to="/ptz_group1">
-        <NavItem>PTZ Group 1</NavItem>
+       <LinkContainer to="/caspar_group2">
+        <MenuItem>Video</MenuItem>
       </LinkContainer>
+      </NavDropdown>
     </Nav>
     <Nav pullRight>
       <NavDropdown id="user-dropdown" title={<MdMoreVert size={18} />} noCaret>

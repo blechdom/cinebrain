@@ -266,7 +266,6 @@ onBreakpointChange(breakpoint, cols) {
 render() {
   return (
       <div>goobydooby
-<Joystick />
  	<Row>
           <Col xs={6} sm={3} md={2} lg={1}>
 	<AddController />

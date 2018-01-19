@@ -8,9 +8,12 @@ import DeviceEdit from './DeviceEdit.jsx';
 import NewControllers from './NewControllers.jsx';
 import ControlInterface from './ControlInterface.jsx';
 import Demo from './Demo.jsx';
+import Caspar1 from './CasparGroup1.jsx';
+import Caspar2 from './CasparGroup2.jsx';
 import Group1 from './Group1.jsx';
 import Group2 from './Group2.jsx';
 import PTZGroup1 from './PTZGroup1.jsx';
+import PTZGroup2 from './PTZGroup2.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import Help from './Help.jsx';
 
@@ -19,10 +22,13 @@ const NoMatch = () => <p>Page Not Found</p>;
 export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/controllers" />
+    <Route path="caspar_group1" component={Caspar1} />
+     <Route path="caspar_group2" component={Caspar2} />
     <Route path="demo" component={Demo} />
     <Route path="group1" component={Group1} />
     <Route path="group2" component={Group2} />
     <Route path="ptz_group1" component={PTZGroup1} />
+    <Route path="ptz_group2" component={PTZGroup2} />
     <Route path="control_interface" component={ControlInterface} />
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />
