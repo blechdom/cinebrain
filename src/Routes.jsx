@@ -14,6 +14,8 @@ import Group1 from './Group1.jsx';
 import Group2 from './Group2.jsx';
 import PTZGroup1 from './PTZGroup1.jsx';
 import PTZGroup2 from './PTZGroup2.jsx';
+import ATEMGroup1 from './ATEMGroup1.jsx';
+import ATEMGroup2 from './ATEMGroup2.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import Help from './Help.jsx';
 
@@ -29,6 +31,8 @@ export default (
     <Route path="group2" component={Group2} />
     <Route path="ptz_group1" component={PTZGroup1} />
     <Route path="ptz_group2" component={PTZGroup2} />
+    <Route path="atem_group1" component={ATEMGroup1} />
+    <Route path="atem_group2" component={ATEMGroup2} />
     <Route path="control_interface" component={ControlInterface} />
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />

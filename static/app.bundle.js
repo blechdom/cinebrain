@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(934);
+	var _ContextWrapper = __webpack_require__(936);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -120,11 +120,19 @@ webpackJsonp([0],{
 	
 	var _PTZGroup4 = _interopRequireDefault(_PTZGroup3);
 	
-	var _Diagnostics = __webpack_require__(932);
+	var _ATEMGroup = __webpack_require__(932);
+	
+	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
+	
+	var _ATEMGroup3 = __webpack_require__(933);
+	
+	var _ATEMGroup4 = _interopRequireDefault(_ATEMGroup3);
+	
+	var _Diagnostics = __webpack_require__(934);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(933);
+	var _Help = __webpack_require__(935);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -149,6 +157,8 @@ webpackJsonp([0],{
 	  _react2.default.createElement(_reactRouter.Route, { path: 'group2', component: _Group4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group2', component: _PTZGroup4.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group1', component: _ATEMGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group2', component: _ATEMGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues', component: (0, _reactRouter.withRouter)(_IssueList2.default) }),
@@ -230,7 +240,16 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            _reactBootstrap.MenuItem,
 	            null,
-	            'Video'
+	            'Media'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/atem_group1' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Video Switch'
 	          )
 	        )
 	      ),
@@ -261,7 +280,16 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            _reactBootstrap.MenuItem,
 	            null,
-	            'Video'
+	            'Media'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/atem_group2' },
+	          _react2.default.createElement(
+	            _reactBootstrap.MenuItem,
+	            null,
+	            'Video Switch'
 	          )
 	        )
 	      )
@@ -38164,7 +38192,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'strong',
 	                null,
-	                'Group 1: VIDEO'
+	                'Group 1: MEDIA'
 	              )
 	            )
 	          ),
@@ -38628,7 +38656,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'strong',
 	                null,
-	                'Group 2: VIDEO'
+	                'Group 2: MEDIA'
 	              )
 	            )
 	          ),
@@ -40725,7 +40753,7 @@ webpackJsonp([0],{
 	      lock: true,
 	      host: '127.0.0.1',
 	      port: 5250,
-	      PTZhost: '192.168.0.100',
+	      PTZhost: '192.168.0.200',
 	      PTZport: 52381,
 	      command: "",
 	      response: '',
@@ -40883,9 +40911,70 @@ webpackJsonp([0],{
 	        case 'ptz_iris_down':
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
 	          break;
-	        case 'ptz_iris_reset':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b00ff' });
+	        case 'ptz_shutter_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040a02ff' });
 	          break;
+	        case 'ptz_shutter_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040a03ff' });
+	          break;
+	        case 'ptz_gain_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040c02ff' });
+	          break;
+	        case 'ptz_gain_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040c03ff' });
+	          break;
+	        case 'ptz_iris_priority':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Bff' });
+	          break;
+	        case 'ptz_shutter_priority':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Aff' });
+	          break;
+	        case 'ptz_bright_mode':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Dff' });
+	          break;
+	        case 'ptz_bright_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D02ff' });
+	          break;
+	        case 'ptz_bright_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D03ff' });
+	          break;
+	        case 'ptz_awb':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043500ff' });
+	          break;
+	        //8101043503ff
+	        case 'ptz_onetouch_wb':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043503ff' });
+	          break;
+	        //8101041005ff
+	        case 'ptz_onetouch_wb_trigger':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101041005ff' });
+	          break;
+	        case 'ptz_manual_wb':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043505ff' });
+	          break;
+	        case 'ptz_full_auto':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101043900ff' });
+	          break;
+	        case 'ptz_manual_exposure':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101043903ff' });
+	          break;
+	        case 'ptz_fx_off':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101046300ff' });
+	          break;
+	        case 'ptz_fx_neg':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101046302ff' });
+	          break;
+	        case 'ptz_fx_bw':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101046304ff' });
+	          break;
+	        case 'ptz_onscreen_on':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000981017e011802ff' });
+	          break;
+	        case 'ptz_onscreen_off':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000031681017e011803ff' });
+	          break;
+	        //81017e011802ff Information display On    
+	        //81017e011803ff Information display Off
 	
 	        default:
 	          console.log('ERROR: Button does not exist');
@@ -41071,7 +41160,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-warning',
-	          text: 'PTZ Zoom In'
+	          text: 'Zoom In'
 	        }, {
 	          type: 0,
 	          i: "ptz_zoom_out",
@@ -41080,7 +41169,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-warning',
-	          text: 'PTZ Zoom Out'
+	          text: 'Zoom Out'
 	        }, {
 	          type: 0,
 	          i: "ptz_save_preset_1",
@@ -41143,7 +41232,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Up Left'
+	          text: 'Up Left'
 	        }, {
 	          type: 0,
 	          i: "ptz_up",
@@ -41152,7 +41241,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Up'
+	          text: 'Up'
 	        }, {
 	          type: 0,
 	          i: "ptz_up_right",
@@ -41161,7 +41250,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Up Right'
+	          text: 'Up Right'
 	        }, {
 	          type: 0,
 	          i: "ptz_left",
@@ -41170,7 +41259,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Left'
+	          text: 'Left'
 	        }, {
 	          type: 0,
 	          i: "ptz_right",
@@ -41179,7 +41268,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Right'
+	          text: 'Right'
 	        }, {
 	          type: 0,
 	          i: "ptz_down_left",
@@ -41188,7 +41277,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Down Left'
+	          text: 'Down Left'
 	        }, {
 	          type: 0,
 	          i: "ptz_down",
@@ -41197,7 +41286,7 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Down'
+	          text: 'Down'
 	        }, {
 	          type: 0,
 	          i: "ptz_down_right",
@@ -41206,34 +41295,196 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'PTZ Down Right'
+	          text: 'Down Right'
 	        }, {
 	          type: 0,
-	          i: "ptz_iris_up",
+	          i: "ptz_onetouch_wb",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 7, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
-	          text: 'PTZ Iris Up'
+	          text: 'WB Set Standby'
 	        }, {
 	          type: 0,
-	          i: "ptz_iris_down",
+	          i: "ptz_onetouch_wb_trigger",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 7, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
-	          text: 'PTZ Iris Down'
+	          text: 'Press to Set WB'
 	        }, {
 	          type: 0,
-	          i: "ptz_iris_reset",
+	          i: "ptz_awb",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 7, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
-	          text: 'PTZ Iris Reset'
+	          text: 'Auto White Balance'
+	        }, {
+	          type: 0,
+	          i: "ptz_full_auto",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Full Auto'
+	        }, {
+	          type: 0,
+	          i: "ptz_manual_exposure",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Manual Exposure'
+	        }, {
+	          type: 0,
+	          i: "ptz_iris_priority",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Iris Priority'
+	        }, {
+	          type: 0,
+	          i: "ptz_iris_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Iris Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_iris_down",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Iris Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_shutter_priority",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Shutter Priority'
+	        }, {
+	          type: 0,
+	          i: "ptz_shutter_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Shutter Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_shutter_down",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Shutter Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_gain_up",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Gain Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_gain_down",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Gain Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_bright_up",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Bright Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_bright_down",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Bright Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_bright_mode",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Bright Mode'
+	        }, {
+	          type: 0,
+	          i: "ptz_fx_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Effect Off'
+	        }, {
+	          type: 0,
+	          i: "ptz_fx_neg",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Effect Negative'
+	        }, {
+	          type: 0,
+	          i: "ptz_fx_bw",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Black+White'
+	        }, {
+	          type: 0,
+	          i: "ptz_onscreen_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Camera Debug On'
+	        }, {
+	          type: 0,
+	          i: "ptz_onscreen_off",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Camera Debug Off'
 	        }]
 	      });
 	    }
@@ -41253,6 +41504,586 @@ webpackJsonp([0],{
 /***/ }),
 
 /***/ 932:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(858);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(859);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(860);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(922);
+	
+	var _socket2 = __webpack_require__(868);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var ATEM = function (_React$Component) {
+	  _inherits(ATEM, _React$Component);
+	
+	  function ATEM(props, context) {
+	    _classCallCheck(this, ATEM);
+	
+	    var _this = _possibleConstructorReturn(this, (ATEM.__proto__ || Object.getPrototypeOf(ATEM)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ATEM, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	        case 'atem_caspar':
+	          socket.emit('atem_changeProgramInput', '1');
+	          break;
+	        case 'atem_camera':
+	          socket.emit('atem_changeProgramInput', '2');
+	          break;
+	        case 'atem_50_50':
+	          socket.emit('atem_runMacro', '0');
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 1: VIDEO Switcher'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "atem_caspar",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'ATEM Media'
+	        }, {
+	          type: 0,
+	          i: "atem_camera",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'ATEM Camera'
+	        }, {
+	          type: 0,
+	          i: "atem_50_50",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'ATEM 50/50'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return ATEM;
+	}(_react2.default.Component);
+	
+	exports.default = ATEM;
+	
+	ATEM.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 933:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(858);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(859);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(860);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(922);
+	
+	var _socket2 = __webpack_require__(868);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var ATEM = function (_React$Component) {
+	  _inherits(ATEM, _React$Component);
+	
+	  function ATEM(props, context) {
+	    _classCallCheck(this, ATEM);
+	
+	    var _this = _possibleConstructorReturn(this, (ATEM.__proto__ || Object.getPrototypeOf(ATEM)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ATEM, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	        case 'atem_caspar':
+	          socket.emit('atem_changePreviewInput', '3');
+	          break;
+	        case 'atem_camera':
+	          socket.emit('atem_changePreviewInput', '4');
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 2: VIDEO Switcher'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "atem_caspar",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'ATEM Media'
+	        }, {
+	          type: 0,
+	          i: "atem_camera",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'ATEM Camera'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return ATEM;
+	}(_react2.default.Component);
+	
+	exports.default = ATEM;
+	
+	ATEM.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 934:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41437,7 +42268,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 933:
+/***/ 935:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41493,7 +42324,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 934:
+/***/ 936:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

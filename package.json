@@ -25,6 +25,7 @@
   ],
   "author": "Kristin and Matthew Galvin",
   "dependencies": {
+    "applest-atem": "^0.2.4",
     "babel-polyfill": "^6.13.0",
     "body-parser": "^1.15.2",
     "dmx": "0.0.5",

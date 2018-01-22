@@ -18,7 +18,10 @@ const Header = () => (
           <NavItem>Camera</NavItem>
         </LinkContainer>
         <LinkContainer to="/caspar_group1">
-          <MenuItem>Video</MenuItem>
+          <MenuItem>Media</MenuItem>
+        </LinkContainer>
+         <LinkContainer to="/atem_group1">
+          <MenuItem>Video Switch</MenuItem>
         </LinkContainer>
 	    </NavDropdown>
       <NavDropdown id="user-dropdown" title="Group 2">
@@ -29,8 +32,11 @@ const Header = () => (
         <NavItem>Camera</NavItem>
       </LinkContainer>
        <LinkContainer to="/caspar_group2">
-        <MenuItem>Video</MenuItem>
+        <MenuItem>Media</MenuItem>
       </LinkContainer>
+       <LinkContainer to="/atem_group2">
+          <MenuItem>Video Switch</MenuItem>
+        </LinkContainer>
       </NavDropdown>
     </Nav>
     <Nav pullRight>

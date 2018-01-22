@@ -160,7 +160,7 @@ render() {
       	    <button onClick={this.handleOnLock}>{lockIcon}</button>
       	  </Col>
            <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 2: VIDEO</strong>
+           <strong>Group 2: MEDIA</strong>
           </Col>
       	</Row>
 	     <ResponsiveReactGridLayout
