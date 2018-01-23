@@ -38949,7 +38949,8 @@ webpackJsonp([0],{
 	      port: 5250,
 	      command: "",
 	      response: '',
-	      compactType: null
+	      compactType: null,
+	      spot_speed: 50
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
@@ -39082,13 +39083,16 @@ webpackJsonp([0],{
 	      var slider_value = event.target.value / 100.0 * 255.0;
 	      switch (event.target.id) {
 	        case 'spot_pan':
+	          socket.emit('dmx-go', { 4: this.state.spot_speed });
 	          socket.emit('dmx-go', { 0: slider_value });
 	          break;
 	        case 'spot_tilt':
+	          socket.emit('dmx-go', { 4: this.state.spot_speed });
 	          socket.emit('dmx-go', { 1: slider_value });
 	          break;
 	        case 'spot_speed':
 	          socket.emit('dmx-go', { 4: slider_value });
+	          this.state.spot_speed = slider_value;
 	          break;
 	        case 'spot_fine_pan':
 	          socket.emit('dmx-go', { 2: slider_value });
@@ -39548,7 +39552,8 @@ webpackJsonp([0],{
 	      port: 5250,
 	      command: "",
 	      response: '',
-	      compactType: null
+	      compactType: null,
+	      spot_speed: 50
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
@@ -39681,9 +39686,11 @@ webpackJsonp([0],{
 	      var slider_value = event.target.value / 100.0 * 255.0;
 	      switch (event.target.id) {
 	        case 'spot_pan':
+	          socket.emit('dmx-go', { 44: this.state.spot_speed });
 	          socket.emit('dmx-go', { 40: slider_value });
 	          break;
 	        case 'spot_tilt':
+	          socket.emit('dmx-go', { 44: this.state.spot_speed });
 	          socket.emit('dmx-go', { 41: slider_value });
 	          break;
 	        case 'spot_fine_pan':
@@ -39694,6 +39701,7 @@ webpackJsonp([0],{
 	          break;
 	        case 'spot_speed':
 	          socket.emit('dmx-go', { 44: slider_value });
+	          this.state.spot_speed = slider_value;
 	          break;
 	        case 'all_intensity':
 	          socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
@@ -40303,614 +40311,6 @@ webpackJsonp([0],{
 	        case 'ptz_iris_down':
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
 	          break;
-	        case 'ptz_iris_reset':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b00ff' });
-	          break;
-	
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'handleButtonRelease',
-	    value: function handleButtonRelease(event) {
-	      console.log(event.target.id + " :mouse upped");
-	
-	      switch (event.target.value) {
-	
-	        case 'ptz_zoom_in':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
-	          break;
-	        case 'ptz_zoom_out':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
-	          break;
-	        default:
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ac810106010c080303ff' });
-	
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 1: CAMERA'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock,
-	              compactType: this.state.compactType
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "ptz_on",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ On'
-	        }, {
-	          type: 0,
-	          i: "ptz_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Off'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_1",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 1'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_2",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 2'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_3",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 3'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_4",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 4'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_5",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 5'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_6",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 6'
-	        }, {
-	          type: 0,
-	          i: "ptz_zoom_in",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'PTZ Zoom In'
-	        }, {
-	          type: 0,
-	          i: "ptz_zoom_out",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'PTZ Zoom Out'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_1",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 1'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_2",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 2'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_3",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 3'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_4",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 4'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_5",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 5'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_6",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 6'
-	        }, {
-	          type: 0,
-	          i: "ptz_up_left",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Up Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_up_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Up Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_left",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 5, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 5, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_down_left",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Down Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_down",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_down_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Down Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_up",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'PTZ Iris Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_down",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'PTZ Iris Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_reset",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'PTZ Iris Reset'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return PTZGroup1;
-	}(_react2.default.Component);
-	
-	exports.default = PTZGroup1;
-	
-	PTZGroup1.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 931:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(844);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(858);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(859);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(860);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(922);
-	
-	var _socket2 = __webpack_require__(868);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var PTZGroup2 = function (_React$Component) {
-	  _inherits(PTZGroup2, _React$Component);
-	
-	  function PTZGroup2(props, context) {
-	    _classCallCheck(this, PTZGroup2);
-	
-	    var _this = _possibleConstructorReturn(this, (PTZGroup2.__proto__ || Object.getPrototypeOf(PTZGroup2)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      PTZhost: '192.168.0.200',
-	      PTZport: 52381,
-	      command: "",
-	      response: '',
-	      compactType: null
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleButtonRelease = _this.handleButtonRelease.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(PTZGroup2, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onMouseDown: this.handleButtons, onMouseUp: this.handleButtonRelease },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	
-	      switch (event.target.value) {
-	
-	        case 'ptz_on':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040002ff' });
-	          break;
-	        case 'ptz_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040003ff' });
-	          break;
-	        case 'ptz_preset_1':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0200ff' });
-	          break;
-	        case 'ptz_preset_2':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0201ff' });
-	          break;
-	        case 'ptz_preset_3':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0202ff' });
-	          break;
-	        case 'ptz_preset_4':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0203ff' });
-	          break;
-	        case 'ptz_preset_5':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
-	          break;
-	        case 'ptz_preset_6':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0205ff' });
-	          break;
-	        case 'ptz_save_preset_1':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000108101043f0100ff' });
-	          break;
-	        case 'ptz_save_preset_2':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0101ff' });
-	          break;
-	        case 'ptz_save_preset_3':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0102ff' });
-	          break;
-	        case 'ptz_save_preset_4':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0103ff' });
-	          break;
-	        case 'ptz_save_preset_5':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0104ff' });
-	          break;
-	        case 'ptz_save_preset_6':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0105ff' });
-	          break;
-	        case 'ptz_up_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000900000099810106010c080101ff' });
-	          break;
-	        case 'ptz_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009b810106010c080301ff' });
-	          break;
-	        case 'ptz_up_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009d810106010c080201ff' });
-	          break;
-	        case 'ptz_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a3810106010c080103ff' });
-	          break;
-	        case 'ptz_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a5810106010c080203ff' });
-	          break;
-	        case 'ptz_down_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a7810106010c080102ff' });
-	          break;
-	        case 'ptz_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a9810106010c080302ff' });
-	          break;
-	        case 'ptz_down_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ab810106010c080202ff' });
-	          break;
-	        case 'ptz_zoom_in':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b78101040723ff' });
-	          break;
-	        case 'ptz_zoom_out':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b98101040733ff' });
-	          break;
-	        case 'ptz_iris_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040b02ff' });
-	          break;
-	        case 'ptz_iris_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
-	          break;
 	        case 'ptz_shutter_up':
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040a02ff' });
 	          break;
@@ -40941,11 +40341,9 @@ webpackJsonp([0],{
 	        case 'ptz_awb':
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043500ff' });
 	          break;
-	        //8101043503ff
 	        case 'ptz_onetouch_wb':
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043503ff' });
 	          break;
-	        //8101041005ff
 	        case 'ptz_onetouch_wb_trigger':
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101041005ff' });
 	          break;
@@ -40968,10 +40366,10 @@ webpackJsonp([0],{
 	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101046304ff' });
 	          break;
 	        case 'ptz_onscreen_on':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000981017e011802ff' });
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011802ff' });
 	          break;
 	        case 'ptz_onscreen_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000031681017e011803ff' });
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011803ff' });
 	          break;
 	        //81017e011802ff Information display On    
 	        //81017e011803ff Information display Off
@@ -41300,7 +40698,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_onetouch_wb",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
+	          y: 13, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41309,7 +40707,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_onetouch_wb_trigger",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
+	          y: 137, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41318,7 +40716,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_awb",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
+	          y: 13, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41327,7 +40725,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_full_auto",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
+	          y: 7, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41336,7 +40734,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_manual_exposure",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
+	          y: 7, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41345,7 +40743,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_iris_priority",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
+	          y: 8, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41354,7 +40752,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_iris_up",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
+	          y: 8, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41363,7 +40761,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_iris_down",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
+	          y: 8, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41372,7 +40770,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_shutter_priority",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
+	          y: 9, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41381,7 +40779,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_shutter_up",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
+	          y: 9, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41390,7 +40788,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_shutter_down",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
+	          y: 9, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41398,7 +40796,7 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "ptz_gain_up",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 10, //Infinity,
 	          w: 1,
 	          h: 1,
@@ -41407,7 +40805,7 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "ptz_gain_down",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 10, //Infinity,
 	          w: 1,
 	          h: 1,
@@ -41416,8 +40814,8 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "ptz_bright_up",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41425,8 +40823,8 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "ptz_bright_down",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41434,8 +40832,8 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "ptz_bright_mode",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41444,7 +40842,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_fx_off",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
+	          y: 12, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41453,7 +40851,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_fx_neg",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
+	          y: 12, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -41462,29 +40860,822 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_fx_bw",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
+	          y: 12, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
 	          text: 'Black+White'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return PTZGroup1;
+	}(_react2.default.Component);
+	
+	exports.default = PTZGroup1;
+	
+	PTZGroup1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 931:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(858);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(859);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(860);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(922);
+	
+	var _socket2 = __webpack_require__(868);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var PTZGroup2 = function (_React$Component) {
+	  _inherits(PTZGroup2, _React$Component);
+	
+	  function PTZGroup2(props, context) {
+	    _classCallCheck(this, PTZGroup2);
+	
+	    var _this = _possibleConstructorReturn(this, (PTZGroup2.__proto__ || Object.getPrototypeOf(PTZGroup2)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      PTZhost: '192.168.0.200',
+	      PTZport: 52381,
+	      command: "",
+	      response: '',
+	      compactType: null
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleButtonRelease = _this.handleButtonRelease.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(PTZGroup2, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onMouseDown: this.handleButtons, onMouseUp: this.handleButtonRelease },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'ptz_on':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040002ff' });
+	          break;
+	        case 'ptz_off':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040003ff' });
+	          break;
+	        case 'ptz_preset_1':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0200ff' });
+	          break;
+	        case 'ptz_preset_2':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0201ff' });
+	          break;
+	        case 'ptz_preset_3':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0202ff' });
+	          break;
+	        case 'ptz_preset_4':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0203ff' });
+	          break;
+	        case 'ptz_preset_5':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
+	          break;
+	        case 'ptz_preset_6':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0205ff' });
+	          break;
+	        case 'ptz_save_preset_1':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000108101043f0100ff' });
+	          break;
+	        case 'ptz_save_preset_2':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0101ff' });
+	          break;
+	        case 'ptz_save_preset_3':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0102ff' });
+	          break;
+	        case 'ptz_save_preset_4':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0103ff' });
+	          break;
+	        case 'ptz_save_preset_5':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0104ff' });
+	          break;
+	        case 'ptz_save_preset_6':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0105ff' });
+	          break;
+	        case 'ptz_up_left':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000900000099810106010c080101ff' });
+	          break;
+	        case 'ptz_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009b810106010c080301ff' });
+	          break;
+	        case 'ptz_up_right':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009d810106010c080201ff' });
+	          break;
+	        case 'ptz_left':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a3810106010c080103ff' });
+	          break;
+	        case 'ptz_right':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a5810106010c080203ff' });
+	          break;
+	        case 'ptz_down_left':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a7810106010c080102ff' });
+	          break;
+	        case 'ptz_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a9810106010c080302ff' });
+	          break;
+	        case 'ptz_down_right':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ab810106010c080202ff' });
+	          break;
+	        case 'ptz_zoom_in':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b78101040723ff' });
+	          break;
+	        case 'ptz_zoom_out':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b98101040733ff' });
+	          break;
+	        case 'ptz_iris_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040b02ff' });
+	          break;
+	        case 'ptz_iris_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
+	          break;
+	        case 'ptz_shutter_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040a02ff' });
+	          break;
+	        case 'ptz_shutter_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040a03ff' });
+	          break;
+	        case 'ptz_gain_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040c02ff' });
+	          break;
+	        case 'ptz_gain_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040c03ff' });
+	          break;
+	        case 'ptz_iris_priority':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Bff' });
+	          break;
+	        case 'ptz_shutter_priority':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Aff' });
+	          break;
+	        case 'ptz_bright_mode':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Dff' });
+	          break;
+	        case 'ptz_bright_up':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D02ff' });
+	          break;
+	        case 'ptz_bright_down':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D03ff' });
+	          break;
+	        case 'ptz_awb':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043500ff' });
+	          break;
+	        case 'ptz_onetouch_wb':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043503ff' });
+	          break;
+	        case 'ptz_onetouch_wb_trigger':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101041005ff' });
+	          break;
+	        case 'ptz_manual_wb':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043505ff' });
+	          break;
+	        case 'ptz_full_auto':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101043900ff' });
+	          break;
+	        case 'ptz_manual_exposure':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101043903ff' });
+	          break;
+	        case 'ptz_fx_off':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101046300ff' });
+	          break;
+	        case 'ptz_fx_neg':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101046302ff' });
+	          break;
+	        case 'ptz_fx_bw':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101046304ff' });
+	          break;
+	        case 'ptz_onscreen_on':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011802ff' });
+	          break;
+	        case 'ptz_onscreen_off':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011803ff' });
+	          break;
+	        //81017e011802ff Information display On    
+	        //81017e011803ff Information display Off
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleButtonRelease',
+	    value: function handleButtonRelease(event) {
+	      console.log(event.target.id + " :mouse upped");
+	
+	      switch (event.target.value) {
+	
+	        case 'ptz_zoom_in':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
+	          break;
+	        case 'ptz_zoom_out':
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
+	          break;
+	        default:
+	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ac810106010c080303ff' });
+	
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 2: CAMERA'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "ptz_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'PTZ On'
 	        }, {
 	          type: 0,
-	          i: "ptz_onscreen_on",
+	          i: "ptz_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'PTZ Off'
+	        }, {
+	          type: 0,
+	          i: "ptz_preset_1",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 1'
+	        }, {
+	          type: 0,
+	          i: "ptz_preset_2",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 2'
+	        }, {
+	          type: 0,
+	          i: "ptz_preset_3",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 3'
+	        }, {
+	          type: 0,
+	          i: "ptz_preset_4",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 4'
+	        }, {
+	          type: 0,
+	          i: "ptz_preset_5",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 5'
+	        }, {
+	          type: 0,
+	          i: "ptz_preset_6",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 6'
+	        }, {
+	          type: 0,
+	          i: "ptz_zoom_in",
+	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, // Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Zoom In'
+	        }, {
+	          type: 0,
+	          i: "ptz_zoom_out",
+	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, // Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Zoom Out'
+	        }, {
+	          type: 0,
+	          i: "ptz_save_preset_1",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Pset 1'
+	        }, {
+	          type: 0,
+	          i: "ptz_save_preset_2",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Pset 2'
+	        }, {
+	          type: 0,
+	          i: "ptz_save_preset_3",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Pset 3'
+	        }, {
+	          type: 0,
+	          i: "ptz_save_preset_4",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Pset 4'
+	        }, {
+	          type: 0,
+	          i: "ptz_save_preset_5",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Pset 5'
+	        }, {
+	          type: 0,
+	          i: "ptz_save_preset_6",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Pset 6'
+	        }, {
+	          type: 0,
+	          i: "ptz_up_left",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Up Left'
+	        }, {
+	          type: 0,
+	          i: "ptz_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_up_right",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Up Right'
+	        }, {
+	          type: 0,
+	          i: "ptz_left",
+	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 5, // Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Left'
+	        }, {
+	          type: 0,
+	          i: "ptz_right",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 5, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Right'
+	        }, {
+	          type: 0,
+	          i: "ptz_down_left",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Down Left'
+	        }, {
+	          type: 0,
+	          i: "ptz_down",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_down_right",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Down Right'
+	        }, {
+	          type: 0,
+	          i: "ptz_onetouch_wb",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'WB Set Standby'
+	        }, {
+	          type: 0,
+	          i: "ptz_onetouch_wb_trigger",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 137, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Press to Set WB'
+	        }, {
+	          type: 0,
+	          i: "ptz_awb",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Auto White Balance'
+	        }, {
+	          type: 0,
+	          i: "ptz_full_auto",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Full Auto'
+	        }, {
+	          type: 0,
+	          i: "ptz_manual_exposure",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Manual Exposure'
+	        }, {
+	          type: 0,
+	          i: "ptz_iris_priority",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Iris Priority'
+	        }, {
+	          type: 0,
+	          i: "ptz_iris_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Iris Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_iris_down",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Iris Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_shutter_priority",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Shutter Priority'
+	        }, {
+	          type: 0,
+	          i: "ptz_shutter_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Shutter Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_shutter_down",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Shutter Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_gain_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Gain Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_gain_down",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Gain Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_bright_up",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Bright Up'
+	        }, {
+	          type: 0,
+	          i: "ptz_bright_down",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Bright Down'
+	        }, {
+	          type: 0,
+	          i: "ptz_bright_mode",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Bright Mode'
+	        }, {
+	          type: 0,
+	          i: "ptz_fx_off",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 12, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
-	          text: 'Camera Debug On'
+	          text: 'Effect Off'
 	        }, {
 	          type: 0,
-	          i: "ptz_onscreen_off",
+	          i: "ptz_fx_neg",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 12, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
-	          text: 'Camera Debug Off'
+	          text: 'Effect Negative'
+	        }, {
+	          type: 0,
+	          i: "ptz_fx_bw",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-default',
+	          text: 'Black+White'
 	        }]
 	      });
 	    }
@@ -41772,15 +41963,6 @@ webpackJsonp([0],{
 	          h: 1,
 	          className: 'btn-block btn',
 	          text: 'ATEM Camera'
-	        }, {
-	          type: 0,
-	          i: "atem_50_50",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'ATEM 50/50'
 	        }]
 	      });
 	    }

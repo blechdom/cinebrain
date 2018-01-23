@@ -37,6 +37,7 @@ export default class Group2 extends React.Component {
       command: "",
       response: '',
       compactType: null,
+      spot_speed: 50,
   };
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
@@ -144,9 +145,11 @@ handleSliders(event) {
   let slider_value = (event.target.value / 100.0) * 255.0;
   switch (event.target.id) {
   case 'spot_pan':
+      socket.emit('dmx-go', {44: this.state.spot_speed});
       socket.emit('dmx-go', {40: slider_value});
       break;
   case 'spot_tilt':
+      socket.emit('dmx-go', {44: this.state.spot_speed});
       socket.emit('dmx-go', {41: slider_value});
       break;
   case 'spot_fine_pan':
@@ -157,6 +160,7 @@ handleSliders(event) {
       break;
   case 'spot_speed':
       socket.emit('dmx-go', {44: slider_value});
+      this.state.spot_speed = slider_value;
       break;
   case 'all_intensity':
       socket.emit('dmx-go', {46:216, 47: slider_value, 56: slider_value});

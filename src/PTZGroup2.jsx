@@ -199,11 +199,9 @@ handleButtons(event) {
   case 'ptz_awb':
      socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043500ff'});
     break;
-//8101043503ff
 case 'ptz_onetouch_wb':
      socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043503ff'});
     break;
-//8101041005ff
  case 'ptz_onetouch_wb_trigger':
      socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101041005ff'});
     break;   
@@ -226,10 +224,10 @@ case 'ptz_onetouch_wb':
      socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101046304ff'});
     break;
     case 'ptz_onscreen_on':
-    socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000981017e011802ff'});
+    socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011802ff'});
     break;
    case 'ptz_onscreen_off':
-     socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000031681017e011803ff'});
+     socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011803ff'});
     break;
 //81017e011802ff Information display On    
 //81017e011803ff Information display Off
@@ -548,7 +546,7 @@ render() {
                 type: 0,
                 i: "ptz_onetouch_wb",
                 x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 7, //Infinity,
+                y: 13, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -558,7 +556,7 @@ render() {
                 type: 0,
                 i: "ptz_onetouch_wb_trigger",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 7, //Infinity,
+                y: 137, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -568,7 +566,7 @@ render() {
                 type: 0,
                 i: "ptz_awb",
                 x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 7, //Infinity,
+                y: 13, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -578,7 +576,7 @@ render() {
                 type: 0,
                 i: "ptz_full_auto",
                 x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity,
+                y: 7, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -588,7 +586,7 @@ render() {
                 type: 0,
                 i: "ptz_manual_exposure",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity,
+                y: 7, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -598,7 +596,7 @@ render() {
                 type: 0,
                 i: "ptz_iris_priority",
                 x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity,
+                y: 8, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -608,7 +606,7 @@ render() {
                 type: 0,
                 i: "ptz_iris_up",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity,
+                y: 8, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -618,7 +616,7 @@ render() {
                 type: 0,
                 i: "ptz_iris_down",
                 x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity,
+                y: 8, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -628,7 +626,7 @@ render() {
                 type: 0,
                 i: "ptz_shutter_priority",
                 x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
+                y: 9, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -638,7 +636,7 @@ render() {
                 type: 0,
                 i: "ptz_shutter_up",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
+                y: 9, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -648,7 +646,7 @@ render() {
                 type: 0,
                 i: "ptz_shutter_down",
                 x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
+                y: 9, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -657,7 +655,7 @@ render() {
                {
                 type: 0,
                 i: "ptz_gain_up",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 10, //Infinity,
                 w: 1,
                 h: 1,
@@ -667,7 +665,7 @@ render() {
                {
                 type: 0,
                 i: "ptz_gain_down",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 10, //Infinity,
                 w: 1,
                 h: 1,
@@ -677,8 +675,8 @@ render() {
               {
                 type: 0,
                 i: "ptz_bright_up",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity,
+                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 11, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -687,8 +685,8 @@ render() {
                {
                 type: 0,
                 i: "ptz_bright_down",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 11, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -697,8 +695,8 @@ render() {
                {
                 type: 0,
                 i: "ptz_bright_mode",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 7, //Infinity,
+                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 11, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -708,7 +706,7 @@ render() {
                 type: 0,
                 i: "ptz_fx_off",
                 x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 11, //Infinity,
+                y: 12, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -718,7 +716,7 @@ render() {
                 type: 0,
                 i: "ptz_fx_neg",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 11, //Infinity,
+                y: 12, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
@@ -728,31 +726,11 @@ render() {
                 type: 0,
                 i: "ptz_fx_bw",
                 x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 11, //Infinity,
+                y: 12, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',
                 text: 'Black+White',
-              },
-              {
-                type: 0,
-                i: "ptz_onscreen_on",
-                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 12, //Infinity,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-default',
-                text: 'Camera Debug On',
-              },
-              {
-                type: 0,
-                i: "ptz_onscreen_off",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 12, //Infinity,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-default',
-                text: 'Camera Debug Off',
               },
             ]
       });

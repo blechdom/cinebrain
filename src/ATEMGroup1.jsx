@@ -165,16 +165,7 @@ render() {
                 className: 'btn-block btn',
                 text: 'ATEM Camera',
               },
-              {
-                type: 0,
-                i: "atem_50_50",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 1, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'ATEM 50/50',
-              },
+             
             ]
       });
 }
