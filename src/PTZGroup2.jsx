@@ -13,6 +13,8 @@ import SocketIOClient from 'socket.io-client';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
+const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+let isIOS = ((/iphone|ipad/gi).test(userAgent));
 
 export default class PTZGroup2 extends React.Component {
 
@@ -44,6 +46,8 @@ export default class PTZGroup2 extends React.Component {
   this.handleOnLock = this.handleOnLock.bind(this);
   this.handleButtons = this.handleButtons.bind(this);
   this.handleButtonRelease = this.handleButtonRelease.bind(this);
+  this.handleUpEvent = this.handleUpEvent.bind(this);
+  this.handleDownEvent = this.handleDownEvent.bind(this);
 }
  handleOnLock(){
    if (this.state.lock == true) {
@@ -71,7 +75,7 @@ export default class PTZGroup2 extends React.Component {
       background: "#FFF"
     };
     const i = el.add ? "+" : el.i;
-    let controllerCode = <button className={el.className} value={el.i} onMouseDown={this.handleButtons} onMouseUp={this.handleButtonRelease}>{el.text}</button>;
+    let controllerCode = <button className={el.className} value={el.i} onMouseDown={this.handleDownEvent} onTouchStart={this.handleDownEvent} onTouchEnd={this.handleUpEvent} onMouseUp={this.handleUpEvent}>{el.text}</button>;
     if (el.type==1) { //type is slider
       controllerCode =  <div> <span className="text">{el.text}</span>
                 <div id="slidecontainer">
@@ -85,7 +89,28 @@ export default class PTZGroup2 extends React.Component {
 		    </div>
     	);
 }
-
+handleDownEvent(event) {
+  if (isIOS) {
+    if (event.type == "touchstart") {
+      this.handleButtons(event);
+    }
+  }
+  else
+  {
+    this.handleButtons(event);
+  }
+}
+handleUpEvent(event) {
+  if (isIOS) {
+    if (event.type != "touchend") {
+      this.handleButtonRelease(event);
+    }
+  }
+  else
+  {
+    this.handleButtonRelease(event);
+  }
+}
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
 
@@ -556,7 +581,7 @@ render() {
                 type: 0,
                 i: "ptz_onetouch_wb_trigger",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 137, //Infinity,
+                y: 13, //Infinity,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-default',

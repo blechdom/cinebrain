@@ -340,7 +340,7 @@ render() {
                 className: 'btn-block btn btn-default',
                 text: 'Spot White',
               },
-              {
+            /*  {
                 type: 0,
                 i: "spot_red",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -379,7 +379,7 @@ render() {
                 h: 1,
                 className: 'btn-block btn btn-warning',
                 text: 'Spot Yellow',
-              },
+              },*/
               {
                 type: 0,
                 i: "wash_on",

@@ -39304,7 +39304,8 @@ webpackJsonp([0],{
 	          h: 1,
 	          className: 'btn-block btn btn-default',
 	          text: 'Spot White'
-	        }, {
+	        },
+	        /*{
 	          type: 0,
 	          i: "spot_red",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -39312,8 +39313,9 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-danger',
-	          text: 'Spot Red'
-	        }, {
+	          text: 'Spot Red',
+	        },
+	        {
 	          type: 0,
 	          i: "spot_green",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -39321,8 +39323,9 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-success',
-	          text: 'Spot Green'
-	        }, {
+	          text: 'Spot Green',
+	        },
+	        {
 	          type: 0,
 	          i: "spot_blue",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -39330,8 +39333,9 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-primary',
-	          text: 'Spot Blue'
-	        }, {
+	          text: 'Spot Blue',
+	        },
+	        {
 	          type: 0,
 	          i: "spot_yellow",
 	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -39339,8 +39343,9 @@ webpackJsonp([0],{
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-warning',
-	          text: 'Spot Yellow'
-	        }, {
+	          text: 'Spot Yellow',
+	        },*/
+	        {
 	          type: 0,
 	          i: "wash_on",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -39907,43 +39912,48 @@ webpackJsonp([0],{
 	          h: 1,
 	          className: 'btn-block btn btn-default',
 	          text: 'Spot White'
-	        }, {
-	          type: 0,
-	          i: "spot_red",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Spot Red'
-	        }, {
-	          type: 0,
-	          i: "spot_green",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Spot Green'
-	        }, {
-	          type: 0,
-	          i: "spot_blue",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-primary',
-	          text: 'Spot Blue'
-	        }, {
-	          type: 0,
-	          i: "spot_yellow",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Spot Yellow'
-	        }, {
+	        },
+	        /*  {
+	            type: 0,
+	            i: "spot_red",
+	            x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	            y: 3, //Infinity, 
+	            w: 1,
+	            h: 1,
+	            className: 'btn-block btn btn-danger',
+	            text: 'Spot Red',
+	          },
+	          {
+	            type: 0,
+	            i: "spot_green",
+	            x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	            y: 2, //Infinity, 
+	            w: 1,
+	            h: 1,
+	            className: 'btn-block btn btn-success',
+	            text: 'Spot Green',
+	          },
+	          {
+	            type: 0,
+	            i: "spot_blue",
+	            x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	            y: 3, //Infinity, 
+	            w: 1,
+	            h: 1,
+	            className: 'btn-block btn btn-primary',
+	            text: 'Spot Blue',
+	          },
+	          {
+	            type: 0,
+	            i: "spot_yellow",
+	            x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	            y: 2, //Infinity, 
+	            w: 1,
+	            h: 1,
+	            className: 'btn-block btn btn-warning',
+	            text: 'Spot Yellow',
+	          },*/
+	        {
 	          type: 0,
 	          i: "wash_on",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -40128,6 +40138,8 @@ webpackJsonp([0],{
 	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
+	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+	var isIOS = /iphone|ipad/gi.test(userAgent);
 	
 	var PTZGroup1 = function (_React$Component) {
 	  _inherits(PTZGroup1, _React$Component);
@@ -40163,6 +40175,8 @@ webpackJsonp([0],{
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    _this.handleButtonRelease = _this.handleButtonRelease.bind(_this);
+	    _this.handleUpEvent = _this.handleUpEvent.bind(_this);
+	    _this.handleDownEvent = _this.handleDownEvent.bind(_this);
 	    return _this;
 	  }
 	
@@ -40198,7 +40212,7 @@ webpackJsonp([0],{
 	      var i = el.add ? "+" : el.i;
 	      var controllerCode = _react2.default.createElement(
 	        'button',
-	        { className: el.className, value: el.i, onMouseDown: this.handleButtons, onMouseUp: this.handleButtonRelease },
+	        { className: el.className, value: el.i, onMouseDown: this.handleDownEvent, onTouchStart: this.handleDownEvent, onTouchEnd: this.handleUpEvent, onMouseUp: this.handleUpEvent },
 	        el.text
 	      );
 	      if (el.type == 1) {
@@ -40225,6 +40239,28 @@ webpackJsonp([0],{
 	        controllerCode,
 	        _react2.default.createElement('span', { style: lockStyle })
 	      );
+	    }
+	  }, {
+	    key: 'handleDownEvent',
+	    value: function handleDownEvent(event) {
+	      if (isIOS) {
+	        if (event.type == "touchstart") {
+	          this.handleButtons(event);
+	        }
+	      } else {
+	        this.handleButtons(event);
+	      }
+	    }
+	  }, {
+	    key: 'handleUpEvent',
+	    value: function handleUpEvent(event) {
+	      if (isIOS) {
+	        if (event.type != "touchend") {
+	          this.handleButtonRelease(event);
+	        }
+	      } else {
+	        this.handleButtonRelease(event);
+	      }
 	    }
 	  }, {
 	    key: 'handleButtons',
@@ -40438,7 +40474,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'strong',
 	                null,
-	                'Group 2: CAMERA'
+	                'Group 1: CAMERA'
 	              )
 	            )
 	          ),
@@ -40707,7 +40743,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_onetouch_wb_trigger",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 137, //Infinity,
+	          y: 13, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -40939,6 +40975,8 @@ webpackJsonp([0],{
 	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
+	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+	var isIOS = /iphone|ipad/gi.test(userAgent);
 	
 	var PTZGroup2 = function (_React$Component) {
 	  _inherits(PTZGroup2, _React$Component);
@@ -40974,6 +41012,8 @@ webpackJsonp([0],{
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    _this.handleButtonRelease = _this.handleButtonRelease.bind(_this);
+	    _this.handleUpEvent = _this.handleUpEvent.bind(_this);
+	    _this.handleDownEvent = _this.handleDownEvent.bind(_this);
 	    return _this;
 	  }
 	
@@ -41009,7 +41049,7 @@ webpackJsonp([0],{
 	      var i = el.add ? "+" : el.i;
 	      var controllerCode = _react2.default.createElement(
 	        'button',
-	        { className: el.className, value: el.i, onMouseDown: this.handleButtons, onMouseUp: this.handleButtonRelease },
+	        { className: el.className, value: el.i, onMouseDown: this.handleDownEvent, onTouchStart: this.handleDownEvent, onTouchEnd: this.handleUpEvent, onMouseUp: this.handleUpEvent },
 	        el.text
 	      );
 	      if (el.type == 1) {
@@ -41036,6 +41076,28 @@ webpackJsonp([0],{
 	        controllerCode,
 	        _react2.default.createElement('span', { style: lockStyle })
 	      );
+	    }
+	  }, {
+	    key: 'handleDownEvent',
+	    value: function handleDownEvent(event) {
+	      if (isIOS) {
+	        if (event.type == "touchstart") {
+	          this.handleButtons(event);
+	        }
+	      } else {
+	        this.handleButtons(event);
+	      }
+	    }
+	  }, {
+	    key: 'handleUpEvent',
+	    value: function handleUpEvent(event) {
+	      if (isIOS) {
+	        if (event.type != "touchend") {
+	          this.handleButtonRelease(event);
+	        }
+	      } else {
+	        this.handleButtonRelease(event);
+	      }
 	    }
 	  }, {
 	    key: 'handleButtons',
@@ -41518,7 +41580,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "ptz_onetouch_wb_trigger",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 137, //Infinity,
+	          y: 13, //Infinity,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',

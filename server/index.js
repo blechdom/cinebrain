@@ -138,9 +138,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
                 UDPclient.send(PTZ_init, data.port, data.host, (err) => {
-                  console.log("send message " + PTZ_init + " err: " + err);
                   UDPclient.send(UDPmessage, data.port, data.host, (err) => {
-                  console.log("send message " + UDPmessage + " err: " + err);
+                  console.log("send message " + data.buffer + " err: " + err);
                   });
                 });
         });     
