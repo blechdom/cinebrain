@@ -12,6 +12,13 @@ import ATEM from 'applest-atem/lib/atem.js';
 
 let atem = new ATEM();
 atem.connect('192.168.10.240');
+
+if (atem.connect('192.168.10.240')){
+  console.log("atem connected to 192.168.10.240");
+}
+else {
+    console.log("cannot connect to atem at 192.168.10.240"); 
+}
   
 //atem.on('connect', function() {
   // atem.changeProgramInput(1);
@@ -51,7 +58,7 @@ const PTZ_change_IP = Buffer.from('024d41433a30342d35642d34622d39642d32652d6365F
 const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
 
-atem.on('connect', function() {
+//atem.on('connect', function() {
                  
  
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
@@ -110,16 +117,22 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         });
         socket.on('atem_changeProgramInput', (message) => {
                 console.log("received atem program input command: " + message);
+                  atem.on('connect', function() {
                     atem.changeProgramInput(message);
+                  });
         });
         socket.on('atem_changePreviewInput', (message) => {
                 console.log("received atem preview input command: " + message);
+                  atem.on('connect', function() {
                     atem.changePreviewInput(message);
+                  });
         });
          socket.on('atem_runMacro', (message) => {
                 console.log("received atem preview input command: " + message);
+                   atem.on('connect', function() {
                     atem.runMacro(2);
                     atem.runMacro(message);
+                  });
         });
         socket.on('device-menu', (message) => {
           console.log("the device number is: " + message);
@@ -190,7 +203,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   console.log('ERROR:', error);
 });
 
-});
+//});
 
 if (module.hot) {
   module.hot.accept('./server.js', () => {

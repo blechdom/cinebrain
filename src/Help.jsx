@@ -6,7 +6,12 @@ import { Button, Glyphicon, Table, Panel } from 'react-bootstrap';
 export default class Help extends React.Component {
  render() {
   return (
-  <div>Help HTML here	</div>
+  	<div><center>
+  <div><h1><a href="dmx_group1">GROUP 1</a></h1></div>
+  <div><h1><a href="dmx_group2">GROUP 2</a></h1></div>
+  <div><h1><a href="dmx_group3">GROUP 3</a></h1></div>
+  </center>
+  </div>
 	);
 };
 }

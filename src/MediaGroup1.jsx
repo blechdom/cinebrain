@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class Caspar extends React.Component {
+export default class MediaGroup1 extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -99,40 +99,52 @@ handleButtons(event) {
      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #0000FF'});
     break;
   case 'vid_play1':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 bbb.mp4 LOOP'});
     break;
   case 'vid_play2':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 bbb.mp4 10 LEFT'}); 
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 beach.mp4 LOOP'}); 
     break;
   case 'vid_play3':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ccc.mp4 PUSH 20 EASEINSINE'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 popup.mp4 LOOP'});
     break;
   case 'vid_play4':
-     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: '"PLAY 1-0 test_scroll SPEED 5 BLUR 50'});
-    break;
-  case 'vid_play5':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 ddd.mp4'});
-    break;
-  case 'vid_play6':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 MOVIE SEEK 100 LOOP'}); 
-    break;
-  case 'vid_play7':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4'});
-    break;
-  case 'vid_play8':
-     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 aaa.mp4'});
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 nyc.mov LOOP '});
     break;
   case 'vid_loop1':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 fire.mov LOOP'});
     break;
   case 'vid_loop2':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP'}); 
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 tunnel.mov LOOP'}); 
     break;
   case 'vid_loop3':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 blueTileFloor.mov LOOP'});
     break;
   case 'vid_loop4':
-     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 aaa.mp4 LOOP'});
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 16189_2.mov LOOP'});
+    break;
+  case 'still_image1':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 bigRock.jpg'});
+    break;
+  case 'still_image2':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 balloons.jpg'}); 
+    break;
+  case 'still_image3':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 circuit.jpg'});
+    break;
+  case 'still_image4':
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 WhiteHouse.jpg'});
+    break;
+   case 'foreground1':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 cactus.png'});
+    break;
+  case 'foreground2':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 barbedwire.jpg'}); 
+    break;
+  case 'foreground3':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 tv.png'});
+    break;
+  case 'foreground4':
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 window.png'});
     break;
   case 'vid_stop':
      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-0'});
@@ -229,48 +241,8 @@ render() {
               },
                {
                 type: 0,
-                i: "vid_play5",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 0, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play5',
-              },
-               {
-                type: 0,
-                i: "vid_play6",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 1, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play6',
-              },
-               {
-                type: 0,
-                i: "vid_play7",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 2, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play7',
-              },
-               {
-                type: 0,
-                i: "vid_play8",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 3, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play8',
-              },
-               {
-                type: 0,
                 i: "vid_loop1",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 0, //Infinity, 
                 w: 1,
                 h: 1,
@@ -280,7 +252,7 @@ render() {
                {
                 type: 0,
                 i: "vid_loop2",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 1, //Infinity, 
                 w: 1,
                 h: 1,
@@ -290,7 +262,7 @@ render() {
                {
                 type: 0,
                 i: "vid_loop3",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 2, //Infinity, 
                 w: 1,
                 h: 1,
@@ -300,7 +272,7 @@ render() {
                {
                 type: 0,
                 i: "vid_loop4",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 3, //Infinity, 
                 w: 1,
                 h: 1,
@@ -309,8 +281,88 @@ render() {
               },
                {
                 type: 0,
-                i: "vid_white",
+                i: "still_image1",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image1',
+              },
+               {
+                type: 0,
+                i: "still_image2",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 1, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image2',
+              },
+               {
+                type: 0,
+                i: "still_image3",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image3',
+              },
+               {
+                type: 0,
+                i: "still_image4",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 3, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image4',
+              },
+               {
+                type: 0,
+                i: "foreground1",
                 x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground1',
+              },
+               {
+                type: 0,
+                i: "foreground2",
+                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 1, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground2',
+              },
+               {
+                type: 0,
+                i: "foreground3",
+                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground3',
+              },
+               {
+                type: 0,
+                i: "foreground4",
+                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 3, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground4',
+              },
+               {
+                type: 0,
+                i: "vid_white",
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 0, //Infinity, 
                 w: 1,
                 h: 1,
@@ -320,7 +372,7 @@ render() {
               {
                 type: 0,
                 i: "vid_red",
-                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 1, //Infinity, 
                 w: 1,
                 h: 1,
@@ -330,7 +382,7 @@ render() {
               {
                 type: 0,
                 i: "vid_green",
-                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 2, //Infinity, 
                 w: 1,
                 h: 1,
@@ -340,7 +392,7 @@ render() {
               {
                 type: 0,
                 i: "vid_blue",
-                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 3, //Infinity, 
                 w: 1,
                 h: 1,
@@ -361,7 +413,7 @@ render() {
       });
 }
 }
-Caspar.defaultProps = {
+MediaGroup1.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},

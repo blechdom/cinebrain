@@ -8,13 +8,12 @@ import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 import { SocketProvider } from 'socket.io-react';
 import SocketIOClient from 'socket.io-client';
+import {isIos} from 'react-device-detect';
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
-const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-let isIOS = ((/iphone|ipad/gi).test(userAgent));
 
 export default class PTZGroup1 extends React.Component {
 
@@ -75,7 +74,7 @@ export default class PTZGroup1 extends React.Component {
       background: "#FFF"
     };
     const i = el.add ? "+" : el.i;
-    let controllerCode = <button className={el.className} value={el.i} onMouseDown={this.handleDownEvent} onTouchStart={this.handleDownEvent} onTouchEnd={this.handleUpEvent} onMouseUp={this.handleUpEvent}>{el.text}</button>;
+    let controllerCode = <button className={el.className} value={el.i} onMouseDown={this.handleDownEvent} onMouseUp={this.handleUpEvent} onTouchStart={this.handleDownEvent} onTouchEnd={this.handleUpEvent} >{el.text}</button>;
     if (el.type==1) { //type is slider
       controllerCode =  <div> <span className="text">{el.text}</span>
                 <div id="slidecontainer">
@@ -90,18 +89,20 @@ export default class PTZGroup1 extends React.Component {
       );
 }
 handleDownEvent(event) {
-  if (isIOS) {
+ if (isIos)
+ {
     if (event.type == "touchstart") {
       this.handleButtons(event);
     }
-  }
+ }
   else
   {
     this.handleButtons(event);
   }
 }
 handleUpEvent(event) {
-  if (isIOS) {
+  if (isIos)
+  {
     if (event.type != "touchend") {
       this.handleButtonRelease(event);
     }
@@ -113,7 +114,7 @@ handleUpEvent(event) {
 }
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
-
+  event.preventDefault();
   switch (event.target.value) {
   
   case 'ptz_on':

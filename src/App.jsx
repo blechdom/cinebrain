@@ -7,17 +7,17 @@ import MdMoreVert from 'react-icons/lib/md/more-vert';
 const Header = () => (
   <Navbar fluid>
     <Navbar.Header>
-      <Navbar.Brand>Cinebrain</Navbar.Brand>
+      <Navbar.Brand><a href="/">Cinebrain</a></Navbar.Brand>
     </Navbar.Header>
     <Nav>
       <NavDropdown id="user-dropdown" title="Group 1">
-        <LinkContainer to="/group1">
+        <LinkContainer to="/dmx_group1">
           <NavItem>Lights</NavItem>
         </LinkContainer>
         <LinkContainer to="/ptz_group1">
           <NavItem>Camera</NavItem>
         </LinkContainer>
-        <LinkContainer to="/caspar_group1">
+        <LinkContainer to="/media_group1">
           <MenuItem>Media</MenuItem>
         </LinkContainer>
          <LinkContainer to="/atem_group1">
@@ -25,16 +25,27 @@ const Header = () => (
         </LinkContainer>
 	    </NavDropdown>
       <NavDropdown id="user-dropdown" title="Group 2">
-       <LinkContainer to="/group2">
+       <LinkContainer to="/dmx_group2">
         <NavItem>Lights</NavItem>
       </LinkContainer>
        <LinkContainer to="/ptz_group2">
         <NavItem>Camera</NavItem>
       </LinkContainer>
-       <LinkContainer to="/caspar_group2">
+       <LinkContainer to="/media_group2">
         <MenuItem>Media</MenuItem>
       </LinkContainer>
        <LinkContainer to="/atem_group2">
+          <MenuItem>Video Switch</MenuItem>
+        </LinkContainer>
+      </NavDropdown>
+      <NavDropdown id="user-dropdown" title="Group 3">
+        <LinkContainer to="/dmx_group3">
+          <NavItem>Lights</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/media_group3">
+          <MenuItem>Media</MenuItem>
+        </LinkContainer>
+         <LinkContainer to="/atem_group3">
           <MenuItem>Video Switch</MenuItem>
         </LinkContainer>
       </NavDropdown>

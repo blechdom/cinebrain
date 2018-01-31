@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class CasparGroup2 extends React.Component {
+export default class MediaGroup2 extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -28,7 +28,7 @@ export default class CasparGroup2 extends React.Component {
           w: 2,
           h: 2,
           add: i === (list.length - 1).toString(),
-	        sliderValue: 0,
+          sliderValue: 0,
         };
       }),
       lock: true,
@@ -43,11 +43,11 @@ export default class CasparGroup2 extends React.Component {
 }
  handleOnLock(){
    if (this.state.lock == true) {
-	lockIcon = <FaUnlock />;
-  	this.setState({lock: false}); 
+  lockIcon = <FaUnlock />;
+    this.setState({lock: false}); 
    } else { 
-	lockIcon = <FaLock />;
-  	this.setState({lock: true});
+  lockIcon = <FaLock />;
+    this.setState({lock: true});
    } 
  }
  createElement(el) {
@@ -55,13 +55,13 @@ export default class CasparGroup2 extends React.Component {
       display: "none",
     };
     if (this.state.lock==false){
-    	lockStyle = {
-    		position: "absolute",
-    		right: "2px",
-    		top: 0,
-    		cursor: "pointer",
-        		display: "inline",
-    	};
+      lockStyle = {
+        position: "absolute",
+        right: "2px",
+        top: 0,
+        cursor: "pointer",
+            display: "inline",
+      };
     }
     const gridStyle = {
       background: "#FFF"
@@ -74,12 +74,12 @@ export default class CasparGroup2 extends React.Component {
                 <input type="range" min="1" max="100" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
         </div>;
     }
-	   return (
-     		<div key={i} data-grid={el} style={gridStyle}>
-		        {controllerCode}
-      		  <span style={lockStyle}></span>
-		    </div>
-    	);
+     return (
+        <div key={i} data-grid={el} style={gridStyle}>
+            {controllerCode}
+            <span style={lockStyle}></span>
+        </div>
+      );
 }
 
 handleButtons(event) {
@@ -99,40 +99,52 @@ handleButtons(event) {
      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #0000FF'});
     break;
   case 'vid_play1':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 aaa.mp4'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 bbb.mp4 LOOP'});
     break;
   case 'vid_play2':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 bbb.mp4 10 LEFT'}); 
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 beach.mp4 LOOP'}); 
     break;
   case 'vid_play3':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 ccc.mp4 PUSH 20 EASEINSINE'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 popup.mp4 LOOP'});
     break;
   case 'vid_play4':
-     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: '"PLAY 2-0 test_scroll SPEED 5 BLUR 50'});
-    break;
-  case 'vid_play5':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 ddd.mp4'});
-    break;
-  case 'vid_play6':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 MOVIE SEEK 100 LOOP'}); 
-    break;
-  case 'vid_play7':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 aaa.mp4'});
-    break;
-  case 'vid_play8':
-     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 aaa.mp4'});
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 nyc.mov LOOP'});
     break;
   case 'vid_loop1':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 fire.mov LOOP'});
     break;
   case 'vid_loop2':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP'}); 
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 tunnel.mov LOOP'}); 
     break;
   case 'vid_loop3':
-      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP'});
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 blueTileFloor.mov LOOP'});
     break;
   case 'vid_loop4':
-     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 aaa.mp4 LOOP'});
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 16189_2.mov LOOP'});
+    break;
+  case 'still_image1':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 bigRock.jpg'});
+    break;
+  case 'still_image2':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 balloons.jpg'}); 
+    break;
+  case 'still_image3':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 circuit.jpg'});
+    break;
+  case 'still_image4':
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 WhiteHouse.jpg'});
+    break;
+   case 'foreground1':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 cactus.png'});
+    break;
+  case 'foreground2':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 barbedwire.jpg'}); 
+    break;
+  case 'foreground3':
+      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 tv.png'});
+    break;
+  case 'foreground4':
+     socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 window.png'});
     break;
   case 'vid_stop':
      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-0'});
@@ -155,22 +167,22 @@ onBreakpointChange(breakpoint, cols) {
 render() {
   return (
       <div><div>
- 	      <Row>
-      	  <Col xs={2} sm={2} md={2} lg={2}>
-      	    <button onClick={this.handleOnLock}>{lockIcon}</button>
-      	  </Col>
-           <Col xs={10} sm={10} md={10} lg={10}>
+        <Row>
+          <Col xs={2} sm={2} md={2} lg={2}>
+            <button onClick={this.handleOnLock}>{lockIcon}</button>
+          </Col>
+            <Col xs={10} sm={10} md={10} lg={10}>
            <strong>Group 2: MEDIA</strong>
           </Col>
-      	</Row>
-	     <ResponsiveReactGridLayout
+        </Row>
+       <ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
-	        isDraggable={!this.state.lock}
-	        isResizable={!this.state.lock}  
-	        {...this.props}
-	     >
-  	     {_.map(this.state.items, el => this.createElement(el))}
+          isDraggable={!this.state.lock}
+          isResizable={!this.state.lock}  
+          {...this.props}
+       >
+         {_.map(this.state.items, el => this.createElement(el))}
        </ResponsiveReactGridLayout>
      </div>
      <div>{this.state.response}</div>
@@ -229,48 +241,8 @@ render() {
               },
                {
                 type: 0,
-                i: "vid_play5",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 0, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play5',
-              },
-               {
-                type: 0,
-                i: "vid_play6",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 1, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play6',
-              },
-               {
-                type: 0,
-                i: "vid_play7",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 2, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play7',
-              },
-               {
-                type: 0,
-                i: "vid_play8",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 3, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Vid Play8',
-              },
-               {
-                type: 0,
                 i: "vid_loop1",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 0, //Infinity, 
                 w: 1,
                 h: 1,
@@ -280,7 +252,7 @@ render() {
                {
                 type: 0,
                 i: "vid_loop2",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 1, //Infinity, 
                 w: 1,
                 h: 1,
@@ -290,7 +262,7 @@ render() {
                {
                 type: 0,
                 i: "vid_loop3",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 2, //Infinity, 
                 w: 1,
                 h: 1,
@@ -300,7 +272,7 @@ render() {
                {
                 type: 0,
                 i: "vid_loop4",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 3, //Infinity, 
                 w: 1,
                 h: 1,
@@ -309,8 +281,88 @@ render() {
               },
                {
                 type: 0,
-                i: "vid_white",
+                i: "still_image1",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image1',
+              },
+               {
+                type: 0,
+                i: "still_image2",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 1, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image2',
+              },
+               {
+                type: 0,
+                i: "still_image3",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image3',
+              },
+               {
+                type: 0,
+                i: "still_image4",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 3, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Still Image4',
+              },
+               {
+                type: 0,
+                i: "foreground1",
                 x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground1',
+              },
+               {
+                type: 0,
+                i: "foreground2",
+                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 1, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground2',
+              },
+               {
+                type: 0,
+                i: "foreground3",
+                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground3',
+              },
+               {
+                type: 0,
+                i: "foreground4",
+                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 3, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Foreground4',
+              },
+               {
+                type: 0,
+                i: "vid_white",
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 0, //Infinity, 
                 w: 1,
                 h: 1,
@@ -320,7 +372,7 @@ render() {
               {
                 type: 0,
                 i: "vid_red",
-                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 1, //Infinity, 
                 w: 1,
                 h: 1,
@@ -330,7 +382,7 @@ render() {
               {
                 type: 0,
                 i: "vid_green",
-                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 2, //Infinity, 
                 w: 1,
                 h: 1,
@@ -340,7 +392,7 @@ render() {
               {
                 type: 0,
                 i: "vid_blue",
-                x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 3, //Infinity, 
                 w: 1,
                 h: 1,
@@ -361,7 +413,7 @@ render() {
       });
 }
 }
-CasparGroup2.defaultProps = {
+MediaGroup2.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},

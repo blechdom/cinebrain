@@ -8,13 +8,12 @@ import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 import { SocketProvider } from 'socket.io-react';
 import SocketIOClient from 'socket.io-client';
+import {isIos} from 'react-device-detect';
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
-const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-let isIOS = ((/iphone|ipad/gi).test(userAgent));
 
 export default class PTZGroup2 extends React.Component {
 
@@ -90,7 +89,7 @@ export default class PTZGroup2 extends React.Component {
     	);
 }
 handleDownEvent(event) {
-  if (isIOS) {
+  if (isIos) {
     if (event.type == "touchstart") {
       this.handleButtons(event);
     }
@@ -101,7 +100,7 @@ handleDownEvent(event) {
   }
 }
 handleUpEvent(event) {
-  if (isIOS) {
+  if (isIos) {
     if (event.type != "touchend") {
       this.handleButtonRelease(event);
     }
@@ -113,7 +112,7 @@ handleUpEvent(event) {
 }
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
-
+  event.preventDefault();
   switch (event.target.value) {
   
   case 'ptz_on':

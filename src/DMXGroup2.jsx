@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class Group1 extends React.Component {
+export default class DMXGroup2 extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -28,7 +28,7 @@ export default class Group1 extends React.Component {
           w: 2,
           h: 2,
           add: i === (list.length - 1).toString(),
-	        sliderValue: 0,
+          sliderValue: 0,
         };
       }),
       lock: true,
@@ -37,7 +37,7 @@ export default class Group1 extends React.Component {
       command: "",
       response: '',
       compactType: null,
-      spot_speed: 50,
+      spot_speed: 215,
   };
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
@@ -46,11 +46,11 @@ export default class Group1 extends React.Component {
 }
  handleOnLock(){
    if (this.state.lock == true) {
-	lockIcon = <FaUnlock />;
-  	this.setState({lock: false}); 
+  lockIcon = <FaUnlock />;
+    this.setState({lock: false}); 
    } else { 
-	lockIcon = <FaLock />;
-  	this.setState({lock: true});
+  lockIcon = <FaLock />;
+    this.setState({lock: true});
    } 
  }
  createElement(el) {
@@ -58,13 +58,13 @@ export default class Group1 extends React.Component {
       display: "none",
     };
     if (this.state.lock==false){
-    	lockStyle = {
-    		position: "absolute",
-    		right: "2px",
-    		top: 0,
-    		cursor: "pointer",
-        		display: "inline",
-    	};
+      lockStyle = {
+        position: "absolute",
+        right: "2px",
+        top: 0,
+        cursor: "pointer",
+            display: "inline",
+      };
     }
     const gridStyle = {
       background: "#FFF"
@@ -74,15 +74,15 @@ export default class Group1 extends React.Component {
     if (el.type==1) { //type is slider
       controllerCode =  <div> <span className="text">{el.text}</span>
                 <div id="slidecontainer">
-                <input type="range" min="1" max="100" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
+                <input type="range" min="1" max="255" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
         </div>;
     }
-	   return (
-     		<div key={i} data-grid={el} style={gridStyle}>
-		        {controllerCode}
-      		  <span style={lockStyle}></span>
-		    </div>
-    	);
+     return (
+        <div key={i} data-grid={el} style={gridStyle}>
+            {controllerCode}
+            <span style={lockStyle}></span>
+        </div>
+      );
 }
 
 handleButtons(event) {
@@ -91,49 +91,49 @@ handleButtons(event) {
   switch (event.target.value) {
   
   case 'spot_on':
-     socket.emit('dmx-go', {6: 216, 7:255 });
+     socket.emit('dmx-go', {45:0, 46: 216, 47:255 });
     break;
   case 'spot_off':
-     socket.emit('dmx-go', {6: 0, 7:0});
+     socket.emit('dmx-go', {46: 0, 47:0});
     break;
   case 'spot_white':
-     socket.emit('dmx-go', {5: 0, 6:216, 7:255});
+     socket.emit('dmx-go', {45: 0, 46:216, 47:255});
     break;
   case 'spot_yellow':
-     socket.emit('dmx-go', {5: 6, 6:216, 7:255});
+     socket.emit('dmx-go', {45: 6, 46:216, 47:255});
     break;
   case 'spot_red':
-     socket.emit('dmx-go', {5: 24, 6:216, 7:255});
+     socket.emit('dmx-go', {45: 24, 46:216, 47:255});
     break;
   case 'spot_green':
-     socket.emit('dmx-go', {5: 18, 6:216, 7:255});
+     socket.emit('dmx-go', {45: 18, 46:216, 47:255});
     break;
   case 'spot_blue':
-     socket.emit('dmx-go', {5: 42, 6:216, 7:255});
+     socket.emit('dmx-go', {45: 42, 46:216, 47:255});
     break;
   case 'wash_on':
-     socket.emit('dmx-go', {16:255 });
+     socket.emit('dmx-go', {56:255 });
     break;
   case 'wash_off':
-     socket.emit('dmx-go', {16: 0});
+     socket.emit('dmx-go', {56: 0});
     break;
   case 'wash_white':
-     socket.emit('dmx-go', {17: 0, 18:0, 19:0, 20:255});
+     socket.emit('dmx-go', {57: 0, 58:0, 59:0, 60:255});
     break;
   case 'wash_red':
-     socket.emit('dmx-go', {17: 255, 18:0, 19:0, 20:0});
+     socket.emit('dmx-go', {57: 255, 58:0, 59:0, 60:0});
     break;
   case 'wash_green':
-     socket.emit('dmx-go', {17: 0, 18:255, 19:0, 20:0});
+     socket.emit('dmx-go', {57: 0, 58:255, 59:0, 60:0});
     break;
   case 'wash_blue':
-     socket.emit('dmx-go', {17: 0, 18:0, 19:255, 20:0});
+     socket.emit('dmx-go', {57: 0, 58:0, 59:255, 20:0});
     break;
   case 'wash_yellow':
-     socket.emit('dmx-go', {17: 255, 18:255, 19:0, 20:0});
+     socket.emit('dmx-go', {57: 255, 58:255, 59:0, 60:0});
     break;
   case 'dmx_off': 
-    socket.emit('dmx-go', {6: 0, 7:0, 16:0});
+    socket.emit('dmx-go', {46: 0, 47:0, 56:0});
     break;
 
   default:
@@ -142,49 +142,47 @@ handleButtons(event) {
 } 
 handleSliders(event) {
   console.log(event.target.id + ': ' + event.target.value);
-  let slider_value = (event.target.value / 100.0) * 255.0;
+  let slider_value = event.target.value;
   switch (event.target.id) {
   case 'spot_pan':
-      socket.emit('dmx-go', {4: this.state.spot_speed});
-      socket.emit('dmx-go', {0: slider_value});
+      socket.emit('dmx-go', {40: slider_value});
       break;
   case 'spot_tilt':
-      socket.emit('dmx-go', {4: this.state.spot_speed});
-      socket.emit('dmx-go', {1: slider_value});
-      break;
-   case 'spot_speed':
-      socket.emit('dmx-go', {4: slider_value});
-      this.state.spot_speed = slider_value;
+      socket.emit('dmx-go', {41: slider_value});
       break;
   case 'spot_fine_pan':
-      socket.emit('dmx-go', {2: slider_value});
+      socket.emit('dmx-go', {42: slider_value});
       break;
   case 'spot_fine_tilt':
-      socket.emit('dmx-go', {3: slider_value});
+      socket.emit('dmx-go', {43: slider_value});
+      break;
+  case 'spot_speed':
+      socket.emit('dmx-go', {44: slider_value});
+      this.state.spot_speed = slider_value;
       break;
   case 'all_intensity':
-      socket.emit('dmx-go', {6:216, 7: slider_value, 16: slider_value});
+      socket.emit('dmx-go', {46:216, 47: slider_value, 56: slider_value});
       break;
   case 'spot_intensity':
-      socket.emit('dmx-go', {7: slider_value});
+      socket.emit('dmx-go', {47: slider_value});
       break;
   case 'wash_intensity':
-      socket.emit('dmx-go', {16: slider_value});
+      socket.emit('dmx-go', {56: slider_value});
       break;
   case 'wash_pan':
-      socket.emit('dmx-go', {22: slider_value});
+      socket.emit('dmx-go', {62: slider_value});
       break;
   case 'wash_tilt':
-      socket.emit('dmx-go', {23: slider_value});
+      socket.emit('dmx-go', {63: slider_value});
       break;
   case 'wash_fine_pan':
-      socket.emit('dmx-go', {24: slider_value});
+      socket.emit('dmx-go', {64: slider_value});
       break;
   case 'wash_fine_tilt':
-      socket.emit('dmx-go', {25: slider_value});
+      socket.emit('dmx-go', {65: slider_value});
       break;
   case 'wash_zoom':
-      socket.emit('dmx-go', {27: slider_value});
+      socket.emit('dmx-go', {67: slider_value});
       break;
   
 
@@ -204,23 +202,23 @@ onBreakpointChange(breakpoint, cols) {
 render() {
   return (
       <div><div>
- 	      <Row>
-      	  <Col xs={2} sm={2} md={2} lg={2}>
-      	    <button onClick={this.handleOnLock}>{lockIcon}</button>
+        <Row>
+          <Col xs={2} sm={2} md={2} lg={2}>
+            <button onClick={this.handleOnLock}>{lockIcon}</button>
           </Col>
-          <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 1: LIGHTS</strong> DMX: 1 + 17
+            <Col xs={10} sm={10} md={10} lg={10}>
+           <strong>Group 2: LIGHTS</strong> DMX: 41 + 57
           </Col>
-      	</Row>
-	     <ResponsiveReactGridLayout
+        </Row>
+       <ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
-	        isDraggable={!this.state.lock}
-	        isResizable={!this.state.lock}  
+          isDraggable={!this.state.lock}
+          isResizable={!this.state.lock}  
           compactType={this.state.compactType}
-	        {...this.props}
-	     >
-  	     {_.map(this.state.items, el => this.createElement(el))}
+          {...this.props}
+       >
+         {_.map(this.state.items, el => this.createElement(el))}
        </ResponsiveReactGridLayout>
      </div>
      <div>{this.state.response}</div>
@@ -245,7 +243,7 @@ render() {
                 w: 2,
                 h: 2,
                 className: 'btn-block btn btn-danger',
-                text: 'LIGHTS OUT',
+                text: 'Lights Out',
               },
               {
                 type: 1,
@@ -330,7 +328,7 @@ render() {
                 h: 2,
                 text: 'Spot Fine Pan',
               },
-              {
+            /*  {
                 type: 0,
                 i: "spot_white",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -340,7 +338,7 @@ render() {
                 className: 'btn-block btn btn-default',
                 text: 'Spot White',
               },
-              /*{
+              {
                 type: 0,
                 i: "spot_red",
                 x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -508,7 +506,7 @@ render() {
       });
 }
 }
-Group1.defaultProps = {
+DMXGroup2.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},
