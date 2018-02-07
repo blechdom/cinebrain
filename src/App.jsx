@@ -20,13 +20,13 @@ const Header = () => (
         <LinkContainer to="/media_group1">
           <MenuItem>Media</MenuItem>
         </LinkContainer>
-         <LinkContainer to="/atem_group1">
-          <MenuItem>Video Switch</MenuItem>
-        </LinkContainer>
 	    </NavDropdown>
       <NavDropdown id="user-dropdown" title="Group 2">
        <LinkContainer to="/dmx_group2">
-        <NavItem>Lights</NavItem>
+        <NavItem>Light 1</NavItem>
+      </LinkContainer>
+       <LinkContainer to="/dmx_group3">
+          <NavItem>Light 2</NavItem>
       </LinkContainer>
        <LinkContainer to="/ptz_group2">
         <NavItem>Camera</NavItem>
@@ -34,28 +34,19 @@ const Header = () => (
        <LinkContainer to="/media_group2">
         <MenuItem>Media</MenuItem>
       </LinkContainer>
-       <LinkContainer to="/atem_group2">
-          <MenuItem>Video Switch</MenuItem>
-        </LinkContainer>
       </NavDropdown>
-      <NavDropdown id="user-dropdown" title="Group 3">
-        <LinkContainer to="/dmx_group3">
-          <NavItem>Lights</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/media_group3">
-          <MenuItem>Media</MenuItem>
-        </LinkContainer>
-         <LinkContainer to="/atem_group3">
-          <MenuItem>Video Switch</MenuItem>
+      <NavDropdown id="user-dropdown" title="Extras">
+        <LinkContainer to="/midi_looper">
+          <NavItem>MIDI Looper</NavItem>
         </LinkContainer>
       </NavDropdown>
     </Nav>
     <Nav pullRight>
       <NavDropdown id="user-dropdown" title={<MdMoreVert size={18} />} noCaret>
-        <LinkContainer to="/demo">
-        <MenuItem>Demo</MenuItem>
+       <LinkContainer to="/diagnostics">
+        <MenuItem>Diagnostics</MenuItem>
       </LinkContainer>
-  <LinkContainer to="/control_interface">
+      <LinkContainer to="/control_interface">
         <MenuItem>Control Interface</MenuItem>
       </LinkContainer>
        <LinkContainer to="/new_controllers">
@@ -64,11 +55,8 @@ const Header = () => (
       <LinkContainer to="/devices">
         <MenuItem>Devices</MenuItem>
       </LinkContainer>
- <LinkContainer to="/issues">
+      <LinkContainer to="/issues">
         <MenuItem>Issues</MenuItem>
-      </LinkContainer>
- <LinkContainer to="/diagnostics">
-        <MenuItem>Diagnostics</MenuItem>
       </LinkContainer>
 		    <LinkContainer to="/help">
 			 <MenuItem>Help</MenuItem>

@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(943);
+	var _ContextWrapper = __webpack_require__(945);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -144,7 +144,15 @@ webpackJsonp([0],{
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _Help = __webpack_require__(942);
+	var _MidiLooper = __webpack_require__(942);
+	
+	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
+	
+	var _Home = __webpack_require__(943);
+	
+	var _Home2 = _interopRequireDefault(_Home);
+	
+	var _Help = __webpack_require__(944);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -161,7 +169,7 @@ webpackJsonp([0],{
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
-	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/help' }),
+	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group1', component: _MediaGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group2', component: _MediaGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group3', component: _MediaGroup6.default }),
@@ -174,6 +182,7 @@ webpackJsonp([0],{
 	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group1', component: _ATEMGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group2', component: _ATEMGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group3', component: _ATEMGroup6.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'midi_looper', component: _MidiLooper2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'issues', component: (0, _reactRouter.withRouter)(_IssueList2.default) }),
@@ -182,6 +191,7 @@ webpackJsonp([0],{
 	  _react2.default.createElement(_reactRouter.Route, { path: 'devices/:id', component: _DeviceEdit2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'diagnostics', component: _Diagnostics2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'help', component: (0, _reactRouter.withRouter)(_Help2.default) }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'home', component: (0, _reactRouter.withRouter)(_Home2.default) }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '*', component: NoMatch })
 	);
 
@@ -261,15 +271,6 @@ webpackJsonp([0],{
 	            null,
 	            'Media'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/atem_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Video Switch'
-	          )
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -281,7 +282,16 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Lights'
+	            'Light 1'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/dmx_group3' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Light 2'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -301,45 +311,18 @@ webpackJsonp([0],{
 	            null,
 	            'Media'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/atem_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Video Switch'
-	          )
 	        )
 	      ),
 	      _react2.default.createElement(
 	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Group 3' },
+	        { id: 'user-dropdown', title: 'Extras' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_group3' },
+	          { to: '/midi_looper' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Lights'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/media_group3' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Media'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/atem_group3' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Video Switch'
+	            'MIDI Looper'
 	          )
 	        )
 	      )
@@ -352,11 +335,11 @@ webpackJsonp([0],{
 	        { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/demo' },
+	          { to: '/diagnostics' },
 	          _react2.default.createElement(
 	            _reactBootstrap.MenuItem,
 	            null,
-	            'Demo'
+	            'Diagnostics'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -393,15 +376,6 @@ webpackJsonp([0],{
 	            _reactBootstrap.MenuItem,
 	            null,
 	            'Issues'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/diagnostics' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Diagnostics'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -38070,11 +38044,21 @@ webpackJsonp([0],{
 	      host: '127.0.0.1',
 	      port: 5250,
 	      command: "",
-	      response: ''
+	      response: '',
+	      left_edge: '0.0',
+	      top_edge: '0.0',
+	      x_scale: '1.0',
+	      y_scale: '1.0',
+	      rotation: '0.0',
+	      left_crop: '0.0',
+	      top_crop: '0.0',
+	      right_crop: '0.0',
+	      bottom_crop: '0.0'
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
 	    return _this;
 	  }
 	
@@ -38127,7 +38111,7 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
 	          )
 	        );
 	      }
@@ -38210,6 +38194,53 @@ webpackJsonp([0],{
 	
 	        default:
 	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value / 100.0;
+	      switch (event.target.id) {
+	        case 'left_edge':
+	          this.state.left_edge = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'top_edge':
+	          this.state.top_edge = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'x_scale':
+	          this.state.x_scale = slider_value * 2.0;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'y_scale':
+	          this.state.y_scale = slider_value * 2.0;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'proportional_scale':
+	          this.state.y_scale = slider_value * 2.0;
+	          this.state.x_scale = slider_value * 2.0;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'left_crop':
+	          this.state.left_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        case 'top_crop':
+	          this.state.top_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        case 'right_crop':
+	          this.state.right_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        case 'bottom_crop':
+	          this.state.bottom_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        default:
+	          console.log('ERROR: Slider does not exist');
 	      }
 	    }
 	  }, {
@@ -38482,6 +38513,78 @@ webpackJsonp([0],{
 	          h: 1,
 	          className: 'btn-block btn btn-primary',
 	          text: 'Vid Stop'
+	        }, {
+	          type: 1,
+	          i: "left_edge",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Left Edge'
+	        }, {
+	          type: 1,
+	          i: "top_edge",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Top Edge'
+	        }, {
+	          type: 1,
+	          i: "x_scale",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'X Scale'
+	        }, {
+	          type: 1,
+	          i: "y_scale",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Y Scale'
+	        }, {
+	          type: 1,
+	          i: "proportional_scale",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 5, //Infinity,
+	          w: 4,
+	          h: 2,
+	          text: 'Proportional Scale'
+	        }, {
+	          type: 1,
+	          i: "left_crop",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Left Crop'
+	        }, {
+	          type: 1,
+	          i: "top_crop",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Top Crop'
+	        }, {
+	          type: 1,
+	          i: "right_crop",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Right Crop'
+	        }, {
+	          type: 1,
+	          i: "bottom_crop",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Bottom Crop'
 	        }]
 	      });
 	    }
@@ -38582,11 +38685,21 @@ webpackJsonp([0],{
 	      host: '127.0.0.1',
 	      port: 5250,
 	      command: "",
-	      response: ''
+	      response: '',
+	      left_edge: '0.0',
+	      top_edge: '0.0',
+	      x_scale: '1.0',
+	      y_scale: '1.0',
+	      rotation: '0.0',
+	      left_crop: '0.0',
+	      top_crop: '0.0',
+	      right_crop: '0.0',
+	      bottom_crop: '0.0'
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
 	    return _this;
 	  }
 	
@@ -38722,6 +38835,53 @@ webpackJsonp([0],{
 	
 	        default:
 	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value / 100.0;
+	      switch (event.target.id) {
+	        case 'left_edge':
+	          this.state.left_edge = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'top_edge':
+	          this.state.top_edge = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'x_scale':
+	          this.state.x_scale = slider_value * 2.0;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'y_scale':
+	          this.state.y_scale = slider_value * 2.0;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'proportional_scale':
+	          this.state.y_scale = slider_value * 2.0;
+	          this.state.x_scale = slider_value * 2.0;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	          break;
+	        case 'left_crop':
+	          this.state.left_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        case 'top_crop':
+	          this.state.top_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        case 'right_crop':
+	          this.state.right_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        case 'bottom_crop':
+	          this.state.bottom_crop = slider_value;
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	          break;
+	        default:
+	          console.log('ERROR: Slider does not exist');
 	      }
 	    }
 	  }, {
@@ -38994,6 +39154,78 @@ webpackJsonp([0],{
 	          h: 1,
 	          className: 'btn-block btn btn-primary',
 	          text: 'Vid Stop'
+	        }, {
+	          type: 1,
+	          i: "left_edge",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Left Edge'
+	        }, {
+	          type: 1,
+	          i: "top_edge",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Top Edge'
+	        }, {
+	          type: 1,
+	          i: "x_scale",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'X Scale'
+	        }, {
+	          type: 1,
+	          i: "y_scale",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Y Scale'
+	        }, {
+	          type: 1,
+	          i: "proportional_scale",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 5, //Infinity,
+	          w: 4,
+	          h: 2,
+	          text: 'Proportional Scale'
+	        }, {
+	          type: 1,
+	          i: "left_crop",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Left Crop'
+	        }, {
+	          type: 1,
+	          i: "top_crop",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Top Crop'
+	        }, {
+	          type: 1,
+	          i: "right_crop",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Right Crop'
+	        }, {
+	          type: 1,
+	          i: "bottom_crop",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Bottom Crop'
 	        }]
 	      });
 	    }
@@ -44747,13 +44979,13 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var ATEM = function (_React$Component) {
-	  _inherits(ATEM, _React$Component);
+	var ATEMGroup1 = function (_React$Component) {
+	  _inherits(ATEMGroup1, _React$Component);
 	
-	  function ATEM(props, context) {
-	    _classCallCheck(this, ATEM);
+	  function ATEMGroup1(props, context) {
+	    _classCallCheck(this, ATEMGroup1);
 	
-	    var _this = _possibleConstructorReturn(this, (ATEM.__proto__ || Object.getPrototypeOf(ATEM)).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (ATEMGroup1.__proto__ || Object.getPrototypeOf(ATEMGroup1)).call(this, props, context));
 	
 	    _this.state = {
 	      items: [].map(function (i, key, list) {
@@ -44777,10 +45009,11 @@ webpackJsonp([0],{
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
 	    return _this;
 	  }
 	
-	  _createClass(ATEM, [{
+	  _createClass(ATEMGroup1, [{
 	    key: 'handleOnLock',
 	    value: function handleOnLock() {
 	      if (this.state.lock == true) {
@@ -44829,7 +45062,7 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
 	          )
 	        );
 	      }
@@ -44847,17 +45080,45 @@ webpackJsonp([0],{
 	
 	      switch (event.target.value) {
 	        case 'atem_caspar':
-	          socket.emit('atem_changeProgramInput', '1');
+	          socket.emit('atemTV1_changeProgramInput', '1');
 	          break;
 	        case 'atem_camera':
-	          socket.emit('atem_changeProgramInput', '2');
+	          socket.emit('atemTV1_changeProgramInput', '2');
+	          break;
+	        case 'atem_preview_caspar':
+	          socket.emit('atemTV1_changePreviewInput', '1');
+	          break;
+	        case 'atem_preview_camera':
+	          socket.emit('atemTV1_changePreviewInput', '2');
+	          break;
+	        case 'atem_auto_transition':
+	          socket.emit('atemTV1_autoTransition', '');
+	          break;
+	        case 'atem_transition_mix':
+	          socket.emit('atemTV1_transitionType', '0');
+	          break;
+	        case 'atem_transition_wipe':
+	          socket.emit('atemTV1_transitionType', '2');
 	          break;
 	        case 'atem_50_50':
-	          socket.emit('atem_runMacro', '0');
+	          socket.emit('atem1me_runMacro', '0');
 	          break;
 	
 	        default:
 	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	      switch (event.target.id) {
+	        case 'atem_transition_position':
+	          socket.emit('atemTV1_transition_position', slider_value * 100);
+	          break;
+	        default:
+	          console.log('ERROR: Slider does not exist');
 	      }
 	    }
 	  }, {
@@ -44944,32 +45205,86 @@ webpackJsonp([0],{
 	        items: [{
 	          type: 0,
 	          i: "atem_caspar",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 0, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'ATEM Media'
+	          text: 'Program Media'
 	        }, {
 	          type: 0,
 	          i: "atem_camera",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 1, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'ATEM Camera'
+	          text: 'Program Camera'
+	        }, {
+	          type: 0,
+	          i: "atem_preview_caspar",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Preview Media'
+	        }, {
+	          type: 0,
+	          i: "atem_preview_camera",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Preview Camera'
+	        }, {
+	          type: 1,
+	          i: "atem_transition_position",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          className: 'btn-block btn',
+	          text: 'ATEM Transition'
+	        }, {
+	          type: 0,
+	          i: "atem_auto_transition",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Auto Transition'
+	        }, {
+	          type: 0,
+	          i: "atem_transition_mix",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Mix'
+	        }, {
+	          type: 0,
+	          i: "atem_transition_wipe",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wipe'
 	        }]
 	      });
 	    }
 	  }]);
 	
-	  return ATEM;
+	  return ATEMGroup1;
 	}(_react2.default.Component);
 	
-	exports.default = ATEM;
+	exports.default = ATEMGroup1;
 	
-	ATEM.defaultProps = {
+	ATEMGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -45034,13 +45349,13 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var ATEM = function (_React$Component) {
-	  _inherits(ATEM, _React$Component);
+	var ATEMGroup2 = function (_React$Component) {
+	  _inherits(ATEMGroup2, _React$Component);
 	
-	  function ATEM(props, context) {
-	    _classCallCheck(this, ATEM);
+	  function ATEMGroup2(props, context) {
+	    _classCallCheck(this, ATEMGroup2);
 	
-	    var _this = _possibleConstructorReturn(this, (ATEM.__proto__ || Object.getPrototypeOf(ATEM)).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (ATEMGroup2.__proto__ || Object.getPrototypeOf(ATEMGroup2)).call(this, props, context));
 	
 	    _this.state = {
 	      items: [].map(function (i, key, list) {
@@ -45064,10 +45379,11 @@ webpackJsonp([0],{
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
 	    return _this;
 	  }
 	
-	  _createClass(ATEM, [{
+	  _createClass(ATEMGroup2, [{
 	    key: 'handleOnLock',
 	    value: function handleOnLock() {
 	      if (this.state.lock == true) {
@@ -45116,7 +45432,7 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            'div',
 	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
 	          )
 	        );
 	      }
@@ -45134,14 +45450,45 @@ webpackJsonp([0],{
 	
 	      switch (event.target.value) {
 	        case 'atem_caspar':
-	          socket.emit('atem_changePreviewInput', '3');
+	          socket.emit('atemTV1_changeProgramInput', '3');
 	          break;
 	        case 'atem_camera':
-	          socket.emit('atem_changePreviewInput', '4');
+	          socket.emit('atemTV1_changeProgramInput', '4');
+	          break;
+	        case 'atem_preview_caspar':
+	          socket.emit('atemTV1_changePreviewInput', '3');
+	          break;
+	        case 'atem_preview_camera':
+	          socket.emit('atemTV1_changePreviewInput', '4');
+	          break;
+	        case 'atem_auto_transition':
+	          socket.emit('atemTV1_autoTransition', '');
+	          break;
+	        case 'atem_transition_mix':
+	          socket.emit('atemTV1_transitionType', '0');
+	          break;
+	        case 'atem_transition_wipe':
+	          socket.emit('atemTV1_transitionType', '2');
+	          break;
+	        case 'atem_50_50':
+	          socket.emit('atem1me_runMacro', '0');
 	          break;
 	
 	        default:
 	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	      switch (event.target.id) {
+	        case 'atem_transition_position':
+	          socket.emit('atemTV1_transition_position', slider_value * 100);
+	          break;
+	        default:
+	          console.log('ERROR: Slider does not exist');
 	      }
 	    }
 	  }, {
@@ -45228,32 +45575,86 @@ webpackJsonp([0],{
 	        items: [{
 	          type: 0,
 	          i: "atem_caspar",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 0, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'ATEM Media'
+	          text: 'Program Media'
 	        }, {
 	          type: 0,
 	          i: "atem_camera",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 1, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn',
-	          text: 'ATEM Camera'
+	          text: 'Program Camera'
+	        }, {
+	          type: 0,
+	          i: "atem_preview_caspar",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Preview Media'
+	        }, {
+	          type: 0,
+	          i: "atem_preview_camera",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Preview Camera'
+	        }, {
+	          type: 1,
+	          i: "atem_transition_position",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          className: 'btn-block btn',
+	          text: 'ATEM Transition'
+	        }, {
+	          type: 0,
+	          i: "atem_auto_transition",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Auto Transition'
+	        }, {
+	          type: 0,
+	          i: "atem_transition_mix",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Mix'
+	        }, {
+	          type: 0,
+	          i: "atem_transition_wipe",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wipe'
 	        }]
 	      });
 	    }
 	  }]);
 	
-	  return ATEM;
+	  return ATEMGroup2;
 	}(_react2.default.Component);
 	
-	exports.default = ATEM;
+	exports.default = ATEMGroup2;
 	
-	ATEM.defaultProps = {
+	ATEMGroup2.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -45739,6 +46140,706 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(858);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(859);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(860);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(922);
+	
+	var _socket2 = __webpack_require__(868);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var MIDILooper = function (_React$Component) {
+	  _inherits(MIDILooper, _React$Component);
+	
+	  function MIDILooper(props, context) {
+	    _classCallCheck(this, MIDILooper);
+	
+	    var _this = _possibleConstructorReturn(this, (MIDILooper.__proto__ || Object.getPrototypeOf(MIDILooper)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0,
+	          inputValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      compactType: null,
+	      spot_speed: 215
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    _this.handleNumberInput = _this.handleNumberInput.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(MIDILooper, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '127', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      if (el.type == 2) {
+	        //type is text input
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('input', { type: 'number', min: '0', max: '99', value: el.inputValue, id: i, onChange: this.handleNumberInput })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'push-record':
+	          socket.emit('midi-cc', { controller: 102, value: 127, channel: 0 });
+	          break;
+	        case 'push-play':
+	          socket.emit('midi-cc', { controller: 104, value: 127, channel: 0 });
+	          break;
+	        case 'mute-all':
+	          socket.emit('midi-program', { number: 126, channel: 0 });
+	          break;
+	        case 'push-new':
+	          socket.emit('midi-program', { number: 110, channel: 0 });
+	          break;
+	        case 'loop-up':
+	          socket.emit('midi-program', { number: 122, channel: 0 });
+	          break;
+	        case 'loop-down':
+	          socket.emit('midi-program', { number: 121, channel: 0 });
+	          break;
+	        case 'push-reverse':
+	          socket.emit('midi-program', { number: 114, channel: 0 });
+	          break;
+	        case 'push-octave':
+	          socket.emit('midi-program', { number: 119, channel: 0 });
+	          break;
+	        case 'push-mixdown':
+	          socket.emit('midi-program', { number: 120, channel: 0 });
+	          break;
+	        case 'push-punchin':
+	          socket.emit('midi-program', { number: 117, channel: 0 });
+	          break;
+	        case 'select-track-1':
+	          socket.emit('midi-program', { number: 106, channel: 0 });
+	          break;
+	        case 'select-track-2':
+	          socket.emit('midi-program', { number: 107, channel: 0 });
+	          break;
+	        case 'select-track-3':
+	          socket.emit('midi-program', { number: 108, channel: 0 });
+	          break;
+	        case 'select-track-4':
+	          socket.emit('midi-program', { number: 109, channel: 0 });
+	          break;
+	        case 'mute-track-1':
+	          socket.emit('midi-program', { number: 101, channel: 0 });
+	          break;
+	        case 'mute-track-2':
+	          socket.emit('midi-program', { number: 102, channel: 0 });
+	          break;
+	        case 'mute-track-3':
+	          socket.emit('midi-program', { number: 103, channel: 0 });
+	          break;
+	        case 'mute-track-4':
+	          socket.emit('midi-program', { number: 104, channel: 0 });
+	          break;
+	        case 'mute-dry':
+	          socket.emit('midi-program', { number: 124, channel: 0 });
+	          break;
+	        case 'mute-mixdown':
+	          socket.emit('midi-program', { number: 123, channel: 0 });
+	          break;
+	        case 'push-quantize':
+	          socket.emit('midi-program', { number: 111, channel: 0 });
+	          break;
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	      switch (event.target.id) {
+	        case 'track-1-level':
+	          socket.emit('midi-cc', { controller: 21, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-2-level':
+	          socket.emit('midi-cc', { controller: 22, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-3-level':
+	          socket.emit('midi-cc', { controller: 23, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-4-level':
+	          socket.emit('midi-cc', { controller: 24, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-1-pan':
+	          socket.emit('midi-cc', { controller: 28, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-2-pan':
+	          socket.emit('midi-cc', { controller: 29, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-3-pan':
+	          socket.emit('midi-cc', { controller: 30, value: slider_value, channel: 0 });
+	          break;
+	        case 'track-4-pan':
+	          socket.emit('midi-cc', { controller: 31, value: slider_value, channel: 0 });
+	          break;
+	        case 'dry-out-level':
+	          socket.emit('midi-cc', { controller: 20, value: slider_value, channel: 0 });
+	          break;
+	        case 'dry-out-pan':
+	          socket.emit('midi-cc', { controller: 27, value: slider_value, channel: 0 });
+	          break;
+	        case 'mix-down-level':
+	          socket.emit('midi-cc', { controller: 25, value: slider_value, channel: 0 });
+	          break;
+	        case 'tempo':
+	          socket.emit('midi-cc', { controller: 26, value: slider_value, channel: 0 });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleNumberInput',
+	    value: function handleNumberInput(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var input_value = event.target.value;
+	      switch (event.target.id) {
+	        case 'loop-input':
+	          socket.emit('midi-program', { number: input_value, channel: 0 });
+	          break;
+	        default:
+	          console.log('ERROR: Input does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'MIDI Out for Looper: Electro-Harmonix 45000'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "push-record",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'RECORD'
+	        }, {
+	          type: 0,
+	          i: "push-play",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'PLAY/STOP'
+	        }, {
+	          type: 0,
+	          i: "push-new",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'NEW LOOP'
+	        }, {
+	          type: 0,
+	          i: "loop-up",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'LOOP UP'
+	        }, {
+	          type: 0,
+	          i: "loop-down",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-primary',
+	          text: 'LOOP DOWN'
+	        }, {
+	          type: 2,
+	          i: "loop-input",
+	          x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          text: 'LOOP INPUT'
+	        }, {
+	          type: 0,
+	          i: "push-reverse",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-info',
+	          text: 'REVERSE'
+	        }, {
+	          type: 0,
+	          i: "push-octave",
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-info',
+	          text: 'OCTAVE'
+	        }, {
+	          type: 0,
+	          i: "push-mixdown",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'MIX DOWN'
+	        }, {
+	          type: 0,
+	          i: "push-quantize",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-info',
+	          text: 'QUANTIZE'
+	        }, {
+	          type: 0,
+	          i: "push-punchin",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'PUNCH IN'
+	        }, {
+	          type: 0,
+	          i: "mute-all",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'MUTE ALL'
+	        }, {
+	          type: 0,
+	          i: "select-track-1",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Select 1'
+	        }, {
+	          type: 0,
+	          i: "select-track-2",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Select 2'
+	        }, {
+	          type: 0,
+	          i: "select-track-3",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Select 3'
+	        }, {
+	          type: 0,
+	          i: "select-track-4",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Select 4'
+	        }, {
+	          type: 0,
+	          i: "mute-track-1",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 3, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Mute 1'
+	        }, {
+	          type: 0,
+	          i: "mute-track-2",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 5, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Mute 2'
+	        }, {
+	          type: 0,
+	          i: "mute-track-3",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 7, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Mute 3'
+	        }, {
+	          type: 0,
+	          i: "mute-track-4",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 9, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Mute 4'
+	        }, {
+	          type: 0,
+	          i: "mute-dry",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 11, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Mute Dry'
+	        }, {
+	          type: 0,
+	          i: "mute-mixdown",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 13, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-warning',
+	          text: 'Mute Mix'
+	        }, {
+	          type: 1,
+	          i: "track-1-level",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 1 Level'
+	        }, {
+	          type: 1,
+	          i: "track-2-level",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 2 Level'
+	        }, {
+	          type: 1,
+	          i: "track-3-level",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 3 Level'
+	        }, {
+	          type: 1,
+	          i: "track-4-level",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 4 Level'
+	        }, {
+	          type: 1,
+	          i: "track-1-pan",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 1 Pan'
+	        }, {
+	          type: 1,
+	          i: "track-2-pan",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 2 Pan'
+	        }, {
+	          type: 1,
+	          i: "track-3-pan",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 3 Pan'
+	        }, {
+	          type: 1,
+	          i: "track-4-pan",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Track 4 Pan'
+	        }, {
+	          type: 1,
+	          i: "dry-out-level",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Dry Level'
+	        }, {
+	          type: 1,
+	          i: "dry-out-pan",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Dry Pan'
+	        }, {
+	          type: 1,
+	          i: "mix-down-level",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Mixdown Level'
+	        }, {
+	          type: 1,
+	          i: "tempo",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 2,
+	          h: 2,
+	          text: 'Tempo'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return MIDILooper;
+	}(_react2.default.Component);
+	
+	exports.default = MIDILooper;
+	
+	MIDILooper.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 943:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(326);
@@ -45812,7 +46913,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'a',
 	                { href: 'dmx_group3' },
-	                'GROUP 3'
+	                'Extras'
 	              )
 	            )
 	          )
@@ -45828,7 +46929,81 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 943:
+/***/ 944:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(832);
+	
+	var _reactRouter = __webpack_require__(509);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Help = function (_React$Component) {
+	  _inherits(Help, _React$Component);
+	
+	  function Help() {
+	    _classCallCheck(this, Help);
+	
+	    return _possibleConstructorReturn(this, (Help.__proto__ || Object.getPrototypeOf(Help)).apply(this, arguments));
+	  }
+	
+	  _createClass(Help, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'center',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Help information coming soon.'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'in the meantime: ',
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'http://www.activematrix.tech/cinebrain/' },
+	              'Cinebrain Blog'
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Help;
+	}(_react2.default.Component);
+	
+	exports.default = Help;
+
+/***/ }),
+
+/***/ 945:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

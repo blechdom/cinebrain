@@ -36,10 +36,20 @@ export default class MediaGroup2 extends React.Component {
       port: 5250,
       command: "",
       response: '',
+      left_edge: '0.0',
+      top_edge: '0.0',
+      x_scale: '1.0',
+      y_scale: '1.0',
+      rotation: '0.0',
+      left_crop: '0.0',
+      top_crop: '0.0',
+      right_crop: '0.0',
+      bottom_crop: '0.0',
   };
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
   this.handleButtons = this.handleButtons.bind(this);
+  this.handleSliders = this.handleSliders.bind(this);
 }
  handleOnLock(){
    if (this.state.lock == true) {
@@ -154,7 +164,51 @@ handleButtons(event) {
     console.log('ERROR: Button does not exist');
   }
 } 
-
+handleSliders(event) {
+  console.log(event.target.id + ': ' + event.target.value);
+  let slider_value = event.target.value/100.0;
+  switch (event.target.id) {
+  case 'left_edge':
+      this.state.left_edge = slider_value;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale});
+    break;
+  case 'top_edge':
+      this.state.top_edge = slider_value;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale});
+    break;
+  case 'x_scale':
+      this.state.x_scale = slider_value*2.0;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale});
+    break;
+  case 'y_scale':
+      this.state.y_scale = slider_value*2.0;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale});
+    break;
+  case 'proportional_scale':
+      this.state.y_scale = slider_value*2.0;
+      this.state.x_scale = slider_value*2.0;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale});
+    break;
+    case 'left_crop':
+      this.state.left_crop = slider_value;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop});
+    break;
+    case 'top_crop':
+      this.state.top_crop = slider_value;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop});
+    break;
+    case 'right_crop':
+      this.state.right_crop = slider_value;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop});
+    break;
+    case 'bottom_crop':
+      this.state.bottom_crop = slider_value;
+       socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop});
+    break;
+  default:
+    console.log('ERROR: Slider does not exist');
+  }
+}
 onBreakpointChange(breakpoint, cols) {
     this.setState({
       breakpoint: breakpoint,
@@ -408,6 +462,87 @@ render() {
                 h: 1,
                 className: 'btn-block btn btn-primary',
                 text: 'Vid Stop',
+              },
+              {
+                type: 1,
+                i: "left_edge",
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 9,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Left Edge',
+              },
+               {
+                type: 1,
+                i: "top_edge",
+                x: 2,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 9,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Top Edge',
+              },
+               {
+                type: 1,
+                i: "x_scale",
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 7,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'X Scale',
+              },
+               {
+                type: 1,
+                i: "y_scale",
+                x: 2,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 7,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Y Scale',
+              },
+              {
+                type: 1,
+                i: "proportional_scale",
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 5,//Infinity,
+                w: 4,
+                h: 2,
+                text: 'Proportional Scale',
+              },
+              {
+                type: 1,
+                i: "left_crop",
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 11,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Left Crop',
+              },
+              {
+                type: 1,
+                i: "top_crop",
+                x: 2,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 11,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Top Crop',
+              },
+              {
+                type: 1,
+                i: "right_crop",
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 13,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Right Crop',
+              },
+              {
+                type: 1,
+                i: "bottom_crop",
+                x: 2,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 13,//Infinity,
+                w: 2,
+                h: 2,
+                text: 'Bottom Crop',
               },
             ]
       });

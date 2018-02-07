@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class ATEM extends React.Component {
+export default class ATEMGroup1 extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -40,6 +40,7 @@ export default class ATEM extends React.Component {
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
   this.handleButtons = this.handleButtons.bind(this);
+  this.handleSliders = this.handleSliders.bind(this);
 }
  handleOnLock(){
    if (this.state.lock == true) {
@@ -71,7 +72,7 @@ export default class ATEM extends React.Component {
     if (el.type==1) { //type is slider
       controllerCode =  <div> <span className="text">{el.text}</span>
                 <div id="slidecontainer">
-                <input type="range" min="1" max="100" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
+                <input type="range" min="0" max="100" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
         </div>;
     }
 	   return (
@@ -87,20 +88,45 @@ handleButtons(event) {
 
   switch (event.target.value) {
   case 'atem_caspar':
-      socket.emit('atem_changeProgramInput', '1');
+      socket.emit('atemTV1_changeProgramInput', '1');
     break;
   case 'atem_camera':
-      socket.emit('atem_changeProgramInput', '2'); 
+      socket.emit('atemTV1_changeProgramInput', '2');
+    break;
+   case 'atem_preview_caspar':
+      socket.emit('atemTV1_changePreviewInput', '1');
+    break;
+  case 'atem_preview_camera':
+      socket.emit('atemTV1_changePreviewInput', '2'); 
+    break;
+  case 'atem_auto_transition':
+      socket.emit('atemTV1_autoTransition', '');
+    break;
+  case 'atem_transition_mix':
+      socket.emit('atemTV1_transitionType', '0');
+    break;
+   case 'atem_transition_wipe':
+      socket.emit('atemTV1_transitionType', '2');
     break;
   case 'atem_50_50':
-      socket.emit('atem_runMacro', '0'); 
+      socket.emit('atem1me_runMacro', '0'); 
     break;
   
   default:
     console.log('ERROR: Button does not exist');
   }
 } 
-
+handleSliders(event) {
+  console.log(event.target.id + ': ' + event.target.value);
+  let slider_value = event.target.value;
+  switch (event.target.id) {
+  case 'atem_transition_position':
+      socket.emit('atemTV1_transition_position', (slider_value * 100));
+      break;
+      default:
+    console.log('ERROR: Slider does not exist');
+  }
+}
 onBreakpointChange(breakpoint, cols) {
     this.setState({
       breakpoint: breakpoint,
@@ -148,29 +174,89 @@ render() {
                {
                 type: 0,
                 i: "atem_caspar",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 0, //Infinity, 
                 w: 1,
                 h: 1,
                 className: 'btn-block btn',
-                text: 'ATEM Media',
+                text: 'Program Media',
               },
                {
                 type: 0,
                 i: "atem_camera",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
                 y: 1, //Infinity, 
                 w: 1,
                 h: 1,
                 className: 'btn-block btn',
-                text: 'ATEM Camera',
+                text: 'Program Camera',
+              },
+               {
+                type: 0,
+                i: "atem_preview_caspar",
+                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Preview Media',
+              },
+               {
+                type: 0,
+                i: "atem_preview_camera",
+                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 1, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Preview Camera',
+              },
+               {
+                type: 1,
+                i: "atem_transition_position",
+                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0, //Infinity, 
+                w: 2,
+                h: 2,
+                className: 'btn-block btn',
+                text: 'ATEM Transition',
+              },
+               {
+                type: 0,
+                i: "atem_auto_transition",
+                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Auto Transition',
+              },
+               {
+                type: 0,
+                i: "atem_transition_mix",
+                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Mix',
+              },
+               {
+                type: 0,
+                i: "atem_transition_wipe",
+                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2, //Infinity, 
+                w: 1,
+                h: 1,
+                className: 'btn-block btn',
+                text: 'Wipe',
               },
              
             ]
       });
 }
 }
-ATEM.defaultProps = {
+ATEMGroup1.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},

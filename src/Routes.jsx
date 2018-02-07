@@ -20,13 +20,15 @@ import ATEMGroup1 from './ATEMGroup1.jsx';
 import ATEMGroup2 from './ATEMGroup2.jsx';
 import ATEMGroup3 from './ATEMGroup3.jsx';
 import Diagnostics from './Diagnostics.jsx';
+import MidiLooper from './MidiLooper.jsx';
+import Home from './Home.jsx';
 import Help from './Help.jsx';
 
 const NoMatch = () => <p>Page Not Found</p>;
 
 export default (
   <Route path="/" component={App} >
-    <IndexRedirect to="/help" />
+    <IndexRedirect to="/home" />
     <Route path="media_group1" component={MediaGroup1} />
     <Route path="media_group2" component={MediaGroup2} />
     <Route path="media_group3" component={MediaGroup3} />
@@ -39,6 +41,7 @@ export default (
     <Route path="atem_group1" component={ATEMGroup1} />
     <Route path="atem_group2" component={ATEMGroup2} />
     <Route path="atem_group3" component={ATEMGroup3} />
+    <Route path="midi_looper" component={MidiLooper} />
     <Route path="control_interface" component={ControlInterface} />
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />
@@ -47,6 +50,7 @@ export default (
     <Route path="devices/:id" component={DeviceEdit} />
     <Route path="diagnostics" component={Diagnostics} />
     <Route path="help" component={withRouter(Help)} />
+    <Route path="home" component={withRouter(Home)} />
     <Route path="*" component={NoMatch} />  
 </Route>
 );

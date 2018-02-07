@@ -9,35 +9,17 @@ import DMX from 'dmx';
 import dgram from 'dgram';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import ATEM from 'applest-atem/lib/atem.js';
+import easymidi from 'easymidi/index.js';
 
-let atem = new ATEM();
-atem.connect('192.168.10.240');
+let atem1me = new ATEM();
+let atemTV1 = new ATEM();
+let atemTV2 = new ATEM();
 
-if (atem.connect('192.168.10.240')){
-  console.log("atem connected to 192.168.10.240");
-}
-else {
-    console.log("cannot connect to atem at 192.168.10.240"); 
-}
-  
-//atem.on('connect', function() {
-  // atem.changeProgramInput(1);
-  // atem.changePreviewInput(2);
-  // atem.autoTransition();
- //setTimeout(function() {
-   // atem.changeProgramInput(1);
-    //atem.startRecordMacro(98, 'Test Macro', 'Hey! This is macroman.');
-    // atem.sendAudioLevelNumber()
- // }, 5000)
+//atem1me.connect('192.168.10.240');
+atemTV1.connect('192.168.10.240');
+//atemTV2.connect('192.168.10.242');
 
-//});
-
-// atem.on('stateChanged', function(err, state) {
-  // console.log(state.audio.master); // catch the ATEM state.
-// });
-// console.log(atem.state); // or use this.
-
-
+var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 
 let appModule = require('./server.js');
 let db;
@@ -58,7 +40,8 @@ const PTZ_change_IP = Buffer.from('024d41433a30342d35642d34622d39642d32652d6365F
 const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
 
-//atem.on('connect', function() {
+//atemTV1.on('connect', function() {
+
                  
  
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
@@ -102,6 +85,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
 
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
+   
         console.log("user connected from: " + socket.id);
 
         socket.on('disconnect', () => {
@@ -115,24 +99,48 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
                 runTelnet(data.host, data.port, data.command);
         });
-        socket.on('atem_changeProgramInput', (message) => {
-                console.log("received atem program input command: " + message);
-                  atem.on('connect', function() {
-                    atem.changeProgramInput(message);
-                  });
+        socket.on('atem1me_changeProgramInput', (message) => {
+                console.log("received atem 1 m/e program input command: " + message);
+                atem1me.changeProgramInput(message);
         });
-        socket.on('atem_changePreviewInput', (message) => {
-                console.log("received atem preview input command: " + message);
-                  atem.on('connect', function() {
-                    atem.changePreviewInput(message);
-                  });
+        socket.on('atem1me_changePreviewInput', (message) => {
+                console.log("received atem 1 m/e preview input command: " + message);
+                atem1me.changePreviewInput(message);
         });
-         socket.on('atem_runMacro', (message) => {
-                console.log("received atem preview input command: " + message);
-                   atem.on('connect', function() {
-                    atem.runMacro(2);
-                    atem.runMacro(message);
-                  });
+        socket.on('atemTV1_changeProgramInput', (message) => {
+                console.log("received atem TV 1 program input command: " + message);
+                atemTV1.changeProgramInput(message);
+        });
+        socket.on('atemTV1_changePreviewInput', (message) => {
+                console.log("received atem TV 1 preview input command: " + message);
+                atemTV1.changePreviewInput(message);
+        });
+        socket.on('atemTV1_transition_position', (message) => {
+                console.log("received atem TV 1 preview input command: " + message);
+                atemTV1.changeTransitionPosition(message);
+        });
+         socket.on('atemTV1_autoTransition', (message) => {
+                console.log("received atem TV 1 preview input command: " + message);
+                atemTV1.autoTransition();
+        });
+          socket.on('atemTV1_transitionType', (message) => {
+                console.log("received atem TV 1 preview input command: " + message);
+                atemTV1.changeTransitionType(message);
+        });
+        socket.on('atemTV2_changeProgramInput', (message) => {
+                console.log("received atem TV 2 program input command: " + message);
+              
+                atemTV2.changeProgramInput(message);
+
+        });
+        socket.on('atemTV2_changePreviewInput', (message) => {
+                console.log("received atem TV 2 preview input command: " + message);
+                atemTV2.changePreviewInput(message);
+        });
+         socket.on('atem1me_runMacro', (message) => {
+                console.log("received atem 1 m/e preview input command: " + message);
+                    atem1md.runMacro(2);
+                    atem1me.runMacro(message);
         });
         socket.on('device-menu', (message) => {
           console.log("the device number is: " + message);
@@ -156,8 +164,19 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                   });
                 });
         });     
-
-
+        socket.on('midi-cc', function(data) {
+              midiOutA.send('cc', {
+                controller: data.controller,
+                value: data.value,
+                channel: data.channel
+              });
+        });
+        socket.on('midi-program', function(data) {
+              midiOutA.send('program', {
+                number: data.number,
+                channel: data.channel
+              });
+        });
 
         const telnetHost = '127.0.0.1';
         const telnetPort = 5250;
@@ -199,9 +218,12 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
           websocket.sockets.emit("telnet-response", res);
         }
   });
+ 
 }).catch(error => {
   console.log('ERROR:', error);
 });
+
+//});
 
 //});
 
