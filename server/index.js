@@ -151,6 +151,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 websocket.sockets.emit("show-parameter-inputs", buffer);
         }); 
         socket.on('dmx-go', (buffer) => {
+                console.log("dmx-go: " + buffer);
                 universe.update(buffer);
         });     
         socket.on('dmx-all', (buffer) => {

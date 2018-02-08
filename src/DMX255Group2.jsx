@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class DMXGroup3 extends React.Component {
+export default class DMX255Group2 extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -58,6 +58,7 @@ export default class DMXGroup3 extends React.Component {
   this.handleSliders = this.handleSliders.bind(this);
   this.savePreset = this.savePreset.bind(this);
   this.loadPreset = this.loadPreset.bind(this);
+  
 }
  handleOnLock(){
    if (this.state.lock == true) {
@@ -156,7 +157,6 @@ handleSliders(event) {
   console.log(event.target.id + ': ' + event.target.value);
   let slider_value = event.target.value;
 
-
   let items= this.state.items;
   for(let i=0; i<items.length; i++){
     if(items[i].i==event.target.id){
@@ -164,6 +164,7 @@ handleSliders(event) {
     }
   }
   this.setState({items});
+
   switch (event.target.id) {
   case 'spot_pan':
       this.setState({spotPan:slider_value});
@@ -253,7 +254,7 @@ render() {
             <button onClick={this.handleOnLock}>{lockIcon}</button>
           </Col>
             <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 3: LIGHT</strong> DMX: 81
+           <strong>Group 2: SPOT LIGHT 255</strong> DMX: 81
           </Col>
         </Row>
        <ResponsiveReactGridLayout
@@ -485,9 +486,10 @@ render() {
             }
             ,{},{},{},{},{},{}],
       });
+      
   }
 }
-DMXGroup3.defaultProps = {
+DMX255Group2.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},

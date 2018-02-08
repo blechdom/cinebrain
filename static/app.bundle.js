@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(945);
+	var _ContextWrapper = __webpack_require__(946);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -108,51 +108,55 @@ webpackJsonp([0],{
 	
 	var _MediaGroup6 = _interopRequireDefault(_MediaGroup5);
 	
-	var _DMXGroup = __webpack_require__(929);
+	var _DMXSpotGroup = __webpack_require__(929);
 	
-	var _DMXGroup2 = _interopRequireDefault(_DMXGroup);
+	var _DMXSpotGroup2 = _interopRequireDefault(_DMXSpotGroup);
 	
-	var _DMXGroup3 = __webpack_require__(930);
+	var _DMXWashGroup = __webpack_require__(930);
 	
-	var _DMXGroup4 = _interopRequireDefault(_DMXGroup3);
+	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMXGroup5 = __webpack_require__(931);
+	var _DMX155Group = __webpack_require__(931);
 	
-	var _DMXGroup6 = _interopRequireDefault(_DMXGroup5);
+	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _PTZGroup = __webpack_require__(932);
+	var _DMX255Group = __webpack_require__(932);
+	
+	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
+	
+	var _PTZGroup = __webpack_require__(933);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _PTZGroup3 = __webpack_require__(937);
+	var _PTZGroup3 = __webpack_require__(938);
 	
 	var _PTZGroup4 = _interopRequireDefault(_PTZGroup3);
 	
-	var _ATEMGroup = __webpack_require__(938);
+	var _ATEMGroup = __webpack_require__(939);
 	
 	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
 	
-	var _ATEMGroup3 = __webpack_require__(939);
+	var _ATEMGroup3 = __webpack_require__(940);
 	
 	var _ATEMGroup4 = _interopRequireDefault(_ATEMGroup3);
 	
-	var _ATEMGroup5 = __webpack_require__(940);
+	var _ATEMGroup5 = __webpack_require__(941);
 	
 	var _ATEMGroup6 = _interopRequireDefault(_ATEMGroup5);
 	
-	var _Diagnostics = __webpack_require__(941);
+	var _Diagnostics = __webpack_require__(942);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(942);
+	var _MidiLooper = __webpack_require__(943);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Home = __webpack_require__(943);
+	var _Home = __webpack_require__(944);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(944);
+	var _Help = __webpack_require__(945);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -174,9 +178,10 @@ webpackJsonp([0],{
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group2', component: _MediaGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group3', component: _MediaGroup6.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_group1', component: _DMXGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_group2', component: _DMXGroup4.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_group3', component: _DMXGroup6.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_spot_group1', component: _DMXSpotGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_wash_group1', component: _DMXWashGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_155_group2', component: _DMX155Group2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_255_group2', component: _DMX255Group2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group2', component: _PTZGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group1', component: _ATEMGroup2.default }),
@@ -247,11 +252,20 @@ webpackJsonp([0],{
 	        { id: 'user-dropdown', title: 'Group 1' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_group1' },
+	          { to: '/dmx_spot_group1' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Lights'
+	            'Spot Light'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/dmx_wash_group1' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Wash Light'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -278,20 +292,20 @@ webpackJsonp([0],{
 	        { id: 'user-dropdown', title: 'Group 2' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_group2' },
+	          { to: '/dmx_155_group2' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Light 1'
+	            'Spot Light 155'
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_group3' },
+	          { to: '/dmx_255_group2' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Light 2'
+	            'Spot Light 255'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -39813,13 +39827,13 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var DMXGroup1 = function (_React$Component) {
-	  _inherits(DMXGroup1, _React$Component);
+	var DMXSpotGroup1 = function (_React$Component) {
+	  _inherits(DMXSpotGroup1, _React$Component);
 	
-	  function DMXGroup1(props, context) {
-	    _classCallCheck(this, DMXGroup1);
+	  function DMXSpotGroup1(props, context) {
+	    _classCallCheck(this, DMXSpotGroup1);
 	
-	    var _this = _possibleConstructorReturn(this, (DMXGroup1.__proto__ || Object.getPrototypeOf(DMXGroup1)).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (DMXSpotGroup1.__proto__ || Object.getPrototypeOf(DMXSpotGroup1)).call(this, props, context));
 	
 	    _this.state = {
 	      items: [].map(function (i, key, list) {
@@ -39835,21 +39849,36 @@ webpackJsonp([0],{
 	        };
 	      }),
 	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: '',
 	      compactType: null,
-	      spot_speed: 215
+	      spotIntensity: '127',
+	      spotPan: '0',
+	      spotFinePan: '127',
+	      spotTilt: '0',
+	      spotFineTilt: '127',
+	      spotSpeed: '215',
+	      presets: [].map(function (i, key, list) {
+	        return {
+	          i: i.toString(),
+	          spotIntensity: '127',
+	          spotPan: '0',
+	          spotFinePan: '127',
+	          spotTilt: '0',
+	          spotFineTilt: '127',
+	          spotSpeed: '215',
+	          add: i === (list.length - 1).toString()
+	        };
+	      })
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    _this.savePreset = _this.savePreset.bind(_this);
+	    _this.loadPreset = _this.loadPreset.bind(_this);
 	    return _this;
 	  }
 	
-	  _createClass(DMXGroup1, [{
+	  _createClass(DMXSpotGroup1, [{
 	    key: 'handleOnLock',
 	    value: function handleOnLock() {
 	      if (this.state.lock == true) {
@@ -39922,31 +39951,42 @@ webpackJsonp([0],{
 	        case 'spot_off':
 	          socket.emit('dmx-go', { 6: 0, 7: 0 });
 	          break;
-	        case 'wash_on':
-	          socket.emit('dmx-go', { 16: 255 });
+	        case 'save_preset_1':
+	          this.savePreset(1);
 	          break;
-	        case 'wash_off':
-	          socket.emit('dmx-go', { 16: 0 });
+	        case 'save_preset_3':
+	          this.savePreset(3);
 	          break;
-	        case 'wash_white':
-	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	        case 'save_preset_4':
+	          this.savePreset(4);
 	          break;
-	        case 'wash_red':
-	          socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	        case 'save_preset_5':
+	          this.savePreset(5);
 	          break;
-	        case 'wash_green':
-	          socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	        case 'save_preset_6':
+	          this.savePreset(6);
 	          break;
-	        case 'wash_blue':
-	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	        case 'save_preset_2':
+	          this.savePreset(2);
 	          break;
-	        case 'wash_yellow':
-	          socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	        case 'recall_preset_1':
+	          this.loadPreset(1);
 	          break;
-	        case 'dmx_off':
-	          socket.emit('dmx-go', { 6: 0, 7: 0, 16: 0 });
+	        case 'recall_preset_2':
+	          this.loadPreset(2);
 	          break;
-	
+	        case 'recall_preset_3':
+	          this.loadPreset(3);
+	          break;
+	        case 'recall_preset_4':
+	          this.loadPreset(4);
+	          break;
+	        case 'recall_preset_5':
+	          this.loadPreset(5);
+	          break;
+	        case 'recall_preset_6':
+	          this.loadPreset(6);
+	          break;
 	        default:
 	          console.log('ERROR: Button does not exist');
 	      }
@@ -39956,51 +39996,90 @@ webpackJsonp([0],{
 	    value: function handleSliders(event) {
 	      console.log(event.target.id + ': ' + event.target.value);
 	      var slider_value = event.target.value;
+	
+	      var items = this.state.items;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == event.target.id) {
+	          items[i].sliderValue = slider_value;
+	        }
+	      }
+	      this.setState({ items: items });
+	
 	      switch (event.target.id) {
 	        case 'spot_pan':
+	          this.setState({ spotPan: slider_value });
 	          socket.emit('dmx-go', { 0: slider_value });
 	          break;
 	        case 'spot_tilt':
+	          this.setState({ spotTilt: slider_value });
 	          socket.emit('dmx-go', { 1: slider_value });
 	          break;
 	        case 'spot_speed':
+	          this.setState({ spotSpeed: slider_value });
 	          socket.emit('dmx-go', { 4: slider_value });
-	          this.state.spot_speed = slider_value;
 	          break;
 	        case 'spot_fine_pan':
+	          this.setState({ spotFinePan: slider_value });
 	          socket.emit('dmx-go', { 2: slider_value });
 	          break;
 	        case 'spot_fine_tilt':
+	          this.setState({ spotFineTilt: slider_value });
 	          socket.emit('dmx-go', { 3: slider_value });
 	          break;
-	        case 'all_intensity':
-	          socket.emit('dmx-go', { 6: 216, 7: slider_value, 16: slider_value });
-	          break;
 	        case 'spot_intensity':
+	          this.setState({ spotIntensity: slider_value });
 	          socket.emit('dmx-go', { 7: slider_value });
-	          break;
-	        case 'wash_intensity':
-	          socket.emit('dmx-go', { 16: slider_value });
-	          break;
-	        case 'wash_pan':
-	          socket.emit('dmx-go', { 22: slider_value });
-	          break;
-	        case 'wash_tilt':
-	          socket.emit('dmx-go', { 23: slider_value });
-	          break;
-	        case 'wash_fine_pan':
-	          socket.emit('dmx-go', { 24: slider_value });
-	          break;
-	        case 'wash_fine_tilt':
-	          socket.emit('dmx-go', { 25: slider_value });
-	          break;
-	        case 'wash_zoom':
-	          socket.emit('dmx-go', { 27: slider_value });
 	          break;
 	
 	        default:
 	          console.log('ERROR: Slider does not exist');
 	      }
+	    }
+	  }, {
+	    key: 'savePreset',
+	    value: function savePreset(preset) {
+	      var presets = this.state.presets;
+	      console.log("save preset " + preset + ": " + presets[preset]);
+	      presets[preset].spotIntensity = this.state.spotIntensity;
+	      presets[preset].spotPan = this.state.spotPan;
+	      presets[preset].spotTilt = this.state.spotTilt;
+	      presets[preset].spotFinePan = this.state.spotFinePan;
+	      presets[preset].spotFineTilt = this.state.spotFineTilt;
+	      presets[preset].spotSpeed = this.state.spotSpeed;
+	      this.setState({ presets: presets });
+	    }
+	  }, {
+	    key: 'loadPreset',
+	    value: function loadPreset(preset) {
+	      var items = this.state.items;
+	      var presets = this.state.presets;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == "spot_pan") {
+	          items[i].sliderValue = presets[preset].spotPan;
+	          socket.emit('dmx-go', { 80: presets[preset].spotPan });
+	        }
+	        if (items[i].i == "spot_tilt") {
+	          items[i].sliderValue = presets[preset].spotTilt;
+	          socket.emit('dmx-go', { 82: presets[preset].spotTilt });
+	        }
+	        if (items[i].i == "spot_fine_pan") {
+	          items[i].sliderValue = presets[preset].spotFinePan;
+	          socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
+	        }
+	        if (items[i].i == "spot_fine_tilt") {
+	          items[i].sliderValue = presets[preset].spotFineTilt;
+	          socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
+	        }
+	        if (items[i].i == "spot_speed") {
+	          items[i].sliderValue = presets[preset].spotSpeed;
+	          socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
+	        }
+	        if (items[i].i == "spot_intensity") {
+	          items[i].sliderValue = presets[preset].spotIntensity;
+	          socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
+	        }
+	      }
+	      this.setState({ items: items });
 	    }
 	  }, {
 	    key: 'onBreakpointChange',
@@ -40087,260 +40166,197 @@ webpackJsonp([0],{
 	      this.setState({
 	        items: [{
 	          type: 0,
-	          i: "dmx_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          className: 'btn-block btn btn-danger',
-	          text: 'LIGHTS OUT'
-	        }, {
-	          type: 1,
-	          i: "all_intensity",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          text: 'Master Intensity'
-	        }, {
-	          type: 0,
 	          i: "spot_on",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
+	          y: 0, //Infinity, 
+	          w: 2,
 	          h: 1,
-	          className: 'btn-block btn',
+	          className: 'btn-block btn btn-success',
 	          text: 'Spot On'
 	        }, {
 	          type: 0,
 	          i: "spot_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
 	          h: 1,
-	          className: 'btn-block btn',
+	          className: 'btn-block btn btn-danger',
 	          text: 'Spot Off'
 	        }, {
 	          type: 1,
 	          i: "spot_intensity",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 2,
+	          y: 2, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Spot Intensity'
 	        }, {
 	          type: 1,
 	          i: "spot_tilt",
-	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 2,
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Spot Tilt'
 	        }, {
 	          type: 1,
 	          i: "spot_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 4, //Infinity,
-	          w: 2,
+	          w: 12,
 	          h: 2,
 	          text: 'Spot Pan'
 	        }, {
 	          type: 1,
 	          i: "spot_speed",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 2,
+	          y: 12, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Spot Speed'
 	        }, {
 	          type: 1,
 	          i: "spot_fine_tilt",
-	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 2,
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Spot Fine Tilt'
 	        }, {
 	          type: 1,
 	          i: "spot_fine_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 6, //Infinity,
-	          w: 2,
+	          w: 12,
 	          h: 2,
 	          text: 'Spot Fine Pan'
-	        },
-	        /*{
+	        }, {
 	          type: 0,
-	          i: "spot_white",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Spot White',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_red",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Spot Red',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_green",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
+	          i: "recall_preset_1",
+	          x: 0,
+	          y: 14,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-success',
-	          text: 'Spot Green',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_blue",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-primary',
-	          text: 'Spot Blue',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_yellow",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Spot Yellow',
-	        },*/
-	        {
-	          type: 0,
-	          i: "wash_on",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Wash On'
+	          text: 'Preset 1'
 	        }, {
 	          type: 0,
-	          i: "wash_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Wash Off'
-	        }, {
-	          type: 1,
-	          i: "wash_intensity",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Wash Intensity'
-	        }, {
-	          type: 1,
-	          i: "wash_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Wash Pan'
-	        }, {
-	          type: 1,
-	          i: "wash_tilt",
-	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, // Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Wash Tilt'
-	        }, {
-	          type: 1,
-	          i: "wash_fine_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Wash Fine Pan'
-	        }, {
-	          type: 1,
-	          i: "wash_fine_tilt",
-	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, // Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Wash Fine Tilt'
-	        }, {
-	          type: 1,
-	          i: "wash_zoom",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Wash Zoom'
-	        }, {
-	          type: 0,
-	          i: "wash_white",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Wash White'
-	        }, {
-	          type: 0,
-	          i: "wash_red",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Wash Red'
-	        }, {
-	          type: 0,
-	          i: "wash_green",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
+	          i: "recall_preset_2",
+	          x: 1,
+	          y: 14,
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-success',
-	          text: 'Wash Green'
+	          text: 'Preset 2'
 	        }, {
 	          type: 0,
-	          i: "wash_blue",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity, 
+	          i: "recall_preset_3",
+	          x: 2,
+	          y: 14,
 	          w: 1,
 	          h: 1,
-	          className: 'btn-block btn btn-primary',
-	          text: 'Wash Blue'
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 3'
 	        }, {
 	          type: 0,
-	          i: "wash_yellow",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
+	          i: "recall_preset_4",
+	          x: 3,
+	          y: 14,
 	          w: 1,
 	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Wash Yellow'
-	        }]
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 4'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_5",
+	          x: 4,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 5'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_6",
+	          x: 5,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 6'
+	        }, {
+	          type: 0,
+	          i: "save_preset_1",
+	          x: 0,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 1'
+	        }, {
+	          type: 0,
+	          i: "save_preset_2",
+	          x: 1,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 2'
+	        }, {
+	          type: 0,
+	          i: "save_preset_3",
+	          x: 2,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 3'
+	        }, {
+	          type: 0,
+	          i: "save_preset_4",
+	          x: 3,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 4'
+	        }, {
+	          type: 0,
+	          i: "save_preset_5",
+	          x: 4,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 5'
+	        }, {
+	          type: 0,
+	          i: "save_preset_6",
+	          x: 5,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 6'
+	        }],
+	        presets: [{
+	          spotIntensity: '127',
+	          spotPan: '0',
+	          spotFinePan: '127',
+	          spotTilt: '0',
+	          spotFineTilt: '127',
+	          spotSpeed: '215'
+	        }, {}, {}, {}, {}, {}, {}]
 	      });
 	    }
 	  }]);
 	
-	  return DMXGroup1;
+	  return DMXSpotGroup1;
 	}(_react2.default.Component);
 	
-	exports.default = DMXGroup1;
+	exports.default = DMXSpotGroup1;
 	
-	DMXGroup1.defaultProps = {
+	DMXSpotGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -40405,13 +40421,13 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var DMXGroup2 = function (_React$Component) {
-	  _inherits(DMXGroup2, _React$Component);
+	var DMXWashGroup1 = function (_React$Component) {
+	  _inherits(DMXWashGroup1, _React$Component);
 	
-	  function DMXGroup2(props, context) {
-	    _classCallCheck(this, DMXGroup2);
+	  function DMXWashGroup1(props, context) {
+	    _classCallCheck(this, DMXWashGroup1);
 	
-	    var _this = _possibleConstructorReturn(this, (DMXGroup2.__proto__ || Object.getPrototypeOf(DMXGroup2)).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (DMXWashGroup1.__proto__ || Object.getPrototypeOf(DMXWashGroup1)).call(this, props, context));
 	
 	    _this.state = {
 	      items: [].map(function (i, key, list) {
@@ -40423,25 +40439,43 @@ webpackJsonp([0],{
 	          w: 2,
 	          h: 2,
 	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
+	          sliderValue: 0,
+	          washColor: { 17: 0, 18: 0, 19: 0, 20: 255 }
 	        };
 	      }),
 	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: '',
 	      compactType: null,
-	      spot_speed: 215
+	      washIntensity: '127',
+	      washPan: '0',
+	      washFinePan: '127',
+	      washTilt: '0',
+	      washFineTilt: '127',
+	      washZoom: '0',
+	      washColor: { 17: 0, 18: 0, 19: 0, 20: 255 },
+	      presets: [].map(function (i, key, list) {
+	        return {
+	          i: i.toString(),
+	          washIntensity: '127',
+	          washPan: '0',
+	          washFinePan: '127',
+	          washTilt: '0',
+	          washFineTilt: '127',
+	          washZoom: '0',
+	          washColor: { 17: 0, 18: 0, 19: 0, 20: 255 },
+	          add: i === (list.length - 1).toString()
+	        };
+	      })
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
 	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    _this.savePreset = _this.savePreset.bind(_this);
+	    _this.loadPreset = _this.loadPreset.bind(_this);
 	    return _this;
 	  }
 	
-	  _createClass(DMXGroup2, [{
+	  _createClass(DMXWashGroup1, [{
 	    key: 'handleOnLock',
 	    value: function handleOnLock() {
 	      if (this.state.lock == true) {
@@ -40508,52 +40542,68 @@ webpackJsonp([0],{
 	
 	      switch (event.target.value) {
 	
-	        case 'spot_on':
-	          socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
-	          break;
-	        case 'spot_off':
-	          socket.emit('dmx-go', { 46: 0, 47: 0 });
-	          break;
-	        case 'spot_white':
-	          socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
-	          break;
-	        case 'spot_yellow':
-	          socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
-	          break;
-	        case 'spot_red':
-	          socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
-	          break;
-	        case 'spot_green':
-	          socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
-	          break;
-	        case 'spot_blue':
-	          socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
-	          break;
 	        case 'wash_on':
-	          socket.emit('dmx-go', { 56: 255 });
+	          socket.emit('dmx-go', { 16: 255 });
 	          break;
 	        case 'wash_off':
-	          socket.emit('dmx-go', { 56: 0 });
+	          socket.emit('dmx-go', { 16: 0 });
 	          break;
 	        case 'wash_white':
-	          socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
+	          this.setState({ washColor: { 17: 0, 18: 0, 19: 0, 20: 255 } });
+	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
 	          break;
 	        case 'wash_red':
-	          socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
+	          this.setState({ washColor: { 17: 255, 18: 0, 19: 0, 20: 0 } });
+	          socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
 	          break;
 	        case 'wash_green':
-	          socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
+	          this.setState({ washColor: { 17: 0, 18: 255, 19: 0, 20: 0 } });
+	          socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
 	          break;
 	        case 'wash_blue':
-	          socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
+	          this.setState({ washColor: { 17: 0, 18: 0, 19: 255, 20: 0 } });
+	          socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
 	          break;
 	        case 'wash_yellow':
-	          socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	          this.setState({ washColor: { 17: 255, 18: 255, 19: 0, 20: 0 } });
+	          socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
 	          break;
-	        case 'dmx_off':
-	          socket.emit('dmx-go', { 46: 0, 47: 0, 56: 0 });
+	        case 'save_preset_1':
+	          this.savePreset(1);
 	          break;
-	
+	        case 'save_preset_3':
+	          this.savePreset(3);
+	          break;
+	        case 'save_preset_4':
+	          this.savePreset(4);
+	          break;
+	        case 'save_preset_5':
+	          this.savePreset(5);
+	          break;
+	        case 'save_preset_6':
+	          this.savePreset(6);
+	          break;
+	        case 'save_preset_2':
+	          this.savePreset(2);
+	          break;
+	        case 'recall_preset_1':
+	          this.loadPreset(1);
+	          break;
+	        case 'recall_preset_2':
+	          this.loadPreset(2);
+	          break;
+	        case 'recall_preset_3':
+	          this.loadPreset(3);
+	          break;
+	        case 'recall_preset_4':
+	          this.loadPreset(4);
+	          break;
+	        case 'recall_preset_5':
+	          this.loadPreset(5);
+	          break;
+	        case 'recall_preset_6':
+	          this.loadPreset(6);
+	          break;
 	        default:
 	          console.log('ERROR: Button does not exist');
 	      }
@@ -40563,51 +40613,96 @@ webpackJsonp([0],{
 	    value: function handleSliders(event) {
 	      console.log(event.target.id + ': ' + event.target.value);
 	      var slider_value = event.target.value;
+	
+	      var items = this.state.items;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == event.target.id) {
+	          items[i].sliderValue = slider_value;
+	        }
+	      }
+	      this.setState({ items: items });
+	
 	      switch (event.target.id) {
-	        case 'spot_pan':
-	          socket.emit('dmx-go', { 40: slider_value });
-	          break;
-	        case 'spot_tilt':
-	          socket.emit('dmx-go', { 41: slider_value });
-	          break;
-	        case 'spot_fine_pan':
-	          socket.emit('dmx-go', { 42: slider_value });
-	          break;
-	        case 'spot_fine_tilt':
-	          socket.emit('dmx-go', { 43: slider_value });
-	          break;
-	        case 'spot_speed':
-	          socket.emit('dmx-go', { 44: slider_value });
-	          this.state.spot_speed = slider_value;
-	          break;
-	        case 'all_intensity':
-	          socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
-	          break;
-	        case 'spot_intensity':
-	          socket.emit('dmx-go', { 47: slider_value });
-	          break;
+	
 	        case 'wash_intensity':
-	          socket.emit('dmx-go', { 56: slider_value });
+	          this.setState({ washIntensity: slider_value });
+	          socket.emit('dmx-go', { 16: slider_value });
 	          break;
 	        case 'wash_pan':
-	          socket.emit('dmx-go', { 62: slider_value });
+	          this.setState({ washPan: slider_value });
+	          socket.emit('dmx-go', { 22: slider_value });
 	          break;
 	        case 'wash_tilt':
-	          socket.emit('dmx-go', { 63: slider_value });
+	          this.setState({ washTilt: slider_value });
+	          socket.emit('dmx-go', { 23: slider_value });
 	          break;
 	        case 'wash_fine_pan':
-	          socket.emit('dmx-go', { 64: slider_value });
+	          this.setState({ washFinePan: slider_value });
+	          socket.emit('dmx-go', { 24: slider_value });
 	          break;
 	        case 'wash_fine_tilt':
-	          socket.emit('dmx-go', { 65: slider_value });
+	          this.setState({ washFineTilt: slider_value });
+	          socket.emit('dmx-go', { 25: slider_value });
 	          break;
 	        case 'wash_zoom':
-	          socket.emit('dmx-go', { 67: slider_value });
+	          this.setState({ washZoom: slider_value });
+	          socket.emit('dmx-go', { 27: slider_value });
 	          break;
 	
 	        default:
 	          console.log('ERROR: Slider does not exist');
 	      }
+	    }
+	  }, {
+	    key: 'savePreset',
+	    value: function savePreset(preset) {
+	      var presets = this.state.presets;
+	      console.log("save preset " + preset + ": " + presets[preset]);
+	      presets[preset].washIntensity = this.state.washIntensity;
+	      presets[preset].washPan = this.state.washPan;
+	      presets[preset].washTilt = this.state.washTilt;
+	      presets[preset].washFinePan = this.state.washFinePan;
+	      presets[preset].washFineTilt = this.state.washFineTilt;
+	      presets[preset].washZoom = this.state.washZoom;
+	      presets[preset].washColor = this.state.washColor;
+	      this.setState({ presets: presets });
+	    }
+	  }, {
+	    key: 'loadPreset',
+	    value: function loadPreset(preset) {
+	      var items = this.state.items;
+	      var presets = this.state.presets;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == "wash_pan") {
+	          items[i].sliderValue = presets[preset].washPan;
+	          socket.emit('dmx-go', { 22: presets[preset].washPan });
+	        }
+	        if (items[i].i == "wash_tilt") {
+	          items[i].sliderValue = presets[preset].washTilt;
+	          socket.emit('dmx-go', { 23: presets[preset].washTilt });
+	        }
+	        if (items[i].i == "wash_fine_pan") {
+	          items[i].sliderValue = presets[preset].washFinePan;
+	          socket.emit('dmx-go', { 24: presets[preset].washFinePan });
+	        }
+	        if (items[i].i == "wash_fine_tilt") {
+	          items[i].sliderValue = presets[preset].washFineTilt;
+	          socket.emit('dmx-go', { 25: presets[preset].washFineTilt });
+	        }
+	        if (items[i].i == "wash_zoom") {
+	          items[i].sliderValue = presets[preset].washZoom;
+	          socket.emit('dmx-go', { 27: presets[preset].washZoom });
+	        }
+	        if (items[i].i == "wash_intensity") {
+	          items[i].sliderValue = presets[preset].washIntensity;
+	          socket.emit('dmx-go', { 16: presets[preset].washIntensity });
+	        }
+	        if (items[i].i == "wash_color") {
+	          items[i].sliderValue = presets[preset].washColor;
+	          socket.emit('dmx-go', { 16: presets[preset].washColor });
+	        }
+	      }
+	      this.setState({ items: items });
 	    }
 	  }, {
 	    key: 'onBreakpointChange',
@@ -40651,9 +40746,9 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'strong',
 	                null,
-	                'Group 2: LIGHTS'
+	                'Group 1: LIGHTS'
 	              ),
-	              ' DMX: 41 + 57'
+	              ' DMX: 1 + 17'
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -40694,194 +40789,60 @@ webpackJsonp([0],{
 	      this.setState({
 	        items: [{
 	          type: 0,
-	          i: "dmx_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Lights Out'
-	        }, {
-	          type: 1,
-	          i: "all_intensity",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          text: 'Master Intensity'
-	        }, {
-	          type: 0,
-	          i: "spot_on",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Spot On'
-	        }, {
-	          type: 0,
-	          i: "spot_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Spot Off'
-	        }, {
-	          type: 1,
-	          i: "spot_intensity",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Spot Intensity'
-	        }, {
-	          type: 1,
-	          i: "spot_tilt",
-	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Spot Tilt'
-	        }, {
-	          type: 1,
-	          i: "spot_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Spot Pan'
-	        }, {
-	          type: 1,
-	          i: "spot_speed",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Spot Speed'
-	        }, {
-	          type: 1,
-	          i: "spot_fine_tilt",
-	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Spot Fine Tilt'
-	        }, {
-	          type: 1,
-	          i: "spot_fine_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 2,
-	          h: 2,
-	          text: 'Spot Fine Pan'
-	        },
-	        /*  {
-	            type: 0,
-	            i: "spot_white",
-	            x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	            y: 2, //Infinity, 
-	            w: 1,
-	            h: 1,
-	            className: 'btn-block btn btn-default',
-	            text: 'Spot White',
-	          },
-	          {
-	            type: 0,
-	            i: "spot_red",
-	            x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	            y: 3, //Infinity, 
-	            w: 1,
-	            h: 1,
-	            className: 'btn-block btn btn-danger',
-	            text: 'Spot Red',
-	          },
-	          {
-	            type: 0,
-	            i: "spot_green",
-	            x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	            y: 2, //Infinity, 
-	            w: 1,
-	            h: 1,
-	            className: 'btn-block btn btn-success',
-	            text: 'Spot Green',
-	          },
-	          {
-	            type: 0,
-	            i: "spot_blue",
-	            x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	            y: 3, //Infinity, 
-	            w: 1,
-	            h: 1,
-	            className: 'btn-block btn btn-primary',
-	            text: 'Spot Blue',
-	          },
-	          {
-	            type: 0,
-	            i: "spot_yellow",
-	            x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	            y: 2, //Infinity, 
-	            w: 1,
-	            h: 1,
-	            className: 'btn-block btn btn-warning',
-	            text: 'Spot Yellow',
-	          },*/
-	        {
-	          type: 0,
 	          i: "wash_on",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
-	          w: 1,
+	          y: 0, //Infinity, 
+	          w: 2,
 	          h: 1,
-	          className: 'btn-block btn',
+	          className: 'btn-block btn btn-success',
 	          text: 'Wash On'
 	        }, {
 	          type: 0,
 	          i: "wash_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity, 
-	          w: 1,
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
 	          h: 1,
-	          className: 'btn-block btn',
+	          className: 'btn-block btn btn-danger',
 	          text: 'Wash Off'
 	        }, {
 	          type: 1,
 	          i: "wash_intensity",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 2,
+	          y: 2, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Wash Intensity'
 	        }, {
 	          type: 1,
 	          i: "wash_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 2,
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Wash Pan'
 	        }, {
 	          type: 1,
 	          i: "wash_tilt",
-	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, // Infinity,
-	          w: 2,
+	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, // Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Wash Tilt'
 	        }, {
 	          type: 1,
 	          i: "wash_fine_pan",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 2,
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Wash Fine Pan'
 	        }, {
 	          type: 1,
 	          i: "wash_fine_tilt",
-	          x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, // Infinity,
-	          w: 2,
+	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, // Infinity,
+	          w: 12,
 	          h: 2,
 	          text: 'Wash Fine Tilt'
 	        }, {
@@ -40889,14 +40850,14 @@ webpackJsonp([0],{
 	          i: "wash_zoom",
 	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	          y: 12, //Infinity,
-	          w: 2,
+	          w: 12,
 	          h: 2,
 	          text: 'Wash Zoom'
 	        }, {
 	          type: 0,
 	          i: "wash_white",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 14, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-default',
@@ -40905,7 +40866,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "wash_red",
 	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity, 
+	          y: 14, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-danger',
@@ -40914,7 +40875,7 @@ webpackJsonp([0],{
 	          type: 0,
 	          i: "wash_green",
 	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
+	          y: 14, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-success',
@@ -40922,8 +40883,8 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "wash_blue",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity, 
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 14, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-primary',
@@ -40931,23 +40892,141 @@ webpackJsonp([0],{
 	        }, {
 	          type: 0,
 	          i: "wash_yellow",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity, 
+	          x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 14, //Infinity, 
 	          w: 1,
 	          h: 1,
 	          className: 'btn-block btn btn-warning',
 	          text: 'Wash Yellow'
-	        }]
+	        }, {
+	          type: 0,
+	          i: "recall_preset_1",
+	          x: 0,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 1'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_2",
+	          x: 1,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 2'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_3",
+	          x: 2,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 3'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_4",
+	          x: 3,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 4'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_5",
+	          x: 4,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 5'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_6",
+	          x: 5,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 6'
+	        }, {
+	          type: 0,
+	          i: "save_preset_1",
+	          x: 0,
+	          y: 16,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 1'
+	        }, {
+	          type: 0,
+	          i: "save_preset_2",
+	          x: 1,
+	          y: 16,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 2'
+	        }, {
+	          type: 0,
+	          i: "save_preset_3",
+	          x: 2,
+	          y: 16,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 3'
+	        }, {
+	          type: 0,
+	          i: "save_preset_4",
+	          x: 3,
+	          y: 16,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 4'
+	        }, {
+	          type: 0,
+	          i: "save_preset_5",
+	          x: 4,
+	          y: 16,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 5'
+	        }, {
+	          type: 0,
+	          i: "save_preset_6",
+	          x: 5,
+	          y: 16,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 6'
+	        }],
+	        presets: [{
+	          washIntensity: '127',
+	          washPan: '0',
+	          washFinePan: '127',
+	          washTilt: '0',
+	          washFineTilt: '127',
+	          washZoom: '215',
+	          washColor: { 17: 0, 18: 0, 19: 255, 20: 0 }
+	        }, {}, {}, {}, {}, {}, {}]
+	
 	      });
 	    }
 	  }]);
 	
-	  return DMXGroup2;
+	  return DMXWashGroup1;
 	}(_react2.default.Component);
 	
-	exports.default = DMXGroup2;
+	exports.default = DMXWashGroup1;
 	
-	DMXGroup2.defaultProps = {
+	DMXWashGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -41012,13 +41091,13 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var DMXGroup3 = function (_React$Component) {
-	  _inherits(DMXGroup3, _React$Component);
+	var DMX155Group2 = function (_React$Component) {
+	  _inherits(DMX155Group2, _React$Component);
 	
-	  function DMXGroup3(props, context) {
-	    _classCallCheck(this, DMXGroup3);
+	  function DMX155Group2(props, context) {
+	    _classCallCheck(this, DMX155Group2);
 	
-	    var _this = _possibleConstructorReturn(this, (DMXGroup3.__proto__ || Object.getPrototypeOf(DMXGroup3)).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (DMX155Group2.__proto__ || Object.getPrototypeOf(DMX155Group2)).call(this, props, context));
 	
 	    _this.state = {
 	      items: [].map(function (i, key, list) {
@@ -41063,7 +41142,7 @@ webpackJsonp([0],{
 	    return _this;
 	  }
 	
-	  _createClass(DMXGroup3, [{
+	  _createClass(DMX155Group2, [{
 	    key: 'handleOnLock',
 	    value: function handleOnLock() {
 	      if (this.state.lock == true) {
@@ -41080,7 +41159,675 @@ webpackJsonp([0],{
 	      var lockStyle = {
 	        display: "none"
 	      };
-	      console.log("does this change? " + el.sliderValue);
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'spot_on':
+	          socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_off':
+	          socket.emit('dmx-go', { 46: 0, 47: 0 });
+	          break;
+	        case 'spot_white':
+	          socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_yellow':
+	          socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_red':
+	          socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_green':
+	          socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
+	          break;
+	        case 'spot_blue':
+	          socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
+	          break;
+	        case 'wash_on':
+	          socket.emit('dmx-go', { 56: 255 });
+	          break;
+	        case 'wash_off':
+	          socket.emit('dmx-go', { 56: 0 });
+	          break;
+	        case 'wash_white':
+	          socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
+	          break;
+	        case 'wash_red':
+	          socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
+	          break;
+	        case 'wash_green':
+	          socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
+	          break;
+	        case 'wash_blue':
+	          socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
+	          break;
+	        case 'wash_yellow':
+	          socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	          break;
+	        case 'save_preset_1':
+	          this.savePreset(1);
+	          break;
+	        case 'save_preset_3':
+	          this.savePreset(3);
+	          break;
+	        case 'save_preset_4':
+	          this.savePreset(4);
+	          break;
+	        case 'save_preset_5':
+	          this.savePreset(5);
+	          break;
+	        case 'save_preset_6':
+	          this.savePreset(6);
+	          break;
+	        case 'save_preset_2':
+	          this.savePreset(2);
+	          break;
+	        case 'recall_preset_1':
+	          this.loadPreset(1);
+	          break;
+	        case 'recall_preset_2':
+	          this.loadPreset(2);
+	          break;
+	        case 'recall_preset_3':
+	          this.loadPreset(3);
+	          break;
+	        case 'recall_preset_4':
+	          this.loadPreset(4);
+	          break;
+	        case 'recall_preset_5':
+	          this.loadPreset(5);
+	          break;
+	        case 'recall_preset_6':
+	          this.loadPreset(6);
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	
+	      var items = this.state.items;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == event.target.id) {
+	          items[i].sliderValue = slider_value;
+	        }
+	      }
+	      this.setState({ items: items });
+	
+	      switch (event.target.id) {
+	        case 'spot_pan':
+	          this.setState({ spotPan: slider_value });
+	          socket.emit('dmx-go', { 40: slider_value });
+	          break;
+	        case 'spot_tilt':
+	          this.setState({ spotTilt: slider_value });
+	          socket.emit('dmx-go', { 41: slider_value });
+	          break;
+	        case 'spot_fine_pan':
+	          this.setState({ spotFinePan: slider_value });
+	          socket.emit('dmx-go', { 42: slider_value });
+	          break;
+	        case 'spot_fine_tilt':
+	          this.setState({ spotFineTilt: slider_value });
+	          socket.emit('dmx-go', { 43: slider_value });
+	          break;
+	        case 'spot_speed':
+	          this.setState({ spotSpeed: slider_value });
+	          socket.emit('dmx-go', { 44: slider_value });
+	          break;
+	        case 'all_intensity':
+	          socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
+	          break;
+	        case 'spot_intensity':
+	          this.setState({ spotIntensity: slider_value });
+	          socket.emit('dmx-go', { 47: slider_value });
+	          break;
+	        case 'wash_intensity':
+	          socket.emit('dmx-go', { 56: slider_value });
+	          break;
+	        case 'wash_pan':
+	          socket.emit('dmx-go', { 62: slider_value });
+	          break;
+	        case 'wash_tilt':
+	          socket.emit('dmx-go', { 63: slider_value });
+	          break;
+	        case 'wash_fine_pan':
+	          socket.emit('dmx-go', { 64: slider_value });
+	          break;
+	        case 'wash_fine_tilt':
+	          socket.emit('dmx-go', { 65: slider_value });
+	          break;
+	        case 'wash_zoom':
+	          socket.emit('dmx-go', { 67: slider_value });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'savePreset',
+	    value: function savePreset(preset) {
+	      var presets = this.state.presets;
+	      console.log("save preset " + preset + ": " + presets[preset]);
+	      presets[preset].spotIntensity = this.state.spotIntensity;
+	      presets[preset].spotPan = this.state.spotPan;
+	      presets[preset].spotTilt = this.state.spotTilt;
+	      presets[preset].spotFinePan = this.state.spotFinePan;
+	      presets[preset].spotFineTilt = this.state.spotFineTilt;
+	      presets[preset].spotSpeed = this.state.spotSpeed;
+	      this.setState({ presets: presets });
+	    }
+	  }, {
+	    key: 'loadPreset',
+	    value: function loadPreset(preset) {
+	      var items = this.state.items;
+	      var presets = this.state.presets;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == "spot_pan") {
+	          items[i].sliderValue = presets[preset].spotPan;
+	          socket.emit('dmx-go', { 80: presets[preset].spotPan });
+	        }
+	        if (items[i].i == "spot_tilt") {
+	          items[i].sliderValue = presets[preset].spotTilt;
+	          socket.emit('dmx-go', { 82: presets[preset].spotTilt });
+	        }
+	        if (items[i].i == "spot_fine_pan") {
+	          items[i].sliderValue = presets[preset].spotFinePan;
+	          socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
+	        }
+	        if (items[i].i == "spot_fine_tilt") {
+	          items[i].sliderValue = presets[preset].spotFineTilt;
+	          socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
+	        }
+	        if (items[i].i == "spot_speed") {
+	          items[i].sliderValue = presets[preset].spotSpeed;
+	          socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
+	        }
+	        if (items[i].i == "spot_intensity") {
+	          items[i].sliderValue = presets[preset].spotIntensity;
+	          socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
+	        }
+	      }
+	      this.setState({ items: items });
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 2: SPOT LIGHT 155'
+	              ),
+	              ' DMX: 41'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      socket = (0, _socket3.default)();
+	
+	      this.setState({
+	        items: [
+	        /*{
+	            type: 0,
+	            i: "dmx_off",
+	            x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	            y: 0, //Infinity, 
+	            w: 2,
+	            h: 2,
+	            className: 'btn-block btn btn-danger',
+	            text: 'Lights Out',
+	          },
+	          {
+	            type: 1,
+	            i: "all_intensity",
+	            x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	            y: 0, //Infinity, 
+	            w: 2,
+	            h: 2,
+	            text: 'Master Intensity',
+	          },*/
+	        {
+	          type: 0,
+	          i: "spot_on",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot On'
+	        }, {
+	          type: 0,
+	          i: "spot_off",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Spot Off'
+	        }, {
+	          type: 1,
+	          i: "spot_intensity",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity,
+	          w: 12,
+	          h: 2,
+	          text: 'Spot Intensity'
+	        }, {
+	          type: 1,
+	          i: "spot_tilt",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 8, //Infinity,
+	          w: 12,
+	          h: 2,
+	          text: 'Spot Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_pan",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 4, //Infinity,
+	          w: 12,
+	          h: 2,
+	          text: 'Spot Pan'
+	        }, {
+	          type: 1,
+	          i: "spot_speed",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 12, //Infinity,
+	          w: 12,
+	          h: 2,
+	          text: 'Spot Speed'
+	        }, {
+	          type: 1,
+	          i: "spot_fine_tilt",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 10, //Infinity,
+	          w: 12,
+	          h: 2,
+	          text: 'Spot Fine Tilt'
+	        }, {
+	          type: 1,
+	          i: "spot_fine_pan",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 6, //Infinity,
+	          w: 12,
+	          h: 2,
+	          text: 'Spot Fine Pan'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_1",
+	          x: 0,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 1'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_2",
+	          x: 1,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 2'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_3",
+	          x: 2,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 3'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_4",
+	          x: 3,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 4'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_5",
+	          x: 4,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 5'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_6",
+	          x: 5,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 6'
+	        }, {
+	          type: 0,
+	          i: "save_preset_1",
+	          x: 0,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 1'
+	        }, {
+	          type: 0,
+	          i: "save_preset_2",
+	          x: 1,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 2'
+	        }, {
+	          type: 0,
+	          i: "save_preset_3",
+	          x: 2,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 3'
+	        }, {
+	          type: 0,
+	          i: "save_preset_4",
+	          x: 3,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 4'
+	        }, {
+	          type: 0,
+	          i: "save_preset_5",
+	          x: 4,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 5'
+	        }, {
+	          type: 0,
+	          i: "save_preset_6",
+	          x: 5,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 6'
+	        }],
+	        presets: [{
+	          spotIntensity: '127',
+	          spotPan: '0',
+	          spotFinePan: '127',
+	          spotTilt: '0',
+	          spotFineTilt: '127',
+	          spotSpeed: '215'
+	        }, {}, {}, {}, {}, {}, {}]
+	      });
+	    }
+	  }]);
+	
+	  return DMX155Group2;
+	}(_react2.default.Component);
+	
+	exports.default = DMX155Group2;
+	
+	DMX155Group2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 932:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(844);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(858);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(859);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(860);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(922);
+	
+	var _socket2 = __webpack_require__(868);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var DMX255Group2 = function (_React$Component) {
+	  _inherits(DMX255Group2, _React$Component);
+	
+	  function DMX255Group2(props, context) {
+	    _classCallCheck(this, DMX255Group2);
+	
+	    var _this = _possibleConstructorReturn(this, (DMX255Group2.__proto__ || Object.getPrototypeOf(DMX255Group2)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: '0'
+	        };
+	      }),
+	      lock: true,
+	      compactType: null,
+	      spotIntensity: '127',
+	      spotPan: '0',
+	      spotFinePan: '127',
+	      spotTilt: '0',
+	      spotFineTilt: '127',
+	      spotSpeed: '215',
+	      presets: [].map(function (i, key, list) {
+	        return {
+	          i: i.toString(),
+	          spotIntensity: '127',
+	          spotPan: '0',
+	          spotFinePan: '127',
+	          spotTilt: '0',
+	          spotFineTilt: '127',
+	          spotSpeed: '215',
+	          add: i === (list.length - 1).toString()
+	        };
+	      })
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    _this.savePreset = _this.savePreset.bind(_this);
+	    _this.loadPreset = _this.loadPreset.bind(_this);
+	
+	    return _this;
+	  }
+	
+	  _createClass(DMX255Group2, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
 	      if (this.state.lock == false) {
 	        lockStyle = {
 	          position: "absolute",
@@ -41123,6 +41870,7 @@ webpackJsonp([0],{
 	        controllerCode,
 	        _react2.default.createElement('span', { style: lockStyle })
 	      );
+	      console.log("does this change? " + el.i + " " + el.sliderValue);
 	    }
 	  }, {
 	    key: 'handleButtons',
@@ -41181,8 +41929,17 @@ webpackJsonp([0],{
 	  }, {
 	    key: 'handleSliders',
 	    value: function handleSliders(event) {
-	      console.log(this.state.presets);
+	      console.log(event.target.id + ': ' + event.target.value);
 	      var slider_value = event.target.value;
+	
+	      var items = this.state.items;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == event.target.id) {
+	          items[i].sliderValue = slider_value;
+	        }
+	      }
+	      this.setState({ items: items });
+	
 	      switch (event.target.id) {
 	        case 'spot_pan':
 	          this.setState({ spotPan: slider_value });
@@ -41217,6 +41974,7 @@ webpackJsonp([0],{
 	    key: 'savePreset',
 	    value: function savePreset(preset) {
 	      var presets = this.state.presets;
+	      console.log("save preset " + preset + ": " + presets[preset]);
 	      presets[preset].spotIntensity = this.state.spotIntensity;
 	      presets[preset].spotPan = this.state.spotPan;
 	      presets[preset].spotTilt = this.state.spotTilt;
@@ -41232,13 +41990,31 @@ webpackJsonp([0],{
 	      var presets = this.state.presets;
 	      for (var i = 0; i < items.length; i++) {
 	        if (items[i].i == "spot_pan") {
-	          console.log("preset: " + presets[preset].spotPan);
 	          items[i].sliderValue = presets[preset].spotPan;
+	          socket.emit('dmx-go', { 80: presets[preset].spotPan });
+	        }
+	        if (items[i].i == "spot_tilt") {
+	          items[i].sliderValue = presets[preset].spotTilt;
+	          socket.emit('dmx-go', { 82: presets[preset].spotTilt });
+	        }
+	        if (items[i].i == "spot_fine_pan") {
+	          items[i].sliderValue = presets[preset].spotFinePan;
+	          socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
+	        }
+	        if (items[i].i == "spot_fine_tilt") {
+	          items[i].sliderValue = presets[preset].spotFineTilt;
+	          socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
+	        }
+	        if (items[i].i == "spot_speed") {
+	          items[i].sliderValue = presets[preset].spotSpeed;
+	          socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
+	        }
+	        if (items[i].i == "spot_intensity") {
+	          items[i].sliderValue = presets[preset].spotIntensity;
+	          socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
 	        }
 	      }
 	      this.setState({ items: items });
-	      console.log(this.state.items);
-	      // this.forceUpdate()
 	    }
 	  }, {
 	    key: 'onBreakpointChange',
@@ -41282,7 +42058,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'strong',
 	                null,
-	                'Group 3: LIGHT'
+	                'Group 2: SPOT LIGHT 255'
 	              ),
 	              ' DMX: 81'
 	            )
@@ -41385,6 +42161,114 @@ webpackJsonp([0],{
 	          w: 12,
 	          h: 2,
 	          text: 'Spot Fine Pan'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_1",
+	          x: 0,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 1'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_2",
+	          x: 1,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 2'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_3",
+	          x: 2,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 3'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_4",
+	          x: 3,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 4'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_5",
+	          x: 4,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 5'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_6",
+	          x: 5,
+	          y: 14,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Preset 6'
+	        }, {
+	          type: 0,
+	          i: "save_preset_1",
+	          x: 0,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 1'
+	        }, {
+	          type: 0,
+	          i: "save_preset_2",
+	          x: 1,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 2'
+	        }, {
+	          type: 0,
+	          i: "save_preset_3",
+	          x: 2,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 3'
+	        }, {
+	          type: 0,
+	          i: "save_preset_4",
+	          x: 3,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 4'
+	        }, {
+	          type: 0,
+	          i: "save_preset_5",
+	          x: 4,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 5'
+	        }, {
+	          type: 0,
+	          i: "save_preset_6",
+	          x: 5,
+	          y: 15,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Save Preset 6'
 	        }],
 	        presets: [{
 	          spotIntensity: '127',
@@ -41398,12 +42282,12 @@ webpackJsonp([0],{
 	    }
 	  }]);
 	
-	  return DMXGroup3;
+	  return DMX255Group2;
 	}(_react2.default.Component);
 	
-	exports.default = DMXGroup3;
+	exports.default = DMX255Group2;
 	
-	DMXGroup3.defaultProps = {
+	DMX255Group2.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -41411,7 +42295,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 932:
+/***/ 933:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41456,7 +42340,7 @@ webpackJsonp([0],{
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(933);
+	var _reactDeviceDetect = __webpack_require__(934);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -42248,7 +43132,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 933:
+/***/ 934:
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -42481,7 +43365,7 @@ webpackJsonp([0],{
 	/* 3 */
 	/***/ (function(module, exports) {
 	
-	module.exports = __webpack_require__(934);
+	module.exports = __webpack_require__(935);
 	
 	/***/ }),
 	/* 4 */
@@ -42677,22 +43561,22 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 934:
+/***/ 935:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	if (process.env.NODE_ENV === 'production') {
-	  module.exports = __webpack_require__(935);
-	} else {
 	  module.exports = __webpack_require__(936);
+	} else {
+	  module.exports = __webpack_require__(937);
 	}
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
 
-/***/ 935:
+/***/ 936:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/** @license React v16.2.0
@@ -42720,7 +43604,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 936:
+/***/ 937:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.2.0
@@ -44085,7 +44969,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 937:
+/***/ 938:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44130,7 +45014,7 @@ webpackJsonp([0],{
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(933);
+	var _reactDeviceDetect = __webpack_require__(934);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -44922,7 +45806,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 938:
+/***/ 939:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45292,7 +46176,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 939:
+/***/ 940:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45662,7 +46546,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 940:
+/***/ 941:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45946,7 +46830,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 941:
+/***/ 942:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46131,7 +47015,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 942:
+/***/ 943:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46831,7 +47715,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 943:
+/***/ 944:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46929,7 +47813,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 944:
+/***/ 945:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47003,7 +47887,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 945:
+/***/ 946:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

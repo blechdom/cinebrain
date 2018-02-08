@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8b5111151624fcf01bdc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1e4fa038b009fca02b9e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -738,6 +738,7 @@
 	      websocket.sockets.emit("show-parameter-inputs", buffer);
 	    });
 	    socket.on('dmx-go', buffer => {
+	      console.log("dmx-go: " + buffer);
 	      universe.update(buffer);
 	    });
 	    socket.on('dmx-all', buffer => {
@@ -8354,7 +8355,7 @@
 	          w: 2,
 	          h: 2,
 	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
+	          sliderValue: '0'
 	        };
 	      }),
 	      lock: true,
@@ -8398,7 +8399,6 @@
 	    let lockStyle = {
 	      display: "none"
 	    };
-	    console.log("does this change? " + el.sliderValue);
 	    if (this.state.lock == false) {
 	      lockStyle = {
 	        position: "absolute",
@@ -8441,6 +8441,7 @@
 	      controllerCode,
 	      _react2.default.createElement('span', { style: lockStyle })
 	    );
+	    console.log("does this change? " + el.i + " " + el.sliderValue);
 	  }
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
@@ -8495,8 +8496,16 @@
 	    }
 	  }
 	  handleSliders(event) {
-	    console.log(this.state.presets);
+	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
 	    switch (event.target.id) {
 	      case 'spot_pan':
 	        this.setState({ spotPan: slider_value });
@@ -8529,6 +8538,7 @@
 	  }
 	  savePreset(preset) {
 	    let presets = this.state.presets;
+	    console.log("save preset " + preset + ": " + presets[preset]);
 	    presets[preset].spotIntensity = this.state.spotIntensity;
 	    presets[preset].spotPan = this.state.spotPan;
 	    presets[preset].spotTilt = this.state.spotTilt;
@@ -8542,13 +8552,31 @@
 	    let presets = this.state.presets;
 	    for (let i = 0; i < items.length; i++) {
 	      if (items[i].i == "spot_pan") {
-	        console.log("preset: " + presets[preset].spotPan);
 	        items[i].sliderValue = presets[preset].spotPan;
+	        socket.emit('dmx-go', { 80: presets[preset].spotPan });
+	      }
+	      if (items[i].i == "spot_tilt") {
+	        items[i].sliderValue = presets[preset].spotTilt;
+	        socket.emit('dmx-go', { 82: presets[preset].spotTilt });
+	      }
+	      if (items[i].i == "spot_fine_pan") {
+	        items[i].sliderValue = presets[preset].spotFinePan;
+	        socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
+	      }
+	      if (items[i].i == "spot_fine_tilt") {
+	        items[i].sliderValue = presets[preset].spotFineTilt;
+	        socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
+	      }
+	      if (items[i].i == "spot_speed") {
+	        items[i].sliderValue = presets[preset].spotSpeed;
+	        socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
+	      }
+	      if (items[i].i == "spot_intensity") {
+	        items[i].sliderValue = presets[preset].spotIntensity;
+	        socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
 	      }
 	    }
 	    this.setState({ items: items });
-	    console.log(this.state.items);
-	    // this.forceUpdate()
 	  }
 	  onBreakpointChange(breakpoint, cols) {
 	    this.setState({
@@ -8681,6 +8709,114 @@
 	        w: 12,
 	        h: 2,
 	        text: 'Spot Fine Pan'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_1",
+	        x: 0,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_2",
+	        x: 1,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_3",
+	        x: 2,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_4",
+	        x: 3,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_5",
+	        x: 4,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_6",
+	        x: 5,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "save_preset_1",
+	        x: 0,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 1'
+	      }, {
+	        type: 0,
+	        i: "save_preset_2",
+	        x: 1,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 2'
+	      }, {
+	        type: 0,
+	        i: "save_preset_3",
+	        x: 2,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 3'
+	      }, {
+	        type: 0,
+	        i: "save_preset_4",
+	        x: 3,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 4'
+	      }, {
+	        type: 0,
+	        i: "save_preset_5",
+	        x: 4,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 5'
+	      }, {
+	        type: 0,
+	        i: "save_preset_6",
+	        x: 5,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 6'
 	      }],
 	      presets: [{
 	        spotIntensity: '127',
@@ -11396,7 +11532,8 @@
 	          w: 2,
 	          h: 2,
 	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
+	          sliderValue: 0,
+	          inputValue: 0
 	        };
 	      }),
 	      lock: true,
@@ -11411,6 +11548,7 @@
 	    this.handleOnLock = this.handleOnLock.bind(this);
 	    this.handleButtons = this.handleButtons.bind(this);
 	    this.handleSliders = this.handleSliders.bind(this);
+	    this.handleNumberInput = this.handleNumberInput.bind(this);
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -11457,7 +11595,25 @@
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'slidecontainer' },
-	          _react2.default.createElement('input', { type: 'range', min: '1', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '127', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    if (el.type == 2) {
+	      //type is text input
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('input', { type: 'number', min: '0', max: '99', value: el.inputValue, id: i, onChange: this.handleNumberInput })
 	        )
 	      );
 	    }
@@ -11483,6 +11639,60 @@
 	      case 'mute-all':
 	        socket.emit('midi-program', { number: 126, channel: 0 });
 	        break;
+	      case 'push-new':
+	        socket.emit('midi-program', { number: 110, channel: 0 });
+	        break;
+	      case 'loop-up':
+	        socket.emit('midi-program', { number: 122, channel: 0 });
+	        break;
+	      case 'loop-down':
+	        socket.emit('midi-program', { number: 121, channel: 0 });
+	        break;
+	      case 'push-reverse':
+	        socket.emit('midi-program', { number: 114, channel: 0 });
+	        break;
+	      case 'push-octave':
+	        socket.emit('midi-program', { number: 119, channel: 0 });
+	        break;
+	      case 'push-mixdown':
+	        socket.emit('midi-program', { number: 120, channel: 0 });
+	        break;
+	      case 'push-punchin':
+	        socket.emit('midi-program', { number: 117, channel: 0 });
+	        break;
+	      case 'select-track-1':
+	        socket.emit('midi-program', { number: 106, channel: 0 });
+	        break;
+	      case 'select-track-2':
+	        socket.emit('midi-program', { number: 107, channel: 0 });
+	        break;
+	      case 'select-track-3':
+	        socket.emit('midi-program', { number: 108, channel: 0 });
+	        break;
+	      case 'select-track-4':
+	        socket.emit('midi-program', { number: 109, channel: 0 });
+	        break;
+	      case 'mute-track-1':
+	        socket.emit('midi-program', { number: 101, channel: 0 });
+	        break;
+	      case 'mute-track-2':
+	        socket.emit('midi-program', { number: 102, channel: 0 });
+	        break;
+	      case 'mute-track-3':
+	        socket.emit('midi-program', { number: 103, channel: 0 });
+	        break;
+	      case 'mute-track-4':
+	        socket.emit('midi-program', { number: 104, channel: 0 });
+	        break;
+	      case 'mute-dry':
+	        socket.emit('midi-program', { number: 124, channel: 0 });
+	        break;
+	      case 'mute-mixdown':
+	        socket.emit('midi-program', { number: 123, channel: 0 });
+	        break;
+	      case 'push-quantize':
+	        socket.emit('midi-program', { number: 111, channel: 0 });
+	        break;
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
@@ -11495,17 +11705,52 @@
 	        socket.emit('midi-cc', { controller: 21, value: slider_value, channel: 0 });
 	        break;
 	      case 'track-2-level':
-	        socket.emit('midi-cc', { controller: 21, value: slider_value, channel: 0 });
+	        socket.emit('midi-cc', { controller: 22, value: slider_value, channel: 0 });
 	        break;
 	      case 'track-3-level':
-	        socket.emit('midi-cc', { controller: 21, value: slider_value, channel: 0 });
+	        socket.emit('midi-cc', { controller: 23, value: slider_value, channel: 0 });
 	        break;
 	      case 'track-4-level':
-	        socket.emit('midi-cc', { controller: 21, value: slider_value, channel: 0 });
+	        socket.emit('midi-cc', { controller: 24, value: slider_value, channel: 0 });
+	        break;
+	      case 'track-1-pan':
+	        socket.emit('midi-cc', { controller: 28, value: slider_value, channel: 0 });
+	        break;
+	      case 'track-2-pan':
+	        socket.emit('midi-cc', { controller: 29, value: slider_value, channel: 0 });
+	        break;
+	      case 'track-3-pan':
+	        socket.emit('midi-cc', { controller: 30, value: slider_value, channel: 0 });
+	        break;
+	      case 'track-4-pan':
+	        socket.emit('midi-cc', { controller: 31, value: slider_value, channel: 0 });
+	        break;
+	      case 'dry-out-level':
+	        socket.emit('midi-cc', { controller: 20, value: slider_value, channel: 0 });
+	        break;
+	      case 'dry-out-pan':
+	        socket.emit('midi-cc', { controller: 27, value: slider_value, channel: 0 });
+	        break;
+	      case 'mix-down-level':
+	        socket.emit('midi-cc', { controller: 25, value: slider_value, channel: 0 });
+	        break;
+	      case 'tempo':
+	        socket.emit('midi-cc', { controller: 26, value: slider_value, channel: 0 });
 	        break;
 	
 	      default:
 	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  handleNumberInput(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let input_value = event.target.value;
+	    switch (event.target.id) {
+	      case 'loop-input':
+	        socket.emit('midi-program', { number: input_value, channel: 0 });
+	        break;
+	      default:
+	        console.log('ERROR: Input does not exist');
 	    }
 	  }
 	  onBreakpointChange(breakpoint, cols) {
@@ -11542,9 +11787,8 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 1: LIGHTS'
-	            ),
-	            ' DMX: 1 + 17'
+	              'MIDI Out for Looper: Electro-Harmonix 45000'
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -11592,20 +11836,190 @@
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
-	        text: 'PLAY'
+	        text: 'PLAY/STOP'
 	      }, {
 	        type: 0,
-	        i: "mute-all",
+	        i: "push-new",
 	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 0, //Infinity, 
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-primary',
+	        text: 'NEW LOOP'
+	      }, {
+	        type: 0,
+	        i: "loop-up",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'LOOP UP'
+	      }, {
+	        type: 0,
+	        i: "loop-down",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'LOOP DOWN'
+	      }, {
+	        type: 2,
+	        i: "loop-input",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        text: 'LOOP INPUT'
+	      }, {
+	        type: 0,
+	        i: "push-reverse",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-info',
+	        text: 'REVERSE'
+	      }, {
+	        type: 0,
+	        i: "push-octave",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-info',
+	        text: 'OCTAVE'
+	      }, {
+	        type: 0,
+	        i: "push-mixdown",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'MIX DOWN'
+	      }, {
+	        type: 0,
+	        i: "push-quantize",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-info',
+	        text: 'QUANTIZE'
+	      }, {
+	        type: 0,
+	        i: "push-punchin",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'PUNCH IN'
+	      }, {
+	        type: 0,
+	        i: "mute-all",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
 	        text: 'MUTE ALL'
+	      }, {
+	        type: 0,
+	        i: "select-track-1",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Select 1'
+	      }, {
+	        type: 0,
+	        i: "select-track-2",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Select 2'
+	      }, {
+	        type: 0,
+	        i: "select-track-3",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Select 3'
+	      }, {
+	        type: 0,
+	        i: "select-track-4",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Select 4'
+	      }, {
+	        type: 0,
+	        i: "mute-track-1",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Mute 1'
+	      }, {
+	        type: 0,
+	        i: "mute-track-2",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Mute 2'
+	      }, {
+	        type: 0,
+	        i: "mute-track-3",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Mute 3'
+	      }, {
+	        type: 0,
+	        i: "mute-track-4",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Mute 4'
+	      }, {
+	        type: 0,
+	        i: "mute-dry",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Mute Dry'
+	      }, {
+	        type: 0,
+	        i: "mute-mixdown",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 13, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Mute Mix'
 	      }, {
 	        type: 1,
 	        i: "track-1-level",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 2, //Infinity,
 	        w: 2,
 	        h: 2,
@@ -11613,27 +12027,91 @@
 	      }, {
 	        type: 1,
 	        i: "track-2-level",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity,
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
 	        w: 2,
 	        h: 2,
 	        text: 'Track 2 Level'
 	      }, {
 	        type: 1,
 	        i: "track-3-level",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity,
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
 	        w: 2,
 	        h: 2,
 	        text: 'Track 3 Level'
 	      }, {
 	        type: 1,
 	        i: "track-4-level",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity,
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity,
 	        w: 2,
 	        h: 2,
 	        text: 'Track 4 Level'
+	      }, {
+	        type: 1,
+	        i: "track-1-pan",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Track 1 Pan'
+	      }, {
+	        type: 1,
+	        i: "track-2-pan",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Track 2 Pan'
+	      }, {
+	        type: 1,
+	        i: "track-3-pan",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Track 3 Pan'
+	      }, {
+	        type: 1,
+	        i: "track-4-pan",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Track 4 Pan'
+	      }, {
+	        type: 1,
+	        i: "dry-out-level",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Dry Level'
+	      }, {
+	        type: 1,
+	        i: "dry-out-pan",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Dry Pan'
+	      }, {
+	        type: 1,
+	        i: "mix-down-level",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Mixdown Level'
+	      }, {
+	        type: 1,
+	        i: "tempo",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 2,
+	        h: 2,
+	        text: 'Tempo'
 	      }]
 	    });
 	  }

@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class DMXGroup3 extends React.Component {
+export default class DMXSpotGroup1 extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -28,7 +28,7 @@ export default class DMXGroup3 extends React.Component {
           w: 2,
           h: 2,
           add: i === (list.length - 1).toString(),
-          sliderValue: '0',
+	        sliderValue: 0,
         };
       }),
       lock: true,
@@ -61,11 +61,11 @@ export default class DMXGroup3 extends React.Component {
 }
  handleOnLock(){
    if (this.state.lock == true) {
-  lockIcon = <FaUnlock />;
-    this.setState({lock: false}); 
+	lockIcon = <FaUnlock />;
+  	this.setState({lock: false}); 
    } else { 
-  lockIcon = <FaLock />;
-    this.setState({lock: true});
+	lockIcon = <FaLock />;
+  	this.setState({lock: true});
    } 
  }
  createElement(el) {
@@ -73,13 +73,13 @@ export default class DMXGroup3 extends React.Component {
       display: "none",
     };
     if (this.state.lock==false){
-      lockStyle = {
-        position: "absolute",
-        right: "2px",
-        top: 0,
-        cursor: "pointer",
-        display: "inline",
-      };
+    	lockStyle = {
+    		position: "absolute",
+    		right: "2px",
+    		top: 0,
+    		cursor: "pointer",
+        		display: "inline",
+    	};
     }
     const gridStyle = {
       background: "#FFF"
@@ -89,30 +89,29 @@ export default class DMXGroup3 extends React.Component {
     if (el.type==1) { //type is slider
       controllerCode =  <div> <span className="text">{el.text}</span>
                 <div id="slidecontainer">
-                <input type="range" min="0" max="255" step="1" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
+                <input type="range" min="1" max="255" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
         </div>;
     }
-     return (
-        <div key={i} data-grid={el} style={gridStyle}>
-            {controllerCode}
-            <span style={lockStyle}></span>
-        </div>
-      );
-     console.log("does this change? " + el.i + " " + el.sliderValue);
+	   return (
+     		<div key={i} data-grid={el} style={gridStyle}>
+		        {controllerCode}
+      		  <span style={lockStyle}></span>
+		    </div>
+    	);
 }
+
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
 
   switch (event.target.value) {
   
   case 'spot_on':
-     socket.emit('dmx-go', {89: 255, 90:216, 95: 0, 84: 215 });
+     socket.emit('dmx-go', {5:0, 6: 216, 7:255 });
     break;
   case 'spot_off':
-    this.setState({spotIntensity:0});
-     socket.emit('dmx-go', {89: 0, 90:0});
+     socket.emit('dmx-go', {6: 0, 7:0});
     break;
-  case 'save_preset_1':
+    case 'save_preset_1':
      this.savePreset(1);
     break;
   case 'save_preset_3':
@@ -156,38 +155,39 @@ handleSliders(event) {
   console.log(event.target.id + ': ' + event.target.value);
   let slider_value = event.target.value;
 
-
-  let items= this.state.items;
+let items= this.state.items;
   for(let i=0; i<items.length; i++){
     if(items[i].i==event.target.id){
       items[i].sliderValue=slider_value;
     }
   }
   this.setState({items});
+  
+
   switch (event.target.id) {
   case 'spot_pan':
       this.setState({spotPan:slider_value});
-      socket.emit('dmx-go', {80: slider_value});
+      socket.emit('dmx-go', {0: slider_value});
       break;
   case 'spot_tilt':
-      this.setState({spotTilt:slider_value});
-      socket.emit('dmx-go', {82: slider_value});
+       this.setState({spotTilt:slider_value});
+      socket.emit('dmx-go', {1: slider_value});
+      break;
+   case 'spot_speed':
+       this.setState({spotSpeed:slider_value});
+      socket.emit('dmx-go', {4: slider_value});
       break;
   case 'spot_fine_pan':
-      this.setState({spotFinePan:slider_value});
-      socket.emit('dmx-go', {81: slider_value});
+       this.setState({spotFinePan:slider_value});
+      socket.emit('dmx-go', {2: slider_value});
       break;
   case 'spot_fine_tilt':
       this.setState({spotFineTilt:slider_value});
-      socket.emit('dmx-go', {83: slider_value});
-      break;
-  case 'spot_speed':
-      this.setState({spotSpeed:slider_value});
-      socket.emit('dmx-go', {84: slider_value});
+      socket.emit('dmx-go', {3: slider_value});
       break;
   case 'spot_intensity':
       this.setState({spotIntensity:slider_value});
-      socket.emit('dmx-go', {89: slider_value});
+      socket.emit('dmx-go', {7: slider_value});
       break;
 
   default:
@@ -248,23 +248,23 @@ onBreakpointChange(breakpoint, cols) {
 render() {
   return (
       <div><div>
-        <Row>
-          <Col xs={2} sm={2} md={2} lg={2}>
-            <button onClick={this.handleOnLock}>{lockIcon}</button>
+ 	      <Row>
+      	  <Col xs={2} sm={2} md={2} lg={2}>
+      	    <button onClick={this.handleOnLock}>{lockIcon}</button>
           </Col>
-            <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 3: LIGHT</strong> DMX: 81
+          <Col xs={10} sm={10} md={10} lg={10}>
+           <strong>Group 1: Spot LIGHT</strong> DMX: 1
           </Col>
-        </Row>
-       <ResponsiveReactGridLayout
+      	</Row>
+	     <ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}
-          isDraggable={!this.state.lock}
-          isResizable={!this.state.lock}  
+	        isDraggable={!this.state.lock}
+	        isResizable={!this.state.lock}  
           compactType={this.state.compactType}
-          {...this.props}
-       >
-         {_.map(this.state.items, el => this.createElement(el))}
+	        {...this.props}
+	     >
+  	     {_.map(this.state.items, el => this.createElement(el))}
        </ResponsiveReactGridLayout>
      </div>
      <div>{this.state.response}</div>
@@ -276,13 +276,16 @@ render() {
   }
   componentDidMount() {
     socket = SocketIOClient();
-      this.setState({
+    socket.on('telnet-response', (mesg) => {
+      this.setState({response: mesg});
+    });
+    this.setState({
          items: [
               {
                 type: 0,
                 i: "spot_on",
-                x: 0,
-                y: 0,
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0,//Infinity, 
                 w: 2,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -291,8 +294,8 @@ render() {
               {
                 type: 0,
                 i: "spot_off",
-                x: 2,
-                y: 0,
+                x: 2,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 0,//Infinity, 
                 w: 2,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -301,18 +304,17 @@ render() {
                {
                 type: 1,
                 i: "spot_intensity",
-                x: 0,
-                y: 2,
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 2,//Infinity,
                 w: 12,
                 h: 2,
                 text: 'Spot Intensity',
-                
               },
               {
                 type: 1,
                 i: "spot_tilt",
-                x: 0,
-                y: 8,
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 8, //Infinity,
                 w: 12,
                 h: 2,
                 text: 'Spot Tilt',
@@ -320,8 +322,8 @@ render() {
               {
                 type: 1,
                 i: "spot_pan",
-                x: 0,
-                y: 4,
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 4,//Infinity,
                 w: 12,
                 h: 2,
                 text: 'Spot Pan',
@@ -329,8 +331,8 @@ render() {
               {
                 type: 1,
                 i: "spot_speed",
-                x: 0,
-                y: 12,
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 12,//Infinity,
                 w: 12,
                 h: 2,
                 text: 'Spot Speed',
@@ -338,8 +340,8 @@ render() {
               {
                 type: 1,
                 i: "spot_fine_tilt",
-                x: 0,
-                y: 10, 
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 10, //Infinity,
                 w: 12,
                 h: 2,
                 text: 'Spot Fine Tilt',
@@ -347,13 +349,12 @@ render() {
               {
                 type: 1,
                 i: "spot_fine_pan",
-                x: 0,
-                y: 6,
+                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
+                y: 6,//Infinity,
                 w: 12,
                 h: 2,
                 text: 'Spot Fine Pan',
-              },
-              {
+              }, {
                 type: 0,
                 i: "recall_preset_1",
                 x: 0,
@@ -485,9 +486,9 @@ render() {
             }
             ,{},{},{},{},{},{}],
       });
-  }
 }
-DMXGroup3.defaultProps = {
+}
+DMXSpotGroup1.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},

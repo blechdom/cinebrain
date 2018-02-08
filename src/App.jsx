@@ -11,8 +11,11 @@ const Header = () => (
     </Navbar.Header>
     <Nav>
       <NavDropdown id="user-dropdown" title="Group 1">
-        <LinkContainer to="/dmx_group1">
-          <NavItem>Lights</NavItem>
+        <LinkContainer to="/dmx_spot_group1">
+          <NavItem>Spot Light</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/dmx_wash_group1">
+          <NavItem>Wash Light</NavItem>
         </LinkContainer>
         <LinkContainer to="/ptz_group1">
           <NavItem>Camera</NavItem>
@@ -22,11 +25,11 @@ const Header = () => (
         </LinkContainer>
 	    </NavDropdown>
       <NavDropdown id="user-dropdown" title="Group 2">
-       <LinkContainer to="/dmx_group2">
-        <NavItem>Light 1</NavItem>
+       <LinkContainer to="/dmx_155_group2">
+        <NavItem>Spot Light 155</NavItem>
       </LinkContainer>
-       <LinkContainer to="/dmx_group3">
-          <NavItem>Light 2</NavItem>
+       <LinkContainer to="/dmx_255_group2">
+          <NavItem>Spot Light 255</NavItem>
       </LinkContainer>
        <LinkContainer to="/ptz_group2">
         <NavItem>Camera</NavItem>
