@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1e4fa038b009fca02b9e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bec8d3db398e74d35f92"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(74);
+	module.exports = __webpack_require__(75);
 
 
 /***/ }),
@@ -607,8 +607,8 @@
 	//atem1me.connect('192.168.10.240');
 	atemTV1.connect('192.168.10.240');
 	//atemTV2.connect('192.168.10.242');
-	
-	var midiOutA = new _index2.default.Output('MIDIPLUS TBOX 2x2 1');
+	var midiOutA;
+	//var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 	
 	let appModule = __webpack_require__(13);
 	let db;
@@ -629,190 +629,186 @@
 	const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 	const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
 	
-	//atemTV1.on('connect', function() {
+	atemTV1.on('connect', function () {
 	
+	  _mongodb.MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
+	    db = connection;
+	    server = _http2.default.createServer();
+	    appModule.setDb(db);
+	    server.on('request', appModule.app);
+	    server.listen(80, () => {
+	      console.log('App started on port 80');
+	    });
 	
-	_mongodb.MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
-	  db = connection;
-	  server = _http2.default.createServer();
-	  appModule.setDb(db);
-	  server.on('request', appModule.app);
-	  server.listen(80, () => {
-	    console.log('App started on port 80');
-	  });
+	    UDPserver = _dgram2.default.createSocket('udp4');
+	    UDPclient = _dgram2.default.createSocket('udp4');
 	
-	  UDPserver = _dgram2.default.createSocket('udp4');
-	  UDPclient = _dgram2.default.createSocket('udp4');
+	    UDPserver.on('error', err => {
+	      console.log(`UDP server error:\n${err.stack}`);
+	      UDPserver.close();
+	    });
 	
-	  UDPserver.on('error', err => {
-	    console.log(`UDP server error:\n${err.stack}`);
-	    UDPserver.close();
-	  });
+	    UDPserver.on('message', (msg, rinfo) => {
+	      console.log(`UDP server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+	    });
 	
-	  UDPserver.on('message', (msg, rinfo) => {
-	    console.log(`UDP server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-	  });
+	    UDPserver.on('listening', () => {
+	      const address = '192.168.10.101';
+	      console.log(`UDP server listening ${address.address}:${address.port}`);
+	    });
 	
-	  UDPserver.on('listening', () => {
-	    const address = '192.168.10.101';
-	    console.log(`UDP server listening ${address.address}:${address.port}`);
-	  });
-	
-	  /*UDPclient.send(PTZ_init, 52381, '192.168.0.100', (err) => {
-	    console.log("send message " + PTZ_init + " err: " + err);
-	    UDPclient.send(PTZ_camera_on, 52381, '192.168.0.100', (err) => {
-	      console.log("send message " + PTZ_camera_on + " err: " + err);
-	    });
-	  });
-	  */
-	  /* UDPclient.send(PTZ_network_setting, 52380, '192.168.0.100', (err) => {
-	     console.log("send message err: " + err);
-	   });
-	  */
-	  UDPserver.bind(62455);
-	
-	  websocket = (0, _socket2.default)(server);
-	  websocket.on('connection', socket => {
-	
-	    console.log("user connected from: " + socket.id);
-	
-	    socket.on('disconnect', () => {
-	      console.log('user disconnected');
-	    });
-	    socket.on('diagnostics-send-telnet', function (data) {
-	      console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
-	      runTelnet(data.host, data.port, data.command);
-	    });
-	    socket.on('control-interface-send-telnet', function (data) {
-	      console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
-	      runTelnet(data.host, data.port, data.command);
-	    });
-	    socket.on('atem1me_changeProgramInput', message => {
-	      console.log("received atem 1 m/e program input command: " + message);
-	      atem1me.changeProgramInput(message);
-	    });
-	    socket.on('atem1me_changePreviewInput', message => {
-	      console.log("received atem 1 m/e preview input command: " + message);
-	      atem1me.changePreviewInput(message);
-	    });
-	    socket.on('atemTV1_changeProgramInput', message => {
-	      console.log("received atem TV 1 program input command: " + message);
-	      atemTV1.changeProgramInput(message);
-	    });
-	    socket.on('atemTV1_changePreviewInput', message => {
-	      console.log("received atem TV 1 preview input command: " + message);
-	      atemTV1.changePreviewInput(message);
-	    });
-	    socket.on('atemTV1_transition_position', message => {
-	      console.log("received atem TV 1 preview input command: " + message);
-	      atemTV1.changeTransitionPosition(message);
-	    });
-	    socket.on('atemTV1_autoTransition', message => {
-	      console.log("received atem TV 1 preview input command: " + message);
-	      atemTV1.autoTransition();
-	    });
-	    socket.on('atemTV1_transitionType', message => {
-	      console.log("received atem TV 1 preview input command: " + message);
-	      atemTV1.changeTransitionType(message);
-	    });
-	    socket.on('atemTV2_changeProgramInput', message => {
-	      console.log("received atem TV 2 program input command: " + message);
-	
-	      atemTV2.changeProgramInput(message);
-	    });
-	    socket.on('atemTV2_changePreviewInput', message => {
-	      console.log("received atem TV 2 preview input command: " + message);
-	      atemTV2.changePreviewInput(message);
-	    });
-	    socket.on('atem1me_runMacro', message => {
-	      console.log("received atem 1 m/e preview input command: " + message);
-	      atem1md.runMacro(2);
-	      atem1me.runMacro(message);
-	    });
-	    socket.on('device-menu', message => {
-	      console.log("the device number is: " + message);
-	      websocket.sockets.emit("show-parameters", message);
-	    });
-	    socket.on('parameter-menu', buffer => {
-	      console.log("the parameter packet is: " + buffer);
-	      websocket.sockets.emit("show-parameter-inputs", buffer);
-	    });
-	    socket.on('dmx-go', buffer => {
-	      console.log("dmx-go: " + buffer);
-	      universe.update(buffer);
-	    });
-	    socket.on('dmx-all', buffer => {
-	      universe.updateAll(buffer);
-	    });
-	    socket.on('ptz-go', function (data) {
-	      let UDPmessage = Buffer.from(data.buffer, 'hex');
-	      UDPclient.send(PTZ_init, data.port, data.host, err => {
-	        UDPclient.send(UDPmessage, data.port, data.host, err => {
-	          console.log("send message " + data.buffer + " err: " + err);
-	        });
+	    /*UDPclient.send(PTZ_init, 52381, '192.168.0.100', (err) => {
+	      console.log("send message " + PTZ_init + " err: " + err);
+	      UDPclient.send(PTZ_camera_on, 52381, '192.168.0.100', (err) => {
+	        console.log("send message " + PTZ_camera_on + " err: " + err);
 	      });
 	    });
-	    socket.on('midi-cc', function (data) {
-	      midiOutA.send('cc', {
-	        controller: data.controller,
-	        value: data.value,
-	        channel: data.channel
+	    */
+	    /* UDPclient.send(PTZ_network_setting, 52380, '192.168.0.100', (err) => {
+	       console.log("send message err: " + err);
+	     });
+	    */
+	    UDPserver.bind(62455);
+	
+	    websocket = (0, _socket2.default)(server);
+	    websocket.on('connection', socket => {
+	
+	      console.log("user connected from: " + socket.id);
+	
+	      socket.on('disconnect', () => {
+	        console.log('user disconnected');
 	      });
-	    });
-	    socket.on('midi-program', function (data) {
-	      midiOutA.send('program', {
-	        number: data.number,
-	        channel: data.channel
+	      socket.on('diagnostics-send-telnet', function (data) {
+	        console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+	        runTelnet(data.host, data.port, data.command);
 	      });
-	    });
+	      socket.on('control-interface-send-telnet', function (data) {
+	        console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
+	        runTelnet(data.host, data.port, data.command);
+	      });
+	      socket.on('atem1me_changeProgramInput', message => {
+	        console.log("received atem 1 m/e program input command: " + message);
+	        atem1me.changeProgramInput(message);
+	      });
+	      socket.on('atem1me_changePreviewInput', message => {
+	        console.log("received atem 1 m/e preview input command: " + message);
+	        atem1me.changePreviewInput(message);
+	      });
+	      socket.on('atemTV1_changeProgramInput', message => {
+	        console.log("received atem TV 1 program input command: " + message);
+	        atemTV1.changeProgramInput(message);
+	      });
+	      socket.on('atemTV1_changePreviewInput', message => {
+	        console.log("received atem TV 1 preview input command: " + message);
+	        atemTV1.changePreviewInput(message);
+	      });
+	      socket.on('atemTV1_transition_position', message => {
+	        console.log("received atem TV 1 preview input command: " + message);
+	        atemTV1.changeTransitionPosition(message);
+	      });
+	      socket.on('atemTV1_autoTransition', message => {
+	        console.log("received atem TV 1 preview input command: " + message);
+	        atemTV1.autoTransition();
+	      });
+	      socket.on('atemTV1_transitionType', message => {
+	        console.log("received atem TV 1 preview input command: " + message);
+	        atemTV1.changeTransitionType(message);
+	      });
+	      socket.on('atemTV2_changeProgramInput', message => {
+	        console.log("received atem TV 2 program input command: " + message);
 	
-	    const telnetHost = '127.0.0.1';
-	    const telnetPort = 5250;
-	
-	    function runTelnet(telnetHost, telnetPort, command) {
-	      var connection = new _telnetClient2.default();
-	
-	      var params = {
-	        host: telnetHost,
-	        port: telnetPort,
-	        timeout: 1500,
-	        negotiationMandatory: false,
-	        ors: '\r\n',
-	        waitfor: '\n'
-	      };
-	      connection.on('connect', function () {
-	        connection.send(command, function (err, res) {
-	          if (err) return err;
-	
-	          console.log('first message:', res.trim());
-	
-	          telnetResponse(res);
-	
-	          connection.send('', {
-	            ors: '\r\n',
-	            waitfor: '\n'
-	          }, function (err, res) {
-	            if (err) return err;
-	
-	            console.log('resp after cmd:', res);
+	        atemTV2.changeProgramInput(message);
+	      });
+	      socket.on('atemTV2_changePreviewInput', message => {
+	        console.log("received atem TV 2 preview input command: " + message);
+	        atemTV2.changePreviewInput(message);
+	      });
+	      socket.on('atem1me_runMacro', message => {
+	        console.log("received atem 1 m/e preview input command: " + message);
+	        atem1md.runMacro(2);
+	        atem1me.runMacro(message);
+	      });
+	      socket.on('device-menu', message => {
+	        console.log("the device number is: " + message);
+	        websocket.sockets.emit("show-parameters", message);
+	      });
+	      socket.on('parameter-menu', buffer => {
+	        console.log("the parameter packet is: " + buffer);
+	        websocket.sockets.emit("show-parameter-inputs", buffer);
+	      });
+	      socket.on('dmx-go', buffer => {
+	        console.log("dmx-go: " + buffer);
+	        universe.update(buffer);
+	      });
+	      socket.on('dmx-all', buffer => {
+	        universe.updateAll(buffer);
+	      });
+	      socket.on('ptz-go', function (data) {
+	        let UDPmessage = Buffer.from(data.buffer, 'hex');
+	        UDPclient.send(PTZ_init, data.port, data.host, err => {
+	          UDPclient.send(UDPmessage, data.port, data.host, err => {
+	            console.log("send message " + data.buffer + " err: " + err);
 	          });
 	        });
 	      });
+	      socket.on('midi-cc', function (data) {
+	        midiOutA.send('cc', {
+	          controller: data.controller,
+	          value: data.value,
+	          channel: data.channel
+	        });
+	      });
+	      socket.on('midi-program', function (data) {
+	        midiOutA.send('program', {
+	          number: data.number,
+	          channel: data.channel
+	        });
+	      });
 	
-	      connection.connect(params);
-	    }
+	      const telnetHost = '127.0.0.1';
+	      const telnetPort = 5250;
 	
-	    function telnetResponse(res) {
-	      websocket.sockets.emit("telnet-response", res);
-	    }
+	      function runTelnet(telnetHost, telnetPort, command) {
+	        var connection = new _telnetClient2.default();
+	
+	        var params = {
+	          host: telnetHost,
+	          port: telnetPort,
+	          timeout: 1500,
+	          negotiationMandatory: false,
+	          ors: '\r\n',
+	          waitfor: '\n'
+	        };
+	        connection.on('connect', function () {
+	          connection.send(command, function (err, res) {
+	            if (err) return err;
+	
+	            console.log('first message:', res.trim());
+	
+	            telnetResponse(res);
+	
+	            connection.send('', {
+	              ors: '\r\n',
+	              waitfor: '\n'
+	            }, function (err, res) {
+	              if (err) return err;
+	
+	              console.log('resp after cmd:', res);
+	            });
+	          });
+	        });
+	
+	        connection.connect(params);
+	      }
+	
+	      function telnetResponse(res) {
+	        websocket.sockets.emit("telnet-response", res);
+	      }
+	    });
+	  }).catch(error => {
+	    console.log('ERROR:', error);
 	  });
-	}).catch(error => {
-	  console.log('ERROR:', error);
 	});
-	
-	//});
-	
-	//});
 	
 	if (true) {
 	  module.hot.accept(13, () => {
@@ -1320,7 +1316,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(73);
+	var _ContextWrapper = __webpack_require__(74);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1478,51 +1474,55 @@
 	
 	var _MediaGroup6 = _interopRequireDefault(_MediaGroup5);
 	
-	var _DMXGroup = __webpack_require__(60);
+	var _DMXSpotGroup = __webpack_require__(60);
 	
-	var _DMXGroup2 = _interopRequireDefault(_DMXGroup);
+	var _DMXSpotGroup2 = _interopRequireDefault(_DMXSpotGroup);
 	
-	var _DMXGroup3 = __webpack_require__(61);
+	var _DMXWashGroup = __webpack_require__(61);
 	
-	var _DMXGroup4 = _interopRequireDefault(_DMXGroup3);
+	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMXGroup5 = __webpack_require__(62);
+	var _DMX155Group = __webpack_require__(62);
 	
-	var _DMXGroup6 = _interopRequireDefault(_DMXGroup5);
+	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _PTZGroup = __webpack_require__(63);
+	var _DMX255Group = __webpack_require__(63);
+	
+	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
+	
+	var _PTZGroup = __webpack_require__(64);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _PTZGroup3 = __webpack_require__(65);
+	var _PTZGroup3 = __webpack_require__(66);
 	
 	var _PTZGroup4 = _interopRequireDefault(_PTZGroup3);
 	
-	var _ATEMGroup = __webpack_require__(66);
+	var _ATEMGroup = __webpack_require__(67);
 	
 	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
 	
-	var _ATEMGroup3 = __webpack_require__(67);
+	var _ATEMGroup3 = __webpack_require__(68);
 	
 	var _ATEMGroup4 = _interopRequireDefault(_ATEMGroup3);
 	
-	var _ATEMGroup5 = __webpack_require__(68);
+	var _ATEMGroup5 = __webpack_require__(69);
 	
 	var _ATEMGroup6 = _interopRequireDefault(_ATEMGroup5);
 	
-	var _Diagnostics = __webpack_require__(69);
+	var _Diagnostics = __webpack_require__(70);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(70);
+	var _MidiLooper = __webpack_require__(71);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Home = __webpack_require__(71);
+	var _Home = __webpack_require__(72);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(72);
+	var _Help = __webpack_require__(73);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1542,9 +1542,10 @@
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group2', component: _MediaGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group3', component: _MediaGroup6.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_group1', component: _DMXGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_group2', component: _DMXGroup4.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_group3', component: _DMXGroup6.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_spot_group1', component: _DMXSpotGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_wash_group1', component: _DMXWashGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_155_group2', component: _DMX155Group2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_255_group2', component: _DMX255Group2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group2', component: _PTZGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group1', component: _ATEMGroup2.default }),
@@ -1613,11 +1614,20 @@
 	      { id: 'user-dropdown', title: 'Group 1' },
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_group1' },
+	        { to: '/dmx_spot_group1' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Lights'
+	          'Spot Light'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/dmx_wash_group1' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Wash Light'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -1644,20 +1654,20 @@
 	      { id: 'user-dropdown', title: 'Group 2' },
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_group2' },
+	        { to: '/dmx_155_group2' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Light 1'
+	          'Spot Light 155'
 	        )
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_group3' },
+	        { to: '/dmx_255_group2' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Light 2'
+	          'Spot Light 255'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -7228,7 +7238,7 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class DMXGroup1 extends _react2.default.Component {
+	class DMXSpotGroup1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -7246,17 +7256,32 @@
 	        };
 	      }),
 	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: '',
 	      compactType: null,
-	      spot_speed: 215
+	      spotIntensity: '127',
+	      spotPan: '0',
+	      spotFinePan: '127',
+	      spotTilt: '0',
+	      spotFineTilt: '127',
+	      spotSpeed: '215',
+	      presets: [].map(function (i, key, list) {
+	        return {
+	          i: i.toString(),
+	          spotIntensity: '127',
+	          spotPan: '0',
+	          spotFinePan: '127',
+	          spotTilt: '0',
+	          spotFineTilt: '127',
+	          spotSpeed: '215',
+	          add: i === (list.length - 1).toString()
+	        };
+	      })
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
 	    this.handleButtons = this.handleButtons.bind(this);
 	    this.handleSliders = this.handleSliders.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -7326,31 +7351,42 @@
 	      case 'spot_off':
 	        socket.emit('dmx-go', { 6: 0, 7: 0 });
 	        break;
-	      case 'wash_on':
-	        socket.emit('dmx-go', { 16: 255 });
+	      case 'save_preset_1':
+	        this.savePreset(1);
 	        break;
-	      case 'wash_off':
-	        socket.emit('dmx-go', { 16: 0 });
+	      case 'save_preset_3':
+	        this.savePreset(3);
 	        break;
-	      case 'wash_white':
-	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
+	      case 'save_preset_4':
+	        this.savePreset(4);
 	        break;
-	      case 'wash_red':
-	        socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
+	      case 'save_preset_5':
+	        this.savePreset(5);
 	        break;
-	      case 'wash_green':
-	        socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
+	      case 'save_preset_6':
+	        this.savePreset(6);
 	        break;
-	      case 'wash_blue':
-	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
+	      case 'save_preset_2':
+	        this.savePreset(2);
 	        break;
-	      case 'wash_yellow':
-	        socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
+	      case 'recall_preset_1':
+	        this.loadPreset(1);
 	        break;
-	      case 'dmx_off':
-	        socket.emit('dmx-go', { 6: 0, 7: 0, 16: 0 });
+	      case 'recall_preset_2':
+	        this.loadPreset(2);
 	        break;
-	
+	      case 'recall_preset_3':
+	        this.loadPreset(3);
+	        break;
+	      case 'recall_preset_4':
+	        this.loadPreset(4);
+	        break;
+	      case 'recall_preset_5':
+	        this.loadPreset(5);
+	        break;
+	      case 'recall_preset_6':
+	        this.loadPreset(6);
+	        break;
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
@@ -7358,51 +7394,86 @@
 	  handleSliders(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
 	    switch (event.target.id) {
 	      case 'spot_pan':
+	        this.setState({ spotPan: slider_value });
 	        socket.emit('dmx-go', { 0: slider_value });
 	        break;
 	      case 'spot_tilt':
+	        this.setState({ spotTilt: slider_value });
 	        socket.emit('dmx-go', { 1: slider_value });
 	        break;
 	      case 'spot_speed':
+	        this.setState({ spotSpeed: slider_value });
 	        socket.emit('dmx-go', { 4: slider_value });
-	        this.state.spot_speed = slider_value;
 	        break;
 	      case 'spot_fine_pan':
+	        this.setState({ spotFinePan: slider_value });
 	        socket.emit('dmx-go', { 2: slider_value });
 	        break;
 	      case 'spot_fine_tilt':
+	        this.setState({ spotFineTilt: slider_value });
 	        socket.emit('dmx-go', { 3: slider_value });
 	        break;
-	      case 'all_intensity':
-	        socket.emit('dmx-go', { 6: 216, 7: slider_value, 16: slider_value });
-	        break;
 	      case 'spot_intensity':
+	        this.setState({ spotIntensity: slider_value });
 	        socket.emit('dmx-go', { 7: slider_value });
-	        break;
-	      case 'wash_intensity':
-	        socket.emit('dmx-go', { 16: slider_value });
-	        break;
-	      case 'wash_pan':
-	        socket.emit('dmx-go', { 22: slider_value });
-	        break;
-	      case 'wash_tilt':
-	        socket.emit('dmx-go', { 23: slider_value });
-	        break;
-	      case 'wash_fine_pan':
-	        socket.emit('dmx-go', { 24: slider_value });
-	        break;
-	      case 'wash_fine_tilt':
-	        socket.emit('dmx-go', { 25: slider_value });
-	        break;
-	      case 'wash_zoom':
-	        socket.emit('dmx-go', { 27: slider_value });
 	        break;
 	
 	      default:
 	        console.log('ERROR: Slider does not exist');
 	    }
+	  }
+	  savePreset(preset) {
+	    let presets = this.state.presets;
+	    console.log("save preset " + preset + ": " + presets[preset]);
+	    presets[preset].spotIntensity = this.state.spotIntensity;
+	    presets[preset].spotPan = this.state.spotPan;
+	    presets[preset].spotTilt = this.state.spotTilt;
+	    presets[preset].spotFinePan = this.state.spotFinePan;
+	    presets[preset].spotFineTilt = this.state.spotFineTilt;
+	    presets[preset].spotSpeed = this.state.spotSpeed;
+	    this.setState({ presets: presets });
+	  }
+	  loadPreset(preset) {
+	    let items = this.state.items;
+	    let presets = this.state.presets;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == "spot_pan") {
+	        items[i].sliderValue = presets[preset].spotPan;
+	        socket.emit('dmx-go', { 80: presets[preset].spotPan });
+	      }
+	      if (items[i].i == "spot_tilt") {
+	        items[i].sliderValue = presets[preset].spotTilt;
+	        socket.emit('dmx-go', { 82: presets[preset].spotTilt });
+	      }
+	      if (items[i].i == "spot_fine_pan") {
+	        items[i].sliderValue = presets[preset].spotFinePan;
+	        socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
+	      }
+	      if (items[i].i == "spot_fine_tilt") {
+	        items[i].sliderValue = presets[preset].spotFineTilt;
+	        socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
+	      }
+	      if (items[i].i == "spot_speed") {
+	        items[i].sliderValue = presets[preset].spotSpeed;
+	        socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
+	      }
+	      if (items[i].i == "spot_intensity") {
+	        items[i].sliderValue = presets[preset].spotIntensity;
+	        socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
+	      }
+	    }
+	    this.setState({ items: items });
 	  }
 	  onBreakpointChange(breakpoint, cols) {
 	    this.setState({
@@ -7438,9 +7509,9 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 1: LIGHTS'
+	              'Group 1: Spot LIGHT'
 	            ),
-	            ' DMX: 1 + 17'
+	            ' DMX: 1'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -7473,255 +7544,192 @@
 	    this.setState({
 	      items: [{
 	        type: 0,
-	        i: "dmx_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 2,
-	        h: 2,
-	        className: 'btn-block btn btn-danger',
-	        text: 'LIGHTS OUT'
-	      }, {
-	        type: 1,
-	        i: "all_intensity",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 2,
-	        h: 2,
-	        text: 'Master Intensity'
-	      }, {
-	        type: 0,
 	        i: "spot_on",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
+	        y: 0, //Infinity, 
+	        w: 2,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-success',
 	        text: 'Spot On'
 	      }, {
 	        type: 0,
 	        i: "spot_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-danger',
 	        text: 'Spot Off'
 	      }, {
 	        type: 1,
 	        i: "spot_intensity",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
+	        y: 2, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Spot Intensity'
 	      }, {
 	        type: 1,
 	        i: "spot_tilt",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Spot Tilt'
 	      }, {
 	        type: 1,
 	        i: "spot_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 4, //Infinity,
-	        w: 2,
+	        w: 12,
 	        h: 2,
 	        text: 'Spot Pan'
 	      }, {
 	        type: 1,
 	        i: "spot_speed",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
+	        y: 12, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Spot Speed'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_tilt",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Spot Fine Tilt'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 6, //Infinity,
-	        w: 2,
+	        w: 12,
 	        h: 2,
 	        text: 'Spot Fine Pan'
-	      },
-	      /*{
+	      }, {
 	        type: 0,
-	        i: "spot_white",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-default',
-	        text: 'Spot White',
-	      },
-	      {
-	        type: 0,
-	        i: "spot_red",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-danger',
-	        text: 'Spot Red',
-	      },
-	      {
-	        type: 0,
-	        i: "spot_green",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        i: "recall_preset_1",
+	        x: 0,
+	        y: 14,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
-	        text: 'Spot Green',
-	      },
-	      {
-	        type: 0,
-	        i: "spot_blue",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Spot Blue',
-	      },
-	      {
-	        type: 0,
-	        i: "spot_yellow",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-warning',
-	        text: 'Spot Yellow',
-	      },*/
-	      {
-	        type: 0,
-	        i: "wash_on",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Wash On'
+	        text: 'Preset 1'
 	      }, {
 	        type: 0,
-	        i: "wash_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Wash Off'
-	      }, {
-	        type: 1,
-	        i: "wash_intensity",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Intensity'
-	      }, {
-	        type: 1,
-	        i: "wash_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Pan'
-	      }, {
-	        type: 1,
-	        i: "wash_tilt",
-	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, // Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Tilt'
-	      }, {
-	        type: 1,
-	        i: "wash_fine_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Fine Pan'
-	      }, {
-	        type: 1,
-	        i: "wash_fine_tilt",
-	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, // Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Fine Tilt'
-	      }, {
-	        type: 1,
-	        i: "wash_zoom",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Wash Zoom'
-	      }, {
-	        type: 0,
-	        i: "wash_white",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-default',
-	        text: 'Wash White'
-	      }, {
-	        type: 0,
-	        i: "wash_red",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-danger',
-	        text: 'Wash Red'
-	      }, {
-	        type: 0,
-	        i: "wash_green",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        i: "recall_preset_2",
+	        x: 1,
+	        y: 14,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
-	        text: 'Wash Green'
+	        text: 'Preset 2'
 	      }, {
 	        type: 0,
-	        i: "wash_blue",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        i: "recall_preset_3",
+	        x: 2,
+	        y: 14,
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Wash Blue'
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
 	      }, {
 	        type: 0,
-	        i: "wash_yellow",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        i: "recall_preset_4",
+	        x: 3,
+	        y: 14,
 	        w: 1,
 	        h: 1,
-	        className: 'btn-block btn btn-warning',
-	        text: 'Wash Yellow'
-	      }]
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_5",
+	        x: 4,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_6",
+	        x: 5,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "save_preset_1",
+	        x: 0,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 1'
+	      }, {
+	        type: 0,
+	        i: "save_preset_2",
+	        x: 1,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 2'
+	      }, {
+	        type: 0,
+	        i: "save_preset_3",
+	        x: 2,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 3'
+	      }, {
+	        type: 0,
+	        i: "save_preset_4",
+	        x: 3,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 4'
+	      }, {
+	        type: 0,
+	        i: "save_preset_5",
+	        x: 4,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 5'
+	      }, {
+	        type: 0,
+	        i: "save_preset_6",
+	        x: 5,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 6'
+	      }],
+	      presets: [{
+	        spotIntensity: '127',
+	        spotPan: '0',
+	        spotFinePan: '127',
+	        spotTilt: '0',
+	        spotFineTilt: '127',
+	        spotSpeed: '215'
+	      }, {}, {}, {}, {}, {}, {}]
 	    });
 	  }
 	}
-	exports.default = DMXGroup1;
-	DMXGroup1.defaultProps = {
+	exports.default = DMXSpotGroup1;
+	DMXSpotGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -7777,7 +7785,7 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class DMXGroup2 extends _react2.default.Component {
+	class DMXWashGroup1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -7791,21 +7799,39 @@
 	          w: 2,
 	          h: 2,
 	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
+	          sliderValue: 0,
+	          washColor: { 17: 0, 18: 0, 19: 0, 20: 255 }
 	        };
 	      }),
 	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: '',
 	      compactType: null,
-	      spot_speed: 215
+	      washIntensity: '127',
+	      washPan: '0',
+	      washFinePan: '127',
+	      washTilt: '0',
+	      washFineTilt: '127',
+	      washZoom: '0',
+	      washColor: { 17: 0, 18: 0, 19: 0, 20: 255 },
+	      presets: [].map(function (i, key, list) {
+	        return {
+	          i: i.toString(),
+	          washIntensity: '127',
+	          washPan: '0',
+	          washFinePan: '127',
+	          washTilt: '0',
+	          washFineTilt: '127',
+	          washZoom: '0',
+	          washColor: { 17: 0, 18: 0, 19: 0, 20: 255 },
+	          add: i === (list.length - 1).toString()
+	        };
+	      })
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
 	    this.handleButtons = this.handleButtons.bind(this);
 	    this.handleSliders = this.handleSliders.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -7869,52 +7895,68 @@
 	
 	    switch (event.target.value) {
 	
-	      case 'spot_on':
-	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_off':
-	        socket.emit('dmx-go', { 46: 0, 47: 0 });
-	        break;
-	      case 'spot_white':
-	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_yellow':
-	        socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_red':
-	        socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_green':
-	        socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_blue':
-	        socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
-	        break;
 	      case 'wash_on':
-	        socket.emit('dmx-go', { 56: 255 });
+	        socket.emit('dmx-go', { 16: 255 });
 	        break;
 	      case 'wash_off':
-	        socket.emit('dmx-go', { 56: 0 });
+	        socket.emit('dmx-go', { 16: 0 });
 	        break;
 	      case 'wash_white':
-	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
+	        this.setState({ washColor: { 17: 0, 18: 0, 19: 0, 20: 255 } });
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 0, 20: 255 });
 	        break;
 	      case 'wash_red':
-	        socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
+	        this.setState({ washColor: { 17: 255, 18: 0, 19: 0, 20: 0 } });
+	        socket.emit('dmx-go', { 17: 255, 18: 0, 19: 0, 20: 0 });
 	        break;
 	      case 'wash_green':
-	        socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
+	        this.setState({ washColor: { 17: 0, 18: 255, 19: 0, 20: 0 } });
+	        socket.emit('dmx-go', { 17: 0, 18: 255, 19: 0, 20: 0 });
 	        break;
 	      case 'wash_blue':
-	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
+	        this.setState({ washColor: { 17: 0, 18: 0, 19: 255, 20: 0 } });
+	        socket.emit('dmx-go', { 17: 0, 18: 0, 19: 255, 20: 0 });
 	        break;
 	      case 'wash_yellow':
-	        socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	        this.setState({ washColor: { 17: 255, 18: 255, 19: 0, 20: 0 } });
+	        socket.emit('dmx-go', { 17: 255, 18: 255, 19: 0, 20: 0 });
 	        break;
-	      case 'dmx_off':
-	        socket.emit('dmx-go', { 46: 0, 47: 0, 56: 0 });
+	      case 'save_preset_1':
+	        this.savePreset(1);
 	        break;
-	
+	      case 'save_preset_3':
+	        this.savePreset(3);
+	        break;
+	      case 'save_preset_4':
+	        this.savePreset(4);
+	        break;
+	      case 'save_preset_5':
+	        this.savePreset(5);
+	        break;
+	      case 'save_preset_6':
+	        this.savePreset(6);
+	        break;
+	      case 'save_preset_2':
+	        this.savePreset(2);
+	        break;
+	      case 'recall_preset_1':
+	        this.loadPreset(1);
+	        break;
+	      case 'recall_preset_2':
+	        this.loadPreset(2);
+	        break;
+	      case 'recall_preset_3':
+	        this.loadPreset(3);
+	        break;
+	      case 'recall_preset_4':
+	        this.loadPreset(4);
+	        break;
+	      case 'recall_preset_5':
+	        this.loadPreset(5);
+	        break;
+	      case 'recall_preset_6':
+	        this.loadPreset(6);
+	        break;
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
@@ -7922,51 +7964,92 @@
 	  handleSliders(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
 	    switch (event.target.id) {
-	      case 'spot_pan':
-	        socket.emit('dmx-go', { 40: slider_value });
-	        break;
-	      case 'spot_tilt':
-	        socket.emit('dmx-go', { 41: slider_value });
-	        break;
-	      case 'spot_fine_pan':
-	        socket.emit('dmx-go', { 42: slider_value });
-	        break;
-	      case 'spot_fine_tilt':
-	        socket.emit('dmx-go', { 43: slider_value });
-	        break;
-	      case 'spot_speed':
-	        socket.emit('dmx-go', { 44: slider_value });
-	        this.state.spot_speed = slider_value;
-	        break;
-	      case 'all_intensity':
-	        socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
-	        break;
-	      case 'spot_intensity':
-	        socket.emit('dmx-go', { 47: slider_value });
-	        break;
+	
 	      case 'wash_intensity':
-	        socket.emit('dmx-go', { 56: slider_value });
+	        this.setState({ washIntensity: slider_value });
+	        socket.emit('dmx-go', { 16: slider_value });
 	        break;
 	      case 'wash_pan':
-	        socket.emit('dmx-go', { 62: slider_value });
+	        this.setState({ washPan: slider_value });
+	        socket.emit('dmx-go', { 22: slider_value });
 	        break;
 	      case 'wash_tilt':
-	        socket.emit('dmx-go', { 63: slider_value });
+	        this.setState({ washTilt: slider_value });
+	        socket.emit('dmx-go', { 23: slider_value });
 	        break;
 	      case 'wash_fine_pan':
-	        socket.emit('dmx-go', { 64: slider_value });
+	        this.setState({ washFinePan: slider_value });
+	        socket.emit('dmx-go', { 24: slider_value });
 	        break;
 	      case 'wash_fine_tilt':
-	        socket.emit('dmx-go', { 65: slider_value });
+	        this.setState({ washFineTilt: slider_value });
+	        socket.emit('dmx-go', { 25: slider_value });
 	        break;
 	      case 'wash_zoom':
-	        socket.emit('dmx-go', { 67: slider_value });
+	        this.setState({ washZoom: slider_value });
+	        socket.emit('dmx-go', { 27: slider_value });
 	        break;
 	
 	      default:
 	        console.log('ERROR: Slider does not exist');
 	    }
+	  }
+	  savePreset(preset) {
+	    let presets = this.state.presets;
+	    console.log("save preset " + preset + ": " + presets[preset]);
+	    presets[preset].washIntensity = this.state.washIntensity;
+	    presets[preset].washPan = this.state.washPan;
+	    presets[preset].washTilt = this.state.washTilt;
+	    presets[preset].washFinePan = this.state.washFinePan;
+	    presets[preset].washFineTilt = this.state.washFineTilt;
+	    presets[preset].washZoom = this.state.washZoom;
+	    presets[preset].washColor = this.state.washColor;
+	    this.setState({ presets: presets });
+	  }
+	  loadPreset(preset) {
+	    let items = this.state.items;
+	    let presets = this.state.presets;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == "wash_pan") {
+	        items[i].sliderValue = presets[preset].washPan;
+	        socket.emit('dmx-go', { 22: presets[preset].washPan });
+	      }
+	      if (items[i].i == "wash_tilt") {
+	        items[i].sliderValue = presets[preset].washTilt;
+	        socket.emit('dmx-go', { 23: presets[preset].washTilt });
+	      }
+	      if (items[i].i == "wash_fine_pan") {
+	        items[i].sliderValue = presets[preset].washFinePan;
+	        socket.emit('dmx-go', { 24: presets[preset].washFinePan });
+	      }
+	      if (items[i].i == "wash_fine_tilt") {
+	        items[i].sliderValue = presets[preset].washFineTilt;
+	        socket.emit('dmx-go', { 25: presets[preset].washFineTilt });
+	      }
+	      if (items[i].i == "wash_zoom") {
+	        items[i].sliderValue = presets[preset].washZoom;
+	        socket.emit('dmx-go', { 27: presets[preset].washZoom });
+	      }
+	      if (items[i].i == "wash_intensity") {
+	        items[i].sliderValue = presets[preset].washIntensity;
+	        socket.emit('dmx-go', { 16: presets[preset].washIntensity });
+	      }
+	      if (items[i].i == "wash_color") {
+	        items[i].sliderValue = presets[preset].washColor;
+	        socket.emit('dmx-go', { 16: presets[preset].washColor });
+	      }
+	    }
+	    this.setState({ items: items });
 	  }
 	  onBreakpointChange(breakpoint, cols) {
 	    this.setState({
@@ -8002,9 +8085,9 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 2: LIGHTS'
+	              'Group 1: Wash LIGHT'
 	            ),
-	            ' DMX: 41 + 57'
+	            ' DMX: 17'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -8037,194 +8120,60 @@
 	    this.setState({
 	      items: [{
 	        type: 0,
-	        i: "dmx_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 2,
-	        h: 2,
-	        className: 'btn-block btn btn-danger',
-	        text: 'Lights Out'
-	      }, {
-	        type: 1,
-	        i: "all_intensity",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 2,
-	        h: 2,
-	        text: 'Master Intensity'
-	      }, {
-	        type: 0,
-	        i: "spot_on",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Spot On'
-	      }, {
-	        type: 0,
-	        i: "spot_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Spot Off'
-	      }, {
-	        type: 1,
-	        i: "spot_intensity",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Intensity'
-	      }, {
-	        type: 1,
-	        i: "spot_tilt",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Tilt'
-	      }, {
-	        type: 1,
-	        i: "spot_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Pan'
-	      }, {
-	        type: 1,
-	        i: "spot_speed",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Speed'
-	      }, {
-	        type: 1,
-	        i: "spot_fine_tilt",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Fine Tilt'
-	      }, {
-	        type: 1,
-	        i: "spot_fine_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Spot Fine Pan'
-	      },
-	      /*  {
-	          type: 0,
-	          i: "spot_white",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Spot White',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_red",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Spot Red',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_green",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Spot Green',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_blue",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-primary',
-	          text: 'Spot Blue',
-	        },
-	        {
-	          type: 0,
-	          i: "spot_yellow",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Spot Yellow',
-	        },*/
-	      {
-	        type: 0,
 	        i: "wash_on",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
-	        w: 1,
+	        y: 0, //Infinity, 
+	        w: 2,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-success',
 	        text: 'Wash On'
 	      }, {
 	        type: 0,
 	        i: "wash_off",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
-	        w: 1,
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-danger',
 	        text: 'Wash Off'
 	      }, {
 	        type: 1,
 	        i: "wash_intensity",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity,
-	        w: 2,
+	        y: 2, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Wash Intensity'
 	      }, {
 	        type: 1,
 	        i: "wash_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity,
-	        w: 2,
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Wash Pan'
 	      }, {
 	        type: 1,
 	        i: "wash_tilt",
-	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, // Infinity,
-	        w: 2,
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, // Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Wash Tilt'
 	      }, {
 	        type: 1,
 	        i: "wash_fine_pan",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity,
-	        w: 2,
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Wash Fine Pan'
 	      }, {
 	        type: 1,
 	        i: "wash_fine_tilt",
-	        x: 4, // (this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, // Infinity,
-	        w: 2,
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, // Infinity,
+	        w: 12,
 	        h: 2,
 	        text: 'Wash Fine Tilt'
 	      }, {
@@ -8232,14 +8181,14 @@
 	        i: "wash_zoom",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 12, //Infinity,
-	        w: 2,
+	        w: 12,
 	        h: 2,
 	        text: 'Wash Zoom'
 	      }, {
 	        type: 0,
 	        i: "wash_white",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-default',
@@ -8248,7 +8197,7 @@
 	        type: 0,
 	        i: "wash_red",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        y: 14, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -8257,7 +8206,7 @@
 	        type: 0,
 	        i: "wash_green",
 	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        y: 14, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -8265,8 +8214,8 @@
 	      }, {
 	        type: 0,
 	        i: "wash_blue",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-primary',
@@ -8274,18 +8223,136 @@
 	      }, {
 	        type: 0,
 	        i: "wash_yellow",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
 	        text: 'Wash Yellow'
-	      }]
+	      }, {
+	        type: 0,
+	        i: "recall_preset_1",
+	        x: 0,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_2",
+	        x: 1,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_3",
+	        x: 2,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_4",
+	        x: 3,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_5",
+	        x: 4,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_6",
+	        x: 5,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "save_preset_1",
+	        x: 0,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 1'
+	      }, {
+	        type: 0,
+	        i: "save_preset_2",
+	        x: 1,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 2'
+	      }, {
+	        type: 0,
+	        i: "save_preset_3",
+	        x: 2,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 3'
+	      }, {
+	        type: 0,
+	        i: "save_preset_4",
+	        x: 3,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 4'
+	      }, {
+	        type: 0,
+	        i: "save_preset_5",
+	        x: 4,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 5'
+	      }, {
+	        type: 0,
+	        i: "save_preset_6",
+	        x: 5,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 6'
+	      }],
+	      presets: [{
+	        washIntensity: '127',
+	        washPan: '0',
+	        washFinePan: '127',
+	        washTilt: '0',
+	        washFineTilt: '127',
+	        washZoom: '215',
+	        washColor: { 17: 0, 18: 0, 19: 255, 20: 0 }
+	      }, {}, {}, {}, {}, {}, {}]
+	
 	    });
 	  }
 	}
-	exports.default = DMXGroup2;
-	DMXGroup2.defaultProps = {
+	exports.default = DMXWashGroup1;
+	DMXWashGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -8341,7 +8408,630 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class DMXGroup3 extends _react2.default.Component {
+	class DMX155Group2 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      compactType: null,
+	      spotIntensity: '127',
+	      spotPan: '0',
+	      spotFinePan: '127',
+	      spotTilt: '0',
+	      spotFineTilt: '127',
+	      spotSpeed: '215',
+	      presets: [].map(function (i, key, list) {
+	        return {
+	          i: i.toString(),
+	          spotIntensity: '127',
+	          spotPan: '0',
+	          spotFinePan: '127',
+	          spotTilt: '0',
+	          spotFineTilt: '127',
+	          spotSpeed: '215',
+	          add: i === (list.length - 1).toString()
+	        };
+	      })
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'spot_on':
+	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_off':
+	        socket.emit('dmx-go', { 46: 0, 47: 0 });
+	        break;
+	      case 'spot_white':
+	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_yellow':
+	        socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_red':
+	        socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_green':
+	        socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
+	        break;
+	      case 'spot_blue':
+	        socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
+	        break;
+	      case 'wash_on':
+	        socket.emit('dmx-go', { 56: 255 });
+	        break;
+	      case 'wash_off':
+	        socket.emit('dmx-go', { 56: 0 });
+	        break;
+	      case 'wash_white':
+	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
+	        break;
+	      case 'wash_red':
+	        socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
+	        break;
+	      case 'wash_green':
+	        socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
+	        break;
+	      case 'wash_blue':
+	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
+	        break;
+	      case 'wash_yellow':
+	        socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	        break;
+	      case 'save_preset_1':
+	        this.savePreset(1);
+	        break;
+	      case 'save_preset_3':
+	        this.savePreset(3);
+	        break;
+	      case 'save_preset_4':
+	        this.savePreset(4);
+	        break;
+	      case 'save_preset_5':
+	        this.savePreset(5);
+	        break;
+	      case 'save_preset_6':
+	        this.savePreset(6);
+	        break;
+	      case 'save_preset_2':
+	        this.savePreset(2);
+	        break;
+	      case 'recall_preset_1':
+	        this.loadPreset(1);
+	        break;
+	      case 'recall_preset_2':
+	        this.loadPreset(2);
+	        break;
+	      case 'recall_preset_3':
+	        this.loadPreset(3);
+	        break;
+	      case 'recall_preset_4':
+	        this.loadPreset(4);
+	        break;
+	      case 'recall_preset_5':
+	        this.loadPreset(5);
+	        break;
+	      case 'recall_preset_6':
+	        this.loadPreset(6);
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
+	    switch (event.target.id) {
+	      case 'spot_pan':
+	        this.setState({ spotPan: slider_value });
+	        socket.emit('dmx-go', { 40: slider_value });
+	        break;
+	      case 'spot_tilt':
+	        this.setState({ spotTilt: slider_value });
+	        socket.emit('dmx-go', { 41: slider_value });
+	        break;
+	      case 'spot_fine_pan':
+	        this.setState({ spotFinePan: slider_value });
+	        socket.emit('dmx-go', { 42: slider_value });
+	        break;
+	      case 'spot_fine_tilt':
+	        this.setState({ spotFineTilt: slider_value });
+	        socket.emit('dmx-go', { 43: slider_value });
+	        break;
+	      case 'spot_speed':
+	        this.setState({ spotSpeed: slider_value });
+	        socket.emit('dmx-go', { 44: slider_value });
+	        break;
+	      case 'all_intensity':
+	        socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        this.setState({ spotIntensity: slider_value });
+	        socket.emit('dmx-go', { 47: slider_value });
+	        break;
+	      case 'wash_intensity':
+	        socket.emit('dmx-go', { 56: slider_value });
+	        break;
+	      case 'wash_pan':
+	        socket.emit('dmx-go', { 62: slider_value });
+	        break;
+	      case 'wash_tilt':
+	        socket.emit('dmx-go', { 63: slider_value });
+	        break;
+	      case 'wash_fine_pan':
+	        socket.emit('dmx-go', { 64: slider_value });
+	        break;
+	      case 'wash_fine_tilt':
+	        socket.emit('dmx-go', { 65: slider_value });
+	        break;
+	      case 'wash_zoom':
+	        socket.emit('dmx-go', { 67: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  savePreset(preset) {
+	    let presets = this.state.presets;
+	    console.log("save preset " + preset + ": " + presets[preset]);
+	    presets[preset].spotIntensity = this.state.spotIntensity;
+	    presets[preset].spotPan = this.state.spotPan;
+	    presets[preset].spotTilt = this.state.spotTilt;
+	    presets[preset].spotFinePan = this.state.spotFinePan;
+	    presets[preset].spotFineTilt = this.state.spotFineTilt;
+	    presets[preset].spotSpeed = this.state.spotSpeed;
+	    this.setState({ presets: presets });
+	  }
+	  loadPreset(preset) {
+	    let items = this.state.items;
+	    let presets = this.state.presets;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == "spot_pan") {
+	        items[i].sliderValue = presets[preset].spotPan;
+	        socket.emit('dmx-go', { 80: presets[preset].spotPan });
+	      }
+	      if (items[i].i == "spot_tilt") {
+	        items[i].sliderValue = presets[preset].spotTilt;
+	        socket.emit('dmx-go', { 82: presets[preset].spotTilt });
+	      }
+	      if (items[i].i == "spot_fine_pan") {
+	        items[i].sliderValue = presets[preset].spotFinePan;
+	        socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
+	      }
+	      if (items[i].i == "spot_fine_tilt") {
+	        items[i].sliderValue = presets[preset].spotFineTilt;
+	        socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
+	      }
+	      if (items[i].i == "spot_speed") {
+	        items[i].sliderValue = presets[preset].spotSpeed;
+	        socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
+	      }
+	      if (items[i].i == "spot_intensity") {
+	        items[i].sliderValue = presets[preset].spotIntensity;
+	        socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
+	      }
+	    }
+	    this.setState({ items: items });
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 2: SPOT LIGHT 155'
+	            ),
+	            ' DMX: 41'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	
+	    this.setState({
+	      items: [
+	      /*{
+	          type: 0,
+	          i: "dmx_off",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Lights Out',
+	        },
+	        {
+	          type: 1,
+	          i: "all_intensity",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          text: 'Master Intensity',
+	        },*/
+	      {
+	        type: 0,
+	        i: "spot_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot On'
+	      }, {
+	        type: 0,
+	        i: "spot_off",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Spot Off'
+	      }, {
+	        type: 1,
+	        i: "spot_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Intensity'
+	      }, {
+	        type: 1,
+	        i: "spot_tilt",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_pan",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_speed",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Speed'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_tilt",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_pan",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Fine Pan'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_1",
+	        x: 0,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_2",
+	        x: 1,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_3",
+	        x: 2,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_4",
+	        x: 3,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_5",
+	        x: 4,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_6",
+	        x: 5,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "save_preset_1",
+	        x: 0,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 1'
+	      }, {
+	        type: 0,
+	        i: "save_preset_2",
+	        x: 1,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 2'
+	      }, {
+	        type: 0,
+	        i: "save_preset_3",
+	        x: 2,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 3'
+	      }, {
+	        type: 0,
+	        i: "save_preset_4",
+	        x: 3,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 4'
+	      }, {
+	        type: 0,
+	        i: "save_preset_5",
+	        x: 4,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 5'
+	      }, {
+	        type: 0,
+	        i: "save_preset_6",
+	        x: 5,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 6'
+	      }],
+	      presets: [{
+	        spotIntensity: '127',
+	        spotPan: '0',
+	        spotFinePan: '127',
+	        spotTilt: '0',
+	        spotFineTilt: '127',
+	        spotSpeed: '215'
+	      }, {}, {}, {}, {}, {}, {}]
+	    });
+	  }
+	}
+	exports.default = DMX155Group2;
+	DMX155Group2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(19);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(40);
+	
+	var _reactDom = __webpack_require__(41);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(42);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(29);
+	
+	var _reactBootstrap = __webpack_require__(25);
+	
+	var _lock = __webpack_require__(43);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(44);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(55);
+	
+	var _socket2 = __webpack_require__(52);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class DMX255Group2 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -8506,6 +9196,7 @@
 	      }
 	    }
 	    this.setState({ items: items });
+	
 	    switch (event.target.id) {
 	      case 'spot_pan':
 	        this.setState({ spotPan: slider_value });
@@ -8612,7 +9303,7 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 3: LIGHT'
+	              'Group 2: SPOT LIGHT 255'
 	            ),
 	            ' DMX: 81'
 	          )
@@ -8829,15 +9520,15 @@
 	    });
 	  }
 	}
-	exports.default = DMXGroup3;
-	DMXGroup3.defaultProps = {
+	exports.default = DMX255Group2;
+	DMX255Group2.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
 	};
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8880,7 +9571,7 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(64);
+	var _reactDeviceDetect = __webpack_require__(65);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -9626,13 +10317,13 @@
 	};
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-device-detect");
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9675,7 +10366,7 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(64);
+	var _reactDeviceDetect = __webpack_require__(65);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -10421,7 +11112,7 @@
 	};
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10748,7 +11439,7 @@
 	};
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11075,7 +11766,7 @@
 	};
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11319,7 +12010,7 @@
 	};
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11469,7 +12160,7 @@
 	exports.default = Diagnostics;
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12124,7 +12815,7 @@
 	};
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12199,7 +12890,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12250,7 +12941,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12286,7 +12977,7 @@
 	};
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -12317,7 +13008,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(75)(updatedModules, updatedModules);
+					__webpack_require__(76)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -12330,7 +13021,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports) {
 
 	/*

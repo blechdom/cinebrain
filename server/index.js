@@ -18,8 +18,8 @@ let atemTV2 = new ATEM();
 //atem1me.connect('192.168.10.240');
 atemTV1.connect('192.168.10.240');
 //atemTV2.connect('192.168.10.242');
-
-var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
+var midiOutA;
+//var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 
 let appModule = require('./server.js');
 let db;
@@ -40,7 +40,7 @@ const PTZ_change_IP = Buffer.from('024d41433a30342d35642d34622d39642d32652d6365F
 const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
 
-//atemTV1.on('connect', function() {
+atemTV1.on('connect', function() {
 
                  
  
@@ -224,9 +224,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   console.log('ERROR:', error);
 });
 
-//});
+});
 
-//});
 
 if (module.hot) {
   module.hot.accept('./server.js', () => {
