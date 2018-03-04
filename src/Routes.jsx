@@ -3,6 +3,7 @@ import { Route, IndexRedirect, withRouter } from 'react-router';
 import App from './App.jsx';
 import IssueList from './IssueList.jsx';
 import IssueEdit from './IssueEdit.jsx';
+import IssueAddNavItem from './IssueAddNavItem.jsx';
 import DeviceList from './DeviceList.jsx';
 import DeviceEdit from './DeviceEdit.jsx';
 import NewControllers from './NewControllers.jsx';
@@ -48,6 +49,7 @@ export default (
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />
     <Route path="issues/:id" component={IssueEdit} />
+    <Route path="issue_add_item" component={IssueAddNavItem} />
     <Route path="devices" component={withRouter(DeviceList)} />
     <Route path="devices/:id" component={DeviceEdit} />
     <Route path="diagnostics" component={Diagnostics} />

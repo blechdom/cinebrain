@@ -1,14 +1,15 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import ReactDOM from 'react-dom'
 import _ from "lodash";
 import 'isomorphic-fetch';
-import {Row, Col, Button} from 'react-bootstrap';
+import Toast from './Toast.jsx';
+import {Row, Col, NavItem, Glyphicon, Modal, Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar} from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 import { SocketProvider } from 'socket.io-react';
 import SocketIOClient from 'socket.io-client';
-
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
@@ -29,28 +30,34 @@ export default class DMXWashGroup1 extends React.Component {
           h: 2,
           add: i === (list.length - 1).toString(),
 	        sliderValue: 0,
-          washColor: {17: 0, 18:0, 19:0, 20:255},
+   //       washColor: {17: 0, 18:0, 19:0, 20:255},
         };
       }),
+      toastVisible: false, toastMessage: '', toastType: 'success',
       lock: true,
       compactType: null,
-      washIntensity: '127',
-      washPan: '0',
-      washFinePan: '127',
-      washTilt: '0',
-      washFineTilt: '127',
-      washZoom: '0',
-      washColor: {17: 0, 18:0, 19:0, 20:255},
+      //dmx_data: {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+      //washIntensity: '127',
+      //washPan: '0',
+      //washFinePan: '127',
+      //washTilt: '0',
+      //washFineTilt: '127',
+      //washZoom: '0',
+      //washColor: {17: 0, 18:0, 19:0, 20:255},
+      instrument_id: "wash_1",
+      dmx_offset: 17,
+      dmx_data: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0, 16:0},
       presets: [].map(function(i, key, list) {
         return {
           i: i.toString(),
-          washIntensity: '127',
-          washPan: '0',
-          washFinePan: '127',
-          washTilt: '0',
-          washFineTilt: '127',
-          washZoom: '0',
-          washColor: {17: 0, 18:0, 19:0, 20:255},
+          dmx_data: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0, 16:0},
+    //      washIntensity: '127',
+    //      washPan: '0',
+    //      washFinePan: '127',
+    //      washTilt: '0',
+    //      washFineTilt: '127',
+    //      washZoom: '0',
+    //      washColor: {17: 0, 18:0, 19:0, 20:255},
           add: i === (list.length - 1).toString(),
         };
       }),
@@ -61,7 +68,15 @@ export default class DMXWashGroup1 extends React.Component {
   this.handleSliders = this.handleSliders.bind(this);
   this.savePreset = this.savePreset.bind(this);
   this.loadPreset = this.loadPreset.bind(this);
+  this.showError = this.showError.bind(this);
+  this.dismissToast = this.dismissToast.bind(this);
 }
+  showError(message) {
+    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+  }
+  dismissToast() {
+    this.setState({ toastVisible: false });
+  }
  handleOnLock(){
    if (this.state.lock == true) {
 	lockIcon = <FaUnlock />;
@@ -102,14 +117,15 @@ export default class DMXWashGroup1 extends React.Component {
 		    </div>
     	);
 }
-
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
 
   switch (event.target.value) {
 
   case 'wash_on':
-     socket.emit('dmx-go', {16:255 });
+    let dmx_data = this.state.dmx_data;
+    socket.emit('dmx-go', {16:255 });
+     console.log("dmx_data: " + dmx_data);
     break;
   case 'wash_off':
      socket.emit('dmx-go', {16: 0});
@@ -135,7 +151,10 @@ handleButtons(event) {
      socket.emit('dmx-go', {17: 255, 18:255, 19:0, 20:0});
     break;
   case 'save_preset_1':
-     this.savePreset(1);
+    this.savePreset(1);
+    break;
+   case 'save_preset_2':
+     this.savePreset(2);
     break;
   case 'save_preset_3':
      this.savePreset(3);
@@ -148,9 +167,6 @@ handleButtons(event) {
     break;
      case 'save_preset_6':
      this.savePreset(6);
-    break;
-  case 'save_preset_2':
-     this.savePreset(2);
     break;
   case 'recall_preset_1':
      this.loadPreset(1);
@@ -229,6 +245,27 @@ savePreset(preset){
       presets[preset].washZoom=this.state.washZoom;
       presets[preset].washColor=this.state.washColor;
     this.setState({presets});
+    const newDMXPreset = {
+      instrument: "Monoprice Wash", dmx_offset: 17, preset_num: preset,
+      dmx_data: presets[preset], created: new Date(),
+    };
+    fetch('/api/dmx_presets', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newDMXPreset),
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(updatedIssue => {
+          //success? this.props.router.push(`/issues/${updatedIssue._id}`);
+        });
+      } else {
+        response.json().then(error => {
+          this.showError(`Failed to add issue: ${error.message}`);
+        });
+      }
+    }).catch(err => {
+      this.showError(`Error in sending data to server: ${err.message}`);
+    });
 }
 loadPreset(preset){
   let items= this.state.items;
@@ -285,6 +322,14 @@ render() {
            <strong>Group 1: Wash LIGHT</strong> DMX: 17
           </Col>
       	</Row>
+        <Row>
+        <Col>
+         <Toast
+          showing={this.state.toastVisible} message={this.state.toastMessage}
+          onDismiss={this.dismissToast} bsStyle={this.state.toastType}
+        />
+        </Col>
+        </Row>
 	     <ResponsiveReactGridLayout
           onBreakpointChange={this.onBreakpointChange}
           onLayoutChange={this.onLayoutChange}

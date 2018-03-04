@@ -12,8 +12,6 @@ app.use(bodyParser.json());
 
 let db;
 
-
-
 app.get('/api/issues', (req, res) => {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
@@ -68,6 +66,22 @@ app.get('/api/device_1_casparcg', (req, res) => {
   });
 });
 
+
+app.get('/api/dmx_presets', (req, res) => {
+  const instrument = req.query.instrument;
+  console.log("instrument is " + instrument);
+  db.collection('dmx_presets').find(instrument).toArray()
+  .then(dmx_presets => {
+    const metadata = { total_count: dmx_presets.length };
+    res.json({ _metadata: metadata, records: dmx_presets });
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+});
+
+
 app.post('/api/issues', (req, res) => {
   const newIssue = req.body;
   newIssue.created = new Date();
@@ -113,6 +127,21 @@ app.post('/api/devices', (req, res) => {
   )
   .then(savedDevice => {
     res.json(savedDevice);
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).json({ message: `Internal Server Error: ${error}` });
+  });
+});
+
+app.post('/api/dmx_presets', (req, res) => {
+  const newDMXPreset = req.body;
+  db.collection('dmx_presets').insertOne(newDMXPreset).then(result =>
+    db.collection('dmx_presets').find({ _id: result.insertedId }).limit(1)
+    .next()
+  )
+  .then(savedDMXPreset => {
+    res.json(savedDMXPreset);
   })
   .catch(error => {
     console.log(error);
@@ -259,6 +288,7 @@ app.delete('/api/devices/:id', (req, res) => {
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
 });
+
 app.use('/', renderedPageRouter);
 
 function setDb(newDb) {

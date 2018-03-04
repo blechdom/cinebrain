@@ -1,7 +1,7 @@
 {
   "name": "Cinebrain",
   "version": "0.0.0",
-  "description": "Cinebrain is a MERN/Socket/Telnet/Serial/Visca/DMX/MIDI hypervisor for live Audio Visual presentation hardware, software and more",
+  "description": "Cinebrain is a MERN/Socket/Telnet/Serial/ATEM/Visca/DMX/MIDI hypervisor for live Audio Visual presentation hardware, software and more",
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.bundle.js",
@@ -29,7 +29,7 @@
     "babel-polyfill": "^6.13.0",
     "body-parser": "^1.15.2",
     "casparcg-connection": "^3.0.1",
-    "dmx": "0.0.5",
+    "debug": "^3.1.0",
     "easymidi": "0.0.4",
     "express": "^4.14.0",
     "http": "0.0.0",
@@ -53,6 +53,7 @@
     "react-icons": "^2.2.7",
     "react-router": "^2.7.0",
     "react-router-bootstrap": "^0.23.1",
+    "serialport": "^4.0.7",
     "socket.io": "^2.0.4",
     "socket.io-client": "^1.4.5",
     "socket.io-react": "^1.2.0",

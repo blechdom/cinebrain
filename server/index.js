@@ -5,7 +5,7 @@ import http from 'http';
 import { MongoClient } from 'mongodb';
 import socketio from 'socket.io';
 import telnet from 'telnet-client';
-import DMX from 'dmx';
+import DMX from './dmx_usb_pro.js';
 import dgram from 'dgram';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import ATEM from 'applest-atem/lib/atem.js';
@@ -28,11 +28,6 @@ let websocket;
 let UDPserver;
 let UDPclient;
 
-let dmx = new DMX();
-let universe = dmx.addUniverse('demo', 'enttec-usb-dmx-pro', 'COM3')
-
-let on = false;
-
 const PTZ_init = Buffer.from('020000010000000001', 'hex');
 const PTZ_network_setting = Buffer.from('02045d4b9d2eceff1921680102ff255255255000ffrobocam2ff03', 'hex');
 const PTZ_change_IP_Enquiry = Buffer.from('02454e513a6e6574776f726b03ff', 'hex');
@@ -40,9 +35,7 @@ const PTZ_change_IP = Buffer.from('024d41433a30342d35642d34622d39642d32652d6365F
 const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
 
-atemTV1.on('connect', function() {
-
-                 
+//atemTV1.on('connect', function() {     
  
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   db = connection;
@@ -52,6 +45,22 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   server.listen(80, () => {
     console.log('App started on port 80');
   });
+
+
+  let current_universe_buffer = new Buffer(512);
+  let dmx_usb_pro, current_universe;
+
+  db.collection('last_known_universe', function (err, collection) {
+    collection.findOne({ _id: "last_known_universe" }, { dmx_data: 1, _id:0 }, function (err, result) {
+      console.log("result " + JSON.stringify(result));
+      current_universe = result.dmx_data; 
+      console.log("current_universe is " + JSON.stringify(current_universe.data));
+      current_universe_buffer = Buffer(current_universe.data);
+      dmx_usb_pro = new DMX('COM3', current_universe_buffer);
+    });
+  });
+   
+   //dmx_usb_pro = new DMX('COM3', current_universe);
 
   UDPserver = dgram.createSocket('udp4');
   UDPclient = dgram.createSocket('udp4');
@@ -129,9 +138,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         });
         socket.on('atemTV2_changeProgramInput', (message) => {
                 console.log("received atem TV 2 program input command: " + message);
-              
                 atemTV2.changeProgramInput(message);
-
         });
         socket.on('atemTV2_changePreviewInput', (message) => {
                 console.log("received atem TV 2 preview input command: " + message);
@@ -143,19 +150,22 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                     atem1me.runMacro(message);
         });
         socket.on('device-menu', (message) => {
-          console.log("the device number is: " + message);
-          websocket.sockets.emit("show-parameters", message);
+            console.log("the device number is: " + message);
+            websocket.sockets.emit("show-parameters", message);
         });
         socket.on('parameter-menu', (buffer) => {
                 console.log("the parameter packet is: " + buffer);
                 websocket.sockets.emit("show-parameter-inputs", buffer);
         }); 
         socket.on('dmx-go', (buffer) => {
-                console.log("dmx-go: " + buffer);
-                universe.update(buffer);
+                dmx_usb_pro.update(buffer);
+                console.log("dmx-go: " + JSON.stringify(buffer));
+                console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
+                let updated_dmx = JSON.stringify(dmx_usb_pro.universe);
+                db.collection('last_known_universe').save({_id:"last_known_universe", dmx_data:JSON.parse(updated_dmx.toString())});
         });     
         socket.on('dmx-all', (buffer) => {
-                universe.updateAll(buffer);
+                dmx_usb_pro.updateAll(buffer);
         });     
         socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
@@ -224,8 +234,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   console.log('ERROR:', error);
 });
 
-});
-
+//});
 
 if (module.hot) {
   module.hot.accept('./server.js', () => {
@@ -235,13 +244,3 @@ if (module.hot) {
     server.on('request', appModule.app);
   });
 }
-
-
-
-
-
-
-
-
-
-
