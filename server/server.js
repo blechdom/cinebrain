@@ -66,21 +66,18 @@ app.get('/api/device_1_casparcg', (req, res) => {
   });
 });
 
-
-app.get('/api/dmx_presets', (req, res) => {
-  const instrument = req.query.instrument;
-  console.log("instrument is " + instrument);
-  db.collection('dmx_presets').find(instrument).toArray()
+app.get('/api/load_dmx_presets', (req, res) => {
+  console.log("what req? " + JSON.stringify(req.query.instrument_id) + " and what res? " + JSON.stringify(res.body)); // 
+  db.collection('dmx_presets').find({instrument: req.query.instrument_id, preset_num: Number(req.query.preset_num), dmx_offset: Number(req.query.dmx_offset)}).toArray()
   .then(dmx_presets => {
-    const metadata = { total_count: dmx_presets.length };
-    res.json({ _metadata: metadata, records: dmx_presets });
+    console.log("res " + JSON.stringify(dmx_presets));
+    res.json({ dmx_data: dmx_presets });
   })
   .catch(error => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
 });
-
 
 app.post('/api/issues', (req, res) => {
   const newIssue = req.body;
@@ -134,9 +131,9 @@ app.post('/api/devices', (req, res) => {
   });
 });
 
-app.post('/api/dmx_presets', (req, res) => {
+app.post('/api/save_dmx_presets', (req, res) => {
   const newDMXPreset = req.body;
-  db.collection('dmx_presets').insertOne(newDMXPreset).then(result =>
+  db.collection('dmx_presets').update({instrument:req.body.instrument, preset_num: req.body.preset_num, dmx_offset: req.body.dmx_offset}, newDMXPreset, {upsert: true}).then(result =>
     db.collection('dmx_presets').find({ _id: result.insertedId }).limit(1)
     .next()
   )

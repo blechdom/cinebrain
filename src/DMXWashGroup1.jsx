@@ -30,37 +30,14 @@ export default class DMXWashGroup1 extends React.Component {
           h: 2,
           add: i === (list.length - 1).toString(),
 	        sliderValue: 0,
-   //       washColor: {17: 0, 18:0, 19:0, 20:255},
         };
       }),
       toastVisible: false, toastMessage: '', toastType: 'success',
       lock: true,
       compactType: null,
-      //dmx_data: {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-      //washIntensity: '127',
-      //washPan: '0',
-      //washFinePan: '127',
-      //washTilt: '0',
-      //washFineTilt: '127',
-      //washZoom: '0',
-      //washColor: {17: 0, 18:0, 19:0, 20:255},
       instrument_id: "wash_1",
       dmx_offset: 17,
-      dmx_data: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0, 16:0},
-      presets: [].map(function(i, key, list) {
-        return {
-          i: i.toString(),
-          dmx_data: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0, 13:0, 14:0, 15:0, 16:0},
-    //      washIntensity: '127',
-    //      washPan: '0',
-    //      washFinePan: '127',
-    //      washTilt: '0',
-    //      washFineTilt: '127',
-    //      washZoom: '0',
-    //      washColor: {17: 0, 18:0, 19:0, 20:255},
-          add: i === (list.length - 1).toString(),
-        };
-      }),
+      dmx_data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
   };
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
@@ -118,37 +95,52 @@ export default class DMXWashGroup1 extends React.Component {
     	);
 }
 handleButtons(event) {
-  console.log(event.target.id + ': ' + event.target.value);
-
-  switch (event.target.value) {
-
+ console.log(event.target.id + ': ' + event.target.value);
+ let dmx_data = this.state.dmx_data;
+  
+ switch (event.target.value) {
   case 'wash_on':
-    let dmx_data = this.state.dmx_data;
-    socket.emit('dmx-go', {16:255 });
-     console.log("dmx_data: " + dmx_data);
+    dmx_data[0]=255;
+    socket.emit('dmx-go', {dmx: {1:255}, offset: this.state.dmx_offset});
     break;
   case 'wash_off':
-     socket.emit('dmx-go', {16: 0});
+    dmx_data[0]=0;
+    socket.emit('dmx-go', {dmx: {1:0}, offset: this.state.dmx_offset});
     break;
   case 'wash_white':
-    this.setState({washColor: {17: 0, 18:0, 19:0, 20:255} });
-     socket.emit('dmx-go', {17: 0, 18:0, 19:0, 20:255});
+    dmx_data[1]=0;
+    dmx_data[2]=0;
+    dmx_data[3]=0;
+    dmx_data[4]=255;
+    socket.emit('dmx-go', {dmx: {2: 0, 3:0, 4:0, 5:255}, offset: this.state.dmx_offset});
     break;
   case 'wash_red':
-   this.setState({washColor:{17: 255, 18:0, 19:0, 20:0} });
-     socket.emit('dmx-go', {17: 255, 18:0, 19:0, 20:0});
+    dmx_data[1]=255;
+    dmx_data[2]=0;
+    dmx_data[3]=0;
+    dmx_data[4]=0;
+    socket.emit('dmx-go', {dmx: {2: 255, 3:0, 4:0, 5:0}, offset: this.state.dmx_offset});
     break;
   case 'wash_green':
-  this.setState({washColor:{17: 0, 18:255, 19:0, 20:0} });
-     socket.emit('dmx-go', {17: 0, 18:255, 19:0, 20:0});
+    dmx_data[1]=0;
+    dmx_data[2]=255;
+    dmx_data[3]=0;
+    dmx_data[4]=0;
+    socket.emit('dmx-go', {dmx: {2: 0, 3:255, 4:0, 5:0}, offset: this.state.dmx_offset});
     break;
   case 'wash_blue':
-  this.setState({washColor:{17: 0, 18:0, 19:255, 20:0}});
-     socket.emit('dmx-go', {17: 0, 18:0, 19:255, 20:0});
+    dmx_data[1]=0;
+    dmx_data[2]=0;
+    dmx_data[3]=255;
+    dmx_data[4]=0;
+    socket.emit('dmx-go', {dmx: {2: 0, 3:0, 4:255, 5:0}, offset: this.state.dmx_offset});
     break;
   case 'wash_yellow':
-   this.setState({washColor:{17: 255, 18:255, 19:0, 20:0}});
-     socket.emit('dmx-go', {17: 255, 18:255, 19:0, 20:0});
+    dmx_data[1]=255;
+    dmx_data[2]=255;
+    dmx_data[3]=0;
+    dmx_data[4]=0;
+    socket.emit('dmx-go', {dmx: {2: 255, 3:255, 4:0, 5:0}, offset: this.state.dmx_offset});
     break;
   case 'save_preset_1':
     this.savePreset(1);
@@ -189,10 +181,13 @@ handleButtons(event) {
   default:
     console.log('ERROR: Button does not exist');
   }
+  this.setState({dmx_data: dmx_data});
+  //console.log("dmx_data: " + this.state.dmx_data);
 } 
 handleSliders(event) {
   console.log(event.target.id + ': ' + event.target.value);
-  let slider_value = event.target.value;
+  let slider_value = Number(event.target.value);
+  let dmx_data = this.state.dmx_data;
 
   let items= this.state.items;
   for(let i=0; i<items.length; i++){
@@ -205,102 +200,50 @@ handleSliders(event) {
   switch (event.target.id) {
 
   case 'wash_intensity':
-      this.setState({washIntensity:slider_value});
-      socket.emit('dmx-go', {16: slider_value});
+      dmx_data[0]=slider_value;
+      socket.emit('dmx-go', {dmx: {1: slider_value}, offset: this.state.dmx_offset});
       break;
   case 'wash_pan':
-      this.setState({washPan:slider_value});
-      socket.emit('dmx-go', {22: slider_value});
+      slider_value = Math.floor(((slider_value/255)*86)+42);
+      dmx_data[6]=slider_value;
+      socket.emit('dmx-go', {dmx: {7: slider_value}, offset: this.state.dmx_offset});
       break;
   case 'wash_tilt':
-      this.setState({washTilt:slider_value});
-      socket.emit('dmx-go', {23: slider_value});
+      slider_value = Math.floor(210-((slider_value/255)*86));
+      dmx_data[7]=slider_value;
+      socket.emit('dmx-go', {dmx: {8: slider_value}, offset: this.state.dmx_offset});
       break;
   case 'wash_fine_pan':
-      this.setState({washFinePan:slider_value});
-      socket.emit('dmx-go', {24: slider_value});
+      dmx_data[8]=slider_value;
+      socket.emit('dmx-go', {dmx: {9: slider_value}, offset: this.state.dmx_offset});
       break;
   case 'wash_fine_tilt':
-      this.setState({washFineTilt:slider_value});
-      socket.emit('dmx-go', {25: slider_value});
+      dmx_data[9]=slider_value;
+      socket.emit('dmx-go', {dmx: {10: slider_value}, offset: this.state.dmx_offset});
       break;
   case 'wash_zoom':
-      this.setState({washZoom:slider_value});
-      socket.emit('dmx-go', {27: slider_value});
+      dmx_data[11]=slider_value;
+      socket.emit('dmx-go', {dmx: {12: slider_value}, offset: this.state.dmx_offset});
       break;
-  
-
   default:
     console.log('ERROR: Slider does not exist');
   }
+  this.setState({dmx_data: dmx_data});
+  console.log("dmx_data: " + this.state.dmx_data);
 }
 savePreset(preset){
-  let presets = this.state.presets;
-  console.log("save preset " + preset + ": " + presets[preset]);
-      presets[preset].washIntensity=this.state.washIntensity;
-      presets[preset].washPan=this.state.washPan;
-      presets[preset].washTilt=this.state.washTilt;
-      presets[preset].washFinePan=this.state.washFinePan;
-      presets[preset].washFineTilt=this.state.washFineTilt;
-      presets[preset].washZoom=this.state.washZoom;
-      presets[preset].washColor=this.state.washColor;
-    this.setState({presets});
-    const newDMXPreset = {
-      instrument: "Monoprice Wash", dmx_offset: 17, preset_num: preset,
-      dmx_data: presets[preset], created: new Date(),
+  const newDMXPreset = {
+      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+      dmx_data: this.state.dmx_data,
     };
-    fetch('/api/dmx_presets', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newDMXPreset),
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(updatedIssue => {
-          //success? this.props.router.push(`/issues/${updatedIssue._id}`);
-        });
-      } else {
-        response.json().then(error => {
-          this.showError(`Failed to add issue: ${error.message}`);
-        });
-      }
-    }).catch(err => {
-      this.showError(`Error in sending data to server: ${err.message}`);
-    });
+  socket.emit('dmx-save-preset', newDMXPreset);
 }
+
 loadPreset(preset){
-  let items= this.state.items;
-  let presets=this.state.presets;
-  for(let i=0; i<items.length; i++){
-    if(items[i].i=="wash_pan"){
-      items[i].sliderValue=presets[preset].washPan;
-      socket.emit('dmx-go', {22: presets[preset].washPan});
-    }
-    if(items[i].i=="wash_tilt"){
-      items[i].sliderValue=presets[preset].washTilt;
-      socket.emit('dmx-go', {23: presets[preset].washTilt});
-    }
-    if(items[i].i=="wash_fine_pan"){
-      items[i].sliderValue=presets[preset].washFinePan;
-      socket.emit('dmx-go', {24: presets[preset].washFinePan});
-    }
-    if(items[i].i=="wash_fine_tilt"){
-      items[i].sliderValue=presets[preset].washFineTilt;
-      socket.emit('dmx-go', {25: presets[preset].washFineTilt});
-    }
-     if(items[i].i=="wash_zoom"){
-      items[i].sliderValue=presets[preset].washZoom;
-      socket.emit('dmx-go', {27: presets[preset].washZoom});
-    }
-    if(items[i].i=="wash_intensity"){
-      items[i].sliderValue=presets[preset].washIntensity;
-      socket.emit('dmx-go', {16: presets[preset].washIntensity});
-    }
-    if(items[i].i=="wash_color"){
-      items[i].sliderValue=presets[preset].washColor;
-      socket.emit('dmx-go', {16: presets[preset].washColor});
-    }
-  }
-  this.setState({items});
+  const loadDMXPreset = {
+      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data,
+  };
+  socket.emit('dmx-load-preset', loadDMXPreset);
 }
 onBreakpointChange(breakpoint, cols) {
     this.setState({
@@ -319,7 +262,7 @@ render() {
       	    <button onClick={this.handleOnLock}>{lockIcon}</button>
           </Col>
           <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 1: Wash LIGHT</strong> DMX: 17
+           <strong>Group 1: Wash LIGHT ({this.state.instrument_id}) </strong> DMX OFFSET: {this.state.dmx_offset}
           </Col>
       	</Row>
         <Row>
@@ -352,6 +295,10 @@ render() {
     socket = SocketIOClient();
     socket.on('telnet-response', (mesg) => {
       this.setState({response: mesg});
+    });
+    socket.on('dmx-load-preset-data', (data) => {
+      this.setState({dmx_data: data});
+      console.log("preset retrieved " + this.state.dmx_data);
     });
     this.setState({
          items: [

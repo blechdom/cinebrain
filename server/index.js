@@ -158,15 +158,32 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 websocket.sockets.emit("show-parameter-inputs", buffer);
         }); 
         socket.on('dmx-go', (buffer) => {
-                dmx_usb_pro.update(buffer);
-                console.log("dmx-go: " + JSON.stringify(buffer));
+                dmx_usb_pro.update(buffer.dmx, buffer.offset);
+                console.log("dmx-go: " + JSON.stringify(buffer.dmx));
                 console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
                 let updated_dmx = JSON.stringify(dmx_usb_pro.universe);
                 db.collection('last_known_universe').save({_id:"last_known_universe", dmx_data:JSON.parse(updated_dmx.toString())});
         });     
         socket.on('dmx-all', (buffer) => {
                 dmx_usb_pro.updateAll(buffer);
-        });     
+        });
+        socket.on('dmx-save-preset', (data) => {
+          db.collection('dmx_presets').update({instrument_id:data.instrument_id, preset_num: data.preset_num, dmx_offset: data.dmx_offset}, data, {upsert: true});
+        }); 
+        socket.on('dmx-load-preset', (data) => {
+        
+          db.collection('dmx_presets', function (err, collection) {
+            collection.findOne({instrument_id: data.instrument_id, preset_num: data.preset_num, dmx_offset: data.dmx_offset}, function (err, result) {
+                socket.emit('dmx-load-preset-data', result.dmx_data);
+                let DMXArray = result.dmx_data;
+                let DMXObject = {};
+                for (var i = 0, len = DMXArray.length; i < len; i++) {
+                  DMXObject[i+1] = DMXArray[i];
+                }
+                dmx_usb_pro.update(DMXObject, result.dmx_offset);
+            });
+          });
+        });  
         socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
                 UDPclient.send(PTZ_init, data.port, data.host, (err) => {
@@ -201,7 +218,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
               timeout: 1500,
               negotiationMandatory: false,
               ors: '\r\n', 
-              waitfor: '\n' 
+              waitfor: '\n'  
           };
           connection.on('connect', function() {
               connection.send(command, function(err, res) {

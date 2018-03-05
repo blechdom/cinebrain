@@ -49,9 +49,13 @@ DMX.prototype.close = function(cb) {
 	this.dev.close(cb)
 }
 
-DMX.prototype.update = function(u) {
+DMX.prototype.update = function(u, offset) {
+	console.log("in driver: " + JSON.stringify(u) + " offset: " + offset);
 	for(var c in u) {
-		this.universe[c] = u[c]
+		console.log("c: " + c + " u " + JSON.stringify(u) + " u[c] " + u[c]);
+		console.log("c+offset " + (c+offset));
+		console.log("c+offset-1 " + (parseFloat(c)+parseFloat(offset)-parseFloat(2)));
+		this.universe[(parseFloat(c)+parseFloat(offset)-parseFloat(2))] = u[c]
 	}
 	this.send_universe()
 }
@@ -76,3 +80,4 @@ DMX.prototype.get = function(c) {
 }
 
 module.exports = DMX
+ 

@@ -91,6 +91,7 @@ export default class IssueList extends React.Component {
 
   componentDidMount() {
     this.loadData();
+    console.log("location " + this.state.location);
   }
 
   componentDidUpdate(prevProps) {
@@ -117,6 +118,7 @@ export default class IssueList extends React.Component {
   }
 
   loadData() {
+
     IssueList.dataFetcher({ location: this.props.location })
     .then(data => {
       const issues = data.IssueList.records;
