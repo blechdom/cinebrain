@@ -1,11 +1,10 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import {Responsive, WidthProvider} from 'react-grid-layout';
 import ReactDOM from 'react-dom'
 import _ from "lodash";
 import 'isomorphic-fetch';
 import Toast from './Toast.jsx';
-import {Row, Col, NavItem, Glyphicon, Modal, Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar} from 'react-bootstrap';
+import {Row, Col, Button} from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
 import { SocketProvider } from 'socket.io-react';
@@ -229,7 +228,7 @@ handleSliders(event) {
     console.log('ERROR: Slider does not exist');
   }
   this.setState({dmx_data: dmx_data});
-  console.log("dmx_data: " + this.state.dmx_data);
+  //console.log("dmx_data: " + this.state.dmx_data);
 }
 savePreset(preset){
   const newDMXPreset = {
@@ -293,9 +292,6 @@ render() {
   }
   componentDidMount() {
     socket = SocketIOClient();
-    socket.on('telnet-response', (mesg) => {
-      this.setState({response: mesg});
-    });
     socket.on('dmx-load-preset-data', (data) => {
       this.setState({dmx_data: data});
       console.log("preset retrieved " + this.state.dmx_data);
@@ -548,18 +544,6 @@ render() {
                 text: 'Save Preset 6',
               },
             ],
-            presets:[
-            {
-              washIntensity: '127',
-              washPan: '0',
-              washFinePan: '127',
-              washTilt: '0',
-              washFineTilt: '127',
-              washZoom: '215',
-              washColor: {17: 0, 18:0, 19:255, 20:0},
-            }
-            ,{},{},{},{},{},{}],
-            
       });
 }
 }

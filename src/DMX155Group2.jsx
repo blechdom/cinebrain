@@ -3,6 +3,7 @@ import {Responsive, WidthProvider} from 'react-grid-layout';
 import ReactDOM from 'react-dom'
 import _ from "lodash";
 import 'isomorphic-fetch';
+import Toast from './Toast.jsx';
 import {Row, Col, Button} from 'react-bootstrap';
 import FaLock from 'react-icons/lib/fa/lock';
 import FaUnlock from 'react-icons/lib/fa/unlock';
@@ -31,26 +32,12 @@ export default class DMX155Group2 extends React.Component {
           sliderValue: 0,
         };
       }),
+      toastVisible: false, toastMessage: '', toastType: 'success',
       lock: true,
       compactType: null,
-      spotIntensity: '127',
-      spotPan: '0',
-      spotFinePan: '127',
-      spotTilt: '0',
-      spotFineTilt: '127',
-      spotSpeed: '215',
-      presets: [].map(function(i, key, list) {
-        return {
-          i: i.toString(),
-          spotIntensity: '127',
-          spotPan: '0',
-          spotFinePan: '127',
-          spotTilt: '0',
-          spotFineTilt: '127',
-          spotSpeed: '215',
-          add: i === (list.length - 1).toString(),
-        };
-      }),
+      instrument_id: "spot_2",
+      dmx_offset: 41,
+      dmx_data: [0,0,0,0,0,0,0,0,0,0,0],
   };
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
   this.handleOnLock = this.handleOnLock.bind(this);
@@ -58,7 +45,15 @@ export default class DMX155Group2 extends React.Component {
   this.handleSliders = this.handleSliders.bind(this);
   this.savePreset = this.savePreset.bind(this);
   this.loadPreset = this.loadPreset.bind(this);
+  this.showError = this.showError.bind(this);
+  this.dismissToast = this.dismissToast.bind(this);
 }
+showError(message) {
+    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+  }
+  dismissToast() {
+    this.setState({ toastVisible: false });
+  }
  handleOnLock(){
    if (this.state.lock == true) {
   lockIcon = <FaUnlock />;
@@ -102,50 +97,20 @@ export default class DMX155Group2 extends React.Component {
 
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
+  let dmx_data = this.state.dmx_data;
 
   switch (event.target.value) {
   
   case 'spot_on':
-     socket.emit('dmx-go', {45:0, 46: 216, 47:255 });
+    dmx_data[5]=0;
+    dmx_data[6]=216;
+    dmx_data[7]=255;
+     socket.emit('dmx-go', {6:0, 7: 216, 8:255 });
     break;
   case 'spot_off':
-     socket.emit('dmx-go', {46: 0, 47:0});
-    break;
-  case 'spot_white':
-     socket.emit('dmx-go', {45: 0, 46:216, 47:255});
-    break;
-  case 'spot_yellow':
-     socket.emit('dmx-go', {45: 6, 46:216, 47:255});
-    break;
-  case 'spot_red':
-     socket.emit('dmx-go', {45: 24, 46:216, 47:255});
-    break;
-  case 'spot_green':
-     socket.emit('dmx-go', {45: 18, 46:216, 47:255});
-    break;
-  case 'spot_blue':
-     socket.emit('dmx-go', {45: 42, 46:216, 47:255});
-    break;
-  case 'wash_on':
-     socket.emit('dmx-go', {56:255 });
-    break;
-  case 'wash_off':
-     socket.emit('dmx-go', {56: 0});
-    break;
-  case 'wash_white':
-     socket.emit('dmx-go', {57: 0, 58:0, 59:0, 60:255});
-    break;
-  case 'wash_red':
-     socket.emit('dmx-go', {57: 255, 58:0, 59:0, 60:0});
-    break;
-  case 'wash_green':
-     socket.emit('dmx-go', {57: 0, 58:255, 59:0, 60:0});
-    break;
-  case 'wash_blue':
-     socket.emit('dmx-go', {57: 0, 58:0, 59:255, 20:0});
-    break;
-  case 'wash_yellow':
-     socket.emit('dmx-go', {57: 255, 58:255, 59:0, 60:0});
+    dmx_data[6]=0;
+    dmx_data[7]=0;
+     socket.emit('dmx-go', {7: 0, 8:0});
     break;
   case 'save_preset_1':
      this.savePreset(1);
@@ -187,10 +152,12 @@ handleButtons(event) {
   default:
     console.log('ERROR: Button does not exist');
   }
+  this.setState({dmx_data: dmx_data});
 } 
 handleSliders(event) {
   console.log(event.target.id + ': ' + event.target.value);
   let slider_value = event.target.value;
+  let dmx_data = this.state.dmx_data;
 
   let items= this.state.items;
   for(let i=0; i<items.length; i++){
@@ -202,97 +169,48 @@ handleSliders(event) {
 
   switch (event.target.id) {
   case 'spot_pan':
-      this.setState({spotPan:slider_value});
-      socket.emit('dmx-go', {40: slider_value});
+      slider_value = Math.floor(((slider_value/255)*86)+42);
+      dmx_data[0]=slider_value;
+      socket.emit('dmx-go', {1: slider_value});
       break;
   case 'spot_tilt':
-      this.setState({spotTilt:slider_value});
-      socket.emit('dmx-go', {41: slider_value});
+      slider_value = Math.floor(210-((slider_value/255)*86));
+       dmx_data[1]=slider_value;
+      socket.emit('dmx-go', {2: slider_value});
+      break;
+   case 'spot_speed':
+       dmx_data[4]=slider_value;
+      socket.emit('dmx-go', {5: slider_value});
       break;
   case 'spot_fine_pan':
-      this.setState({spotFinePan:slider_value});
-      socket.emit('dmx-go', {42: slider_value});
+       dmx_data[2]=slider_value;
+      socket.emit('dmx-go', {3: slider_value});
       break;
   case 'spot_fine_tilt':
-      this.setState({spotFineTilt:slider_value});
-      socket.emit('dmx-go', {43: slider_value});
-      break;
-  case 'spot_speed':
-      this.setState({spotSpeed:slider_value});
-      socket.emit('dmx-go', {44: slider_value});
-      break;
-  case 'all_intensity':
-      socket.emit('dmx-go', {46:216, 47: slider_value, 56: slider_value});
+       dmx_data[3]=slider_value;
+      socket.emit('dmx-go', {4: slider_value});
       break;
   case 'spot_intensity':
-      this.setState({spotIntensity:slider_value});
-      socket.emit('dmx-go', {47: slider_value});
+       dmx_data[7]=slider_value;
+      socket.emit('dmx-go', {8: slider_value});
       break;
-  case 'wash_intensity':
-      socket.emit('dmx-go', {56: slider_value});
-      break;
-  case 'wash_pan':
-      socket.emit('dmx-go', {62: slider_value});
-      break;
-  case 'wash_tilt':
-      socket.emit('dmx-go', {63: slider_value});
-      break;
-  case 'wash_fine_pan':
-      socket.emit('dmx-go', {64: slider_value});
-      break;
-  case 'wash_fine_tilt':
-      socket.emit('dmx-go', {65: slider_value});
-      break;
-  case 'wash_zoom':
-      socket.emit('dmx-go', {67: slider_value});
-      break;
-  
-
   default:
     console.log('ERROR: Slider does not exist');
   }
+  this.setState({dmx_data: dmx_data});
 }
 savePreset(preset){
-  let presets = this.state.presets;
-  console.log("save preset " + preset + ": " + presets[preset]);
-      presets[preset].spotIntensity=this.state.spotIntensity;
-      presets[preset].spotPan=this.state.spotPan;
-      presets[preset].spotTilt=this.state.spotTilt;
-      presets[preset].spotFinePan=this.state.spotFinePan;
-      presets[preset].spotFineTilt=this.state.spotFineTilt;
-      presets[preset].spotSpeed=this.state.spotSpeed;
-    this.setState({presets});
+  const newDMXPreset = {
+      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+      dmx_data: this.state.dmx_data,
+    };
+  socket.emit('dmx-save-preset', newDMXPreset);
 }
 loadPreset(preset){
-  let items= this.state.items;
-  let presets=this.state.presets;
-  for(let i=0; i<items.length; i++){
-    if(items[i].i=="spot_pan"){
-      items[i].sliderValue=presets[preset].spotPan;
-      socket.emit('dmx-go', {80: presets[preset].spotPan});
-    }
-    if(items[i].i=="spot_tilt"){
-      items[i].sliderValue=presets[preset].spotTilt;
-      socket.emit('dmx-go', {82: presets[preset].spotTilt});
-    }
-    if(items[i].i=="spot_fine_pan"){
-      items[i].sliderValue=presets[preset].spotFinePan;
-      socket.emit('dmx-go', {81: presets[preset].spotFinePan});
-    }
-    if(items[i].i=="spot_fine_tilt"){
-      items[i].sliderValue=presets[preset].spotFineTilt;
-      socket.emit('dmx-go', {83: presets[preset].spotFineTilt});
-    }
-     if(items[i].i=="spot_speed"){
-      items[i].sliderValue=presets[preset].spotSpeed;
-      socket.emit('dmx-go', {84: presets[preset].spotSpeed});
-    }
-    if(items[i].i=="spot_intensity"){
-      items[i].sliderValue=presets[preset].spotIntensity;
-      socket.emit('dmx-go', {89: presets[preset].spotIntensity});
-    }
-  }
-  this.setState({items});
+  const loadDMXPreset = {
+      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data,
+  };
+  socket.emit('dmx-load-preset', loadDMXPreset);
 }
 onBreakpointChange(breakpoint, cols) {
     this.setState({
@@ -334,28 +252,12 @@ render() {
   }
   componentDidMount() {
     socket = SocketIOClient();
-  
+    socket.on('dmx-load-preset-data', (data) => {
+      this.setState({dmx_data: data});
+      console.log("preset retrieved " + this.state.dmx_data);
+    });
     this.setState({
          items: [
-            /*{
-                type: 0,
-                i: "dmx_off",
-                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 0, //Infinity, 
-                w: 2,
-                h: 2,
-                className: 'btn-block btn btn-danger',
-                text: 'Lights Out',
-              },
-              {
-                type: 1,
-                i: "all_intensity",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 0, //Infinity, 
-                w: 2,
-                h: 2,
-                text: 'Master Intensity',
-              },*/
               {
                 type: 0,
                 i: "spot_on",
@@ -550,191 +452,7 @@ render() {
                 className: 'btn-block btn btn-danger',
                 text: 'Save Preset 6',
               },
-            /*  {
-                type: 0,
-                i: "spot_white",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 2, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-default',
-                text: 'Spot White',
-              },
-              {
-                type: 0,
-                i: "spot_red",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 3, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Spot Red',
-              },
-              {
-                type: 0,
-                i: "spot_green",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 2, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Spot Green',
-              },
-              {
-                type: 0,
-                i: "spot_blue",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 3, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-primary',
-                text: 'Spot Blue',
-              },
-              {
-                type: 0,
-                i: "spot_yellow",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 2, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-warning',
-                text: 'Spot Yellow',
-              },
-              {
-                type: 0,
-                i: "wash_on",
-                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Wash On',
-              },
-              {
-                type: 0,
-                i: "wash_off",
-                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn',
-                text: 'Wash Off',
-              },
-               {
-                type: 1,
-                i: "wash_intensity",
-                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
-                w: 2,
-                h: 2,
-                text: 'Wash Intensity',
-              },
-              {
-                type: 1,
-                i: "wash_pan",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
-                w: 2,
-                h: 2,
-                text: 'Wash Pan',
-              },
-              {
-                type: 1,
-                i: "wash_tilt",
-                x: 4,// (this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10,// Infinity,
-                w: 2,
-                h: 2,
-                text: 'Wash Tilt',
-              },
-              {
-                type: 1,
-                i: "wash_fine_pan",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 12, //Infinity,
-                w: 2,
-                h: 2,
-                text: 'Wash Fine Pan',
-              },
-              {
-                type: 1,
-                i: "wash_fine_tilt",
-                x: 4,// (this.state.items.length * 2) % (this.state.cols || 12),
-                y: 12,// Infinity,
-                w: 2,
-                h: 2,
-                text: 'Wash Fine Tilt',
-              },
-               {
-                type: 1,
-                i: "wash_zoom",
-                x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 12, //Infinity,
-                w: 2,
-                h: 2,
-                text: 'Wash Zoom',
-              },
-              {
-                type: 0,
-                i: "wash_white",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-default',
-                text: 'Wash White',
-              },
-              {
-                type: 0,
-                i: "wash_red",
-                x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Wash Red',
-              },
-              {
-                type: 0,
-                i: "wash_green",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Wash Green',
-              },
-              {
-                type: 0,
-                i: "wash_blue",
-                x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 9, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-primary',
-                text: 'Wash Blue',
-              },
-              {
-                type: 0,
-                i: "wash_yellow",
-                x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity, 
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-warning',
-                text: 'Wash Yellow',
-              },*/
             ],
-            presets:[
-            {
-              spotIntensity: '127',
-              spotPan: '0',
-              spotFinePan: '127',
-              spotTilt: '0',
-              spotFineTilt: '127',
-              spotSpeed: '215',
-            }
-            ,{},{},{},{},{},{}],
       });
 }
 }

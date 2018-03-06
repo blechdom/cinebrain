@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "21e47f92bc7078fcb925"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ba230b01926fb2ef9f67"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -930,11 +930,8 @@
 	};
 	
 	DMX.prototype.update = function (u, offset) {
-		console.log("in driver: " + JSON.stringify(u) + " offset: " + offset);
 		for (var c in u) {
 			console.log("c: " + c + " u " + JSON.stringify(u) + " u[c] " + u[c]);
-			console.log("c+offset " + (c + offset));
-			console.log("c+offset-1 " + (parseFloat(c) + parseFloat(offset) - parseFloat(2)));
 			this.universe[parseFloat(c) + parseFloat(offset) - parseFloat(2)] = u[c];
 		}
 		this.send_universe();
@@ -7520,6 +7517,10 @@
 	
 	__webpack_require__(30);
 	
+	var _Toast = __webpack_require__(33);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
 	var _reactBootstrap = __webpack_require__(26);
 	
 	var _lock = __webpack_require__(45);
@@ -7559,26 +7560,12 @@
 	          sliderValue: 0
 	        };
 	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
 	      lock: true,
 	      compactType: null,
-	      spotIntensity: '127',
-	      spotPan: '0',
-	      spotFinePan: '127',
-	      spotTilt: '0',
-	      spotFineTilt: '127',
-	      spotSpeed: '215',
-	      presets: [].map(function (i, key, list) {
-	        return {
-	          i: i.toString(),
-	          spotIntensity: '127',
-	          spotPan: '0',
-	          spotFinePan: '127',
-	          spotTilt: '0',
-	          spotFineTilt: '127',
-	          spotSpeed: '215',
-	          add: i === (list.length - 1).toString()
-	        };
-	      })
+	      instrument_id: "spot_1",
+	      dmx_offset: 1,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
@@ -7586,6 +7573,14 @@
 	    this.handleSliders = this.handleSliders.bind(this);
 	    this.savePreset = this.savePreset.bind(this);
 	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -7646,14 +7641,20 @@
 	
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
 	
 	    switch (event.target.value) {
 	
 	      case 'spot_on':
-	        socket.emit('dmx-go', { 5: 0, 6: 216, 7: 255 });
+	        dmx_data[5] = 0;
+	        dmx_data[6] = 216;
+	        dmx_data[7] = 255;
+	        socket.emit('dmx-go', { 6: 0, 7: 216, 8: 255 });
 	        break;
 	      case 'spot_off':
-	        socket.emit('dmx-go', { 6: 0, 7: 0 });
+	        dmx_data[6] = 0;
+	        dmx_data[7] = 0;
+	        socket.emit('dmx-go', { 7: 0, 8: 0 });
 	        break;
 	      case 'save_preset_1':
 	        this.savePreset(1);
@@ -7694,10 +7695,12 @@
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
+	    this.setState({ dmx_data: dmx_data });
 	  }
 	  handleSliders(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value;
+	    let dmx_data = this.state.dmx_data;
 	
 	    let items = this.state.items;
 	    for (let i = 0; i < items.length; i++) {
@@ -7709,75 +7712,49 @@
 	
 	    switch (event.target.id) {
 	      case 'spot_pan':
-	        this.setState({ spotPan: slider_value });
-	        socket.emit('dmx-go', { 0: slider_value });
-	        break;
-	      case 'spot_tilt':
-	        this.setState({ spotTilt: slider_value });
+	        slider_value = Math.floor(slider_value / 255 * 86 + 42);
+	        dmx_data[0] = slider_value;
 	        socket.emit('dmx-go', { 1: slider_value });
 	        break;
-	      case 'spot_speed':
-	        this.setState({ spotSpeed: slider_value });
-	        socket.emit('dmx-go', { 4: slider_value });
-	        break;
-	      case 'spot_fine_pan':
-	        this.setState({ spotFinePan: slider_value });
+	      case 'spot_tilt':
+	        slider_value = Math.floor(210 - slider_value / 255 * 86);
+	        dmx_data[1] = slider_value;
 	        socket.emit('dmx-go', { 2: slider_value });
 	        break;
-	      case 'spot_fine_tilt':
-	        this.setState({ spotFineTilt: slider_value });
+	      case 'spot_speed':
+	        dmx_data[4] = slider_value;
+	        socket.emit('dmx-go', { 5: slider_value });
+	        break;
+	      case 'spot_fine_pan':
+	        dmx_data[2] = slider_value;
 	        socket.emit('dmx-go', { 3: slider_value });
 	        break;
+	      case 'spot_fine_tilt':
+	        dmx_data[3] = slider_value;
+	        socket.emit('dmx-go', { 4: slider_value });
+	        break;
 	      case 'spot_intensity':
-	        this.setState({ spotIntensity: slider_value });
-	        socket.emit('dmx-go', { 7: slider_value });
+	        dmx_data[7] = slider_value;
+	        socket.emit('dmx-go', { 8: slider_value });
 	        break;
 	
 	      default:
 	        console.log('ERROR: Slider does not exist');
 	    }
+	    this.setState({ dmx_data: dmx_data });
 	  }
 	  savePreset(preset) {
-	    let presets = this.state.presets;
-	    console.log("save preset " + preset + ": " + presets[preset]);
-	    presets[preset].spotIntensity = this.state.spotIntensity;
-	    presets[preset].spotPan = this.state.spotPan;
-	    presets[preset].spotTilt = this.state.spotTilt;
-	    presets[preset].spotFinePan = this.state.spotFinePan;
-	    presets[preset].spotFineTilt = this.state.spotFineTilt;
-	    presets[preset].spotSpeed = this.state.spotSpeed;
-	    this.setState({ presets: presets });
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-save-preset', newDMXPreset);
 	  }
 	  loadPreset(preset) {
-	    let items = this.state.items;
-	    let presets = this.state.presets;
-	    for (let i = 0; i < items.length; i++) {
-	      if (items[i].i == "spot_pan") {
-	        items[i].sliderValue = presets[preset].spotPan;
-	        socket.emit('dmx-go', { 80: presets[preset].spotPan });
-	      }
-	      if (items[i].i == "spot_tilt") {
-	        items[i].sliderValue = presets[preset].spotTilt;
-	        socket.emit('dmx-go', { 82: presets[preset].spotTilt });
-	      }
-	      if (items[i].i == "spot_fine_pan") {
-	        items[i].sliderValue = presets[preset].spotFinePan;
-	        socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
-	      }
-	      if (items[i].i == "spot_fine_tilt") {
-	        items[i].sliderValue = presets[preset].spotFineTilt;
-	        socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
-	      }
-	      if (items[i].i == "spot_speed") {
-	        items[i].sliderValue = presets[preset].spotSpeed;
-	        socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
-	      }
-	      if (items[i].i == "spot_intensity") {
-	        items[i].sliderValue = presets[preset].spotIntensity;
-	        socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
-	      }
-	    }
-	    this.setState({ items: items });
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
 	  }
 	  onBreakpointChange(breakpoint, cols) {
 	    this.setState({
@@ -7842,8 +7819,9 @@
 	  }
 	  componentDidMount() {
 	    socket = (0, _socket3.default)();
-	    socket.on('telnet-response', mesg => {
-	      this.setState({ response: mesg });
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
 	    });
 	    this.setState({
 	      items: [{
@@ -8020,15 +7998,7 @@
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
 	        text: 'Save Preset 6'
-	      }],
-	      presets: [{
-	        spotIntensity: '127',
-	        spotPan: '0',
-	        spotFinePan: '127',
-	        spotTilt: '0',
-	        spotFineTilt: '127',
-	        spotSpeed: '215'
-	      }, {}, {}, {}, {}, {}, {}]
+	      }]
 	    });
 	  }
 	}
@@ -8054,8 +8024,6 @@
 	var _react = __webpack_require__(20);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(22);
 	
 	var _reactGridLayout = __webpack_require__(42);
 	
@@ -8325,7 +8293,7 @@
 	        console.log('ERROR: Slider does not exist');
 	    }
 	    this.setState({ dmx_data: dmx_data });
-	    console.log("dmx_data: " + this.state.dmx_data);
+	    //console.log("dmx_data: " + this.state.dmx_data);
 	  }
 	  savePreset(preset) {
 	    const newDMXPreset = {
@@ -8419,9 +8387,6 @@
 	  }
 	  componentDidMount() {
 	    socket = (0, _socket3.default)();
-	    socket.on('telnet-response', mesg => {
-	      this.setState({ response: mesg });
-	    });
 	    socket.on('dmx-load-preset-data', data => {
 	      this.setState({ dmx_data: data });
 	      console.log("preset retrieved " + this.state.dmx_data);
@@ -8646,17 +8611,7 @@
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
 	        text: 'Save Preset 6'
-	      }],
-	      presets: [{
-	        washIntensity: '127',
-	        washPan: '0',
-	        washFinePan: '127',
-	        washTilt: '0',
-	        washFineTilt: '127',
-	        washZoom: '215',
-	        washColor: { 17: 0, 18: 0, 19: 255, 20: 0 }
-	      }, {}, {}, {}, {}, {}, {}]
-	
+	      }]
 	    });
 	  }
 	}
@@ -8694,6 +8649,10 @@
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
 	__webpack_require__(30);
+	
+	var _Toast = __webpack_require__(33);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
 	
 	var _reactBootstrap = __webpack_require__(26);
 	
@@ -8734,26 +8693,12 @@
 	          sliderValue: 0
 	        };
 	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
 	      lock: true,
 	      compactType: null,
-	      spotIntensity: '127',
-	      spotPan: '0',
-	      spotFinePan: '127',
-	      spotTilt: '0',
-	      spotFineTilt: '127',
-	      spotSpeed: '215',
-	      presets: [].map(function (i, key, list) {
-	        return {
-	          i: i.toString(),
-	          spotIntensity: '127',
-	          spotPan: '0',
-	          spotFinePan: '127',
-	          spotTilt: '0',
-	          spotFineTilt: '127',
-	          spotSpeed: '215',
-	          add: i === (list.length - 1).toString()
-	        };
-	      })
+	      instrument_id: "spot_2",
+	      dmx_offset: 41,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
@@ -8761,6 +8706,14 @@
 	    this.handleSliders = this.handleSliders.bind(this);
 	    this.savePreset = this.savePreset.bind(this);
 	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -8821,50 +8774,20 @@
 	
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
 	
 	    switch (event.target.value) {
 	
 	      case 'spot_on':
-	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
+	        dmx_data[5] = 0;
+	        dmx_data[6] = 216;
+	        dmx_data[7] = 255;
+	        socket.emit('dmx-go', { 6: 0, 7: 216, 8: 255 });
 	        break;
 	      case 'spot_off':
-	        socket.emit('dmx-go', { 46: 0, 47: 0 });
-	        break;
-	      case 'spot_white':
-	        socket.emit('dmx-go', { 45: 0, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_yellow':
-	        socket.emit('dmx-go', { 45: 6, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_red':
-	        socket.emit('dmx-go', { 45: 24, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_green':
-	        socket.emit('dmx-go', { 45: 18, 46: 216, 47: 255 });
-	        break;
-	      case 'spot_blue':
-	        socket.emit('dmx-go', { 45: 42, 46: 216, 47: 255 });
-	        break;
-	      case 'wash_on':
-	        socket.emit('dmx-go', { 56: 255 });
-	        break;
-	      case 'wash_off':
-	        socket.emit('dmx-go', { 56: 0 });
-	        break;
-	      case 'wash_white':
-	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 0, 60: 255 });
-	        break;
-	      case 'wash_red':
-	        socket.emit('dmx-go', { 57: 255, 58: 0, 59: 0, 60: 0 });
-	        break;
-	      case 'wash_green':
-	        socket.emit('dmx-go', { 57: 0, 58: 255, 59: 0, 60: 0 });
-	        break;
-	      case 'wash_blue':
-	        socket.emit('dmx-go', { 57: 0, 58: 0, 59: 255, 20: 0 });
-	        break;
-	      case 'wash_yellow':
-	        socket.emit('dmx-go', { 57: 255, 58: 255, 59: 0, 60: 0 });
+	        dmx_data[6] = 0;
+	        dmx_data[7] = 0;
+	        socket.emit('dmx-go', { 7: 0, 8: 0 });
 	        break;
 	      case 'save_preset_1':
 	        this.savePreset(1);
@@ -8906,10 +8829,12 @@
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
+	    this.setState({ dmx_data: dmx_data });
 	  }
 	  handleSliders(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value;
+	    let dmx_data = this.state.dmx_data;
 	
 	    let items = this.state.items;
 	    for (let i = 0; i < items.length; i++) {
@@ -8921,96 +8846,48 @@
 	
 	    switch (event.target.id) {
 	      case 'spot_pan':
-	        this.setState({ spotPan: slider_value });
-	        socket.emit('dmx-go', { 40: slider_value });
+	        slider_value = Math.floor(slider_value / 255 * 86 + 42);
+	        dmx_data[0] = slider_value;
+	        socket.emit('dmx-go', { 1: slider_value });
 	        break;
 	      case 'spot_tilt':
-	        this.setState({ spotTilt: slider_value });
-	        socket.emit('dmx-go', { 41: slider_value });
-	        break;
-	      case 'spot_fine_pan':
-	        this.setState({ spotFinePan: slider_value });
-	        socket.emit('dmx-go', { 42: slider_value });
-	        break;
-	      case 'spot_fine_tilt':
-	        this.setState({ spotFineTilt: slider_value });
-	        socket.emit('dmx-go', { 43: slider_value });
+	        slider_value = Math.floor(210 - slider_value / 255 * 86);
+	        dmx_data[1] = slider_value;
+	        socket.emit('dmx-go', { 2: slider_value });
 	        break;
 	      case 'spot_speed':
-	        this.setState({ spotSpeed: slider_value });
-	        socket.emit('dmx-go', { 44: slider_value });
+	        dmx_data[4] = slider_value;
+	        socket.emit('dmx-go', { 5: slider_value });
 	        break;
-	      case 'all_intensity':
-	        socket.emit('dmx-go', { 46: 216, 47: slider_value, 56: slider_value });
+	      case 'spot_fine_pan':
+	        dmx_data[2] = slider_value;
+	        socket.emit('dmx-go', { 3: slider_value });
+	        break;
+	      case 'spot_fine_tilt':
+	        dmx_data[3] = slider_value;
+	        socket.emit('dmx-go', { 4: slider_value });
 	        break;
 	      case 'spot_intensity':
-	        this.setState({ spotIntensity: slider_value });
-	        socket.emit('dmx-go', { 47: slider_value });
+	        dmx_data[7] = slider_value;
+	        socket.emit('dmx-go', { 8: slider_value });
 	        break;
-	      case 'wash_intensity':
-	        socket.emit('dmx-go', { 56: slider_value });
-	        break;
-	      case 'wash_pan':
-	        socket.emit('dmx-go', { 62: slider_value });
-	        break;
-	      case 'wash_tilt':
-	        socket.emit('dmx-go', { 63: slider_value });
-	        break;
-	      case 'wash_fine_pan':
-	        socket.emit('dmx-go', { 64: slider_value });
-	        break;
-	      case 'wash_fine_tilt':
-	        socket.emit('dmx-go', { 65: slider_value });
-	        break;
-	      case 'wash_zoom':
-	        socket.emit('dmx-go', { 67: slider_value });
-	        break;
-	
 	      default:
 	        console.log('ERROR: Slider does not exist');
 	    }
+	    this.setState({ dmx_data: dmx_data });
 	  }
 	  savePreset(preset) {
-	    let presets = this.state.presets;
-	    console.log("save preset " + preset + ": " + presets[preset]);
-	    presets[preset].spotIntensity = this.state.spotIntensity;
-	    presets[preset].spotPan = this.state.spotPan;
-	    presets[preset].spotTilt = this.state.spotTilt;
-	    presets[preset].spotFinePan = this.state.spotFinePan;
-	    presets[preset].spotFineTilt = this.state.spotFineTilt;
-	    presets[preset].spotSpeed = this.state.spotSpeed;
-	    this.setState({ presets: presets });
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-save-preset', newDMXPreset);
 	  }
 	  loadPreset(preset) {
-	    let items = this.state.items;
-	    let presets = this.state.presets;
-	    for (let i = 0; i < items.length; i++) {
-	      if (items[i].i == "spot_pan") {
-	        items[i].sliderValue = presets[preset].spotPan;
-	        socket.emit('dmx-go', { 80: presets[preset].spotPan });
-	      }
-	      if (items[i].i == "spot_tilt") {
-	        items[i].sliderValue = presets[preset].spotTilt;
-	        socket.emit('dmx-go', { 82: presets[preset].spotTilt });
-	      }
-	      if (items[i].i == "spot_fine_pan") {
-	        items[i].sliderValue = presets[preset].spotFinePan;
-	        socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
-	      }
-	      if (items[i].i == "spot_fine_tilt") {
-	        items[i].sliderValue = presets[preset].spotFineTilt;
-	        socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
-	      }
-	      if (items[i].i == "spot_speed") {
-	        items[i].sliderValue = presets[preset].spotSpeed;
-	        socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
-	      }
-	      if (items[i].i == "spot_intensity") {
-	        items[i].sliderValue = presets[preset].spotIntensity;
-	        socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
-	      }
-	    }
-	    this.setState({ items: items });
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
 	  }
 	  onBreakpointChange(breakpoint, cols) {
 	    this.setState({
@@ -9075,29 +8952,12 @@
 	  }
 	  componentDidMount() {
 	    socket = (0, _socket3.default)();
-	
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
 	    this.setState({
-	      items: [
-	      /*{
-	          type: 0,
-	          i: "dmx_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Lights Out',
-	        },
-	        {
-	          type: 1,
-	          i: "all_intensity",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          text: 'Master Intensity',
-	        },*/
-	      {
+	      items: [{
 	        type: 0,
 	        i: "spot_on",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
@@ -9271,15 +9131,7 @@
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
 	        text: 'Save Preset 6'
-	      }],
-	      presets: [{
-	        spotIntensity: '127',
-	        spotPan: '0',
-	        spotFinePan: '127',
-	        spotTilt: '0',
-	        spotFineTilt: '127',
-	        spotSpeed: '215'
-	      }, {}, {}, {}, {}, {}, {}]
+	      }]
 	    });
 	  }
 	}
@@ -9317,6 +9169,10 @@
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
 	__webpack_require__(30);
+	
+	var _Toast = __webpack_require__(33);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
 	
 	var _reactBootstrap = __webpack_require__(26);
 	
@@ -9357,26 +9213,13 @@
 	          sliderValue: '0'
 	        };
 	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
 	      lock: true,
 	      compactType: null,
-	      spotIntensity: '127',
-	      spotPan: '0',
-	      spotFinePan: '127',
-	      spotTilt: '0',
-	      spotFineTilt: '127',
-	      spotSpeed: '215',
-	      presets: [].map(function (i, key, list) {
-	        return {
-	          i: i.toString(),
-	          spotIntensity: '127',
-	          spotPan: '0',
-	          spotFinePan: '127',
-	          spotTilt: '0',
-	          spotFineTilt: '127',
-	          spotSpeed: '215',
-	          add: i === (list.length - 1).toString()
-	        };
-	      })
+	      instrument_id: "spot_3",
+	      dmx_offset: 81,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
@@ -9384,6 +9227,14 @@
 	    this.handleSliders = this.handleSliders.bind(this);
 	    this.savePreset = this.savePreset.bind(this);
 	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
 	  }
 	  handleOnLock() {
 	    if (this.state.lock == true) {
@@ -9444,15 +9295,21 @@
 	  }
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
 	
 	    switch (event.target.value) {
 	
 	      case 'spot_on':
-	        socket.emit('dmx-go', { 89: 255, 90: 216, 95: 0, 84: 215 });
+	        dmx_data[9] = 255;
+	        dmx_data[10] = 216;
+	        dmx_data[15] = 0;
+	        dmx_data[4] = 215;
+	        socket.emit('dmx-go', { 10: 255, 11: 216, 16: 0, 5: 215 });
 	        break;
 	      case 'spot_off':
-	        this.setState({ spotIntensity: 0 });
-	        socket.emit('dmx-go', { 89: 0, 90: 0 });
+	        dmx_data[9] = 0;
+	        dmx_data[10] = 0;
+	        socket.emit('dmx-go', { 10: 0, 11: 0 });
 	        break;
 	      case 'save_preset_1':
 	        this.savePreset(1);
@@ -9493,10 +9350,12 @@
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
+	    this.setState({ dmx_data: dmx_data });
 	  }
 	  handleSliders(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value;
+	    let dmx_data = this.state.dmx_data;
 	
 	    let items = this.state.items;
 	    for (let i = 0; i < items.length; i++) {
@@ -9508,75 +9367,49 @@
 	
 	    switch (event.target.id) {
 	      case 'spot_pan':
-	        this.setState({ spotPan: slider_value });
-	        socket.emit('dmx-go', { 80: slider_value });
+	        slider_value = Math.floor(slider_value / 255 * 86 + 42);
+	        dmx_data[0] = slider_value;
+	        socket.emit('dmx-go', { 1: slider_value });
 	        break;
 	      case 'spot_tilt':
-	        this.setState({ spotTilt: slider_value });
-	        socket.emit('dmx-go', { 82: slider_value });
+	        slider_value = Math.floor(210 - slider_value / 255 * 86);
+	        dmx_data[2] = slider_value;
+	        socket.emit('dmx-go', { 3: slider_value });
 	        break;
 	      case 'spot_fine_pan':
-	        this.setState({ spotFinePan: slider_value });
-	        socket.emit('dmx-go', { 81: slider_value });
+	        dmx_data[1] = slider_value;
+	        socket.emit('dmx-go', { 2: slider_value });
 	        break;
 	      case 'spot_fine_tilt':
-	        this.setState({ spotFineTilt: slider_value });
-	        socket.emit('dmx-go', { 83: slider_value });
+	        dmx_data[3] = slider_value;
+	        socket.emit('dmx-go', { 4: slider_value });
 	        break;
 	      case 'spot_speed':
-	        this.setState({ spotSpeed: slider_value });
-	        socket.emit('dmx-go', { 84: slider_value });
+	        dmx_data[4] = slider_value;
+	        socket.emit('dmx-go', { 5: slider_value });
 	        break;
 	      case 'spot_intensity':
-	        this.setState({ spotIntensity: slider_value });
-	        socket.emit('dmx-go', { 89: slider_value });
+	        dmx_data[9] = slider_value;
+	        socket.emit('dmx-go', { 10: slider_value });
 	        break;
 	
 	      default:
 	        console.log('ERROR: Slider does not exist');
 	    }
+	    this.setState({ dmx_data: dmx_data });
 	  }
 	  savePreset(preset) {
-	    let presets = this.state.presets;
-	    console.log("save preset " + preset + ": " + presets[preset]);
-	    presets[preset].spotIntensity = this.state.spotIntensity;
-	    presets[preset].spotPan = this.state.spotPan;
-	    presets[preset].spotTilt = this.state.spotTilt;
-	    presets[preset].spotFinePan = this.state.spotFinePan;
-	    presets[preset].spotFineTilt = this.state.spotFineTilt;
-	    presets[preset].spotSpeed = this.state.spotSpeed;
-	    this.setState({ presets: presets });
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-save-preset', newDMXPreset);
 	  }
 	  loadPreset(preset) {
-	    let items = this.state.items;
-	    let presets = this.state.presets;
-	    for (let i = 0; i < items.length; i++) {
-	      if (items[i].i == "spot_pan") {
-	        items[i].sliderValue = presets[preset].spotPan;
-	        socket.emit('dmx-go', { 80: presets[preset].spotPan });
-	      }
-	      if (items[i].i == "spot_tilt") {
-	        items[i].sliderValue = presets[preset].spotTilt;
-	        socket.emit('dmx-go', { 82: presets[preset].spotTilt });
-	      }
-	      if (items[i].i == "spot_fine_pan") {
-	        items[i].sliderValue = presets[preset].spotFinePan;
-	        socket.emit('dmx-go', { 81: presets[preset].spotFinePan });
-	      }
-	      if (items[i].i == "spot_fine_tilt") {
-	        items[i].sliderValue = presets[preset].spotFineTilt;
-	        socket.emit('dmx-go', { 83: presets[preset].spotFineTilt });
-	      }
-	      if (items[i].i == "spot_speed") {
-	        items[i].sliderValue = presets[preset].spotSpeed;
-	        socket.emit('dmx-go', { 84: presets[preset].spotSpeed });
-	      }
-	      if (items[i].i == "spot_intensity") {
-	        items[i].sliderValue = presets[preset].spotIntensity;
-	        socket.emit('dmx-go', { 89: presets[preset].spotIntensity });
-	      }
-	    }
-	    this.setState({ items: items });
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
 	  }
 	  onBreakpointChange(breakpoint, cols) {
 	    this.setState({
@@ -9641,6 +9474,10 @@
 	  }
 	  componentDidMount() {
 	    socket = (0, _socket3.default)();
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
 	    this.setState({
 	      items: [{
 	        type: 0,
@@ -9817,15 +9654,7 @@
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
 	        text: 'Save Preset 6'
-	      }],
-	      presets: [{
-	        spotIntensity: '127',
-	        spotPan: '0',
-	        spotFinePan: '127',
-	        spotTilt: '0',
-	        spotFineTilt: '127',
-	        spotSpeed: '215'
-	      }, {}, {}, {}, {}, {}, {}]
+	      }]
 	    });
 	  }
 	}
