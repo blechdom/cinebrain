@@ -29,7 +29,7 @@ export default class DMX255Group2 extends React.Component {
           w: 2,
           h: 2,
           add: i === (list.length - 1).toString(),
-          sliderValue: '0',
+          sliderValue: 0,
         };
       }),
       toastVisible: false, toastMessage: '', toastType: 'success',
@@ -44,6 +44,7 @@ export default class DMX255Group2 extends React.Component {
   this.handleOnLock = this.handleOnLock.bind(this);
   this.handleButtons = this.handleButtons.bind(this);
   this.handleSliders = this.handleSliders.bind(this);
+  this.sendDMX = this.sendDMX.bind(this);
   this.savePreset = this.savePreset.bind(this);
   this.loadPreset = this.loadPreset.bind(this);
   this.showError = this.showError.bind(this);
@@ -52,7 +53,7 @@ export default class DMX255Group2 extends React.Component {
 showError(message) {
     this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
   }
-  dismissToast() {
+dismissToast() {
     this.setState({ toastVisible: false });
   }
  handleOnLock(){
@@ -85,7 +86,7 @@ showError(message) {
     if (el.type==1) { //type is slider
       controllerCode =  <div> <span className="text">{el.text}</span>
                 <div id="slidecontainer">
-                <input type="range" min="0" max="255" step="1" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
+                <input type="range" min="1" max="255" step="1" value={el.sliderValue} id={i} className="slider" onChange={this.handleSliders}/></div>
         </div>;
     }
      return (
@@ -105,14 +106,14 @@ handleButtons(event) {
   case 'spot_on':
     dmx_data[9]=255;
     dmx_data[10]=216;
-    dmx_data[15]=0;
+    dmx_data[5]=0;
     dmx_data[4]=215;
-     socket.emit('dmx-go', {10: 255, 11:216, 16: 0, 5: 215 });
+    this.sendDMX({10: 255, 11:216, 6: 0, 5: 215});
     break;
   case 'spot_off':
     dmx_data[9]=0;
     dmx_data[10]=0;
-     socket.emit('dmx-go', {10: 0, 11:0});
+    this.sendDMX({10: 0, 11:0});
     break;
   case 'save_preset_1':
      this.savePreset(1);
@@ -120,13 +121,13 @@ handleButtons(event) {
   case 'save_preset_3':
      this.savePreset(3);
     break;
-     case 'save_preset_4':
+  case 'save_preset_4':
      this.savePreset(4);
     break;
   case 'save_preset_5':
      this.savePreset(5);
     break;
-     case 'save_preset_6':
+  case 'save_preset_6':
      this.savePreset(6);
     break;
   case 'save_preset_2':
@@ -138,7 +139,7 @@ handleButtons(event) {
   case 'recall_preset_2':
      this.loadPreset(2);
     break;
-    case 'recall_preset_3':
+  case 'recall_preset_3':
      this.loadPreset(3);
     break;
   case 'recall_preset_4':
@@ -170,36 +171,39 @@ handleSliders(event) {
 
   switch (event.target.id) {
   case 'spot_pan':
-      slider_value = Math.floor(((slider_value/255)*86)+42);
+      slider_value = Math.floor(213-((slider_value/255)*86));
       dmx_data[0]=slider_value;
-      socket.emit('dmx-go', {1: slider_value});
+      this.sendDMX({1: slider_value});
       break;
   case 'spot_tilt':
-      slider_value = Math.floor(210-((slider_value/255)*86));
+      slider_value = Math.floor((slider_value/255)*72);
       dmx_data[2]=slider_value;
-      socket.emit('dmx-go', {3: slider_value});
+      this.sendDMX({3: slider_value});
       break;
   case 'spot_fine_pan':
       dmx_data[1]=slider_value;
-      socket.emit('dmx-go', {2: slider_value});
+      this.sendDMX({2: slider_value});
       break;
   case 'spot_fine_tilt':
       dmx_data[3]=slider_value;
-      socket.emit('dmx-go', {4: slider_value});
+      this.sendDMX({4: slider_value});
       break;
   case 'spot_speed':
       dmx_data[4]=slider_value;
-      socket.emit('dmx-go', {5: slider_value});
+      this.sendDMX({5: slider_value});
       break;
   case 'spot_intensity':
       dmx_data[9]=slider_value;
-      socket.emit('dmx-go', {10: slider_value});
+      this.sendDMX({10: slider_value});
       break;
 
   default:
     console.log('ERROR: Slider does not exist');
   }
   this.setState({dmx_data: dmx_data});
+}
+sendDMX(dmx) {
+    socket.emit('dmx-go', {dmx: dmx, offset: this.state.dmx_offset});  
 }
 savePreset(preset){
   const newDMXPreset = {

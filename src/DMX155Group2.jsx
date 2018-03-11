@@ -43,6 +43,7 @@ export default class DMX155Group2 extends React.Component {
   this.handleOnLock = this.handleOnLock.bind(this);
   this.handleButtons = this.handleButtons.bind(this);
   this.handleSliders = this.handleSliders.bind(this);
+  this.sendDMX = this.sendDMX.bind(this);
   this.savePreset = this.savePreset.bind(this);
   this.loadPreset = this.loadPreset.bind(this);
   this.showError = this.showError.bind(this);
@@ -50,11 +51,11 @@ export default class DMX155Group2 extends React.Component {
 }
 showError(message) {
     this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
-  }
-  dismissToast() {
+}
+dismissToast() {
     this.setState({ toastVisible: false });
-  }
- handleOnLock(){
+}
+handleOnLock(){
    if (this.state.lock == true) {
   lockIcon = <FaUnlock />;
     this.setState({lock: false}); 
@@ -62,8 +63,8 @@ showError(message) {
   lockIcon = <FaLock />;
     this.setState({lock: true});
    } 
- }
- createElement(el) {
+}
+createElement(el) {
     let lockStyle = {
       display: "none",
     };
@@ -105,12 +106,12 @@ handleButtons(event) {
     dmx_data[5]=0;
     dmx_data[6]=216;
     dmx_data[7]=255;
-     socket.emit('dmx-go', {6:0, 7: 216, 8:255 });
+    this.sendDMX({6:0, 7: 216, 8:255 });
     break;
   case 'spot_off':
     dmx_data[6]=0;
     dmx_data[7]=0;
-     socket.emit('dmx-go', {7: 0, 8:0});
+    this.sendDMX({7: 0, 8:0});
     break;
   case 'save_preset_1':
      this.savePreset(1);
@@ -118,13 +119,13 @@ handleButtons(event) {
   case 'save_preset_3':
      this.savePreset(3);
     break;
-     case 'save_preset_4':
+  case 'save_preset_4':
      this.savePreset(4);
     break;
   case 'save_preset_5':
      this.savePreset(5);
     break;
-     case 'save_preset_6':
+  case 'save_preset_6':
      this.savePreset(6);
     break;
   case 'save_preset_2':
@@ -136,13 +137,13 @@ handleButtons(event) {
   case 'recall_preset_2':
      this.loadPreset(2);
     break;
-    case 'recall_preset_3':
+  case 'recall_preset_3':
      this.loadPreset(3);
     break;
   case 'recall_preset_4':
      this.loadPreset(4);
     break;
-    case 'recall_preset_5':
+  case 'recall_preset_5':
      this.loadPreset(5);
     break;
   case 'recall_preset_6':
@@ -169,35 +170,38 @@ handleSliders(event) {
 
   switch (event.target.id) {
   case 'spot_pan':
-      slider_value = Math.floor(((slider_value/255)*86)+42);
+      slider_value = Math.floor(213-((slider_value/255)*86));
       dmx_data[0]=slider_value;
-      socket.emit('dmx-go', {1: slider_value});
+      this.sendDMX({1: slider_value});
       break;
   case 'spot_tilt':
-      slider_value = Math.floor(210-((slider_value/255)*86));
+      slider_value = Math.floor((slider_value/255)*136);
        dmx_data[1]=slider_value;
-      socket.emit('dmx-go', {2: slider_value});
+      this.sendDMX({2: slider_value});
       break;
    case 'spot_speed':
-       dmx_data[4]=slider_value;
-      socket.emit('dmx-go', {5: slider_value});
+      dmx_data[4]=slider_value;
+      this.sendDMX({5: slider_value});
       break;
   case 'spot_fine_pan':
-       dmx_data[2]=slider_value;
-      socket.emit('dmx-go', {3: slider_value});
+      dmx_data[2]=slider_value;
+      this.sendDMX({3: slider_value});
       break;
   case 'spot_fine_tilt':
-       dmx_data[3]=slider_value;
-      socket.emit('dmx-go', {4: slider_value});
+      dmx_data[3]=slider_value;
+      this.sendDMX({4: slider_value});
       break;
   case 'spot_intensity':
-       dmx_data[7]=slider_value;
-      socket.emit('dmx-go', {8: slider_value});
+      dmx_data[7]=slider_value;
+      this.sendDMX({8: slider_value});
       break;
   default:
     console.log('ERROR: Slider does not exist');
   }
   this.setState({dmx_data: dmx_data});
+}
+sendDMX(dmx) {
+    socket.emit('dmx-go', {dmx: dmx, offset: this.state.dmx_offset});  
 }
 savePreset(preset){
   const newDMXPreset = {
@@ -261,8 +265,8 @@ render() {
               {
                 type: 0,
                 i: "spot_on",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 0,//Infinity, 
+                x: 0,
+                y: 0, 
                 w: 2,
                 h: 1,
                 className: 'btn-block btn',
@@ -271,8 +275,8 @@ render() {
               {
                 type: 0,
                 i: "spot_off",
-                x: 2,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 0,//Infinity, 
+                x: 2,
+                y: 0, 
                 w: 2,
                 h: 1,
                 className: 'btn-block btn',
@@ -281,8 +285,8 @@ render() {
                {
                 type: 1,
                 i: "spot_intensity",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 2,//Infinity,
+                x: 0,
+                y: 2,
                 w: 12,
                 h: 2,
                 text: 'Spot Intensity',
@@ -290,8 +294,8 @@ render() {
               {
                 type: 1,
                 i: "spot_tilt",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 8, //Infinity,
+                x: 0,
+                y: 8, 
                 w: 12,
                 h: 2,
                 text: 'Spot Tilt',
@@ -299,8 +303,8 @@ render() {
               {
                 type: 1,
                 i: "spot_pan",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 4,//Infinity,
+                x: 0,
+                y: 4,
                 w: 12,
                 h: 2,
                 text: 'Spot Pan',
@@ -308,8 +312,8 @@ render() {
               {
                 type: 1,
                 i: "spot_speed",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 12,//Infinity,
+                x: 0,
+                y: 12,
                 w: 12,
                 h: 2,
                 text: 'Spot Speed',
@@ -317,8 +321,8 @@ render() {
               {
                 type: 1,
                 i: "spot_fine_tilt",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 10, //Infinity,
+                x: 0,
+                y: 10, 
                 w: 12,
                 h: 2,
                 text: 'Spot Fine Tilt',
@@ -326,8 +330,8 @@ render() {
               {
                 type: 1,
                 i: "spot_fine_pan",
-                x: 0,//(this.state.items.length * 2) % (this.state.cols || 12),
-                y: 6,//Infinity,
+                x: 0,
+                y: 6,
                 w: 12,
                 h: 2,
                 text: 'Spot Fine Pan',

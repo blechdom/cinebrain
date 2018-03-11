@@ -183,6 +183,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 dmx_usb_pro.update(DMXObject, result.dmx_offset);
             });
           });
+          console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
         });  
         socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
