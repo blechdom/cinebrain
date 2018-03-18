@@ -9,9 +9,10 @@ import DeviceEdit from './DeviceEdit.jsx';
 import NewControllers from './NewControllers.jsx';
 import ControlInterface from './ControlInterface.jsx';
 import Demo from './Demo.jsx';
-import MediaGroup1 from './MediaGroup1.jsx';
-import MediaGroup2 from './MediaGroup2.jsx';
-import MediaGroup3 from './MediaGroup3.jsx';
+import AudioGroup1 from './AudioGroup1.jsx';
+import AudioGroup2 from './AudioGroup2.jsx';
+import VideoGroup1 from './VideoGroup1.jsx';
+import VideoGroup2 from './VideoGroup2.jsx';
 import DMXSpotGroup1 from './DMXSpotGroup1.jsx';
 import DMXWashGroup1 from './DMXWashGroup1.jsx';
 import DMX155Group2 from './DMX155Group2.jsx';
@@ -31,9 +32,10 @@ const NoMatch = () => <p>Page Not Found</p>;
 export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/home" />
-    <Route path="media_group1" component={MediaGroup1} />
-    <Route path="media_group2" component={MediaGroup2} />
-    <Route path="media_group3" component={MediaGroup3} />
+    <Route path="audio_group1" component={AudioGroup1} />
+    <Route path="audio_group2" component={AudioGroup2} />
+    <Route path="video_group1" component={VideoGroup1} />
+    <Route path="video_group2" component={VideoGroup2} />
     <Route path="demo" component={Demo} />
     <Route path="dmx_spot_group1" component={DMXSpotGroup1} />
     <Route path="dmx_wash_group1" component={DMXWashGroup1} />

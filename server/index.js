@@ -60,7 +60,6 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
     });
   });
    
-   //dmx_usb_pro = new DMX('COM3', current_universe);
 
   UDPserver = dgram.createSocket('udp4');
   UDPclient = dgram.createSocket('udp4');
@@ -194,6 +193,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 });
         });     
         socket.on('midi-cc', function(data) {
+           console.log("sending midi cc change-cc#: " + data.controller + " cc-value: " + data.value + " on channel: " + data.channel);
+              
               midiOutA.send('cc', {
                 controller: data.controller,
                 value: data.value,
@@ -201,6 +202,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
               });
         });
         socket.on('midi-program', function(data) {
+              console.log("sending midi program change-program#: " + data.number + " on channel: " + data.channel);
               midiOutA.send('program', {
                 number: data.number,
                 channel: data.channel
