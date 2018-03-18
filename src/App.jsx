@@ -7,7 +7,7 @@ import MdMoreVert from 'react-icons/lib/md/more-vert';
 const Header = () => (
   <Navbar fluid>
     <Navbar.Header>
-      <Navbar.Brand><a href="/">Cinebrain-Presets-Branch</a></Navbar.Brand>
+      <Navbar.Brand><a href="/">Cinebrain</a></Navbar.Brand>
     </Navbar.Header>
     <Nav>
       <NavDropdown id="user-dropdown" title="Group 1">

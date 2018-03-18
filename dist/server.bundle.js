@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9b9b12fcf4b57664dc7f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "075222d40880b9f507a8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(81);
+	module.exports = __webpack_require__(82);
 
 
 /***/ }),
@@ -1443,7 +1443,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(80);
+	var _ContextWrapper = __webpack_require__(81);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1593,67 +1593,71 @@
 	
 	var _Demo2 = _interopRequireDefault(_Demo);
 	
-	var _MediaGroup = __webpack_require__(59);
+	var _AudioGroup = __webpack_require__(59);
 	
-	var _MediaGroup2 = _interopRequireDefault(_MediaGroup);
+	var _AudioGroup2 = _interopRequireDefault(_AudioGroup);
 	
-	var _MediaGroup3 = __webpack_require__(60);
+	var _AudioGroup3 = __webpack_require__(60);
 	
-	var _MediaGroup4 = _interopRequireDefault(_MediaGroup3);
+	var _AudioGroup4 = _interopRequireDefault(_AudioGroup3);
 	
-	var _MediaGroup5 = __webpack_require__(61);
+	var _VideoGroup = __webpack_require__(61);
 	
-	var _MediaGroup6 = _interopRequireDefault(_MediaGroup5);
+	var _VideoGroup2 = _interopRequireDefault(_VideoGroup);
 	
-	var _DMXSpotGroup = __webpack_require__(62);
+	var _VideoGroup3 = __webpack_require__(62);
+	
+	var _VideoGroup4 = _interopRequireDefault(_VideoGroup3);
+	
+	var _DMXSpotGroup = __webpack_require__(63);
 	
 	var _DMXSpotGroup2 = _interopRequireDefault(_DMXSpotGroup);
 	
-	var _DMXWashGroup = __webpack_require__(63);
+	var _DMXWashGroup = __webpack_require__(64);
 	
 	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMX155Group = __webpack_require__(64);
+	var _DMX155Group = __webpack_require__(65);
 	
 	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _DMX255Group = __webpack_require__(65);
+	var _DMX255Group = __webpack_require__(66);
 	
 	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
 	
-	var _PTZGroup = __webpack_require__(66);
+	var _PTZGroup = __webpack_require__(67);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _PTZGroup3 = __webpack_require__(68);
+	var _PTZGroup3 = __webpack_require__(69);
 	
 	var _PTZGroup4 = _interopRequireDefault(_PTZGroup3);
 	
-	var _ATEMGroup = __webpack_require__(69);
+	var _ATEMGroup = __webpack_require__(70);
 	
 	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
 	
-	var _ATEMGroup3 = __webpack_require__(70);
+	var _ATEMGroup3 = __webpack_require__(71);
 	
 	var _ATEMGroup4 = _interopRequireDefault(_ATEMGroup3);
 	
-	var _ATEMGroup5 = __webpack_require__(71);
+	var _ATEMGroup5 = __webpack_require__(72);
 	
 	var _ATEMGroup6 = _interopRequireDefault(_ATEMGroup5);
 	
-	var _Diagnostics = __webpack_require__(72);
+	var _Diagnostics = __webpack_require__(73);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(77);
+	var _MidiLooper = __webpack_require__(78);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Home = __webpack_require__(78);
+	var _Home = __webpack_require__(79);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(79);
+	var _Help = __webpack_require__(80);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1669,9 +1673,10 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group1', component: _MediaGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group2', component: _MediaGroup4.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'media_group3', component: _MediaGroup6.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group2', component: _AudioGroup4.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group1', component: _VideoGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group2', component: _VideoGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_spot_group1', component: _DMXSpotGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_wash_group1', component: _DMXWashGroup2.default }),
@@ -1755,11 +1760,11 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_wash_group1' },
+	        { to: '/dmx_255_group2' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Wash Light'
+	          'Spot Light 255'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -1773,11 +1778,20 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/media_group1' },
+	        { to: '/video_group1' },
 	        _react2.default.createElement(
 	          _reactBootstrap.MenuItem,
 	          null,
-	          'Media'
+	          'Video'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/audio_group1' },
+	        _react2.default.createElement(
+	          _reactBootstrap.MenuItem,
+	          null,
+	          'Audio'
 	        )
 	      )
 	    ),
@@ -1795,11 +1809,11 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_255_group2' },
+	        { to: '/dmx_wash_group1' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
 	          null,
-	          'Spot Light 255'
+	          'Wash Light'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -1813,24 +1827,20 @@
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/media_group2' },
+	        { to: '/video_group2' },
 	        _react2.default.createElement(
 	          _reactBootstrap.MenuItem,
 	          null,
-	          'Media'
+	          'Video'
 	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Extras' },
+	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/midi_looper' },
+	        { to: '/audio_group2' },
 	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
+	          _reactBootstrap.MenuItem,
 	          null,
-	          'MIDI Looper'
+	          'Audio'
 	        )
 	      )
 	    )
@@ -1893,6 +1903,15 @@
 	          _reactBootstrap.MenuItem,
 	          null,
 	          'Add Issue'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/midi_looper' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'MIDI Looper'
 	        )
 	      ),
 	      _react2.default.createElement(
@@ -5873,7 +5892,7 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class MediaGroup1 extends _react2.default.Component {
+	class AudioGroup1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -5895,15 +5914,7 @@
 	      port: 5250,
 	      command: "",
 	      response: '',
-	      left_edge: '0.0',
-	      top_edge: '0.0',
-	      x_scale: '1.0',
-	      y_scale: '1.0',
-	      rotation: '0.0',
-	      left_crop: '0.0',
-	      top_crop: '0.0',
-	      right_crop: '0.0',
-	      bottom_crop: '0.0'
+	      audio_volume: '0.0'
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
@@ -5955,7 +5966,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'slidecontainer' },
-	          _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
 	        )
 	      );
 	    }
@@ -5969,72 +5980,34 @@
 	
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
-	
 	    switch (event.target.value) {
-	      case 'vid_red':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FF0000' });
+	      case 'audio1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio1.wav' });
 	        break;
-	      case 'vid_white':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FFFFFF' });
+	      case 'audio2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio2.wav' });
 	        break;
-	      case 'vid_green':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #00FF00' });
+	      case 'audio3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio3.wav' });
 	        break;
-	      case 'vid_blue':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #0000FF' });
+	      case 'audio4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio4.wav' });
 	        break;
-	      case 'vid_play1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 bbb.mp4 LOOP' });
+	      case 'audio5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio5.wav' });
 	        break;
-	      case 'vid_play2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 beach.mp4 LOOP' });
+	      case 'audio6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio6.wav' });
 	        break;
-	      case 'vid_play3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 popup.mp4 LOOP' });
+	      case 'audio7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio7.wav' });
 	        break;
-	      case 'vid_play4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 nyc.mov LOOP ' });
+	      case 'audio8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-1 group1_audio8.wav' });
 	        break;
-	      case 'vid_loop1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 fire.mov LOOP' });
+	      case 'audio_stop':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-1' });
 	        break;
-	      case 'vid_loop2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 tunnel.mov LOOP' });
-	        break;
-	      case 'vid_loop3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 blueTileFloor.mov LOOP' });
-	        break;
-	      case 'vid_loop4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 16189_2.mov LOOP' });
-	        break;
-	      case 'still_image1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 bigRock.jpg' });
-	        break;
-	      case 'still_image2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 balloons.jpg' });
-	        break;
-	      case 'still_image3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 circuit.jpg' });
-	        break;
-	      case 'still_image4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 WhiteHouse.jpg' });
-	        break;
-	      case 'foreground1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 cactus.png' });
-	        break;
-	      case 'foreground2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 barbedwire.jpg' });
-	        break;
-	      case 'foreground3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 tv.png' });
-	        break;
-	      case 'foreground4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 window.png' });
-	        break;
-	      case 'vid_stop':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-0' });
-	        break;
-	
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
@@ -6043,42 +6016,9 @@
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let slider_value = event.target.value / 100.0;
 	    switch (event.target.id) {
-	      case 'left_edge':
-	        this.state.left_edge = slider_value;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	        break;
-	      case 'top_edge':
-	        this.state.top_edge = slider_value;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	        break;
-	      case 'x_scale':
-	        this.state.x_scale = slider_value * 2.0;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	        break;
-	      case 'y_scale':
-	        this.state.y_scale = slider_value * 2.0;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	        break;
-	      case 'proportional_scale':
-	        this.state.y_scale = slider_value * 2.0;
-	        this.state.x_scale = slider_value * 2.0;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	        break;
-	      case 'left_crop':
-	        this.state.left_crop = slider_value;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	        break;
-	      case 'top_crop':
-	        this.state.top_crop = slider_value;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	        break;
-	      case 'right_crop':
-	        this.state.right_crop = slider_value;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	        break;
-	      case 'bottom_crop':
-	        this.state.bottom_crop = slider_value;
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	      case 'audio_volume':
+	        this.state.audio_volume = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-1 VOLUME " + this.state.audio_volume });
 	        break;
 	      default:
 	        console.log('ERROR: Slider does not exist');
@@ -6118,7 +6058,7 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 1: MEDIA'
+	              'Group 1: AUDIO'
 	            )
 	          )
 	        ),
@@ -6151,271 +6091,99 @@
 	    this.setState({
 	      items: [{
 	        type: 0,
-	        i: "vid_play1",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
+	        i: "audio1",
+	        x: 0,
+	        y: 2,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play1'
+	        text: 'Audio 1'
 	      }, {
 	        type: 0,
-	        i: "vid_play2",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
+	        i: "audio2",
+	        x: 0,
+	        y: 3,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play2'
+	        text: 'Audio 2'
 	      }, {
 	        type: 0,
-	        i: "vid_play3",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
+	        i: "audio3",
+	        x: 0,
+	        y: 4,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play3'
+	        text: 'Audio 3'
 	      }, {
 	        type: 0,
-	        i: "vid_play4",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
+	        i: "audio4",
+	        x: 0,
+	        y: 5,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play4'
+	        text: 'Audio 4'
 	      }, {
 	        type: 0,
-	        i: "vid_loop1",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
+	        i: "audio5",
+	        x: 2,
+	        y: 2,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop1'
+	        text: 'Audio 5'
 	      }, {
 	        type: 0,
-	        i: "vid_loop2",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
+	        i: "audio6",
+	        x: 2,
+	        y: 3,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop2'
+	        text: 'Audio 6'
 	      }, {
 	        type: 0,
-	        i: "vid_loop3",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
+	        i: "audio7",
+	        x: 2,
+	        y: 4,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop3'
+	        text: 'Audio 7'
 	      }, {
 	        type: 0,
-	        i: "vid_loop4",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
+	        i: "audio8",
+	        x: 2,
+	        y: 5,
+	        w: 2,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop4'
+	        text: 'Audio 8'
 	      }, {
 	        type: 0,
-	        i: "still_image1",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image1'
-	      }, {
-	        type: 0,
-	        i: "still_image2",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image2'
-	      }, {
-	        type: 0,
-	        i: "still_image3",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image3'
-	      }, {
-	        type: 0,
-	        i: "still_image4",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image4'
-	      }, {
-	        type: 0,
-	        i: "foreground1",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground1'
-	      }, {
-	        type: 0,
-	        i: "foreground2",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground2'
-	      }, {
-	        type: 0,
-	        i: "foreground3",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground3'
-	      }, {
-	        type: 0,
-	        i: "foreground4",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground4'
-	      }, {
-	        type: 0,
-	        i: "vid_white",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-default',
-	        text: 'Vid White'
-	      }, {
-	        type: 0,
-	        i: "vid_red",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
+	        i: "audio_stop",
+	        x: 0,
+	        y: 0,
+	        w: 2,
+	        h: 2,
 	        className: 'btn-block btn btn-danger',
-	        text: 'Vid Red'
-	      }, {
-	        type: 0,
-	        i: "vid_green",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-success',
-	        text: 'Vid Green'
-	      }, {
-	        type: 0,
-	        i: "vid_blue",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Vid Blue'
-	      }, {
-	        type: 0,
-	        i: "vid_stop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Vid Stop'
+	        text: 'Audio Stop'
 	      }, {
 	        type: 1,
-	        i: "left_edge",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity,
+	        i: "audio_volume",
+	        x: 2,
+	        y: 0,
 	        w: 2,
 	        h: 2,
-	        text: 'Left Edge'
-	      }, {
-	        type: 1,
-	        i: "top_edge",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Top Edge'
-	      }, {
-	        type: 1,
-	        i: "x_scale",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'X Scale'
-	      }, {
-	        type: 1,
-	        i: "y_scale",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Y Scale'
-	      }, {
-	        type: 1,
-	        i: "proportional_scale",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 5, //Infinity,
-	        w: 4,
-	        h: 2,
-	        text: 'Proportional Scale'
-	      }, {
-	        type: 1,
-	        i: "left_crop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 11, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Left Crop'
-	      }, {
-	        type: 1,
-	        i: "top_crop",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 11, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Top Crop'
-	      }, {
-	        type: 1,
-	        i: "right_crop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 13, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Right Crop'
-	      }, {
-	        type: 1,
-	        i: "bottom_crop",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 13, //Infinity,
-	        w: 2,
-	        h: 2,
-	        text: 'Bottom Crop'
+	        text: 'Audio Volume'
 	      }]
 	    });
 	  }
 	}
-	exports.default = MediaGroup1;
-	MediaGroup1.defaultProps = {
+	exports.default = AudioGroup1;
+	AudioGroup1.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -6471,7 +6239,357 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class MediaGroup2 extends _react2.default.Component {
+	class AudioGroup2 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      audio_volume: '0.0'
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	      case 'audio1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio1.wav' });
+	        break;
+	      case 'audio2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio2.wav' });
+	        break;
+	      case 'audio3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio3.wav' });
+	        break;
+	      case 'audio4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio4.wav' });
+	        break;
+	      case 'audio5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio5.wav' });
+	        break;
+	      case 'audio6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio6.wav' });
+	        break;
+	      case 'audio7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio7.wav' });
+	        break;
+	      case 'audio8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio8.wav' });
+	        break;
+	      case 'audio_stop':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-1' });
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value / 100.0;
+	    switch (event.target.id) {
+	      case 'audio_volume':
+	        this.state.audio_volume = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-1 VOLUME " + this.state.audio_volume });
+	        break;
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 2: AUDIO'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 VOLUME 0" });
+	
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "audio1",
+	        x: 0,
+	        y: 2,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 1'
+	      }, {
+	        type: 0,
+	        i: "audio2",
+	        x: 0,
+	        y: 3,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 2'
+	      }, {
+	        type: 0,
+	        i: "audio3",
+	        x: 0,
+	        y: 4,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 3'
+	      }, {
+	        type: 0,
+	        i: "audio4",
+	        x: 0,
+	        y: 5,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 4'
+	      }, {
+	        type: 0,
+	        i: "audio5",
+	        x: 2,
+	        y: 2,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 5'
+	      }, {
+	        type: 0,
+	        i: "audio6",
+	        x: 2,
+	        y: 3,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 6'
+	      }, {
+	        type: 0,
+	        i: "audio7",
+	        x: 2,
+	        y: 4,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 7'
+	      }, {
+	        type: 0,
+	        i: "audio8",
+	        x: 2,
+	        y: 5,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Audio 8'
+	      }, {
+	        type: 0,
+	        i: "audio_stop",
+	        x: 0,
+	        y: 0,
+	        w: 2,
+	        h: 2,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Audio Stop'
+	      }, {
+	        type: 1,
+	        i: "audio_volume",
+	        x: 2,
+	        y: 0,
+	        w: 2,
+	        h: 2,
+	        text: 'Audio Volume'
+	      }]
+	    });
+	  }
+	}
+	exports.default = AudioGroup2;
+	AudioGroup2.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(20);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(42);
+	
+	var _reactDom = __webpack_require__(43);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(44);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(30);
+	
+	var _reactBootstrap = __webpack_require__(26);
+	
+	var _lock = __webpack_require__(45);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(46);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(57);
+	
+	var _socket2 = __webpack_require__(54);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class VideoGroup1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -6497,7 +6615,6 @@
 	      top_edge: '0.0',
 	      x_scale: '1.0',
 	      y_scale: '1.0',
-	      rotation: '0.0',
 	      left_crop: '0.0',
 	      top_crop: '0.0',
 	      right_crop: '0.0',
@@ -6567,7 +6684,603 @@
 	
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
+	    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 VOLUME 0.0" });
+	    switch (event.target.value) {
+	      case 'vid_red':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FF0000' });
+	        break;
+	      case 'vid_white':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #FFFFFF' });
+	        break;
+	      case 'vid_green':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #00FF00' });
+	        break;
+	      case 'vid_blue':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 #0000FF' });
+	        break;
+	      case 'loop1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop1.mov LOOP' });
+	        break;
+	      case 'loop2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop2.mov LOOP' });
+	        break;
+	      case 'loop3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 1-0 group1_loop3.mov LOOP' });
+	        break;
+	      case 'loop4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop4.mov LOOP' });
+	        break;
+	      case 'loop5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop5.mov LOOP' });
+	        break;
+	      case 'loop6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop6.mov LOOP' });
+	        break;
+	      case 'loop7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop7.mov LOOP' });
+	        break;
+	      case 'loop8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_loop8.mov LOOP' });
+	        break;
+	      case 'still1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still1.png' });
+	        break;
+	      case 'still2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still2.png' });
+	        break;
+	      case 'still3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still3.png' });
+	        break;
+	      case 'still4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still4.png' });
+	        break;
+	      case 'still5 ':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still5.png' });
+	        break;
+	      case 'still6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still6.png' });
+	        break;
+	      case 'still7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still7.png' });
+	        break;
+	      case 'still8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 group1_still8.png' });
+	        break;
+	      case 'vid_stop':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-0' });
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value / 100.0;
+	    switch (event.target.id) {
+	      case 'left_edge':
+	        this.state.left_edge = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	        break;
+	      case 'top_edge':
+	        this.state.top_edge = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	        break;
+	      case 'x_scale':
+	        this.state.x_scale = slider_value * 2.0;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	        break;
+	      case 'y_scale':
+	        this.state.y_scale = slider_value * 2.0;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	        break;
+	      case 'proportional_scale':
+	        this.state.y_scale = slider_value * 2.0;
+	        this.state.x_scale = slider_value * 2.0;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
+	        break;
+	      case 'left_crop':
+	        this.state.left_crop = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	        break;
+	      case 'top_crop':
+	        this.state.top_crop = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	        break;
+	      case 'right_crop':
+	        this.state.right_crop = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	        break;
+	      case 'bottom_crop':
+	        this.state.bottom_crop = slider_value;
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
+	        break;
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 1: VIDEO'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "loop1",
+	        x: 1,
+	        y: 0,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 1'
+	      }, {
+	        type: 0,
+	        i: "loop2",
+	        x: 1,
+	        y: 1,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 2'
+	      }, {
+	        type: 0,
+	        i: "loop3",
+	        x: 1,
+	        y: 2,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 3'
+	      }, {
+	        type: 0,
+	        i: "loop4",
+	        x: 1,
+	        y: 3,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 4'
+	      }, {
+	        type: 0,
+	        i: "loop5",
+	        x: 2,
+	        y: 0,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 5'
+	      }, {
+	        type: 0,
+	        i: "loop6",
+	        x: 2,
+	        y: 1,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 6'
+	      }, {
+	        type: 0,
+	        i: "loop7",
+	        x: 2,
+	        y: 2,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 7'
+	      }, {
+	        type: 0,
+	        i: "loop8",
+	        x: 2,
+	        y: 3,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Vid Loop 8'
+	      }, {
+	        type: 0,
+	        i: "still1",
+	        x: 3,
+	        y: 0,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 1'
+	      }, {
+	        type: 0,
+	        i: "still2",
+	        x: 3,
+	        y: 1,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 2'
+	      }, {
+	        type: 0,
+	        i: "still3",
+	        x: 3,
+	        y: 2,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 3'
+	      }, {
+	        type: 0,
+	        i: "still4",
+	        x: 3,
+	        y: 3,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 4'
+	      }, {
+	        type: 0,
+	        i: "still5",
+	        x: 4,
+	        y: 0,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 5'
+	      }, {
+	        type: 0,
+	        i: "still6",
+	        x: 4,
+	        y: 1,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 6'
+	      }, {
+	        type: 0,
+	        i: "still7",
+	        x: 4,
+	        y: 2,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 7'
+	      }, {
+	        type: 0,
+	        i: "still8",
+	        x: 4,
+	        y: 3,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Still 8'
+	      }, {
+	        type: 0,
+	        i: "vid_white",
+	        x: 5,
+	        y: 0,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Vid White'
+	      }, {
+	        type: 0,
+	        i: "vid_red",
+	        x: 5,
+	        y: 1,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Vid Red'
+	      }, {
+	        type: 0,
+	        i: "vid_green",
+	        x: 5,
+	        y: 2,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Vid Green'
+	      }, {
+	        type: 0,
+	        i: "vid_blue",
+	        x: 5,
+	        y: 3,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Blue'
+	      }, {
+	        type: 0,
+	        i: "vid_stop",
+	        x: 0,
+	        y: 0,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Vid Stop'
+	      }, {
+	        type: 1,
+	        i: "left_edge",
+	        x: 0,
+	        y: 9,
+	        w: 2,
+	        h: 2,
+	        text: 'Left Edge'
+	      }, {
+	        type: 1,
+	        i: "top_edge",
+	        x: 2,
+	        y: 9,
+	        w: 2,
+	        h: 2,
+	        text: 'Top Edge'
+	      }, {
+	        type: 1,
+	        i: "x_scale",
+	        x: 0,
+	        y: 7,
+	        w: 2,
+	        h: 2,
+	        text: 'X Scale'
+	      }, {
+	        type: 1,
+	        i: "y_scale",
+	        x: 2,
+	        y: 7,
+	        w: 2,
+	        h: 2,
+	        text: 'Y Scale'
+	      }, {
+	        type: 1,
+	        i: "proportional_scale",
+	        x: 0,
+	        y: 5,
+	        w: 4,
+	        h: 2,
+	        text: 'Proportional Scale'
+	      }, {
+	        type: 1,
+	        i: "left_crop",
+	        x: 0,
+	        y: 11,
+	        w: 2,
+	        h: 2,
+	        text: 'Left Crop'
+	      }, {
+	        type: 1,
+	        i: "top_crop",
+	        x: 2,
+	        y: 11,
+	        w: 2,
+	        h: 2,
+	        text: 'Top Crop'
+	      }, {
+	        type: 1,
+	        i: "right_crop",
+	        x: 0,
+	        y: 13,
+	        w: 2,
+	        h: 2,
+	        text: 'Right Crop'
+	      }, {
+	        type: 1,
+	        i: "bottom_crop",
+	        x: 2,
+	        y: 13,
+	        w: 2,
+	        h: 2,
+	        text: 'Bottom Crop'
+	      }]
+	    });
+	  }
+	}
+	exports.default = VideoGroup1;
+	VideoGroup1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(20);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(42);
+	
+	var _reactDom = __webpack_require__(43);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(44);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(30);
+	
+	var _reactBootstrap = __webpack_require__(26);
+	
+	var _lock = __webpack_require__(45);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(46);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(57);
+	
+	var _socket2 = __webpack_require__(54);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class VideoGroup2 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      left_edge: '0.0',
+	      top_edge: '0.0',
+	      x_scale: '1.0',
+	      y_scale: '1.0',
+	      left_crop: '0.0',
+	      top_crop: '0.0',
+	      right_crop: '0.0',
+	      bottom_crop: '0.0'
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'MIXER 2-0 VOLUME 0.0' });
 	    switch (event.target.value) {
 	      case 'vid_red':
 	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #FF0000' });
@@ -6581,58 +7294,57 @@
 	      case 'vid_blue':
 	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #0000FF' });
 	        break;
-	      case 'vid_play1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 bbb.mp4 LOOP' });
+	      case 'loop1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop1.mov LOOP' });
 	        break;
-	      case 'vid_play2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 beach.mp4 LOOP' });
+	      case 'loop2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop2.mov LOOP' });
 	        break;
-	      case 'vid_play3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 popup.mp4 LOOP' });
+	      case 'loop3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 group2_loop3.mov LOOP' });
 	        break;
-	      case 'vid_play4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 nyc.mov LOOP' });
+	      case 'loop4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop4.mov LOOP' });
 	        break;
-	      case 'vid_loop1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 fire.mov LOOP' });
+	      case 'loop5':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop5.mov LOOP' });
 	        break;
-	      case 'vid_loop2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 tunnel.mov LOOP' });
+	      case 'loop6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop6.mov LOOP' });
 	        break;
-	      case 'vid_loop3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 blueTileFloor.mov LOOP' });
+	      case 'loop7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop7.mov LOOP' });
 	        break;
-	      case 'vid_loop4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 16189_2.mov LOOP' });
+	      case 'loop8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop8.mov LOOP' });
 	        break;
-	      case 'still_image1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 bigRock.jpg' });
+	      case 'still1':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still1.png' });
 	        break;
-	      case 'still_image2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 balloons.jpg' });
+	      case 'still2':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still2.png' });
 	        break;
-	      case 'still_image3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 circuit.jpg' });
+	      case 'still3':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still3.png' });
 	        break;
-	      case 'still_image4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 WhiteHouse.jpg' });
+	      case 'still4':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still4.png' });
 	        break;
-	      case 'foreground1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 cactus.png' });
+	      case 'still5 ':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still5.png' });
 	        break;
-	      case 'foreground2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 barbedwire.jpg' });
+	      case 'still6':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still6.png' });
 	        break;
-	      case 'foreground3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 tv.png' });
+	      case 'still7':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still7.png' });
 	        break;
-	      case 'foreground4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 window.png' });
+	      case 'still8':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still8.png' });
 	        break;
 	      case 'vid_stop':
 	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-0' });
 	        break;
-	
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
@@ -6716,7 +7428,7 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 2: MEDIA'
+	              'Group 2: VIDEO'
 	            )
 	          )
 	        ),
@@ -6749,153 +7461,153 @@
 	    this.setState({
 	      items: [{
 	        type: 0,
-	        i: "vid_play1",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        i: "loop1",
+	        x: 1,
+	        y: 0,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play1'
+	        text: 'Vid Loop 1'
 	      }, {
 	        type: 0,
-	        i: "vid_play2",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        i: "loop2",
+	        x: 1,
+	        y: 1,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play2'
+	        text: 'Vid Loop 2'
 	      }, {
 	        type: 0,
-	        i: "vid_play3",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        i: "loop3",
+	        x: 1,
+	        y: 2,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play3'
+	        text: 'Vid Loop 3'
 	      }, {
 	        type: 0,
-	        i: "vid_play4",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        i: "loop4",
+	        x: 1,
+	        y: 3,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Play4'
+	        text: 'Vid Loop 4'
 	      }, {
 	        type: 0,
-	        i: "vid_loop1",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        i: "loop5",
+	        x: 2,
+	        y: 0,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop1'
+	        text: 'Vid Loop 5'
 	      }, {
 	        type: 0,
-	        i: "vid_loop2",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        i: "loop6",
+	        x: 2,
+	        y: 1,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop2'
+	        text: 'Vid Loop 6'
 	      }, {
 	        type: 0,
-	        i: "vid_loop3",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        i: "loop7",
+	        x: 2,
+	        y: 2,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop3'
+	        text: 'Vid Loop 7'
 	      }, {
 	        type: 0,
-	        i: "vid_loop4",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        i: "loop8",
+	        x: 2,
+	        y: 3,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Vid Loop4'
+	        text: 'Vid Loop 8'
 	      }, {
 	        type: 0,
-	        i: "still_image1",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        i: "still1",
+	        x: 3,
+	        y: 0,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Still Image1'
+	        text: 'Still 1'
 	      }, {
 	        type: 0,
-	        i: "still_image2",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        i: "still2",
+	        x: 3,
+	        y: 1,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Still Image2'
+	        text: 'Still 2'
 	      }, {
 	        type: 0,
-	        i: "still_image3",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        i: "still3",
+	        x: 3,
+	        y: 2,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Still Image3'
+	        text: 'Still 3'
 	      }, {
 	        type: 0,
-	        i: "still_image4",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        i: "still4",
+	        x: 3,
+	        y: 3,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Still Image4'
+	        text: 'Still 4'
 	      }, {
 	        type: 0,
-	        i: "foreground1",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        i: "still5",
+	        x: 4,
+	        y: 0,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Foreground1'
+	        text: 'Still 5'
 	      }, {
 	        type: 0,
-	        i: "foreground2",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        i: "still6",
+	        x: 4,
+	        y: 1,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Foreground2'
+	        text: 'Still 6'
 	      }, {
 	        type: 0,
-	        i: "foreground3",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        i: "still7",
+	        x: 4,
+	        y: 2,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Foreground3'
+	        text: 'Still 7'
 	      }, {
 	        type: 0,
-	        i: "foreground4",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        i: "still8",
+	        x: 4,
+	        y: 3,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn',
-	        text: 'Foreground4'
+	        text: 'Still 8'
 	      }, {
 	        type: 0,
 	        i: "vid_white",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        x: 5,
+	        y: 0,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-default',
@@ -6903,8 +7615,8 @@
 	      }, {
 	        type: 0,
 	        i: "vid_red",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        x: 5,
+	        y: 1,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -6912,8 +7624,8 @@
 	      }, {
 	        type: 0,
 	        i: "vid_green",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        x: 5,
+	        y: 2,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -6921,8 +7633,8 @@
 	      }, {
 	        type: 0,
 	        i: "vid_blue",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        x: 5,
+	        y: 3,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-primary',
@@ -6930,8 +7642,8 @@
 	      }, {
 	        type: 0,
 	        i: "vid_stop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        x: 0,
+	        y: 0,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-primary',
@@ -6939,72 +7651,72 @@
 	      }, {
 	        type: 1,
 	        i: "left_edge",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity,
+	        x: 0,
+	        y: 9,
 	        w: 2,
 	        h: 2,
 	        text: 'Left Edge'
 	      }, {
 	        type: 1,
 	        i: "top_edge",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity,
+	        x: 2,
+	        y: 9,
 	        w: 2,
 	        h: 2,
 	        text: 'Top Edge'
 	      }, {
 	        type: 1,
 	        i: "x_scale",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity,
+	        x: 0,
+	        y: 7,
 	        w: 2,
 	        h: 2,
 	        text: 'X Scale'
 	      }, {
 	        type: 1,
 	        i: "y_scale",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity,
+	        x: 2,
+	        y: 7,
 	        w: 2,
 	        h: 2,
 	        text: 'Y Scale'
 	      }, {
 	        type: 1,
 	        i: "proportional_scale",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 5, //Infinity,
+	        x: 0,
+	        y: 5,
 	        w: 4,
 	        h: 2,
 	        text: 'Proportional Scale'
 	      }, {
 	        type: 1,
 	        i: "left_crop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 11, //Infinity,
+	        x: 0,
+	        y: 11,
 	        w: 2,
 	        h: 2,
 	        text: 'Left Crop'
 	      }, {
 	        type: 1,
 	        i: "top_crop",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 11, //Infinity,
+	        x: 2,
+	        y: 11,
 	        w: 2,
 	        h: 2,
 	        text: 'Top Crop'
 	      }, {
 	        type: 1,
 	        i: "right_crop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 13, //Infinity,
+	        x: 0,
+	        y: 13,
 	        w: 2,
 	        h: 2,
 	        text: 'Right Crop'
 	      }, {
 	        type: 1,
 	        i: "bottom_crop",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 13, //Infinity,
+	        x: 2,
+	        y: 13,
 	        w: 2,
 	        h: 2,
 	        text: 'Bottom Crop'
@@ -7012,487 +7724,15 @@
 	    });
 	  }
 	}
-	exports.default = MediaGroup2;
-	MediaGroup2.defaultProps = {
+	exports.default = VideoGroup2;
+	VideoGroup2.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
 	};
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(20);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(42);
-	
-	var _reactDom = __webpack_require__(43);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(44);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(30);
-	
-	var _reactBootstrap = __webpack_require__(26);
-	
-	var _lock = __webpack_require__(45);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(46);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(57);
-	
-	var _socket2 = __webpack_require__(54);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	let lockIcon = _react2.default.createElement(_lock2.default, null);
-	let socket;
-	
-	class MediaGroup3 extends _react2.default.Component {
-	
-	  constructor(props, context) {
-	    super(props, context);
-	    this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: ''
-	    };
-	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
-	    this.handleOnLock = this.handleOnLock.bind(this);
-	    this.handleButtons = this.handleButtons.bind(this);
-	  }
-	  handleOnLock() {
-	    if (this.state.lock == true) {
-	      lockIcon = _react2.default.createElement(_unlock2.default, null);
-	      this.setState({ lock: false });
-	    } else {
-	      lockIcon = _react2.default.createElement(_lock2.default, null);
-	      this.setState({ lock: true });
-	    }
-	  }
-	  createElement(el) {
-	    let lockStyle = {
-	      display: "none"
-	    };
-	    if (this.state.lock == false) {
-	      lockStyle = {
-	        position: "absolute",
-	        right: "2px",
-	        top: 0,
-	        cursor: "pointer",
-	        display: "inline"
-	      };
-	    }
-	    const gridStyle = {
-	      background: "#FFF"
-	    };
-	    const i = el.add ? "+" : el.i;
-	    let controllerCode = _react2.default.createElement(
-	      'button',
-	      { className: el.className, value: el.i, onClick: this.handleButtons },
-	      el.text
-	    );
-	    if (el.type == 1) {
-	      //type is slider
-	      controllerCode = _react2.default.createElement(
-	        'div',
-	        null,
-	        ' ',
-	        _react2.default.createElement(
-	          'span',
-	          { className: 'text' },
-	          el.text
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { id: 'slidecontainer' },
-	          _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	        )
-	      );
-	    }
-	    return _react2.default.createElement(
-	      'div',
-	      { key: i, 'data-grid': el, style: gridStyle },
-	      controllerCode,
-	      _react2.default.createElement('span', { style: lockStyle })
-	    );
-	  }
-	
-	  handleButtons(event) {
-	    console.log(event.target.id + ': ' + event.target.value);
-	
-	    switch (event.target.value) {
-	      case 'vid_red':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 3-0 #FF0000' });
-	        break;
-	      case 'vid_white':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 3-0 #FFFFFF' });
-	        break;
-	      case 'vid_green':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 3-0 #00FF00' });
-	        break;
-	      case 'vid_blue':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 3-0 #0000FF' });
-	        break;
-	      case 'vid_play1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 CaliforniaTimelapse.mov' });
-	        break;
-	      case 'vid_play2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 beach.mp4' });
-	        break;
-	      case 'vid_play3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 3-0 psych1.mov' });
-	        break;
-	      case 'vid_play4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 nyc.mp4' });
-	        break;
-	      case 'vid_loop1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 fire.mov LOOP' });
-	        break;
-	      case 'vid_loop2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 tunnel.mov LOOP' });
-	        break;
-	      case 'vid_loop3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 blueTileFloor.mov LOOP' });
-	        break;
-	      case 'vid_loop4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 16189_2.mov LOOP' });
-	        break;
-	      case 'still_image1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 bigRock.jpg' });
-	        break;
-	      case 'still_image2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 circuit.jpg' });
-	        break;
-	      case 'still_image3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 mime.jpg' });
-	        break;
-	      case 'still_image4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 WhiteHouse.jpg' });
-	        break;
-	      case 'foreground1':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 cactus.png' });
-	        break;
-	      case 'foreground2':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 barbedwire.jpg' });
-	        break;
-	      case 'foreground3':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 tv.png' });
-	        break;
-	      case 'foreground4':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 3-0 window.png' });
-	        break;
-	      case 'vid_stop':
-	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 3-0' });
-	        break;
-	
-	      default:
-	        console.log('ERROR: Button does not exist');
-	    }
-	  }
-	
-	  onBreakpointChange(breakpoint, cols) {
-	    this.setState({
-	      breakpoint: breakpoint,
-	      cols: cols
-	    });
-	  }
-	  onLayoutChange(layout) {
-	    console.log("layout:", layout);
-	  }
-	  render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { xs: 2, sm: 2, md: 2, lg: 2 },
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: this.handleOnLock },
-	              lockIcon
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { xs: 10, sm: 10, md: 10, lg: 10 },
-	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              'Group 3: MEDIA'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          ResponsiveReactGridLayout,
-	          _extends({
-	            onBreakpointChange: this.onBreakpointChange,
-	            onLayoutChange: this.onLayoutChange,
-	            isDraggable: !this.state.lock,
-	            isResizable: !this.state.lock
-	          }, this.props),
-	          _lodash2.default.map(this.state.items, el => this.createElement(el))
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        null,
-	        this.state.response
-	      )
-	    );
-	  }
-	  componentWillUnmount() {
-	    socket.off(this.props.page);
-	  }
-	  componentDidMount() {
-	    socket = (0, _socket3.default)();
-	    socket.on('telnet-response', mesg => {
-	      this.setState({ response: mesg });
-	    });
-	    this.setState({
-	      items: [{
-	        type: 0,
-	        i: "vid_play1",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Play1'
-	      }, {
-	        type: 0,
-	        i: "vid_play2",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Play2'
-	      }, {
-	        type: 0,
-	        i: "vid_play3",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Play3'
-	      }, {
-	        type: 0,
-	        i: "vid_play4",
-	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Play4'
-	      }, {
-	        type: 0,
-	        i: "vid_loop1",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Loop1'
-	      }, {
-	        type: 0,
-	        i: "vid_loop2",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Loop2'
-	      }, {
-	        type: 0,
-	        i: "vid_loop3",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Loop3'
-	      }, {
-	        type: 0,
-	        i: "vid_loop4",
-	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Vid Loop4'
-	      }, {
-	        type: 0,
-	        i: "still_image1",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image1'
-	      }, {
-	        type: 0,
-	        i: "still_image2",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image2'
-	      }, {
-	        type: 0,
-	        i: "still_image3",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image3'
-	      }, {
-	        type: 0,
-	        i: "still_image4",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Still Image4'
-	      }, {
-	        type: 0,
-	        i: "foreground1",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground1'
-	      }, {
-	        type: 0,
-	        i: "foreground2",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground2'
-	      }, {
-	        type: 0,
-	        i: "foreground3",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground3'
-	      }, {
-	        type: 0,
-	        i: "foreground4",
-	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn',
-	        text: 'Foreground4'
-	      }, {
-	        type: 0,
-	        i: "vid_white",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-default',
-	        text: 'Vid White'
-	      }, {
-	        type: 0,
-	        i: "vid_red",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-danger',
-	        text: 'Vid Red'
-	      }, {
-	        type: 0,
-	        i: "vid_green",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-success',
-	        text: 'Vid Green'
-	      }, {
-	        type: 0,
-	        i: "vid_blue",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Vid Blue'
-	      }, {
-	        type: 0,
-	        i: "vid_stop",
-	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
-	        w: 1,
-	        h: 1,
-	        className: 'btn-block btn btn-primary',
-	        text: 'Vid Stop'
-	      }]
-	    });
-	  }
-	}
-	exports.default = MediaGroup3;
-	MediaGroup3.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8016,7 +8256,7 @@
 	};
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8629,7 +8869,7 @@
 	};
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9153,7 +9393,7 @@
 	};
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9680,7 +9920,7 @@
 	};
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9723,7 +9963,7 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(67);
+	var _reactDeviceDetect = __webpack_require__(68);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -10469,13 +10709,13 @@
 	};
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-device-detect");
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10518,7 +10758,7 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(67);
+	var _reactDeviceDetect = __webpack_require__(68);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -11264,7 +11504,7 @@
 	};
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11591,7 +11831,7 @@
 	};
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11918,7 +12158,7 @@
 	};
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12162,7 +12402,7 @@
 	};
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12179,19 +12419,19 @@
 	
 	var _reactBootstrap = __webpack_require__(26);
 	
-	var _TelnetDiagnostics = __webpack_require__(73);
+	var _TelnetDiagnostics = __webpack_require__(74);
 	
 	var _TelnetDiagnostics2 = _interopRequireDefault(_TelnetDiagnostics);
 	
-	var _MIDIDiagnostics = __webpack_require__(74);
+	var _MIDIDiagnostics = __webpack_require__(75);
 	
 	var _MIDIDiagnostics2 = _interopRequireDefault(_MIDIDiagnostics);
 	
-	var _DMXDiagnostics = __webpack_require__(75);
+	var _DMXDiagnostics = __webpack_require__(76);
 	
 	var _DMXDiagnostics2 = _interopRequireDefault(_DMXDiagnostics);
 	
-	var _OSCDiagnostics = __webpack_require__(76);
+	var _OSCDiagnostics = __webpack_require__(77);
 	
 	var _OSCDiagnostics2 = _interopRequireDefault(_OSCDiagnostics);
 	
@@ -12242,7 +12482,7 @@
 	exports.default = Diagnostics;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12398,7 +12638,7 @@
 	exports.default = TelnetDiagnostics;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12589,7 +12829,7 @@
 	exports.default = MIDIDiagnostics;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13116,7 +13356,7 @@
 	};
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13443,7 +13683,7 @@
 	};
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14098,7 +14338,7 @@
 	};
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14173,7 +14413,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14224,7 +14464,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14260,7 +14500,7 @@
 	};
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -14291,7 +14531,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(82)(updatedModules, updatedModules);
+					__webpack_require__(83)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -14304,7 +14544,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	/*

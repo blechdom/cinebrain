@@ -250,7 +250,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(
 	          'a',
 	          { href: '/' },
-	          'Cinebrain-Presets-Branch'
+	          'Cinebrain'
 	        )
 	      )
 	    ),
