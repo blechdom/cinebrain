@@ -4,37 +4,85 @@ import 'babel-polyfill';
 import http from 'http';
 import { MongoClient } from 'mongodb';
 import socketio from 'socket.io';
-import telnet from 'telnet-client';
+//import telnet from 'telnet-client';
 import DMX from './dmx_usb_pro.js';
 import dgram from 'dgram';
 import emptyFunction from 'fbjs/lib/emptyFunction';
-import ATEM from 'applest-atem/lib/atem.js';
-import easymidi from 'easymidi/index.js';
+//import ATEM from 'applest-atem/lib/atem.js';
+//import easymidi from 'easymidi/index.js';
+import HyperdeckLib from 'hyperdeck-js-lib';
 
-let atem1me = new ATEM();
-let atemTV1 = new ATEM();
-let atemTV2 = new ATEM();
+var hyperdeck = new HyperdeckLib.Hyperdeck("192.168.10.50");
+hyperdeck.onConnected().then(function() {
+    // connected to hyperdeck
+    // Note: you do not have to wait for the connection before you start making requests.
+    // Requests are buffered until the connection completes. If the connection fails, any
+    // buffered requests will be rejected.
+    /*
+    There are a number of different predefined commands which can be called upon:
+      hyperdeck.play();
+      hyperdeck.play(35); //play at 35%
+      hyperdeck.stop();
+      hyperdeck.record();
+      hyperdeck.goTo("00:13:03:55"); //goes to timecode in format hh:mm:ss:ff
+      hyperdeck.slotSelect(2);
+      hyperdeck.slotInfo(); //Gives info on currently selected slot
+      hyperdeck.slotInfo(1);
+      hyperdeck.clipsGet();
+      hyperdeck.transportInfo();
+      hyperdeck.format(format);
+    */
+    hyperdeck.transportInfo().then(function(response) {
+      console.log("transport info object: " + JSON.stringify(response));
+     
+    });
+    hyperdeck.makeRequest("device info").then(function(response) {
+      console.log("Got response with code "+response.code+".");
+      console.log("Hyperdeck unique id: "+response.params["unique id"]);
+    }).catch(function(errResponse) {
+      if (!errResponse) {
+        console.error("The request failed because the hyperdeck connection was lost.");
+      }
+      else {
+        console.error("The hyperdeck returned an error with status code "+errResponse.code+".");
+      }
+    });
+ 
+    hyperdeck.getNotifier().on("asynchronousEvent", function(response) {
+      console.log("Got an asynchronous event with code "+response.code+".");
+    });
+ 
+    hyperdeck.getNotifier().on("connectionLost", function() {
+      console.error("Connection lost.");
+    });
+}).catch(function() {
+    console.error("Failed to connect to hyperdeck.");
+});
+
+//let atem1me = new ATEM();
+//let atemTV1 = new ATEM();
+//let atemTV2 = new ATEM();
 
 //atem1me.connect('192.168.10.240');
-atemTV1.connect('192.168.10.240');
+//atemTV1.connect('192.168.10.240');
 //atemTV2.connect('192.168.10.242');
-var midiOutA;
+//var midiOutA;
 //var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 
 let appModule = require('./server.js');
 let db;
 let server;
 let websocket;
-let UDPserver;
-let UDPclient;
-
+//let UDPserver;
+//let UDPclient;
+/*
 const PTZ_init = Buffer.from('020000010000000001', 'hex');
 const PTZ_network_setting = Buffer.from('02045d4b9d2eceff1921680102ff255255255000ffrobocam2ff03', 'hex');
 const PTZ_change_IP_Enquiry = Buffer.from('02454e513a6e6574776f726b03ff', 'hex');
 const PTZ_change_IP = Buffer.from('024d41433a30342d35642d34622d39642d32652d6365FF49504144523a3139322e3136382e31302e323030FF4d41534b3a3235352e3235352e302e30FF4e414d453a43414d4552413031FF03', 'hex');
 const PTZ_camera_on = Buffer.from('010000060000000c8101040002ff', 'hex');
 const PTZ_camera_off = Buffer.from('010000060000000c8101040003ff', 'hex');
-
+*/
 //atemTV1.on('connect', function() {     
  
 MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
@@ -61,10 +109,10 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   });
    
 
-  UDPserver = dgram.createSocket('udp4');
-  UDPclient = dgram.createSocket('udp4');
+  //UDPserver = dgram.createSocket('udp4');
+  //UDPclient = dgram.createSocket('udp4');
 
-  UDPserver.on('error', (err) => {
+  /*UDPserver.on('error', (err) => {
   console.log(`UDP server error:\n${err.stack}`);
   UDPserver.close();
   });
@@ -77,7 +125,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
     const address = '192.168.10.101';
     console.log(`UDP server listening ${address.address}:${address.port}`);
   });
-
+*/
   /*UDPclient.send(PTZ_init, 52381, '192.168.0.100', (err) => {
     console.log("send message " + PTZ_init + " err: " + err);
     UDPclient.send(PTZ_camera_on, 52381, '192.168.0.100', (err) => {
@@ -89,7 +137,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
     console.log("send message err: " + err);
   });
 */
-  UDPserver.bind(62455);
+ // UDPserver.bind(62455);
 
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
@@ -99,7 +147,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         socket.on('disconnect', () => {
                 console.log('user disconnected')
         });
-        socket.on('diagnostics-send-telnet', function(data) {
+/*        socket.on('diagnostics-send-telnet', function(data) {
                 console.log("received telnet command: " + data.host + ":" + data.port + "-->" + data.command);
                 runTelnet(data.host, data.port, data.command);
         });
@@ -156,6 +204,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 console.log("the parameter packet is: " + buffer);
                 websocket.sockets.emit("show-parameter-inputs", buffer);
         }); 
+        */
         socket.on('dmx-go', (buffer) => {
                 dmx_usb_pro.update(buffer.dmx, buffer.offset);
                 console.log("dmx-go: " + JSON.stringify(buffer.dmx));
@@ -184,7 +233,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
           });
           console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
         });  
-        socket.on('ptz-go', function(data) {
+  /*      socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
                 UDPclient.send(PTZ_init, data.port, data.host, (err) => {
                   UDPclient.send(UDPmessage, data.port, data.host, (err) => {
@@ -208,7 +257,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 channel: data.channel
               });
         });
-
+*/
+/*
         const telnetHost = '127.0.0.1';
         const telnetPort = 5250;
 
@@ -247,7 +297,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
 
         function telnetResponse (res) {
           websocket.sockets.emit("telnet-response", res);
-        }
+        }*/
   });
  
 }).catch(error => {

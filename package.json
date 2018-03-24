@@ -34,6 +34,7 @@
     "easymidi": "0.0.4",
     "express": "^4.14.0",
     "http": "0.0.0",
+    "hyperdeck-js-lib": "^1.4.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash.map": "^4.6.0",
     "lodash.random": "^3.2.0",
