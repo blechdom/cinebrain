@@ -15,7 +15,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let lockIcon = <FaLock />;
 let socket;
 
-export default class DMX255Group2 extends React.Component {
+export default class DMXSliders extends React.Component {
 
   constructor(props, context){
     super(props, context);
@@ -35,9 +35,9 @@ export default class DMX255Group2 extends React.Component {
       toastVisible: false, toastMessage: '', toastType: 'success',
       lock: true,
       compactType: null,
-      instrument_id: "dmx_sliders",
+      instrument_id: "kcat_dmx",
       dmx_offset: 1,
-      dmx_data: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+      dmx_data: [0,0,0,0,0,0,0,0,0,0,0,0],
       
   };
   this.onBreakpointChange = this.onBreakpointChange.bind(this);
@@ -103,41 +103,17 @@ handleButtons(event) {
 
   switch (event.target.value) {
   
-  case 'save_preset_1':
+  case 'save_preset_cst':
      this.savePreset(1);
     break;
-  case 'save_preset_3':
-     this.savePreset(3);
-    break;
-  case 'save_preset_4':
-     this.savePreset(4);
-    break;
-  case 'save_preset_5':
-     this.savePreset(5);
-    break;
-  case 'save_preset_6':
-     this.savePreset(6);
-    break;
-  case 'save_preset_2':
+  case 'save_preset_tott':
      this.savePreset(2);
     break;
-  case 'recall_preset_1':
+  case 'recall_preset_cst':
      this.loadPreset(1);
     break;
-  case 'recall_preset_2':
+  case 'recall_preset_tott':
      this.loadPreset(2);
-    break;
-  case 'recall_preset_3':
-     this.loadPreset(3);
-    break;
-  case 'recall_preset_4':
-     this.loadPreset(4);
-    break;
-    case 'recall_preset_5':
-     this.loadPreset(5);
-    break;
-  case 'recall_preset_6':
-     this.loadPreset(6);
     break;
   default:
     console.log('ERROR: Button does not exist');
@@ -159,54 +135,54 @@ handleSliders(event) {
 
   switch (event.target.id) {
   case 'channel_1':
+      dmx_data[0]=slider_value;
       this.sendDMX({1: slider_value});
       break;
   case 'channel_2':
+      dmx_data[1]=slider_value;
       this.sendDMX({2: slider_value});
       break;
   case 'channel_3':
+      dmx_data[2]=slider_value;
       this.sendDMX({3: slider_value});
       break;
   case 'channel_4':
+      dmx_data[3]=slider_value;
       this.sendDMX({4: slider_value});
       break;
   case 'channel_5':
+      dmx_data[4]=slider_value;
       this.sendDMX({5: slider_value});
       break;
   case 'channel_6':
+      dmx_data[5]=slider_value;
       this.sendDMX({6: slider_value});
       break;
   case 'channel_7':
+      dmx_data[6]=slider_value;
       this.sendDMX({7: slider_value});
       break;
   case 'channel_8':
+      dmx_data[7]=slider_value;
       this.sendDMX({8: slider_value});
       break;
   case 'channel_9':
+      dmx_data[8]=slider_value;
       this.sendDMX({9: slider_value});
       break;
   case 'channel_10':
+      dmx_data[9]=slider_value;
       this.sendDMX({10: slider_value});
       break;
   case 'channel_11':
+      dmx_data[10]=slider_value;
       this.sendDMX({11: slider_value});
       break;
   case 'channel_12':
+      dmx_data[11]=slider_value;
       this.sendDMX({12: slider_value});
       break;
-  case 'channel_13':
-      this.sendDMX({13: slider_value});
-      break;
-  case 'channel_14':
-      this.sendDMX({14: slider_value});
-      break;
-  case 'channel_15':
-      this.sendDMX({15: slider_value});
-      break;
-  case 'channel_16':
-      this.sendDMX({16: slider_value});
-      break;
-
+  
   default:
     console.log('ERROR: Slider does not exist');
   }
@@ -220,6 +196,7 @@ savePreset(preset){
       instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
       dmx_data: this.state.dmx_data,
     };
+  console.log(JSON.stringify(newDMXPreset));
   socket.emit('dmx-save-preset', newDMXPreset);
 }
 loadPreset(preset){
@@ -382,168 +359,52 @@ render() {
                 h: 1,
                 text: 'Channel 12',
               },
-               {
-                type: 1,
-                i: "channel_13",
-                x: 0,
-                y: 12,
-                w: 12,
-                h: 1,
-                text: 'Channel 13',
-              },
-               {
-                type: 1,
-                i: "channel_14",
+              {
+                type: 0,
+                i: "recall_preset_cst",
                 x: 0,
                 y: 13,
-                w: 12,
+                w: 2,
                 h: 1,
-                text: 'Channel 14',
+                className: 'btn-block btn btn-success',
+                text: 'LOAD CST PRESET',
               },
-               {
-                type: 1,
-                i: "channel_15",
+              {
+                type: 0,
+                i: "recall_preset_tott",
+                x: 2,
+                y: 13,
+                w: 2,
+                h: 1,
+                className: 'btn-block btn btn-success',
+                text: 'LOAD TOTT PRESET',
+              },
+              {
+                type: 0,
+                i: "save_preset_cst",
                 x: 0,
                 y: 14,
-                w: 12,
+                w: 2,
                 h: 1,
-                text: 'Channel 15',
-              },
-               {
-                type: 1,
-                i: "channel_16",
-                x: 0,
-                y: 15,
-                w: 12,
-                h: 1,
-                text: 'Channel 16',
+                className: 'btn-block btn btn-danger',
+                text: 'SAVE CST PRESET',
               },
               {
                 type: 0,
-                i: "recall_preset_1",
-                x: 0,
-                y: 16,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Preset 1',
-              },
-              {
-                type: 0,
-                i: "recall_preset_2",
-                x: 1,
-                y: 16,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Preset 2',
-              },
-              {
-                type: 0,
-                i: "recall_preset_3",
+                i: "save_preset_tott",
                 x: 2,
-                y: 16,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Preset 3',
-              },
-              {
-                type: 0,
-                i: "recall_preset_4",
-                x: 3,
-                y: 16,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Preset 4',
-              },
-              {
-                type: 0,
-                i: "recall_preset_5",
-                x: 4,
-                y: 16,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Preset 5',
-              },
-              {
-                type: 0,
-                i: "recall_preset_6",
-                x: 5,
-                y: 16,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-success',
-                text: 'Preset 6',
-              },
-              {
-                type: 0,
-                i: "save_preset_1",
-                x: 0,
-                y: 17,
-                w: 1,
+                y: 14,
+                w: 2,
                 h: 1,
                 className: 'btn-block btn btn-danger',
-                text: 'Save Preset 1',
-              },
-              {
-                type: 0,
-                i: "save_preset_2",
-                x: 1,
-                y: 17,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Save Preset 2',
-              },
-               {
-                type: 0,
-                i: "save_preset_3",
-                x: 2,
-                y: 17,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Save Preset 3',
-              },
-              {
-                type: 0,
-                i: "save_preset_4",
-                x: 3,
-                y: 17,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Save Preset 4',
-              },
-               {
-                type: 0,
-                i: "save_preset_5",
-                x: 4,
-                y: 17,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Save Preset 5',
-              },
-              {
-                type: 0,
-                i: "save_preset_6",
-                x: 5,
-                y: 17,
-                w: 1,
-                h: 1,
-                className: 'btn-block btn btn-danger',
-                text: 'Save Preset 6',
+                text: 'SAVE TOTT PRESET',
               },
             ],
       });
       
   }
 }
-DMX255Group2.defaultProps = {
+DMXSliders.defaultProps = {
     className: "layout",
     rowHeight: 30,
     cols: {lg: 12, md: 10, sm: 6, xs: 4, xxs: 2},

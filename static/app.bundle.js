@@ -40185,13 +40185,13 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var DMX255Group2 = function (_React$Component) {
-	  _inherits(DMX255Group2, _React$Component);
+	var DMXSliders = function (_React$Component) {
+	  _inherits(DMXSliders, _React$Component);
 	
-	  function DMX255Group2(props, context) {
-	    _classCallCheck(this, DMX255Group2);
+	  function DMXSliders(props, context) {
+	    _classCallCheck(this, DMXSliders);
 	
-	    var _this = _possibleConstructorReturn(this, (DMX255Group2.__proto__ || Object.getPrototypeOf(DMX255Group2)).call(this, props, context));
+	    var _this = _possibleConstructorReturn(this, (DMXSliders.__proto__ || Object.getPrototypeOf(DMXSliders)).call(this, props, context));
 	
 	    _this.state = {
 	      items: [].map(function (i, key, list) {
@@ -40209,9 +40209,9 @@ webpackJsonp([0],{
 	      toastVisible: false, toastMessage: '', toastType: 'success',
 	      lock: true,
 	      compactType: null,
-	      instrument_id: "dmx_sliders",
+	      instrument_id: "kcat_dmx",
 	      dmx_offset: 1,
-	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	
 	    };
 	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
@@ -40226,7 +40226,7 @@ webpackJsonp([0],{
 	    return _this;
 	  }
 	
-	  _createClass(DMX255Group2, [{
+	  _createClass(DMXSliders, [{
 	    key: 'showError',
 	    value: function showError(message) {
 	      this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
@@ -40305,41 +40305,17 @@ webpackJsonp([0],{
 	
 	      switch (event.target.value) {
 	
-	        case 'save_preset_1':
+	        case 'save_preset_cst':
 	          this.savePreset(1);
 	          break;
-	        case 'save_preset_3':
-	          this.savePreset(3);
-	          break;
-	        case 'save_preset_4':
-	          this.savePreset(4);
-	          break;
-	        case 'save_preset_5':
-	          this.savePreset(5);
-	          break;
-	        case 'save_preset_6':
-	          this.savePreset(6);
-	          break;
-	        case 'save_preset_2':
+	        case 'save_preset_tott':
 	          this.savePreset(2);
 	          break;
-	        case 'recall_preset_1':
+	        case 'recall_preset_cst':
 	          this.loadPreset(1);
 	          break;
-	        case 'recall_preset_2':
+	        case 'recall_preset_tott':
 	          this.loadPreset(2);
-	          break;
-	        case 'recall_preset_3':
-	          this.loadPreset(3);
-	          break;
-	        case 'recall_preset_4':
-	          this.loadPreset(4);
-	          break;
-	        case 'recall_preset_5':
-	          this.loadPreset(5);
-	          break;
-	        case 'recall_preset_6':
-	          this.loadPreset(6);
 	          break;
 	        default:
 	          console.log('ERROR: Button does not exist');
@@ -40363,52 +40339,52 @@ webpackJsonp([0],{
 	
 	      switch (event.target.id) {
 	        case 'channel_1':
+	          dmx_data[0] = slider_value;
 	          this.sendDMX({ 1: slider_value });
 	          break;
 	        case 'channel_2':
+	          dmx_data[1] = slider_value;
 	          this.sendDMX({ 2: slider_value });
 	          break;
 	        case 'channel_3':
+	          dmx_data[2] = slider_value;
 	          this.sendDMX({ 3: slider_value });
 	          break;
 	        case 'channel_4':
+	          dmx_data[3] = slider_value;
 	          this.sendDMX({ 4: slider_value });
 	          break;
 	        case 'channel_5':
+	          dmx_data[4] = slider_value;
 	          this.sendDMX({ 5: slider_value });
 	          break;
 	        case 'channel_6':
+	          dmx_data[5] = slider_value;
 	          this.sendDMX({ 6: slider_value });
 	          break;
 	        case 'channel_7':
+	          dmx_data[6] = slider_value;
 	          this.sendDMX({ 7: slider_value });
 	          break;
 	        case 'channel_8':
+	          dmx_data[7] = slider_value;
 	          this.sendDMX({ 8: slider_value });
 	          break;
 	        case 'channel_9':
+	          dmx_data[8] = slider_value;
 	          this.sendDMX({ 9: slider_value });
 	          break;
 	        case 'channel_10':
+	          dmx_data[9] = slider_value;
 	          this.sendDMX({ 10: slider_value });
 	          break;
 	        case 'channel_11':
+	          dmx_data[10] = slider_value;
 	          this.sendDMX({ 11: slider_value });
 	          break;
 	        case 'channel_12':
+	          dmx_data[11] = slider_value;
 	          this.sendDMX({ 12: slider_value });
-	          break;
-	        case 'channel_13':
-	          this.sendDMX({ 13: slider_value });
-	          break;
-	        case 'channel_14':
-	          this.sendDMX({ 14: slider_value });
-	          break;
-	        case 'channel_15':
-	          this.sendDMX({ 15: slider_value });
-	          break;
-	        case 'channel_16':
-	          this.sendDMX({ 16: slider_value });
 	          break;
 	
 	        default:
@@ -40428,6 +40404,7 @@ webpackJsonp([0],{
 	        instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
 	        dmx_data: this.state.dmx_data
 	      };
+	      console.log(JSON.stringify(newDMXPreset));
 	      socket.emit('dmx-save-preset', newDMXPreset);
 	    }
 	  }, {
@@ -40622,156 +40599,52 @@ webpackJsonp([0],{
 	          h: 1,
 	          text: 'Channel 12'
 	        }, {
-	          type: 1,
-	          i: "channel_13",
-	          x: 0,
-	          y: 12,
-	          w: 12,
-	          h: 1,
-	          text: 'Channel 13'
-	        }, {
-	          type: 1,
-	          i: "channel_14",
+	          type: 0,
+	          i: "recall_preset_cst",
 	          x: 0,
 	          y: 13,
-	          w: 12,
+	          w: 2,
 	          h: 1,
-	          text: 'Channel 14'
+	          className: 'btn-block btn btn-success',
+	          text: 'LOAD CST PRESET'
 	        }, {
-	          type: 1,
-	          i: "channel_15",
+	          type: 0,
+	          i: "recall_preset_tott",
+	          x: 2,
+	          y: 13,
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'LOAD TOTT PRESET'
+	        }, {
+	          type: 0,
+	          i: "save_preset_cst",
 	          x: 0,
 	          y: 14,
-	          w: 12,
+	          w: 2,
 	          h: 1,
-	          text: 'Channel 15'
-	        }, {
-	          type: 1,
-	          i: "channel_16",
-	          x: 0,
-	          y: 15,
-	          w: 12,
-	          h: 1,
-	          text: 'Channel 16'
+	          className: 'btn-block btn btn-danger',
+	          text: 'SAVE CST PRESET'
 	        }, {
 	          type: 0,
-	          i: "recall_preset_1",
-	          x: 0,
-	          y: 16,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 1'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_2",
-	          x: 1,
-	          y: 16,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 2'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_3",
+	          i: "save_preset_tott",
 	          x: 2,
-	          y: 16,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 3'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_4",
-	          x: 3,
-	          y: 16,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 4'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_5",
-	          x: 4,
-	          y: 16,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 5'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_6",
-	          x: 5,
-	          y: 16,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 6'
-	        }, {
-	          type: 0,
-	          i: "save_preset_1",
-	          x: 0,
-	          y: 17,
-	          w: 1,
+	          y: 14,
+	          w: 2,
 	          h: 1,
 	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 1'
-	        }, {
-	          type: 0,
-	          i: "save_preset_2",
-	          x: 1,
-	          y: 17,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 2'
-	        }, {
-	          type: 0,
-	          i: "save_preset_3",
-	          x: 2,
-	          y: 17,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 3'
-	        }, {
-	          type: 0,
-	          i: "save_preset_4",
-	          x: 3,
-	          y: 17,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 4'
-	        }, {
-	          type: 0,
-	          i: "save_preset_5",
-	          x: 4,
-	          y: 17,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 5'
-	        }, {
-	          type: 0,
-	          i: "save_preset_6",
-	          x: 5,
-	          y: 17,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 6'
+	          text: 'SAVE TOTT PRESET'
 	        }]
 	      });
 	    }
 	  }]);
 	
-	  return DMX255Group2;
+	  return DMXSliders;
 	}(_react2.default.Component);
 	
-	exports.default = DMX255Group2;
+	exports.default = DMXSliders;
 	
-	DMX255Group2.defaultProps = {
+	DMXSliders.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
@@ -49318,8 +49191,6 @@ webpackJsonp([0],{
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(326);
@@ -49340,21 +49211,11 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
 	var _socket = __webpack_require__(923);
 	
 	var _socket2 = __webpack_require__(869);
 	
 	var _socket3 = _interopRequireDefault(_socket2);
-	
-	var _reactDeviceDetect = __webpack_require__(936);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -49364,8 +49225,6 @@ webpackJsonp([0],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
 	var Decklink = function (_React$Component) {
@@ -49377,33 +49236,11 @@ webpackJsonp([0],{
 	    var _this = _possibleConstructorReturn(this, (Decklink.__proto__ || Object.getPrototypeOf(Decklink)).call(this, props, context));
 	
 	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      PTZhost: '192.168.0.100',
-	      PTZport: 52381,
-	      command: "",
-	      response: '',
-	      compactType: null
+	      deck1_response: '',
+	      deck2_response: '',
+	      deck3_response: ''
 	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
 	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleButtonRelease = _this.handleButtonRelease.bind(_this);
-	    _this.handleUpEvent = _this.handleUpEvent.bind(_this);
-	    _this.handleDownEvent = _this.handleDownEvent.bind(_this);
 	    return _this;
 	  }
 	
@@ -49411,318 +49248,144 @@ webpackJsonp([0],{
 	    key: 'handleOnLock',
 	    value: function handleOnLock() {
 	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        lockIcon = _react2.default.createElement(FaUnlock, null);
 	        this.setState({ lock: false });
 	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        lockIcon = _react2.default.createElement(FaLock, null);
 	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onMouseDown: this.handleDownEvent, onMouseUp: this.handleUpEvent, onTouchStart: this.handleDownEvent, onTouchEnd: this.handleUpEvent },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleDownEvent',
-	    value: function handleDownEvent(event) {
-	      if (_reactDeviceDetect.isIos) {
-	        if (event.type == "touchstart") {
-	          this.handleButtons(event);
-	        }
-	      } else {
-	        this.handleButtons(event);
-	      }
-	    }
-	  }, {
-	    key: 'handleUpEvent',
-	    value: function handleUpEvent(event) {
-	      if (_reactDeviceDetect.isIos) {
-	        if (event.type != "touchend") {
-	          this.handleButtonRelease(event);
-	        }
-	      } else {
-	        this.handleButtonRelease(event);
 	      }
 	    }
 	  }, {
 	    key: 'handleButtons',
 	    value: function handleButtons(event) {
 	      console.log(event.target.id + ': ' + event.target.value);
-	      event.preventDefault();
 	      switch (event.target.value) {
 	
-	        case 'ptz_on':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040002ff' });
+	        case 'deck1_rec':
+	          socket.emit('deck1', "rec");
 	          break;
-	        case 'ptz_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040003ff' });
+	        case 'deck1_stop':
+	          socket.emit('deck1', "stop");
 	          break;
-	        case 'ptz_preset_1':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0200ff' });
+	        case 'deck2_rec':
+	          socket.emit('deck2', "rec");
 	          break;
-	        case 'ptz_preset_2':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0201ff' });
+	        case 'deck2_stop':
+	          socket.emit('deck2', "stop");
 	          break;
-	        case 'ptz_preset_3':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0202ff' });
+	        case 'deck3_rec':
+	          socket.emit('deck3', "rec");
 	          break;
-	        case 'ptz_preset_4':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0203ff' });
+	        case 'deck3_stop':
+	          socket.emit('deck3', "stop");
 	          break;
-	        case 'ptz_preset_5':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
-	          break;
-	        case 'ptz_preset_6':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0205ff' });
-	          break;
-	        case 'ptz_save_preset_1':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000108101043f0100ff' });
-	          break;
-	        case 'ptz_save_preset_2':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0101ff' });
-	          break;
-	        case 'ptz_save_preset_3':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0102ff' });
-	          break;
-	        case 'ptz_save_preset_4':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0103ff' });
-	          break;
-	        case 'ptz_save_preset_5':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0104ff' });
-	          break;
-	        case 'ptz_save_preset_6':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0105ff' });
-	          break;
-	        case 'ptz_up_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000900000099810106010c080101ff' });
-	          break;
-	        case 'ptz_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009b810106010c080301ff' });
-	          break;
-	        case 'ptz_up_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009d810106010c080201ff' });
-	          break;
-	        case 'ptz_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a3810106010c080103ff' });
-	          break;
-	        case 'ptz_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a5810106010c080203ff' });
-	          break;
-	        case 'ptz_down_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a7810106010c080102ff' });
-	          break;
-	        case 'ptz_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a9810106010c080302ff' });
-	          break;
-	        case 'ptz_down_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ab810106010c080202ff' });
-	          break;
-	        case 'ptz_zoom_in':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b78101040723ff' });
-	          break;
-	        case 'ptz_zoom_out':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b98101040733ff' });
-	          break;
-	        case 'ptz_iris_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040b02ff' });
-	          break;
-	        case 'ptz_iris_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
-	          break;
-	        case 'ptz_shutter_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040a02ff' });
-	          break;
-	        case 'ptz_shutter_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040a03ff' });
-	          break;
-	        case 'ptz_gain_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040c02ff' });
-	          break;
-	        case 'ptz_gain_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040c03ff' });
-	          break;
-	        case 'ptz_iris_priority':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Bff' });
-	          break;
-	        case 'ptz_shutter_priority':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Aff' });
-	          break;
-	        case 'ptz_bright_mode':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Dff' });
-	          break;
-	        case 'ptz_bright_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D02ff' });
-	          break;
-	        case 'ptz_bright_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D03ff' });
-	          break;
-	        case 'ptz_awb':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043500ff' });
-	          break;
-	        case 'ptz_onetouch_wb':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043503ff' });
-	          break;
-	        case 'ptz_onetouch_wb_trigger':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101041005ff' });
-	          break;
-	        case 'ptz_manual_wb':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043505ff' });
-	          break;
-	        case 'ptz_full_auto':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101043900ff' });
-	          break;
-	        case 'ptz_manual_exposure':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101043903ff' });
-	          break;
-	        case 'ptz_fx_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101046300ff' });
-	          break;
-	        case 'ptz_fx_neg':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101046302ff' });
-	          break;
-	        case 'ptz_fx_bw':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101046304ff' });
-	          break;
-	        case 'ptz_onscreen_on':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011802ff' });
-	          break;
-	        case 'ptz_onscreen_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011803ff' });
-	          break;
-	        //81017e011802ff Information display On    
-	        //81017e011803ff Information display Off
 	
 	        default:
 	          console.log('ERROR: Button does not exist');
 	      }
 	    }
 	  }, {
-	    key: 'handleButtonRelease',
-	    value: function handleButtonRelease(event) {
-	      console.log(event.target.id + " :mouse upped");
-	
-	      switch (event.target.value) {
-	
-	        case 'ptz_zoom_in':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
-	          break;
-	        case 'ptz_zoom_out':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
-	          break;
-	        default:
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ac810106010c080303ff' });
-	
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'div',
+	          'center',
 	          null,
 	          _react2.default.createElement(
-	            _reactBootstrap.Row,
+	            'div',
 	            null,
 	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              'h3',
+	              null,
+	              'DECKLINK VIDEO RECORDERS'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 1'
+	              ),
 	              _react2.default.createElement(
 	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	                { className: 'btn-block btn btn-danger', width: '50%', value: 'deck1_rec', onClick: this.handleButtons },
+	                'RECORD'
+	              ),
 	              _react2.default.createElement(
-	                'strong',
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck1_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
 	                null,
-	                'Group 1: CAMERA'
+	                this.state.deck1_response
 	              )
 	            )
 	          ),
 	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock,
-	              compactType: this.state.compactType
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 2'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-danger', width: '50%', value: 'deck2_rec', onClick: this.handleButtons },
+	                'RECORD'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck2_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                this.state.deck2_response
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 3'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-danger', width: '50%', value: 'deck3_rec', onClick: this.handleButtons },
+	                'RECORD'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck3_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                this.state.deck3_response
+	              )
+	            )
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
 	        )
 	      );
 	    }
@@ -49734,402 +49397,52 @@ webpackJsonp([0],{
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this3 = this;
-	
+	      var deck1Response = '';
+	      var deck2Response = '';
+	      var deck3Response = '';
 	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
+	      socket.on('deck1_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 RECORDING';
+	        }
+	        console.log("deck1 recording " + Number(mesg.code));
 	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "ptz_on",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ On'
-	        }, {
-	          type: 0,
-	          i: "ptz_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Off'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_1",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 1'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_2",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 2'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_3",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 3'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_4",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 4'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_5",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 5'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_6",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 6'
-	        }, {
-	          type: 0,
-	          i: "ptz_zoom_in",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Zoom In'
-	        }, {
-	          type: 0,
-	          i: "ptz_zoom_out",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Zoom Out'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_1",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 1'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_2",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 2'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_3",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 3'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_4",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 4'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_5",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 5'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_6",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 6'
-	        }, {
-	          type: 0,
-	          i: "ptz_up_left",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Up Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_up_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Up Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_left",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 5, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 5, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_down_left",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Down Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_down",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_down_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Down Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_onetouch_wb",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 13, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'WB Set Standby'
-	        }, {
-	          type: 0,
-	          i: "ptz_onetouch_wb_trigger",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 13, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Press to Set WB'
-	        }, {
-	          type: 0,
-	          i: "ptz_awb",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 13, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Auto White Balance'
-	        }, {
-	          type: 0,
-	          i: "ptz_full_auto",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Full Auto'
-	        }, {
-	          type: 0,
-	          i: "ptz_manual_exposure",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Manual Exposure'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_priority",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Iris Priority'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Iris Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Iris Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_shutter_priority",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Shutter Priority'
-	        }, {
-	          type: 0,
-	          i: "ptz_shutter_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Shutter Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_shutter_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Shutter Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_gain_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Gain Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_gain_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Gain Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_bright_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Bright Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_bright_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Bright Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_bright_mode",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Bright Mode'
-	        }, {
-	          type: 0,
-	          i: "ptz_fx_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Effect Off'
-	        }, {
-	          type: 0,
-	          i: "ptz_fx_neg",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Effect Negative'
-	        }, {
-	          type: 0,
-	          i: "ptz_fx_bw",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Black+White'
-	        }]
+	      socket.on('deck1_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 STOPPED';
+	        }
+	        console.log("deck1 stop " + Number(mesg.code));
 	      });
+	      socket.on('deck2_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 RECORDING';
+	        }
+	        console.log("deck2 recording " + Number(mesg.code));
+	      });
+	      socket.on('deck2_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 STOPPED';
+	        }
+	        console.log("deck2 stop " + Number(mesg.code));
+	      });
+	      socket.on('deck3_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 RECORDING';
+	        }
+	        console.log("deck3 recording " + Number(mesg.code));
+	      });
+	      socket.on('deck3_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 STOPPED';
+	        }
+	        console.log("deck3 stop " + Number(mesg.code));
+	      });
+	      console.log("deck1Response " + deck1Response);
+	      console.log("deck2Response " + deck2Response);
+	      console.log("deck3Response " + deck3Response);
+	      this.setState({ deck1_response: deck1Response });
+	      this.setState({ deck2_response: deck2Response });
+	      this.setState({ deck3_response: deck3Response });
 	    }
 	  }]);
 	
@@ -50137,12 +49450,6 @@ webpackJsonp([0],{
 	}(_react2.default.Component);
 	
 	exports.default = Decklink;
-	
-	Decklink.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
 
 /***/ }),
 
@@ -50167,6 +49474,12 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -50174,6 +49487,8 @@ webpackJsonp([0],{
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var socket = void 0;
 	
 	var Home = function (_React$Component) {
 	  _inherits(Home, _React$Component);
@@ -50189,6 +49504,22 @@ webpackJsonp([0],{
 	  }
 	
 	  _createClass(Home, [{
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('dmx-load-preset-data', function (data) {
+	        _this2.setState({ dmx_data: data });
+	        console.log("preset retrieved " + _this2.state.dmx_data);
+	      });
+	    }
+	  }, {
 	    key: 'handleButtons',
 	    value: function handleButtons(event) {
 	      console.log(event.target.id + ': ' + event.target.value);
@@ -50197,15 +49528,37 @@ webpackJsonp([0],{
 	
 	        case 'cst_on':
 	          console.log("CST ON");
+	          var loadCSTPreset = {
+	            instrument_id: 'kcat_dmx', dmx_offset: 1, preset_num: 1, dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	          };
+	          socket.emit('dmx-load-preset', loadCSTPreset);
 	          break;
 	        case 'cst_off':
 	          console.log("CST OFF");
+	          socket.emit('dmx-all', 0);
 	          break;
 	        case 'tott_on':
 	          console.log("TOTT ON");
+	          var loadTOTTPreset = {
+	            instrument_id: 'kcat_dmx', dmx_offset: 1, preset_num: 2, dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	          };
+	          socket.emit('dmx-load-preset', loadTOTTPreset);
 	          break;
 	        case 'tott_off':
 	          console.log("TOTT OFF");
+	          socket.emit('dmx-all', 0);
+	          break;
+	        case 'deck_all_rec':
+	          console.log("RECORD ALL");
+	          socket.emit('deck1', "rec");
+	          socket.emit('deck2', "rec");
+	          socket.emit('deck3', "rec");
+	          break;
+	        case 'deck_all_stop':
+	          console.log("STOP ALL");
+	          socket.emit('deck1', "stop");
+	          socket.emit('deck2', "stop");
+	          socket.emit('deck3', "stop");
 	          break;
 	
 	        default:
@@ -50266,6 +49619,25 @@ webpackJsonp([0],{
 	              'button',
 	              { className: 'btn-block btn btn-danger', width: '50%', value: 'tott_off', onClick: this.handleButtons },
 	              'OFF'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h2',
+	              null,
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'deck_all_rec', onClick: this.handleButtons },
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-warning', width: '50%', value: 'deck_all_stop', onClick: this.handleButtons },
+	              'STOP'
 	            )
 	          )
 	        )
