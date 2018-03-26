@@ -28,6 +28,12 @@ let websocket;
 let UDPserver;
 let UDPclient;
 
+const {CasparCG} = require("casparcg-connection");
+ 
+var casparConnection = new CasparCG();
+casparConnection.play(2, 1, "group2_loop1.mov");
+
+
 const PTZ_init = Buffer.from('020000010000000001', 'hex');
 const PTZ_network_setting = Buffer.from('02045d4b9d2eceff1921680102ff255255255000ffrobocam2ff03', 'hex');
 const PTZ_change_IP_Enquiry = Buffer.from('02454e513a6e6574776f726b03ff', 'hex');

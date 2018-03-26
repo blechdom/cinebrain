@@ -11,6 +11,9 @@ const Header = () => (
     </Navbar.Header>
     <Nav>
       <NavDropdown id="user-dropdown" title="Group 1">
+        <LinkContainer to="/dash">
+          <NavItem>Agendash</NavItem>
+        </LinkContainer>
         <LinkContainer to="/dmx_spot_group1">
           <NavItem>Spot Light</NavItem>
         </LinkContainer>

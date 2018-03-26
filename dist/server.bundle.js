@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "075222d40880b9f507a8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2c4ff25c004810be0295"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(82);
+	module.exports = __webpack_require__(85);
 
 
 /***/ }),
@@ -616,6 +616,14 @@
 	let websocket;
 	let UDPserver;
 	let UDPclient;
+	
+	var _require = __webpack_require__(84);
+	
+	const CasparCG = _require.CasparCG;
+	
+	
+	var casparConnection = new CasparCG();
+	casparConnection.play(2, 1, "group2_loop1.mov");
 	
 	const PTZ_init = Buffer.from('020000010000000001', 'hex');
 	const PTZ_network_setting = Buffer.from('02045d4b9d2eceff1921680102ff255255255000ffrobocam2ff03', 'hex');
@@ -1031,6 +1039,11 @@
 	app.use(_bodyParser2.default.json());
 	
 	let db;
+	
+	var Agenda = __webpack_require__(82);
+	var Agendash = __webpack_require__(83);
+	var agenda = new Agenda({ db: { address: 'mongodb://127.0.0.1/agendaDb' } });
+	app.use('/dash', Agendash(agenda));
 	
 	app.get('/api/issues', (req, res) => {
 	  const filter = {};
@@ -1739,7 +1752,7 @@
 	      _react2.default.createElement(
 	        'a',
 	        { href: '/' },
-	        'Cinebrain-Presets-Branch'
+	        'Cinebrain'
 	      )
 	    )
 	  ),
@@ -1749,6 +1762,15 @@
 	    _react2.default.createElement(
 	      _reactBootstrap.NavDropdown,
 	      { id: 'user-dropdown', title: 'Group 1' },
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/dash' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Agendash'
+	        )
+	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
 	        { to: '/dmx_spot_group1' },
@@ -14501,6 +14523,24 @@
 
 /***/ }),
 /* 82 */
+/***/ (function(module, exports) {
+
+	module.exports = require("agenda");
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports) {
+
+	module.exports = require("agendash");
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports) {
+
+	module.exports = require("casparcg-connection");
+
+/***/ }),
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -14531,7 +14571,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(83)(updatedModules, updatedModules);
+					__webpack_require__(86)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -14544,7 +14584,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports) {
 
 	/*

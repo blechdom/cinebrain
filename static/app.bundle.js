@@ -262,6 +262,15 @@ webpackJsonp([0],{
 	        { id: 'user-dropdown', title: 'Group 1' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/dash' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Agendash'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/dmx_spot_group1' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
