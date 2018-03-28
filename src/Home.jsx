@@ -23,6 +23,9 @@ export default class Home extends React.Component {
     socket.off(this.props.page);
   }
   componentDidMount() {
+    let deck1Response = '';
+    let deck2Response = '';
+    let deck3Response = '';
     socket = SocketIOClient();
     socket.on('dmx-load-preset-data', (data) => {
       this.setState({dmx_data: data});
