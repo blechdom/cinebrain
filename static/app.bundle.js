@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(952);
+	var _ContextWrapper = __webpack_require__(946);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -104,67 +104,43 @@ webpackJsonp([0],{
 	
 	var _AudioGroup2 = _interopRequireDefault(_AudioGroup);
 	
-	var _AudioGroup3 = __webpack_require__(928);
-	
-	var _AudioGroup4 = _interopRequireDefault(_AudioGroup3);
-	
-	var _VideoGroup = __webpack_require__(929);
+	var _VideoGroup = __webpack_require__(928);
 	
 	var _VideoGroup2 = _interopRequireDefault(_VideoGroup);
 	
-	var _VideoGroup3 = __webpack_require__(930);
-	
-	var _VideoGroup4 = _interopRequireDefault(_VideoGroup3);
-	
-	var _DMXSpotGroup = __webpack_require__(931);
-	
-	var _DMXSpotGroup2 = _interopRequireDefault(_DMXSpotGroup);
-	
-	var _DMXWashGroup = __webpack_require__(932);
+	var _DMXWashGroup = __webpack_require__(929);
 	
 	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMX155Group = __webpack_require__(933);
+	var _DMX155Group = __webpack_require__(930);
 	
 	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _DMX255Group = __webpack_require__(934);
+	var _DMX255Group = __webpack_require__(931);
 	
 	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
 	
-	var _PTZGroup = __webpack_require__(935);
+	var _PTZGroup = __webpack_require__(932);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _PTZGroup3 = __webpack_require__(940);
-	
-	var _PTZGroup4 = _interopRequireDefault(_PTZGroup3);
-	
-	var _ATEMGroup = __webpack_require__(941);
-	
-	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
-	
-	var _ATEMGroup3 = __webpack_require__(942);
-	
-	var _ATEMGroup4 = _interopRequireDefault(_ATEMGroup3);
-	
-	var _ATEMGroup5 = __webpack_require__(943);
-	
-	var _ATEMGroup6 = _interopRequireDefault(_ATEMGroup5);
-	
-	var _Diagnostics = __webpack_require__(944);
+	var _Diagnostics = __webpack_require__(937);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(949);
+	var _MidiLooper = __webpack_require__(942);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Home = __webpack_require__(950);
+	var _Agenda = __webpack_require__(943);
+	
+	var _Agenda2 = _interopRequireDefault(_Agenda);
+	
+	var _Home = __webpack_require__(944);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(951);
+	var _Help = __webpack_require__(945);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -183,19 +159,13 @@ webpackJsonp([0],{
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group2', component: _AudioGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group1', component: _VideoGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group2', component: _VideoGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_spot_group1', component: _DMXSpotGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'agenda', component: _Agenda2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_wash_group1', component: _DMXWashGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_155_group2', component: _DMX155Group2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_255_group2', component: _DMX255Group2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group2', component: _PTZGroup4.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group1', component: _ATEMGroup2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group2', component: _ATEMGroup4.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'atem_group3', component: _ATEMGroup6.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'midi_looper', component: _MidiLooper2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'new_controllers', component: _NewControllers2.default }),
@@ -250,7 +220,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(
 	          'a',
 	          { href: '/' },
-	          'Cinebrain'
+	          'Agenda-Caspar: Cinebrain'
 	        )
 	      )
 	    ),
@@ -259,41 +229,14 @@ webpackJsonp([0],{
 	      null,
 	      _react2.default.createElement(
 	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Group 1' },
+	        { id: 'user-dropdown', title: 'Caspar' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dash' },
+	          { to: '/agenda' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Agendash'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_spot_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Spot Light'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_255_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Spot Light 255'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/ptz_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Camera'
+	            'Caspar Schedule'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -317,7 +260,7 @@ webpackJsonp([0],{
 	      ),
 	      _react2.default.createElement(
 	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Group 2' },
+	        { id: 'user-dropdown', title: 'Lights' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/dmx_155_group2' },
@@ -329,38 +272,42 @@ webpackJsonp([0],{
 	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/dmx_255_group2' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Spot Light 255'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/dmx_wash_group1' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
 	            'Wash Light'
 	          )
-	        ),
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactBootstrap.NavDropdown,
+	        { id: 'user-dropdown', title: 'Tools' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/ptz_group2' },
+	          { to: '/ptz_group1' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
 	            null,
-	            'Camera'
+	            'PTZ Camera'
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/video_group2' },
+	          { to: '/midi_looper' },
 	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
+	            _reactBootstrap.NavItem,
 	            null,
-	            'Video'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/audio_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Audio'
+	            'MIDI Looper'
 	          )
 	        )
 	      )
@@ -423,15 +370,6 @@ webpackJsonp([0],{
 	            _reactBootstrap.MenuItem,
 	            null,
 	            'Add Issue'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/midi_looper' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'MIDI Looper'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -38653,399 +38591,6 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
-	var AudioGroup2 = function (_React$Component) {
-	  _inherits(AudioGroup2, _React$Component);
-	
-	  function AudioGroup2(props, context) {
-	    _classCallCheck(this, AudioGroup2);
-	
-	    var _this = _possibleConstructorReturn(this, (AudioGroup2.__proto__ || Object.getPrototypeOf(AudioGroup2)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: '',
-	      audio_volume: '0.0'
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleSliders = _this.handleSliders.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(AudioGroup2, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onClick: this.handleButtons },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	
-	      switch (event.target.value) {
-	        case 'audio1':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio1.wav' });
-	          break;
-	        case 'audio2':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio2.wav' });
-	          break;
-	        case 'audio3':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio3.wav' });
-	          break;
-	        case 'audio4':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio4.wav' });
-	          break;
-	        case 'audio5':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio5.wav' });
-	          break;
-	        case 'audio6':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio6.wav' });
-	          break;
-	        case 'audio7':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio7.wav' });
-	          break;
-	        case 'audio8':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-1 group2_audio8.wav' });
-	          break;
-	        case 'audio_stop':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-1' });
-	          break;
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'handleSliders',
-	    value: function handleSliders(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      var slider_value = event.target.value / 100.0;
-	      switch (event.target.id) {
-	        case 'audio_volume':
-	          this.state.audio_volume = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-1 VOLUME " + this.state.audio_volume });
-	          break;
-	        default:
-	          console.log('ERROR: Slider does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 2: AUDIO'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 VOLUME 0" });
-	
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "audio1",
-	          x: 0,
-	          y: 2,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 1'
-	        }, {
-	          type: 0,
-	          i: "audio2",
-	          x: 0,
-	          y: 3,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 2'
-	        }, {
-	          type: 0,
-	          i: "audio3",
-	          x: 0,
-	          y: 4,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 3'
-	        }, {
-	          type: 0,
-	          i: "audio4",
-	          x: 0,
-	          y: 5,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 4'
-	        }, {
-	          type: 0,
-	          i: "audio5",
-	          x: 2,
-	          y: 2,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 5'
-	        }, {
-	          type: 0,
-	          i: "audio6",
-	          x: 2,
-	          y: 3,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 6'
-	        }, {
-	          type: 0,
-	          i: "audio7",
-	          x: 2,
-	          y: 4,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 7'
-	        }, {
-	          type: 0,
-	          i: "audio8",
-	          x: 2,
-	          y: 5,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Audio 8'
-	        }, {
-	          type: 0,
-	          i: "audio_stop",
-	          x: 0,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Audio Stop'
-	        }, {
-	          type: 1,
-	          i: "audio_volume",
-	          x: 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          text: 'Audio Volume'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return AudioGroup2;
-	}(_react2.default.Component);
-	
-	exports.default = AudioGroup2;
-	
-	AudioGroup2.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 929:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
 	var VideoGroup1 = function (_React$Component) {
 	  _inherits(VideoGroup1, _React$Component);
 	
@@ -39628,1223 +39173,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 930:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var VideoGroup2 = function (_React$Component) {
-	  _inherits(VideoGroup2, _React$Component);
-	
-	  function VideoGroup2(props, context) {
-	    _classCallCheck(this, VideoGroup2);
-	
-	    var _this = _possibleConstructorReturn(this, (VideoGroup2.__proto__ || Object.getPrototypeOf(VideoGroup2)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: '',
-	      left_edge: '0.0',
-	      top_edge: '0.0',
-	      x_scale: '1.0',
-	      y_scale: '1.0',
-	      left_crop: '0.0',
-	      top_crop: '0.0',
-	      right_crop: '0.0',
-	      bottom_crop: '0.0'
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleSliders = _this.handleSliders.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(VideoGroup2, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onClick: this.handleButtons },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'MIXER 2-0 VOLUME 0.0' });
-	      switch (event.target.value) {
-	        case 'vid_red':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #FF0000' });
-	          break;
-	        case 'vid_white':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #FFFFFF' });
-	          break;
-	        case 'vid_green':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #00FF00' });
-	          break;
-	        case 'vid_blue':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 #0000FF' });
-	          break;
-	        case 'loop1':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop1.mov LOOP' });
-	          break;
-	        case 'loop2':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop2.mov LOOP' });
-	          break;
-	        case 'loop3':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'play 2-0 group2_loop3.mov LOOP' });
-	          break;
-	        case 'loop4':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop4.mov LOOP' });
-	          break;
-	        case 'loop5':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop5.mov LOOP' });
-	          break;
-	        case 'loop6':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop6.mov LOOP' });
-	          break;
-	        case 'loop7':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop7.mov LOOP' });
-	          break;
-	        case 'loop8':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_loop8.mov LOOP' });
-	          break;
-	        case 'still1':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still1.png' });
-	          break;
-	        case 'still2':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still2.png' });
-	          break;
-	        case 'still3':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still3.png' });
-	          break;
-	        case 'still4':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still4.png' });
-	          break;
-	        case 'still5 ':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still5.png' });
-	          break;
-	        case 'still6':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still6.png' });
-	          break;
-	        case 'still7':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still7.png' });
-	          break;
-	        case 'still8':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 group2_still8.png' });
-	          break;
-	        case 'vid_stop':
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-0' });
-	          break;
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'handleSliders',
-	    value: function handleSliders(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      var slider_value = event.target.value / 100.0;
-	      switch (event.target.id) {
-	        case 'left_edge':
-	          this.state.left_edge = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	          break;
-	        case 'top_edge':
-	          this.state.top_edge = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	          break;
-	        case 'x_scale':
-	          this.state.x_scale = slider_value * 2.0;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	          break;
-	        case 'y_scale':
-	          this.state.y_scale = slider_value * 2.0;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	          break;
-	        case 'proportional_scale':
-	          this.state.y_scale = slider_value * 2.0;
-	          this.state.x_scale = slider_value * 2.0;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 FILL " + this.state.left_edge + " " + this.state.top_edge + " " + this.state.x_scale + " " + this.state.y_scale });
-	          break;
-	        case 'left_crop':
-	          this.state.left_crop = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	          break;
-	        case 'top_crop':
-	          this.state.top_crop = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	          break;
-	        case 'right_crop':
-	          this.state.right_crop = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	          break;
-	        case 'bottom_crop':
-	          this.state.bottom_crop = slider_value;
-	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 2-0 CROP " + this.state.left_crop + " " + this.state.top_crop + " " + this.state.right_crop + " " + this.state.bottom_crop });
-	          break;
-	        default:
-	          console.log('ERROR: Slider does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 2: VIDEO'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "loop1",
-	          x: 1,
-	          y: 0,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 1'
-	        }, {
-	          type: 0,
-	          i: "loop2",
-	          x: 1,
-	          y: 1,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 2'
-	        }, {
-	          type: 0,
-	          i: "loop3",
-	          x: 1,
-	          y: 2,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 3'
-	        }, {
-	          type: 0,
-	          i: "loop4",
-	          x: 1,
-	          y: 3,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 4'
-	        }, {
-	          type: 0,
-	          i: "loop5",
-	          x: 2,
-	          y: 0,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 5'
-	        }, {
-	          type: 0,
-	          i: "loop6",
-	          x: 2,
-	          y: 1,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 6'
-	        }, {
-	          type: 0,
-	          i: "loop7",
-	          x: 2,
-	          y: 2,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 7'
-	        }, {
-	          type: 0,
-	          i: "loop8",
-	          x: 2,
-	          y: 3,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Vid Loop 8'
-	        }, {
-	          type: 0,
-	          i: "still1",
-	          x: 3,
-	          y: 0,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 1'
-	        }, {
-	          type: 0,
-	          i: "still2",
-	          x: 3,
-	          y: 1,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 2'
-	        }, {
-	          type: 0,
-	          i: "still3",
-	          x: 3,
-	          y: 2,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 3'
-	        }, {
-	          type: 0,
-	          i: "still4",
-	          x: 3,
-	          y: 3,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 4'
-	        }, {
-	          type: 0,
-	          i: "still5",
-	          x: 4,
-	          y: 0,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 5'
-	        }, {
-	          type: 0,
-	          i: "still6",
-	          x: 4,
-	          y: 1,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 6'
-	        }, {
-	          type: 0,
-	          i: "still7",
-	          x: 4,
-	          y: 2,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 7'
-	        }, {
-	          type: 0,
-	          i: "still8",
-	          x: 4,
-	          y: 3,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Still 8'
-	        }, {
-	          type: 0,
-	          i: "vid_white",
-	          x: 5,
-	          y: 0,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Vid White'
-	        }, {
-	          type: 0,
-	          i: "vid_red",
-	          x: 5,
-	          y: 1,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Vid Red'
-	        }, {
-	          type: 0,
-	          i: "vid_green",
-	          x: 5,
-	          y: 2,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Vid Green'
-	        }, {
-	          type: 0,
-	          i: "vid_blue",
-	          x: 5,
-	          y: 3,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-primary',
-	          text: 'Vid Blue'
-	        }, {
-	          type: 0,
-	          i: "vid_stop",
-	          x: 0,
-	          y: 0,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-primary',
-	          text: 'Vid Stop'
-	        }, {
-	          type: 1,
-	          i: "left_edge",
-	          x: 0,
-	          y: 9,
-	          w: 2,
-	          h: 2,
-	          text: 'Left Edge'
-	        }, {
-	          type: 1,
-	          i: "top_edge",
-	          x: 2,
-	          y: 9,
-	          w: 2,
-	          h: 2,
-	          text: 'Top Edge'
-	        }, {
-	          type: 1,
-	          i: "x_scale",
-	          x: 0,
-	          y: 7,
-	          w: 2,
-	          h: 2,
-	          text: 'X Scale'
-	        }, {
-	          type: 1,
-	          i: "y_scale",
-	          x: 2,
-	          y: 7,
-	          w: 2,
-	          h: 2,
-	          text: 'Y Scale'
-	        }, {
-	          type: 1,
-	          i: "proportional_scale",
-	          x: 0,
-	          y: 5,
-	          w: 4,
-	          h: 2,
-	          text: 'Proportional Scale'
-	        }, {
-	          type: 1,
-	          i: "left_crop",
-	          x: 0,
-	          y: 11,
-	          w: 2,
-	          h: 2,
-	          text: 'Left Crop'
-	        }, {
-	          type: 1,
-	          i: "top_crop",
-	          x: 2,
-	          y: 11,
-	          w: 2,
-	          h: 2,
-	          text: 'Top Crop'
-	        }, {
-	          type: 1,
-	          i: "right_crop",
-	          x: 0,
-	          y: 13,
-	          w: 2,
-	          h: 2,
-	          text: 'Right Crop'
-	        }, {
-	          type: 1,
-	          i: "bottom_crop",
-	          x: 2,
-	          y: 13,
-	          w: 2,
-	          h: 2,
-	          text: 'Bottom Crop'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return VideoGroup2;
-	}(_react2.default.Component);
-	
-	exports.default = VideoGroup2;
-	
-	VideoGroup2.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 931:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _Toast = __webpack_require__(836);
-	
-	var _Toast2 = _interopRequireDefault(_Toast);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var DMXSpotGroup1 = function (_React$Component) {
-	  _inherits(DMXSpotGroup1, _React$Component);
-	
-	  function DMXSpotGroup1(props, context) {
-	    _classCallCheck(this, DMXSpotGroup1);
-	
-	    var _this = _possibleConstructorReturn(this, (DMXSpotGroup1.__proto__ || Object.getPrototypeOf(DMXSpotGroup1)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      toastVisible: false, toastMessage: '', toastType: 'success',
-	      lock: true,
-	      compactType: null,
-	      instrument_id: "spot_1",
-	      dmx_offset: 1,
-	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleSliders = _this.handleSliders.bind(_this);
-	    _this.sendDMX = _this.sendDMX.bind(_this);
-	    _this.savePreset = _this.savePreset.bind(_this);
-	    _this.loadPreset = _this.loadPreset.bind(_this);
-	    _this.showError = _this.showError.bind(_this);
-	    _this.dismissToast = _this.dismissToast.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(DMXSpotGroup1, [{
-	    key: 'showError',
-	    value: function showError(message) {
-	      this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
-	    }
-	  }, {
-	    key: 'dismissToast',
-	    value: function dismissToast() {
-	      this.setState({ toastVisible: false });
-	    }
-	  }, {
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onClick: this.handleButtons },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      var dmx_data = this.state.dmx_data;
-	
-	      switch (event.target.value) {
-	
-	        case 'spot_on':
-	          dmx_data[5] = 0;
-	          dmx_data[6] = 216;
-	          dmx_data[7] = 255;
-	          this.sendDMX({ 6: 0, 7: 216, 8: 255 });
-	          break;
-	        case 'spot_off':
-	          dmx_data[6] = 0;
-	          dmx_data[7] = 0;
-	          this.sendDMX({ 7: 0, 8: 0 });
-	          break;
-	        case 'save_preset_1':
-	          this.savePreset(1);
-	          break;
-	        case 'save_preset_3':
-	          this.savePreset(3);
-	          break;
-	        case 'save_preset_4':
-	          this.savePreset(4);
-	          break;
-	        case 'save_preset_5':
-	          this.savePreset(5);
-	          break;
-	        case 'save_preset_6':
-	          this.savePreset(6);
-	          break;
-	        case 'save_preset_2':
-	          this.savePreset(2);
-	          break;
-	        case 'recall_preset_1':
-	          this.loadPreset(1);
-	          break;
-	        case 'recall_preset_2':
-	          this.loadPreset(2);
-	          break;
-	        case 'recall_preset_3':
-	          this.loadPreset(3);
-	          break;
-	        case 'recall_preset_4':
-	          this.loadPreset(4);
-	          break;
-	        case 'recall_preset_5':
-	          this.loadPreset(5);
-	          break;
-	        case 'recall_preset_6':
-	          this.loadPreset(6);
-	          break;
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	      this.setState({ dmx_data: dmx_data });
-	    }
-	  }, {
-	    key: 'handleSliders',
-	    value: function handleSliders(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      var slider_value = event.target.value;
-	      var dmx_data = this.state.dmx_data;
-	
-	      var items = this.state.items;
-	      for (var i = 0; i < items.length; i++) {
-	        if (items[i].i == event.target.id) {
-	          items[i].sliderValue = slider_value;
-	        }
-	      }
-	      this.setState({ items: items });
-	
-	      switch (event.target.id) {
-	        case 'spot_pan':
-	          slider_value = Math.floor(213 - slider_value / 255 * 86);
-	          dmx_data[0] = slider_value;
-	          this.sendDMX({ 1: slider_value });
-	          break;
-	        case 'spot_tilt':
-	          slider_value = Math.floor(slider_value / 255 * 136);
-	          dmx_data[1] = slider_value;
-	          this.sendDMX({ 2: slider_value });
-	          break;
-	        case 'spot_speed':
-	          dmx_data[4] = slider_value;
-	          this.sendDMX({ 5: slider_value });
-	          break;
-	        case 'spot_fine_pan':
-	          dmx_data[2] = slider_value;
-	          this.sendDMX({ 3: slider_value });
-	          break;
-	        case 'spot_fine_tilt':
-	          dmx_data[3] = slider_value;
-	          this.sendDMX({ 4: slider_value });
-	          break;
-	        case 'spot_intensity':
-	          dmx_data[7] = slider_value;
-	          this.sendDMX({ 8: slider_value });
-	          break;
-	
-	        default:
-	          console.log('ERROR: Slider does not exist');
-	      }
-	      this.setState({ dmx_data: dmx_data });
-	    }
-	  }, {
-	    key: 'sendDMX',
-	    value: function sendDMX(dmx) {
-	      socket.emit('dmx-go', { dmx: dmx, offset: this.state.dmx_offset });
-	    }
-	  }, {
-	    key: 'savePreset',
-	    value: function savePreset(preset) {
-	      var newDMXPreset = {
-	        instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
-	        dmx_data: this.state.dmx_data
-	      };
-	      socket.emit('dmx-save-preset', newDMXPreset);
-	    }
-	  }, {
-	    key: 'loadPreset',
-	    value: function loadPreset(preset) {
-	      var loadDMXPreset = {
-	        instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
-	      };
-	      socket.emit('dmx-load-preset', loadDMXPreset);
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 1: Spot LIGHT'
-	              ),
-	              ' DMX: 1'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock,
-	              compactType: this.state.compactType
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('dmx-load-preset-data', function (data) {
-	        _this3.setState({ dmx_data: data });
-	        console.log("preset retrieved " + _this3.state.dmx_data);
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "spot_on",
-	          x: 0,
-	          y: 0,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Spot On'
-	        }, {
-	          type: 0,
-	          i: "spot_off",
-	          x: 2,
-	          y: 0,
-	          w: 2,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Spot Off'
-	        }, {
-	          type: 1,
-	          i: "spot_intensity",
-	          x: 0,
-	          y: 2,
-	          w: 12,
-	          h: 2,
-	          text: 'Spot Intensity'
-	        }, {
-	          type: 1,
-	          i: "spot_tilt",
-	          x: 0,
-	          y: 8,
-	          w: 12,
-	          h: 2,
-	          text: 'Spot Tilt'
-	        }, {
-	          type: 1,
-	          i: "spot_pan",
-	          x: 0,
-	          y: 4,
-	          w: 12,
-	          h: 2,
-	          text: 'Spot Pan'
-	        }, {
-	          type: 1,
-	          i: "spot_speed",
-	          x: 0,
-	          y: 12,
-	          w: 12,
-	          h: 2,
-	          text: 'Spot Speed'
-	        }, {
-	          type: 1,
-	          i: "spot_fine_tilt",
-	          x: 0,
-	          y: 10,
-	          w: 12,
-	          h: 2,
-	          text: 'Spot Fine Tilt'
-	        }, {
-	          type: 1,
-	          i: "spot_fine_pan",
-	          x: 0,
-	          y: 6,
-	          w: 12,
-	          h: 2,
-	          text: 'Spot Fine Pan'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_1",
-	          x: 0,
-	          y: 14,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 1'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_2",
-	          x: 1,
-	          y: 14,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 2'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_3",
-	          x: 2,
-	          y: 14,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 3'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_4",
-	          x: 3,
-	          y: 14,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 4'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_5",
-	          x: 4,
-	          y: 14,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 5'
-	        }, {
-	          type: 0,
-	          i: "recall_preset_6",
-	          x: 5,
-	          y: 14,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 6'
-	        }, {
-	          type: 0,
-	          i: "save_preset_1",
-	          x: 0,
-	          y: 15,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 1'
-	        }, {
-	          type: 0,
-	          i: "save_preset_2",
-	          x: 1,
-	          y: 15,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 2'
-	        }, {
-	          type: 0,
-	          i: "save_preset_3",
-	          x: 2,
-	          y: 15,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 3'
-	        }, {
-	          type: 0,
-	          i: "save_preset_4",
-	          x: 3,
-	          y: 15,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 4'
-	        }, {
-	          type: 0,
-	          i: "save_preset_5",
-	          x: 4,
-	          y: 15,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 5'
-	        }, {
-	          type: 0,
-	          i: "save_preset_6",
-	          x: 5,
-	          y: 15,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Preset 6'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return DMXSpotGroup1;
-	}(_react2.default.Component);
-	
-	exports.default = DMXSpotGroup1;
-	
-	DMXSpotGroup1.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 932:
+/***/ 929:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41508,7 +39837,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 933:
+/***/ 930:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42085,7 +40414,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 934:
+/***/ 931:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42666,7 +40995,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 935:
+/***/ 932:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42711,7 +41040,7 @@ webpackJsonp([0],{
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(936);
+	var _reactDeviceDetect = __webpack_require__(933);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -43503,7 +41832,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 936:
+/***/ 933:
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -43736,7 +42065,7 @@ webpackJsonp([0],{
 	/* 3 */
 	/***/ (function(module, exports) {
 	
-	module.exports = __webpack_require__(937);
+	module.exports = __webpack_require__(934);
 	
 	/***/ }),
 	/* 4 */
@@ -43932,22 +42261,22 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 937:
+/***/ 934:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	if (process.env.NODE_ENV === 'production') {
-	  module.exports = __webpack_require__(938);
+	  module.exports = __webpack_require__(935);
 	} else {
-	  module.exports = __webpack_require__(939);
+	  module.exports = __webpack_require__(936);
 	}
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
 
-/***/ 938:
+/***/ 935:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/** @license React v16.2.0
@@ -43975,7 +42304,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 939:
+/***/ 936:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.2.0
@@ -45340,1868 +43669,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 940:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	var _reactDeviceDetect = __webpack_require__(936);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var PTZGroup2 = function (_React$Component) {
-	  _inherits(PTZGroup2, _React$Component);
-	
-	  function PTZGroup2(props, context) {
-	    _classCallCheck(this, PTZGroup2);
-	
-	    var _this = _possibleConstructorReturn(this, (PTZGroup2.__proto__ || Object.getPrototypeOf(PTZGroup2)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      PTZhost: '192.168.0.200',
-	      PTZport: 52381,
-	      command: "",
-	      response: '',
-	      compactType: null
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleButtonRelease = _this.handleButtonRelease.bind(_this);
-	    _this.handleUpEvent = _this.handleUpEvent.bind(_this);
-	    _this.handleDownEvent = _this.handleDownEvent.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(PTZGroup2, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onMouseDown: this.handleDownEvent, onTouchStart: this.handleDownEvent, onTouchEnd: this.handleUpEvent, onMouseUp: this.handleUpEvent },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleDownEvent',
-	    value: function handleDownEvent(event) {
-	      if (_reactDeviceDetect.isIos) {
-	        if (event.type == "touchstart") {
-	          this.handleButtons(event);
-	        }
-	      } else {
-	        this.handleButtons(event);
-	      }
-	    }
-	  }, {
-	    key: 'handleUpEvent',
-	    value: function handleUpEvent(event) {
-	      if (_reactDeviceDetect.isIos) {
-	        if (event.type != "touchend") {
-	          this.handleButtonRelease(event);
-	        }
-	      } else {
-	        this.handleButtonRelease(event);
-	      }
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      event.preventDefault();
-	      switch (event.target.value) {
-	
-	        case 'ptz_on':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040002ff' });
-	          break;
-	        case 'ptz_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c8101040003ff' });
-	          break;
-	        case 'ptz_preset_1':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0200ff' });
-	          break;
-	        case 'ptz_preset_2':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0201ff' });
-	          break;
-	        case 'ptz_preset_3':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0202ff' });
-	          break;
-	        case 'ptz_preset_4':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0203ff' });
-	          break;
-	        case 'ptz_preset_5':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0204ff' });
-	          break;
-	        case 'ptz_preset_6':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0205ff' });
-	          break;
-	        case 'ptz_save_preset_1':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000108101043f0100ff' });
-	          break;
-	        case 'ptz_save_preset_2':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0101ff' });
-	          break;
-	        case 'ptz_save_preset_3':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0102ff' });
-	          break;
-	        case 'ptz_save_preset_4':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0103ff' });
-	          break;
-	        case 'ptz_save_preset_5':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0104ff' });
-	          break;
-	        case 'ptz_save_preset_6':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000007000000648101043f0105ff' });
-	          break;
-	        case 'ptz_up_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000900000099810106010c080101ff' });
-	          break;
-	        case 'ptz_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009b810106010c080301ff' });
-	          break;
-	        case 'ptz_up_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000090000009d810106010c080201ff' });
-	          break;
-	        case 'ptz_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a3810106010c080103ff' });
-	          break;
-	        case 'ptz_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a5810106010c080203ff' });
-	          break;
-	        case 'ptz_down_left':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a7810106010c080102ff' });
-	          break;
-	        case 'ptz_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000a9810106010c080302ff' });
-	          break;
-	        case 'ptz_down_right':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ab810106010c080202ff' });
-	          break;
-	        case 'ptz_zoom_in':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b78101040723ff' });
-	          break;
-	        case 'ptz_zoom_out':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000b98101040733ff' });
-	          break;
-	        case 'ptz_iris_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040b02ff' });
-	          break;
-	        case 'ptz_iris_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040b03ff' });
-	          break;
-	        case 'ptz_shutter_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040a02ff' });
-	          break;
-	        case 'ptz_shutter_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040a03ff' });
-	          break;
-	        case 'ptz_gain_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101040c02ff' });
-	          break;
-	        case 'ptz_gain_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101040c03ff' });
-	          break;
-	        case 'ptz_iris_priority':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Bff' });
-	          break;
-	        case 'ptz_shutter_priority':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Aff' });
-	          break;
-	        case 'ptz_bright_mode':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '0100000600000009810104390Dff' });
-	          break;
-	        case 'ptz_bright_up':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D02ff' });
-	          break;
-	        case 'ptz_bright_down':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101040D03ff' });
-	          break;
-	        case 'ptz_awb':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043500ff' });
-	          break;
-	        case 'ptz_onetouch_wb':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043503ff' });
-	          break;
-	        case 'ptz_onetouch_wb_trigger':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101041005ff' });
-	          break;
-	        case 'ptz_manual_wb':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101043505ff' });
-	          break;
-	        case 'ptz_full_auto':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101043900ff' });
-	          break;
-	        case 'ptz_manual_exposure':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101043903ff' });
-	          break;
-	        case 'ptz_fx_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003148101046300ff' });
-	          break;
-	        case 'ptz_fx_neg':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000098101046302ff' });
-	          break;
-	        case 'ptz_fx_bw':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000003168101046304ff' });
-	          break;
-	        case 'ptz_onscreen_on':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011802ff' });
-	          break;
-	        case 'ptz_onscreen_off':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '010000060000000c81017e011803ff' });
-	          break;
-	        //81017e011802ff Information display On    
-	        //81017e011803ff Information display Off
-	
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'handleButtonRelease',
-	    value: function handleButtonRelease(event) {
-	      console.log(event.target.id + " :mouse upped");
-	
-	      switch (event.target.value) {
-	
-	        case 'ptz_zoom_in':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
-	          break;
-	        case 'ptz_zoom_out':
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000006000000ba8101040700ff' });
-	          break;
-	        default:
-	          socket.emit('ptz-go', { host: this.state.PTZhost, port: this.state.PTZport, buffer: '01000009000000ac810106010c080303ff' });
-	
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 2: CAMERA'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock,
-	              compactType: this.state.compactType
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "ptz_on",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ On'
-	        }, {
-	          type: 0,
-	          i: "ptz_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'PTZ Off'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_1",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 1'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_2",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 2'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_3",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 3'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_4",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 4'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_5",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 5'
-	        }, {
-	          type: 0,
-	          i: "ptz_preset_6",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-success',
-	          text: 'Preset 6'
-	        }, {
-	          type: 0,
-	          i: "ptz_zoom_in",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Zoom In'
-	        }, {
-	          type: 0,
-	          i: "ptz_zoom_out",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-warning',
-	          text: 'Zoom Out'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_1",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 1'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_2",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 2'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_3",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 3'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_4",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 4'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_5",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 5'
-	        }, {
-	          type: 0,
-	          i: "ptz_save_preset_6",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 3, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-danger',
-	          text: 'Save Pset 6'
-	        }, {
-	          type: 0,
-	          i: "ptz_up_left",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Up Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_up_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 4, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Up Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_left",
-	          x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 5, // Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 5, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_down_left",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Down Left'
-	        }, {
-	          type: 0,
-	          i: "ptz_down",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_down_right",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 6, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Down Right'
-	        }, {
-	          type: 0,
-	          i: "ptz_onetouch_wb",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 13, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'WB Set Standby'
-	        }, {
-	          type: 0,
-	          i: "ptz_onetouch_wb_trigger",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 13, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Press to Set WB'
-	        }, {
-	          type: 0,
-	          i: "ptz_awb",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 13, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Auto White Balance'
-	        }, {
-	          type: 0,
-	          i: "ptz_full_auto",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Full Auto'
-	        }, {
-	          type: 0,
-	          i: "ptz_manual_exposure",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 7, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Manual Exposure'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_priority",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Iris Priority'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Iris Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_iris_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 8, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Iris Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_shutter_priority",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Shutter Priority'
-	        }, {
-	          type: 0,
-	          i: "ptz_shutter_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Shutter Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_shutter_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 9, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Shutter Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_gain_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Gain Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_gain_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 10, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Gain Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_bright_up",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Bright Up'
-	        }, {
-	          type: 0,
-	          i: "ptz_bright_down",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Bright Down'
-	        }, {
-	          type: 0,
-	          i: "ptz_bright_mode",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 11, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Bright Mode'
-	        }, {
-	          type: 0,
-	          i: "ptz_fx_off",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Effect Off'
-	        }, {
-	          type: 0,
-	          i: "ptz_fx_neg",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Effect Negative'
-	        }, {
-	          type: 0,
-	          i: "ptz_fx_bw",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 12, //Infinity,
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn btn-default',
-	          text: 'Black+White'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return PTZGroup2;
-	}(_react2.default.Component);
-	
-	exports.default = PTZGroup2;
-	
-	PTZGroup2.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 941:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var ATEMGroup1 = function (_React$Component) {
-	  _inherits(ATEMGroup1, _React$Component);
-	
-	  function ATEMGroup1(props, context) {
-	    _classCallCheck(this, ATEMGroup1);
-	
-	    var _this = _possibleConstructorReturn(this, (ATEMGroup1.__proto__ || Object.getPrototypeOf(ATEMGroup1)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: ''
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleSliders = _this.handleSliders.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(ATEMGroup1, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onClick: this.handleButtons },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	
-	      switch (event.target.value) {
-	        case 'atem_caspar':
-	          socket.emit('atemTV1_changeProgramInput', '1');
-	          break;
-	        case 'atem_camera':
-	          socket.emit('atemTV1_changeProgramInput', '2');
-	          break;
-	        case 'atem_preview_caspar':
-	          socket.emit('atemTV1_changePreviewInput', '1');
-	          break;
-	        case 'atem_preview_camera':
-	          socket.emit('atemTV1_changePreviewInput', '2');
-	          break;
-	        case 'atem_auto_transition':
-	          socket.emit('atemTV1_autoTransition', '');
-	          break;
-	        case 'atem_transition_mix':
-	          socket.emit('atemTV1_transitionType', '0');
-	          break;
-	        case 'atem_transition_wipe':
-	          socket.emit('atemTV1_transitionType', '2');
-	          break;
-	        case 'atem_50_50':
-	          socket.emit('atem1me_runMacro', '0');
-	          break;
-	
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'handleSliders',
-	    value: function handleSliders(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      var slider_value = event.target.value;
-	      switch (event.target.id) {
-	        case 'atem_transition_position':
-	          socket.emit('atemTV1_transition_position', slider_value * 100);
-	          break;
-	        default:
-	          console.log('ERROR: Slider does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 1: VIDEO Switcher'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "atem_caspar",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Program Media'
-	        }, {
-	          type: 0,
-	          i: "atem_camera",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Program Camera'
-	        }, {
-	          type: 0,
-	          i: "atem_preview_caspar",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Preview Media'
-	        }, {
-	          type: 0,
-	          i: "atem_preview_camera",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Preview Camera'
-	        }, {
-	          type: 1,
-	          i: "atem_transition_position",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          className: 'btn-block btn',
-	          text: 'ATEM Transition'
-	        }, {
-	          type: 0,
-	          i: "atem_auto_transition",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Auto Transition'
-	        }, {
-	          type: 0,
-	          i: "atem_transition_mix",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Mix'
-	        }, {
-	          type: 0,
-	          i: "atem_transition_wipe",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Wipe'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return ATEMGroup1;
-	}(_react2.default.Component);
-	
-	exports.default = ATEMGroup1;
-	
-	ATEMGroup1.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 942:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var ATEMGroup2 = function (_React$Component) {
-	  _inherits(ATEMGroup2, _React$Component);
-	
-	  function ATEMGroup2(props, context) {
-	    _classCallCheck(this, ATEMGroup2);
-	
-	    var _this = _possibleConstructorReturn(this, (ATEMGroup2.__proto__ || Object.getPrototypeOf(ATEMGroup2)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: ''
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    _this.handleSliders = _this.handleSliders.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(ATEMGroup2, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onClick: this.handleButtons },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	
-	      switch (event.target.value) {
-	        case 'atem_caspar':
-	          socket.emit('atemTV1_changeProgramInput', '3');
-	          break;
-	        case 'atem_camera':
-	          socket.emit('atemTV1_changeProgramInput', '4');
-	          break;
-	        case 'atem_preview_caspar':
-	          socket.emit('atemTV1_changePreviewInput', '3');
-	          break;
-	        case 'atem_preview_camera':
-	          socket.emit('atemTV1_changePreviewInput', '4');
-	          break;
-	        case 'atem_auto_transition':
-	          socket.emit('atemTV1_autoTransition', '');
-	          break;
-	        case 'atem_transition_mix':
-	          socket.emit('atemTV1_transitionType', '0');
-	          break;
-	        case 'atem_transition_wipe':
-	          socket.emit('atemTV1_transitionType', '2');
-	          break;
-	        case 'atem_50_50':
-	          socket.emit('atem1me_runMacro', '0');
-	          break;
-	
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'handleSliders',
-	    value: function handleSliders(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	      var slider_value = event.target.value;
-	      switch (event.target.id) {
-	        case 'atem_transition_position':
-	          socket.emit('atemTV1_transition_position', slider_value * 100);
-	          break;
-	        default:
-	          console.log('ERROR: Slider does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 2: VIDEO Switcher'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "atem_caspar",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Program Media'
-	        }, {
-	          type: 0,
-	          i: "atem_camera",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Program Camera'
-	        }, {
-	          type: 0,
-	          i: "atem_preview_caspar",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Preview Media'
-	        }, {
-	          type: 0,
-	          i: "atem_preview_camera",
-	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Preview Camera'
-	        }, {
-	          type: 1,
-	          i: "atem_transition_position",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 2,
-	          h: 2,
-	          className: 'btn-block btn',
-	          text: 'ATEM Transition'
-	        }, {
-	          type: 0,
-	          i: "atem_auto_transition",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Auto Transition'
-	        }, {
-	          type: 0,
-	          i: "atem_transition_mix",
-	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Mix'
-	        }, {
-	          type: 0,
-	          i: "atem_transition_wipe",
-	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 2, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'Wipe'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return ATEMGroup2;
-	}(_react2.default.Component);
-	
-	exports.default = ATEMGroup2;
-	
-	ATEMGroup2.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 943:
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(326);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactGridLayout = __webpack_require__(845);
-	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(859);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	__webpack_require__(832);
-	
-	var _reactBootstrap = __webpack_require__(574);
-	
-	var _lock = __webpack_require__(860);
-	
-	var _lock2 = _interopRequireDefault(_lock);
-	
-	var _unlock = __webpack_require__(861);
-	
-	var _unlock2 = _interopRequireDefault(_unlock);
-	
-	var _socket = __webpack_require__(923);
-	
-	var _socket2 = __webpack_require__(869);
-	
-	var _socket3 = _interopRequireDefault(_socket2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
-	var lockIcon = _react2.default.createElement(_lock2.default, null);
-	var socket = void 0;
-	
-	var ATEM = function (_React$Component) {
-	  _inherits(ATEM, _React$Component);
-	
-	  function ATEM(props, context) {
-	    _classCallCheck(this, ATEM);
-	
-	    var _this = _possibleConstructorReturn(this, (ATEM.__proto__ || Object.getPrototypeOf(ATEM)).call(this, props, context));
-	
-	    _this.state = {
-	      items: [].map(function (i, key, list) {
-	        return {
-	          type: 0,
-	          i: i.toString(),
-	          x: i * 2,
-	          y: 0,
-	          w: 2,
-	          h: 2,
-	          add: i === (list.length - 1).toString(),
-	          sliderValue: 0
-	        };
-	      }),
-	      lock: true,
-	      host: '127.0.0.1',
-	      port: 5250,
-	      command: "",
-	      response: ''
-	    };
-	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
-	    _this.handleOnLock = _this.handleOnLock.bind(_this);
-	    _this.handleButtons = _this.handleButtons.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(ATEM, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(_unlock2.default, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(_lock2.default, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
-	    key: 'createElement',
-	    value: function createElement(el) {
-	      var lockStyle = {
-	        display: "none"
-	      };
-	      if (this.state.lock == false) {
-	        lockStyle = {
-	          position: "absolute",
-	          right: "2px",
-	          top: 0,
-	          cursor: "pointer",
-	          display: "inline"
-	        };
-	      }
-	      var gridStyle = {
-	        background: "#FFF"
-	      };
-	      var i = el.add ? "+" : el.i;
-	      var controllerCode = _react2.default.createElement(
-	        'button',
-	        { className: el.className, value: el.i, onClick: this.handleButtons },
-	        el.text
-	      );
-	      if (el.type == 1) {
-	        //type is slider
-	        controllerCode = _react2.default.createElement(
-	          'div',
-	          null,
-	          ' ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'text' },
-	            el.text
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'slidecontainer' },
-	            _react2.default.createElement('input', { type: 'range', min: '1', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
-	          )
-	        );
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        { key: i, 'data-grid': el, style: gridStyle },
-	        controllerCode,
-	        _react2.default.createElement('span', { style: lockStyle })
-	      );
-	    }
-	  }, {
-	    key: 'handleButtons',
-	    value: function handleButtons(event) {
-	      console.log(event.target.id + ': ' + event.target.value);
-	
-	      switch (event.target.value) {
-	        case 'atem_caspar':
-	          socket.emit('atem_changePreviewInput', '3');
-	          break;
-	        case 'atem_camera':
-	          socket.emit('atem_changePreviewInput', '4');
-	          break;
-	
-	        default:
-	          console.log('ERROR: Button does not exist');
-	      }
-	    }
-	  }, {
-	    key: 'onBreakpointChange',
-	    value: function onBreakpointChange(breakpoint, cols) {
-	      this.setState({
-	        breakpoint: breakpoint,
-	        cols: cols
-	      });
-	    }
-	  }, {
-	    key: 'onLayoutChange',
-	    value: function onLayoutChange(layout) {
-	      console.log("layout:", layout);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Row,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 2, sm: 2, md: 2, lg: 2 },
-	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.handleOnLock },
-	                lockIcon
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactBootstrap.Col,
-	              { xs: 10, sm: 10, md: 10, lg: 10 },
-	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Group 2: VIDEO Switcher'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            ResponsiveReactGridLayout,
-	            _extends({
-	              onBreakpointChange: this.onBreakpointChange,
-	              onLayoutChange: this.onLayoutChange,
-	              isDraggable: !this.state.lock,
-	              isResizable: !this.state.lock
-	            }, this.props),
-	            _lodash2.default.map(this.state.items, function (el) {
-	              return _this2.createElement(el);
-	            })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.state.response
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      socket.off(this.props.page);
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this3 = this;
-	
-	      socket = (0, _socket3.default)();
-	      socket.on('telnet-response', function (mesg) {
-	        _this3.setState({ response: mesg });
-	      });
-	      this.setState({
-	        items: [{
-	          type: 0,
-	          i: "atem_caspar",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 0, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'ATEM Media'
-	        }, {
-	          type: 0,
-	          i: "atem_camera",
-	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	          y: 1, //Infinity, 
-	          w: 1,
-	          h: 1,
-	          className: 'btn-block btn',
-	          text: 'ATEM Camera'
-	        }]
-	      });
-	    }
-	  }]);
-	
-	  return ATEM;
-	}(_react2.default.Component);
-	
-	exports.default = ATEM;
-	
-	ATEM.defaultProps = {
-	  className: "layout",
-	  rowHeight: 30,
-	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
-	};
-
-/***/ }),
-
-/***/ 944:
+/***/ 937:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47220,19 +43688,19 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _TelnetDiagnostics = __webpack_require__(945);
+	var _TelnetDiagnostics = __webpack_require__(938);
 	
 	var _TelnetDiagnostics2 = _interopRequireDefault(_TelnetDiagnostics);
 	
-	var _MIDIDiagnostics = __webpack_require__(946);
+	var _MIDIDiagnostics = __webpack_require__(939);
 	
 	var _MIDIDiagnostics2 = _interopRequireDefault(_MIDIDiagnostics);
 	
-	var _DMXDiagnostics = __webpack_require__(947);
+	var _DMXDiagnostics = __webpack_require__(940);
 	
 	var _DMXDiagnostics2 = _interopRequireDefault(_DMXDiagnostics);
 	
-	var _OSCDiagnostics = __webpack_require__(948);
+	var _OSCDiagnostics = __webpack_require__(941);
 	
 	var _OSCDiagnostics2 = _interopRequireDefault(_OSCDiagnostics);
 	
@@ -47302,7 +43770,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 945:
+/***/ 938:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47493,7 +43961,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 946:
+/***/ 939:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47723,7 +44191,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 947:
+/***/ 940:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48304,7 +44772,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 948:
+/***/ 941:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48674,7 +45142,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 949:
+/***/ 942:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49374,7 +45842,317 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 950:
+/***/ 943:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(845);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(860);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(861);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var MIDILooper = function (_React$Component) {
+	  _inherits(MIDILooper, _React$Component);
+	
+	  function MIDILooper(props, context) {
+	    _classCallCheck(this, MIDILooper);
+	
+	    var _this = _possibleConstructorReturn(this, (MIDILooper.__proto__ || Object.getPrototypeOf(MIDILooper)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          inputValue: 0
+	        };
+	      }),
+	      lock: true,
+	      compactType: null
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleNumberInput = _this.handleNumberInput.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(MIDILooper, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '127', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      if (el.type == 2) {
+	        //type is text input
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('input', { type: 'number', min: '0', max: '99', value: el.inputValue, id: i, onChange: this.handleNumberInput })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'push-record':
+	          socket.emit('agenda-create-job', {});
+	          break;
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleNumberInput',
+	    value: function handleNumberInput(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var input_value = event.target.value;
+	      switch (event.target.id) {
+	        case 'Schedule Event':
+	          socket.emit('agenda-schedule-event', { number: input_value, channel: 0 });
+	          break;
+	        default:
+	          console.log('ERROR: Input does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Caspar Scheduler'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "push-record",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'RECORD'
+	        }, {
+	          type: 2,
+	          i: "loop-input",
+	          x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          text: 'LOOP INPUT'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return MIDILooper;
+	}(_react2.default.Component);
+	
+	exports.default = MIDILooper;
+	
+	MIDILooper.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 944:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49472,7 +46250,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 951:
+/***/ 945:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49546,7 +46324,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 952:
+/***/ 946:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

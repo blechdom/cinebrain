@@ -12,11 +12,11 @@ app.use(bodyParser.json());
 
 let db;
 
-var Agenda = require('agenda');
+/*var Agenda = require('agenda');
 var Agendash = require('agendash');
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/agendaDb'}});
 app.use('/dash', Agendash(agenda));
-
+*/
 app.get('/api/issues', (req, res) => {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;

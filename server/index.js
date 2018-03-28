@@ -10,6 +10,13 @@ import dgram from 'dgram';
 import emptyFunction from 'fbjs/lib/emptyFunction';
 import ATEM from 'applest-atem/lib/atem.js';
 import easymidi from 'easymidi/index.js';
+import Agenda from 'agenda';
+
+var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda'}});
+agenda.on('ready', function() {
+  console.log("Agenda locked and loaded");
+  agenda.start();
+});
 
 let atem1me = new ATEM();
 let atemTV1 = new ATEM();
@@ -198,7 +205,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                   });
                 });
         });     
-        socket.on('midi-cc', function(data) {
+    /*    socket.on('midi-cc', function(data) {
            console.log("sending midi cc change-cc#: " + data.controller + " cc-value: " + data.value + " on channel: " + data.channel);
               
               midiOutA.send('cc', {
@@ -214,6 +221,25 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 channel: data.channel
               });
         });
+*/
+
+
+       socket.on('agenda-create-job', function(data) {
+               agenda.define('print_every_minute', function(job, done) {
+                    console.log('agenda-doing job every minute');
+                    done();
+                });
+              agenda.every('1 minutes', 'print_every_minute');
+
+
+                agenda.define('print_starting_March_28', function(job, done) {
+                    console.log('agenda-doing job every two minutes starting on March 28');
+                    done();
+                });
+              agenda.schedule(new Date('2018-03-28'));
+              agenda.every('2 minutes', 'print_starting_March_28');
+        });    
+
 
         const telnetHost = '127.0.0.1';
         const telnetPort = 5250;
