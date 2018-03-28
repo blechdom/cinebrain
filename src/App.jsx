@@ -36,9 +36,6 @@ const Header = () => (
         </LinkContainer>
       </NavDropdown>
        <NavDropdown id="user-dropdown" title="Misc Tools">
-        <LinkContainer to="/decklink">
-          <NavItem>Decklink Control</NavItem>
-        </LinkContainer>
          <LinkContainer to="/decklink">
           <NavItem>Decklink Control</NavItem>
         </LinkContainer>

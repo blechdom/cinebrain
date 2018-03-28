@@ -11,12 +11,18 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 import ATEM from 'applest-atem/lib/atem.js';
 import easymidi from 'easymidi/index.js';
 import Agenda from 'agenda';
+import HyperdeckLib from 'hyperdeck-js-lib';
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda'}});
 agenda.on('ready', function() {
   console.log("Agenda locked and loaded");
   agenda.start();
 });
+
+
+var hyperdeck1 = new HyperdeckLib.Hyperdeck("192.168.1.245");
+var hyperdeck2 = new HyperdeckLib.Hyperdeck("192.168.1.208");
+var hyperdeck3 = new HyperdeckLib.Hyperdeck("192.168.1.57");
 
 let atem1me = new ATEM();
 let atemTV1 = new ATEM();
@@ -197,6 +203,75 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
           });
           console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
         });  
+
+socket.on('deck1', (data) => {
+            hyperdeck1.onConnected().then(function() {
+
+            switch (data) {
+              case 'rec':
+                hyperdeck1.record().then(function(response){
+                  socket.emit('deck1_rec_status', response);
+                });
+                break;
+              case 'stop':
+                hyperdeck1.stop().then(function(response){
+                  socket.emit('deck1_stop_status', response);
+                });
+                break;
+              default:
+                console.log('ERROR: HYPERDECK 1 command unknown');
+
+            }
+          }).catch(function() {
+            console.error("Failed to connect to hyperdeck 1.");
+             socket.emit('deck1_stop_status', "Failed to connect to hyperdeck 1.");
+          });
+        });
+        socket.on('deck2', (data) => {
+            hyperdeck2.onConnected().then(function() {
+
+            switch (data) {
+              case 'rec':
+                hyperdeck2.record().then(function(response){
+                  socket.emit('deck2_rec_status', response);
+                });
+                break;
+              case 'stop':
+                hyperdeck2.stop().then(function(response){
+                  socket.emit('deck2_stop_status', response);
+                });
+                break;
+              default:
+                console.log('ERROR: HYPERDECK 2 command unknown');
+            }
+          }).catch(function() {
+            console.error("Failed to connect to hyperdeck 2.");
+            socket.emit('deck2_stop_status', "Failed to connect to hyperdeck 2.");
+          });
+        });
+        socket.on('deck3', (data) => {
+            hyperdeck3.onConnected().then(function() {
+
+            switch (data) {
+              case 'rec':
+                hyperdeck3.record().then(function(response){
+                  socket.emit('deck3_rec_status', response);
+                });
+                break;
+              case 'stop':
+                hyperdeck3.stop().then(function(response){
+                  socket.emit('deck3_stop_status', response);
+                });
+                break;
+              default:
+                console.log('ERROR: HYPERDECK 3 command unknown');
+            }
+          }).catch(function() {
+            console.error("Failed to connect to hyperdeck 3.");
+            socket.emit('deck3_stop_status', "Failed to connect to hyperdeck 3.");
+          });
+        });
+        
         socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
                 UDPclient.send(PTZ_init, data.port, data.host, (err) => {

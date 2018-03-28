@@ -332,15 +332,6 @@ webpackJsonp([0],{
 	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/decklink' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Decklink Control'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/atem' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
@@ -47042,6 +47033,12 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47050,16 +47047,140 @@ webpackJsonp([0],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var KCATHome = function (_React$Component) {
-	  _inherits(KCATHome, _React$Component);
+	var socket = void 0;
 	
-	  function KCATHome() {
-	    _classCallCheck(this, KCATHome);
+	var Home = function (_React$Component) {
+	  _inherits(Home, _React$Component);
 	
-	    return _possibleConstructorReturn(this, (KCATHome.__proto__ || Object.getPrototypeOf(KCATHome)).apply(this, arguments));
+	  function Home(props, context) {
+	    _classCallCheck(this, Home);
+	
+	    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props, context));
+	
+	    _this.state = {
+	      deck1_response: '',
+	      deck2_response: '',
+	      deck3_response: ''
+	
+	    };
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    return _this;
 	  }
 	
-	  _createClass(KCATHome, [{
+	  _createClass(Home, [{
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var deck1Response = '';
+	      var deck2Response = '';
+	      var deck3Response = '';
+	      socket = (0, _socket3.default)();
+	      socket.on('dmx-load-preset-data', function (data) {
+	        _this2.setState({ dmx_data: data });
+	        console.log("preset retrieved " + _this2.state.dmx_data);
+	      });
+	      socket.on('deck1_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 RECORDING';
+	        }
+	        console.log("deck1 recording " + Number(mesg.code));
+	        _this2.setState({ deck1_response: "record: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck1_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 STOPPED';
+	        }
+	        console.log("deck1 stop " + Number(mesg.code));
+	        _this2.setState({ deck1_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 RECORDING';
+	        }
+	        console.log("deck2 recording " + Number(mesg.code));
+	        _this2.setState({ deck2_response: "record: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 STOPPED';
+	        }
+	        console.log("deck2 stop " + Number(mesg.code));
+	        _this2.setState({ deck2_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck3_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 RECORDING';
+	        }
+	        console.log("deck3 recording " + Number(mesg.code));
+	        _this2.setState({ deck3_response: "record: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck3_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 STOPPED';
+	        }
+	        console.log("deck3 stop " + Number(mesg.code));
+	        _this2.setState({ deck3_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	
+	        case 'cst_on':
+	          console.log("CST ON");
+	          var loadCSTPreset = {
+	            instrument_id: 'kcat_dmx', dmx_offset: 1, preset_num: 1, dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	          };
+	          socket.emit('dmx-load-preset', loadCSTPreset);
+	          break;
+	        case 'cst_off':
+	          console.log("CST OFF");
+	          socket.emit('dmx-all', 0);
+	          break;
+	        case 'tott_on':
+	          console.log("TOTT ON");
+	          var loadTOTTPreset = {
+	            instrument_id: 'kcat_dmx', dmx_offset: 1, preset_num: 2, dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	          };
+	          socket.emit('dmx-load-preset', loadTOTTPreset);
+	          break;
+	        case 'tott_off':
+	          console.log("TOTT OFF");
+	          socket.emit('dmx-all', 0);
+	          break;
+	        case 'deck_all_rec':
+	          console.log("RECORD ALL");
+	          this.setState({ deck1_response: "Starting to Record..." });
+	          this.setState({ deck2_response: "Starting to Record..." });
+	          this.setState({ deck3_response: "Starting to Record..." });
+	          socket.emit('deck1', "rec");
+	          socket.emit('deck2', "rec");
+	          socket.emit('deck3', "rec");
+	          break;
+	        case 'deck_all_stop':
+	          console.log("STOP ALL");
+	          this.setState({ deck1_response: "Stopping..." });
+	          this.setState({ deck2_response: "Stopping..." });
+	          this.setState({ deck3_response: "Stopping..." });
+	          socket.emit('deck1', "stop");
+	          socket.emit('deck2', "stop");
+	          socket.emit('deck3', "stop");
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -47074,37 +47195,78 @@ webpackJsonp([0],{
 	            _react2.default.createElement(
 	              'h1',
 	              null,
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'dmx_group1' },
-	                'GROUP 1'
-	              )
+	              'KCAT: Cinebrain'
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
-	              'h1',
+	              'h2',
 	              null,
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'dmx_group2' },
-	                'GROUP 2'
-	              )
+	              'Community Story Telling'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-success', width: '50%', value: 'cst_on', onClick: this.handleButtons },
+	              'ON'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'cst_off', onClick: this.handleButtons },
+	              'OFF'
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(
-	              'h1',
+	              'h2',
 	              null,
-	              _react2.default.createElement(
-	                'a',
-	                { href: 'dmx_group3' },
-	                'Extras'
-	              )
+	              'Talk of the Town'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-success', width: '50%', value: 'tott_on', onClick: this.handleButtons },
+	              'ON'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'tott_off', onClick: this.handleButtons },
+	              'OFF'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h2',
+	              null,
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'deck_all_rec', onClick: this.handleButtons },
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-warning', width: '50%', value: 'deck_all_stop', onClick: this.handleButtons },
+	              'STOP'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'RECORDER STATUS',
+	              _react2.default.createElement('br', null),
+	              'Deck 1:',
+	              this.state.deck1_response,
+	              _react2.default.createElement('br', null),
+	              'Deck 2:',
+	              this.state.deck2_response,
+	              _react2.default.createElement('br', null),
+	              'Deck 3:',
+	              this.state.deck3_response
 	            )
 	          )
 	        )
@@ -47112,10 +47274,10 @@ webpackJsonp([0],{
 	    }
 	  }]);
 	
-	  return KCATHome;
+	  return Home;
 	}(_react2.default.Component);
 	
-	exports.default = KCATHome;
+	exports.default = Home;
 
 /***/ }),
 
