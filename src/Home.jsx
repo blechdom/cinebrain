@@ -36,42 +36,42 @@ export default class Home extends React.Component {
         deck1Response = 'Deck 1 RECORDING';
       }
       console.log("deck1 recording " + Number(mesg.code));
-      this.setState({deck1_response: JSON.stringify(mesg)}); 
+      this.setState({deck1_response: "record: " + JSON.stringify(mesg)}); 
     });
     socket.on('deck1_stop_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 1 STOPPED';
       }
       console.log("deck1 stop " + Number(mesg.code));
-      this.setState({deck1_response: JSON.stringify(mesg)}); 
+      this.setState({deck1_response: "stop: " + JSON.stringify(mesg)}); 
     });
     socket.on('deck2_rec_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 2 RECORDING';
       }
       console.log("deck2 recording " + Number(mesg.code));
-      this.setState({deck2_response: JSON.stringify(mesg)}); 
+      this.setState({deck2_response: "record: " + JSON.stringify(mesg)}); 
     });
     socket.on('deck2_stop_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 2 STOPPED';
       }
       console.log("deck2 stop " + Number(mesg.code));
-      this.setState({deck2_response: JSON.stringify(mesg)}); 
+      this.setState({deck2_response: "stop: " + JSON.stringify(mesg)}); 
     });
     socket.on('deck3_rec_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 3 RECORDING';
       }
       console.log("deck3 recording " + Number(mesg.code));
-      this.setState({deck3_response: JSON.stringify(mesg)}); 
+      this.setState({deck3_response: "record: " + JSON.stringify(mesg)}); 
     });
     socket.on('deck3_stop_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 3 STOPPED';
       }
       console.log("deck3 stop " + Number(mesg.code));
-      this.setState({deck3_response: JSON.stringify(mesg)}); 
+      this.setState({deck3_response: "stop: " + JSON.stringify(mesg)}); 
     });
   }
 	handleButtons(event) {
