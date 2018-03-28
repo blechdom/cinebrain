@@ -25,21 +25,27 @@ handleButtons(event) {
   switch (event.target.value) {
   
   case 'deck1_rec':
+      this.setState({deck1_response: "Starting to Record..."});
      socket.emit('deck1', "rec");
     break;
   case 'deck1_stop':
+    this.setState({deck1_response: "Stopping..."}); 
      socket.emit('deck1', "stop");
     break;
   case 'deck2_rec':
+    this.setState({deck2_response: "Starting to Record..."});
      socket.emit('deck2', "rec");
     break;
   case 'deck2_stop':
+    this.setState({deck2_response: "Stopping..."}); 
      socket.emit('deck2', "stop");
     break;
   case 'deck3_rec':
+    this.setState({deck3_response: "Starting to Record..."});
      socket.emit('deck3', "rec");
     break;
   case 'deck3_stop':
+    this.setState({deck3_response: "Stopping..."}); 
      socket.emit('deck3', "stop");
     break;
 

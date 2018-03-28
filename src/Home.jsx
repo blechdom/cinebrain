@@ -103,12 +103,18 @@ export default class Home extends React.Component {
     		break;
     		case 'deck_all_rec':
      			console.log("RECORD ALL");
+          this.setState({deck1_response: "Starting to Record..."}); 
+          this.setState({deck2_response: "Starting to Record..."}); 
+          this.setState({deck3_response: "Starting to Record..."}); 
      			socket.emit('deck1', "rec");
      			socket.emit('deck2', "rec");
      			socket.emit('deck3', "rec");
     		break;
     		case 'deck_all_stop':
      			console.log("STOP ALL");
+          this.setState({deck1_response: "Stopping..."}); 
+          this.setState({deck2_response: "Stopping..."}); 
+          this.setState({deck3_response: "Stopping..."});
      			socket.emit('deck1', "stop");
      			socket.emit('deck2', "stop");
      			socket.emit('deck3', "stop");
