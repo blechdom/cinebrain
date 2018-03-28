@@ -22,6 +22,9 @@ const Header = () => (
         </LinkContainer>
 	    </NavDropdown>
       <NavDropdown id="user-dropdown" title="Lights">
+       <LinkContainer to="/dmx_sliders">
+        <NavItem>DMX Sliders</NavItem>
+      </LinkContainer>
        <LinkContainer to="/dmx_155_group2">
         <NavItem>Spot Light 155</NavItem>
       </LinkContainer>
@@ -32,12 +35,24 @@ const Header = () => (
           <NavItem>Wash Light</NavItem>
         </LinkContainer>
       </NavDropdown>
-       <NavDropdown id="user-dropdown" title="Tools">
+       <NavDropdown id="user-dropdown" title="Misc Tools">
+        <LinkContainer to="/decklink">
+          <NavItem>Decklink Control</NavItem>
+        </LinkContainer>
+         <LinkContainer to="/decklink">
+          <NavItem>Decklink Control</NavItem>
+        </LinkContainer>
+         <LinkContainer to="/atem">
+          <NavItem>ATEM Control</NavItem>
+        </LinkContainer>
         <LinkContainer to="/ptz_group1">
           <NavItem>PTZ Camera</NavItem>
         </LinkContainer>
          <LinkContainer to="/midi_looper">
           <NavItem>MIDI Looper</NavItem>
+        </LinkContainer>
+        <LinkContainer to="/kcat_home">
+          <NavItem>KCAT Home</NavItem>
         </LinkContainer>
       </NavDropdown>
     </Nav>

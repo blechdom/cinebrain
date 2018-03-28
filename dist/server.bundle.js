@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a46c3596a304b2c892d4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a2022b7dfe3aad94ced6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(78);
+	module.exports = __webpack_require__(82);
 
 
 /***/ }),
@@ -627,7 +627,7 @@
 	let UDPserver;
 	let UDPclient;
 	
-	var _require = __webpack_require__(77);
+	var _require = __webpack_require__(81);
 	
 	const CasparCG = _require.CasparCG;
 	
@@ -1488,7 +1488,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(76);
+	var _ContextWrapper = __webpack_require__(80);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1646,39 +1646,55 @@
 	
 	var _VideoGroup2 = _interopRequireDefault(_VideoGroup);
 	
-	var _DMXWashGroup = __webpack_require__(62);
+	var _DMXSliders = __webpack_require__(62);
+	
+	var _DMXSliders2 = _interopRequireDefault(_DMXSliders);
+	
+	var _DMXWashGroup = __webpack_require__(63);
 	
 	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMX155Group = __webpack_require__(63);
+	var _DMX155Group = __webpack_require__(64);
 	
 	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _DMX255Group = __webpack_require__(64);
+	var _DMX255Group = __webpack_require__(65);
 	
 	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
 	
-	var _PTZGroup = __webpack_require__(65);
+	var _PTZGroup = __webpack_require__(66);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _Diagnostics = __webpack_require__(67);
+	var _Diagnostics = __webpack_require__(68);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(72);
+	var _MidiLooper = __webpack_require__(73);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Agenda = __webpack_require__(73);
+	var _Agenda = __webpack_require__(74);
 	
 	var _Agenda2 = _interopRequireDefault(_Agenda);
 	
-	var _Home = __webpack_require__(74);
+	var _Decklink = __webpack_require__(75);
+	
+	var _Decklink2 = _interopRequireDefault(_Decklink);
+	
+	var _KCATHome = __webpack_require__(76);
+	
+	var _KCATHome2 = _interopRequireDefault(_KCATHome);
+	
+	var _ATEMGroup = __webpack_require__(77);
+	
+	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
+	
+	var _Home = __webpack_require__(78);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(75);
+	var _Help = __webpack_require__(79);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -1694,6 +1710,10 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'decklink', component: _Decklink2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'atem', component: _ATEMGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_sliders', component: _DMXSliders2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'kcat_home', component: _KCATHome2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group1', component: _VideoGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
@@ -1797,6 +1817,15 @@
 	      { id: 'user-dropdown', title: 'Lights' },
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/dmx_sliders' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'DMX Sliders'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
 	        { to: '/dmx_155_group2' },
 	        _react2.default.createElement(
 	          _reactBootstrap.NavItem,
@@ -1825,7 +1854,34 @@
 	    ),
 	    _react2.default.createElement(
 	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Tools' },
+	      { id: 'user-dropdown', title: 'Misc Tools' },
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/decklink' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Decklink Control'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/decklink' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'Decklink Control'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/atem' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'ATEM Control'
+	        )
+	      ),
 	      _react2.default.createElement(
 	        _reactRouterBootstrap.LinkContainer,
 	        { to: '/ptz_group1' },
@@ -1842,6 +1898,15 @@
 	          _reactBootstrap.NavItem,
 	          null,
 	          'MIDI Looper'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterBootstrap.LinkContainer,
+	        { to: '/kcat_home' },
+	        _react2.default.createElement(
+	          _reactBootstrap.NavItem,
+	          null,
+	          'KCAT Home'
 	        )
 	      )
 	    )
@@ -6831,6 +6896,479 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
+	class DMXSliders extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      lock: true,
+	      compactType: null,
+	      instrument_id: "kcat_dmx",
+	      dmx_offset: 1,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	    this.sendDMX = this.sendDMX.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '255', 'default': '0', step: '1', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	    console.log("does this change? " + el.i + " " + el.sliderValue);
+	  }
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
+	
+	    switch (event.target.value) {
+	
+	      case 'save_preset_cst':
+	        this.savePreset(1);
+	        break;
+	      case 'save_preset_tott':
+	        this.savePreset(2);
+	        break;
+	      case 'recall_preset_cst':
+	        this.loadPreset(1);
+	        break;
+	      case 'recall_preset_tott':
+	        this.loadPreset(2);
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value;
+	    let dmx_data = this.state.dmx_data;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
+	    switch (event.target.id) {
+	      case 'channel_1':
+	        dmx_data[0] = slider_value;
+	        this.sendDMX({ 1: slider_value });
+	        break;
+	      case 'channel_2':
+	        dmx_data[1] = slider_value;
+	        this.sendDMX({ 2: slider_value });
+	        break;
+	      case 'channel_3':
+	        dmx_data[2] = slider_value;
+	        this.sendDMX({ 3: slider_value });
+	        break;
+	      case 'channel_4':
+	        dmx_data[3] = slider_value;
+	        this.sendDMX({ 4: slider_value });
+	        break;
+	      case 'channel_5':
+	        dmx_data[4] = slider_value;
+	        this.sendDMX({ 5: slider_value });
+	        break;
+	      case 'channel_6':
+	        dmx_data[5] = slider_value;
+	        this.sendDMX({ 6: slider_value });
+	        break;
+	      case 'channel_7':
+	        dmx_data[6] = slider_value;
+	        this.sendDMX({ 7: slider_value });
+	        break;
+	      case 'channel_8':
+	        dmx_data[7] = slider_value;
+	        this.sendDMX({ 8: slider_value });
+	        break;
+	      case 'channel_9':
+	        dmx_data[8] = slider_value;
+	        this.sendDMX({ 9: slider_value });
+	        break;
+	      case 'channel_10':
+	        dmx_data[9] = slider_value;
+	        this.sendDMX({ 10: slider_value });
+	        break;
+	      case 'channel_11':
+	        dmx_data[10] = slider_value;
+	        this.sendDMX({ 11: slider_value });
+	        break;
+	      case 'channel_12':
+	        dmx_data[11] = slider_value;
+	        this.sendDMX({ 12: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	  }
+	  sendDMX(dmx) {
+	    socket.emit('dmx-go', { dmx: dmx, offset: this.state.dmx_offset });
+	  }
+	  savePreset(preset) {
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    console.log(JSON.stringify(newDMXPreset));
+	    socket.emit('dmx-save-preset', newDMXPreset);
+	  }
+	  loadPreset(preset) {
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'DMX sliders'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
+	    this.setState({
+	      items: [{
+	        type: 1,
+	        i: "channel_1",
+	        x: 0,
+	        y: 0,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 1'
+	      }, {
+	        type: 1,
+	        i: "channel_2",
+	        x: 0,
+	        y: 1,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 2'
+	      }, {
+	        type: 1,
+	        i: "channel_3",
+	        x: 0,
+	        y: 2,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 3'
+	      }, {
+	        type: 1,
+	        i: "channel_4",
+	        x: 0,
+	        y: 3,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 4'
+	      }, {
+	        type: 1,
+	        i: "channel_5",
+	        x: 0,
+	        y: 4,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 5'
+	      }, {
+	        type: 1,
+	        i: "channel_6",
+	        x: 0,
+	        y: 5,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 6'
+	      }, {
+	        type: 1,
+	        i: "channel_7",
+	        x: 0,
+	        y: 6,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 7'
+	      }, {
+	        type: 1,
+	        i: "channel_8",
+	        x: 0,
+	        y: 7,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 8'
+	      }, {
+	        type: 1,
+	        i: "channel_9",
+	        x: 0,
+	        y: 8,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 9'
+	      }, {
+	        type: 1,
+	        i: "channel_10",
+	        x: 0,
+	        y: 9,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 10'
+	      }, {
+	        type: 1,
+	        i: "channel_11",
+	        x: 0,
+	        y: 10,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 11'
+	      }, {
+	        type: 1,
+	        i: "channel_12",
+	        x: 0,
+	        y: 11,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 12'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_cst",
+	        x: 0,
+	        y: 13,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'LOAD CST PRESET'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_tott",
+	        x: 2,
+	        y: 13,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'LOAD TOTT PRESET'
+	      }, {
+	        type: 0,
+	        i: "save_preset_cst",
+	        x: 0,
+	        y: 14,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'SAVE CST PRESET'
+	      }, {
+	        type: 0,
+	        i: "save_preset_tott",
+	        x: 2,
+	        y: 14,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'SAVE TOTT PRESET'
+	      }]
+	    });
+	  }
+	}
+	exports.default = DMXSliders;
+	DMXSliders.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(21);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(43);
+	
+	var _reactDom = __webpack_require__(44);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(45);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(31);
+	
+	var _Toast = __webpack_require__(34);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _reactBootstrap = __webpack_require__(27);
+	
+	var _lock = __webpack_require__(46);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(47);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(58);
+	
+	var _socket2 = __webpack_require__(55);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
 	class DMXWashGroup1 extends _react2.default.Component {
 	
 	  constructor(props, context) {
@@ -7391,7 +7929,7 @@
 	};
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7915,7 +8453,7 @@
 	};
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8442,7 +8980,7 @@
 	};
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8485,7 +9023,7 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(66);
+	var _reactDeviceDetect = __webpack_require__(67);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -9231,13 +9769,13 @@
 	};
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-device-detect");
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9254,19 +9792,19 @@
 	
 	var _reactBootstrap = __webpack_require__(27);
 	
-	var _TelnetDiagnostics = __webpack_require__(68);
+	var _TelnetDiagnostics = __webpack_require__(69);
 	
 	var _TelnetDiagnostics2 = _interopRequireDefault(_TelnetDiagnostics);
 	
-	var _MIDIDiagnostics = __webpack_require__(69);
+	var _MIDIDiagnostics = __webpack_require__(70);
 	
 	var _MIDIDiagnostics2 = _interopRequireDefault(_MIDIDiagnostics);
 	
-	var _DMXDiagnostics = __webpack_require__(70);
+	var _DMXDiagnostics = __webpack_require__(71);
 	
 	var _DMXDiagnostics2 = _interopRequireDefault(_DMXDiagnostics);
 	
-	var _OSCDiagnostics = __webpack_require__(71);
+	var _OSCDiagnostics = __webpack_require__(72);
 	
 	var _OSCDiagnostics2 = _interopRequireDefault(_OSCDiagnostics);
 	
@@ -9317,7 +9855,7 @@
 	exports.default = Diagnostics;
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9473,7 +10011,7 @@
 	exports.default = TelnetDiagnostics;
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9664,7 +10202,7 @@
 	exports.default = MIDIDiagnostics;
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10191,7 +10729,7 @@
 	};
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10518,7 +11056,7 @@
 	};
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11173,7 +11711,7 @@
 	};
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11440,7 +11978,658 @@
 	};
 
 /***/ }),
-/* 74 */
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(21);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(43);
+	
+	var _reactDom = __webpack_require__(44);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(45);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(31);
+	
+	var _reactBootstrap = __webpack_require__(27);
+	
+	var _socket = __webpack_require__(58);
+	
+	var _socket2 = __webpack_require__(55);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	let socket;
+	
+	class Decklink extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      deck1_response: '',
+	      deck2_response: '',
+	      deck3_response: ''
+	    };
+	    this.handleButtons = this.handleButtons.bind(this);
+	  }
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    switch (event.target.value) {
+	
+	      case 'deck1_rec':
+	        this.setState({ deck1_response: "Starting to Record..." });
+	        socket.emit('deck1', "rec");
+	        break;
+	      case 'deck1_stop':
+	        this.setState({ deck1_response: "Stopping..." });
+	        socket.emit('deck1', "stop");
+	        break;
+	      case 'deck2_rec':
+	        this.setState({ deck2_response: "Starting to Record..." });
+	        socket.emit('deck2', "rec");
+	        break;
+	      case 'deck2_stop':
+	        this.setState({ deck2_response: "Stopping..." });
+	        socket.emit('deck2', "stop");
+	        break;
+	      case 'deck3_rec':
+	        this.setState({ deck3_response: "Starting to Record..." });
+	        socket.emit('deck3', "rec");
+	        break;
+	      case 'deck3_stop':
+	        this.setState({ deck3_response: "Stopping..." });
+	        socket.emit('deck3', "stop");
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'center',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'DECKLINK VIDEO RECORDERS'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Deck 1'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'deck1_rec', onClick: this.handleButtons },
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-warning', width: '50%', value: 'deck1_stop', onClick: this.handleButtons },
+	              'STOP'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'DECK 1 STATUS: ',
+	              this.state.deck1_response
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Deck 2'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'deck2_rec', onClick: this.handleButtons },
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-warning', width: '50%', value: 'deck2_stop', onClick: this.handleButtons },
+	              'STOP'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'DECK 2 STATUS: ',
+	              this.state.deck2_response
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Deck 3'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-danger', width: '50%', value: 'deck3_rec', onClick: this.handleButtons },
+	              'RECORD'
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn-block btn btn-warning', width: '50%', value: 'deck3_stop', onClick: this.handleButtons },
+	              'STOP'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'DECK 3 STATUS: ',
+	              this.state.deck3_response
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    let deck1Response = '';
+	    let deck2Response = '';
+	    let deck3Response = '';
+	    socket = (0, _socket3.default)();
+	    socket.on('deck1_rec_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 1 RECORDING';
+	      }
+	      console.log("deck1 recording " + Number(mesg.code));
+	      this.setState({ deck1_response: "record: " + JSON.stringify(mesg) });
+	    });
+	    socket.on('deck1_stop_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 1 STOPPED';
+	      }
+	      console.log("deck1 stop " + Number(mesg.code));
+	      this.setState({ deck1_response: "stop: " + JSON.stringify(mesg) });
+	    });
+	    socket.on('deck2_rec_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 2 RECORDING';
+	      }
+	      console.log("deck2 recording " + Number(mesg.code));
+	      this.setState({ deck2_response: "record: " + JSON.stringify(mesg) });
+	    });
+	    socket.on('deck2_stop_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 2 STOPPED';
+	      }
+	      console.log("deck2 stop " + Number(mesg.code));
+	      this.setState({ deck2_response: "stop: " + JSON.stringify(mesg) });
+	    });
+	    socket.on('deck3_rec_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 3 RECORDING';
+	      }
+	      console.log("deck3 recording " + Number(mesg.code));
+	      this.setState({ deck3_response: "record: " + JSON.stringify(mesg) });
+	    });
+	    socket.on('deck3_stop_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 3 STOPPED';
+	      }
+	      console.log("deck3 stop " + Number(mesg.code));
+	      this.setState({ deck3_response: "stop: " + JSON.stringify(mesg) });
+	    });
+	    console.log("deck1Response " + deck1Response);
+	    console.log("deck2Response " + deck2Response);
+	    console.log("deck3Response " + deck3Response);
+	    this.setState({ deck1_response: deck1Response });
+	    this.setState({ deck2_response: deck2Response });
+	    this.setState({ deck3_response: deck3Response });
+	  }
+	}
+	exports.default = Decklink;
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(21);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(31);
+	
+	var _reactRouter = __webpack_require__(23);
+	
+	var _reactBootstrap = __webpack_require__(27);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	class KCATHome extends _react2.default.Component {
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'center',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'dmx_group1' },
+	              'GROUP 1'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'dmx_group2' },
+	              'GROUP 2'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'dmx_group3' },
+	              'Extras'
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	}
+	exports.default = KCATHome;
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(21);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(43);
+	
+	var _reactDom = __webpack_require__(44);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(45);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(31);
+	
+	var _reactBootstrap = __webpack_require__(27);
+	
+	var _lock = __webpack_require__(46);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(47);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(58);
+	
+	var _socket2 = __webpack_require__(55);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class ATEMGroup1 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	      case 'atem_caspar':
+	        socket.emit('atemTV1_changeProgramInput', '1');
+	        break;
+	      case 'atem_camera':
+	        socket.emit('atemTV1_changeProgramInput', '2');
+	        break;
+	      case 'atem_preview_caspar':
+	        socket.emit('atemTV1_changePreviewInput', '1');
+	        break;
+	      case 'atem_preview_camera':
+	        socket.emit('atemTV1_changePreviewInput', '2');
+	        break;
+	      case 'atem_auto_transition':
+	        socket.emit('atemTV1_autoTransition', '');
+	        break;
+	      case 'atem_transition_mix':
+	        socket.emit('atemTV1_transitionType', '0');
+	        break;
+	      case 'atem_transition_wipe':
+	        socket.emit('atemTV1_transitionType', '2');
+	        break;
+	      case 'atem_50_50':
+	        socket.emit('atem1me_runMacro', '0');
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value;
+	    switch (event.target.id) {
+	      case 'atem_transition_position':
+	        socket.emit('atemTV1_transition_position', slider_value * 100);
+	        break;
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 1: VIDEO Switcher'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "atem_caspar",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Program Media'
+	      }, {
+	        type: 0,
+	        i: "atem_camera",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Program Camera'
+	      }, {
+	        type: 0,
+	        i: "atem_preview_caspar",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Preview Media'
+	      }, {
+	        type: 0,
+	        i: "atem_preview_camera",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Preview Camera'
+	      }, {
+	        type: 1,
+	        i: "atem_transition_position",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 2,
+	        className: 'btn-block btn',
+	        text: 'ATEM Transition'
+	      }, {
+	        type: 0,
+	        i: "atem_auto_transition",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Auto Transition'
+	      }, {
+	        type: 0,
+	        i: "atem_transition_mix",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Mix'
+	      }, {
+	        type: 0,
+	        i: "atem_transition_wipe",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn',
+	        text: 'Wipe'
+	      }]
+	    });
+	  }
+	}
+	exports.default = ATEMGroup1;
+	ATEMGroup1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11515,7 +12704,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 75 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11566,7 +12755,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 76 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11602,13 +12791,13 @@
 	};
 
 /***/ }),
-/* 77 */
+/* 81 */
 /***/ (function(module, exports) {
 
 	module.exports = require("casparcg-connection");
 
 /***/ }),
-/* 78 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -11639,7 +12828,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(79)(updatedModules, updatedModules);
+					__webpack_require__(83)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -11652,7 +12841,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 79 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	/*

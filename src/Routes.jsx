@@ -11,6 +11,7 @@ import ControlInterface from './ControlInterface.jsx';
 import Demo from './Demo.jsx';
 import AudioGroup1 from './AudioGroup1.jsx';
 import VideoGroup1 from './VideoGroup1.jsx';
+import DMXSliders from './DMXSliders.jsx';
 import DMXWashGroup1 from './DMXWashGroup1.jsx';
 import DMX155Group2 from './DMX155Group2.jsx';
 import DMX255Group2 from './DMX255Group2.jsx';
@@ -18,6 +19,9 @@ import PTZGroup1 from './PTZGroup1.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import MidiLooper from './MidiLooper.jsx';
 import Agenda from './Agenda.jsx';
+import Decklink from './Decklink.jsx';
+import KCATHome from './KCATHome.jsx';
+import ATEM from './ATEMGroup1.jsx';
 import Home from './Home.jsx';
 import Help from './Help.jsx';
 
@@ -26,6 +30,10 @@ const NoMatch = () => <p>Page Not Found</p>;
 export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/home" />
+    <Route path="decklink" component={Decklink} />
+    <Route path="atem" component={ATEM} />
+    <Route path="dmx_sliders" component={DMXSliders} />
+    <Route path="kcat_home" component={KCATHome} />
     <Route path="audio_group1" component={AudioGroup1} />
     <Route path="video_group1" component={VideoGroup1} />
     <Route path="demo" component={Demo} />

@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(946);
+	var _ContextWrapper = __webpack_require__(950);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -108,39 +108,55 @@ webpackJsonp([0],{
 	
 	var _VideoGroup2 = _interopRequireDefault(_VideoGroup);
 	
-	var _DMXWashGroup = __webpack_require__(929);
+	var _DMXSliders = __webpack_require__(929);
+	
+	var _DMXSliders2 = _interopRequireDefault(_DMXSliders);
+	
+	var _DMXWashGroup = __webpack_require__(930);
 	
 	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMX155Group = __webpack_require__(930);
+	var _DMX155Group = __webpack_require__(931);
 	
 	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _DMX255Group = __webpack_require__(931);
+	var _DMX255Group = __webpack_require__(932);
 	
 	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
 	
-	var _PTZGroup = __webpack_require__(932);
+	var _PTZGroup = __webpack_require__(933);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _Diagnostics = __webpack_require__(937);
+	var _Diagnostics = __webpack_require__(938);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(942);
+	var _MidiLooper = __webpack_require__(943);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Agenda = __webpack_require__(943);
+	var _Agenda = __webpack_require__(944);
 	
 	var _Agenda2 = _interopRequireDefault(_Agenda);
 	
-	var _Home = __webpack_require__(944);
+	var _Decklink = __webpack_require__(945);
+	
+	var _Decklink2 = _interopRequireDefault(_Decklink);
+	
+	var _KCATHome = __webpack_require__(946);
+	
+	var _KCATHome2 = _interopRequireDefault(_KCATHome);
+	
+	var _ATEMGroup = __webpack_require__(947);
+	
+	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
+	
+	var _Home = __webpack_require__(948);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(945);
+	var _Help = __webpack_require__(949);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -158,6 +174,10 @@ webpackJsonp([0],{
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'decklink', component: _Decklink2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'atem', component: _ATEMGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_sliders', component: _DMXSliders2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'kcat_home', component: _KCATHome2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group1', component: _VideoGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
@@ -263,6 +283,15 @@ webpackJsonp([0],{
 	        { id: 'user-dropdown', title: 'Lights' },
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/dmx_sliders' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'DMX Sliders'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/dmx_155_group2' },
 	          _react2.default.createElement(
 	            _reactBootstrap.NavItem,
@@ -291,7 +320,34 @@ webpackJsonp([0],{
 	      ),
 	      _react2.default.createElement(
 	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Tools' },
+	        { id: 'user-dropdown', title: 'Misc Tools' },
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/decklink' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Decklink Control'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/decklink' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Decklink Control'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/atem' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'ATEM Control'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/ptz_group1' },
@@ -308,6 +364,15 @@ webpackJsonp([0],{
 	            _reactBootstrap.NavItem,
 	            null,
 	            'MIDI Looper'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/kcat_home' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'KCAT Home'
 	          )
 	        )
 	      )
@@ -39234,6 +39299,533 @@ webpackJsonp([0],{
 	var lockIcon = _react2.default.createElement(_lock2.default, null);
 	var socket = void 0;
 	
+	var DMXSliders = function (_React$Component) {
+	  _inherits(DMXSliders, _React$Component);
+	
+	  function DMXSliders(props, context) {
+	    _classCallCheck(this, DMXSliders);
+	
+	    var _this = _possibleConstructorReturn(this, (DMXSliders.__proto__ || Object.getPrototypeOf(DMXSliders)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      lock: true,
+	      compactType: null,
+	      instrument_id: "kcat_dmx",
+	      dmx_offset: 1,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    _this.sendDMX = _this.sendDMX.bind(_this);
+	    _this.savePreset = _this.savePreset.bind(_this);
+	    _this.loadPreset = _this.loadPreset.bind(_this);
+	    _this.showError = _this.showError.bind(_this);
+	    _this.dismissToast = _this.dismissToast.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(DMXSliders, [{
+	    key: 'showError',
+	    value: function showError(message) {
+	      this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	    }
+	  }, {
+	    key: 'dismissToast',
+	    value: function dismissToast() {
+	      this.setState({ toastVisible: false });
+	    }
+	  }, {
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '255', 'default': '0', step: '1', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	      console.log("does this change? " + el.i + " " + el.sliderValue);
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var dmx_data = this.state.dmx_data;
+	
+	      switch (event.target.value) {
+	
+	        case 'save_preset_cst':
+	          this.savePreset(1);
+	          break;
+	        case 'save_preset_tott':
+	          this.savePreset(2);
+	          break;
+	        case 'recall_preset_cst':
+	          this.loadPreset(1);
+	          break;
+	        case 'recall_preset_tott':
+	          this.loadPreset(2);
+	          break;
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	      this.setState({ dmx_data: dmx_data });
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	      var dmx_data = this.state.dmx_data;
+	
+	      var items = this.state.items;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == event.target.id) {
+	          items[i].sliderValue = slider_value;
+	        }
+	      }
+	      this.setState({ items: items });
+	
+	      switch (event.target.id) {
+	        case 'channel_1':
+	          dmx_data[0] = slider_value;
+	          this.sendDMX({ 1: slider_value });
+	          break;
+	        case 'channel_2':
+	          dmx_data[1] = slider_value;
+	          this.sendDMX({ 2: slider_value });
+	          break;
+	        case 'channel_3':
+	          dmx_data[2] = slider_value;
+	          this.sendDMX({ 3: slider_value });
+	          break;
+	        case 'channel_4':
+	          dmx_data[3] = slider_value;
+	          this.sendDMX({ 4: slider_value });
+	          break;
+	        case 'channel_5':
+	          dmx_data[4] = slider_value;
+	          this.sendDMX({ 5: slider_value });
+	          break;
+	        case 'channel_6':
+	          dmx_data[5] = slider_value;
+	          this.sendDMX({ 6: slider_value });
+	          break;
+	        case 'channel_7':
+	          dmx_data[6] = slider_value;
+	          this.sendDMX({ 7: slider_value });
+	          break;
+	        case 'channel_8':
+	          dmx_data[7] = slider_value;
+	          this.sendDMX({ 8: slider_value });
+	          break;
+	        case 'channel_9':
+	          dmx_data[8] = slider_value;
+	          this.sendDMX({ 9: slider_value });
+	          break;
+	        case 'channel_10':
+	          dmx_data[9] = slider_value;
+	          this.sendDMX({ 10: slider_value });
+	          break;
+	        case 'channel_11':
+	          dmx_data[10] = slider_value;
+	          this.sendDMX({ 11: slider_value });
+	          break;
+	        case 'channel_12':
+	          dmx_data[11] = slider_value;
+	          this.sendDMX({ 12: slider_value });
+	          break;
+	
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	      this.setState({ dmx_data: dmx_data });
+	    }
+	  }, {
+	    key: 'sendDMX',
+	    value: function sendDMX(dmx) {
+	      socket.emit('dmx-go', { dmx: dmx, offset: this.state.dmx_offset });
+	    }
+	  }, {
+	    key: 'savePreset',
+	    value: function savePreset(preset) {
+	      var newDMXPreset = {
+	        instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	        dmx_data: this.state.dmx_data
+	      };
+	      console.log(JSON.stringify(newDMXPreset));
+	      socket.emit('dmx-save-preset', newDMXPreset);
+	    }
+	  }, {
+	    key: 'loadPreset',
+	    value: function loadPreset(preset) {
+	      var loadDMXPreset = {
+	        instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	      };
+	      socket.emit('dmx-load-preset', loadDMXPreset);
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'h3',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'DMX sliders'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('dmx-load-preset-data', function (data) {
+	        _this3.setState({ dmx_data: data });
+	        console.log("preset retrieved " + _this3.state.dmx_data);
+	      });
+	      this.setState({
+	        items: [{
+	          type: 1,
+	          i: "channel_1",
+	          x: 0,
+	          y: 0,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 1'
+	        }, {
+	          type: 1,
+	          i: "channel_2",
+	          x: 0,
+	          y: 1,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 2'
+	        }, {
+	          type: 1,
+	          i: "channel_3",
+	          x: 0,
+	          y: 2,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 3'
+	        }, {
+	          type: 1,
+	          i: "channel_4",
+	          x: 0,
+	          y: 3,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 4'
+	        }, {
+	          type: 1,
+	          i: "channel_5",
+	          x: 0,
+	          y: 4,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 5'
+	        }, {
+	          type: 1,
+	          i: "channel_6",
+	          x: 0,
+	          y: 5,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 6'
+	        }, {
+	          type: 1,
+	          i: "channel_7",
+	          x: 0,
+	          y: 6,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 7'
+	        }, {
+	          type: 1,
+	          i: "channel_8",
+	          x: 0,
+	          y: 7,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 8'
+	        }, {
+	          type: 1,
+	          i: "channel_9",
+	          x: 0,
+	          y: 8,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 9'
+	        }, {
+	          type: 1,
+	          i: "channel_10",
+	          x: 0,
+	          y: 9,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 10'
+	        }, {
+	          type: 1,
+	          i: "channel_11",
+	          x: 0,
+	          y: 10,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 11'
+	        }, {
+	          type: 1,
+	          i: "channel_12",
+	          x: 0,
+	          y: 11,
+	          w: 12,
+	          h: 1,
+	          text: 'Channel 12'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_cst",
+	          x: 0,
+	          y: 13,
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'LOAD CST PRESET'
+	        }, {
+	          type: 0,
+	          i: "recall_preset_tott",
+	          x: 2,
+	          y: 13,
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'LOAD TOTT PRESET'
+	        }, {
+	          type: 0,
+	          i: "save_preset_cst",
+	          x: 0,
+	          y: 14,
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'SAVE CST PRESET'
+	        }, {
+	          type: 0,
+	          i: "save_preset_tott",
+	          x: 2,
+	          y: 14,
+	          w: 2,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'SAVE TOTT PRESET'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return DMXSliders;
+	}(_react2.default.Component);
+	
+	exports.default = DMXSliders;
+	
+	DMXSliders.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 930:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(845);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _Toast = __webpack_require__(836);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(860);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(861);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
 	var DMXWashGroup1 = function (_React$Component) {
 	  _inherits(DMXWashGroup1, _React$Component);
 	
@@ -39837,7 +40429,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 930:
+/***/ 931:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40414,7 +41006,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 931:
+/***/ 932:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40995,7 +41587,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 932:
+/***/ 933:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41040,7 +41632,7 @@ webpackJsonp([0],{
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(933);
+	var _reactDeviceDetect = __webpack_require__(934);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -41832,7 +42424,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 933:
+/***/ 934:
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports =
@@ -42065,7 +42657,7 @@ webpackJsonp([0],{
 	/* 3 */
 	/***/ (function(module, exports) {
 	
-	module.exports = __webpack_require__(934);
+	module.exports = __webpack_require__(935);
 	
 	/***/ }),
 	/* 4 */
@@ -42261,22 +42853,22 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 934:
+/***/ 935:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
 	if (process.env.NODE_ENV === 'production') {
-	  module.exports = __webpack_require__(935);
-	} else {
 	  module.exports = __webpack_require__(936);
+	} else {
+	  module.exports = __webpack_require__(937);
 	}
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(328)))
 
 /***/ }),
 
-/***/ 935:
+/***/ 936:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/** @license React v16.2.0
@@ -42304,7 +42896,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 936:
+/***/ 937:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.2.0
@@ -43669,7 +44261,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 937:
+/***/ 938:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43688,19 +44280,19 @@ webpackJsonp([0],{
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
-	var _TelnetDiagnostics = __webpack_require__(938);
+	var _TelnetDiagnostics = __webpack_require__(939);
 	
 	var _TelnetDiagnostics2 = _interopRequireDefault(_TelnetDiagnostics);
 	
-	var _MIDIDiagnostics = __webpack_require__(939);
+	var _MIDIDiagnostics = __webpack_require__(940);
 	
 	var _MIDIDiagnostics2 = _interopRequireDefault(_MIDIDiagnostics);
 	
-	var _DMXDiagnostics = __webpack_require__(940);
+	var _DMXDiagnostics = __webpack_require__(941);
 	
 	var _DMXDiagnostics2 = _interopRequireDefault(_DMXDiagnostics);
 	
-	var _OSCDiagnostics = __webpack_require__(941);
+	var _OSCDiagnostics = __webpack_require__(942);
 	
 	var _OSCDiagnostics2 = _interopRequireDefault(_OSCDiagnostics);
 	
@@ -43770,7 +44362,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 938:
+/***/ 939:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43961,7 +44553,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 939:
+/***/ 940:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44191,7 +44783,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 940:
+/***/ 941:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44772,7 +45364,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 941:
+/***/ 942:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45142,7 +45734,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 942:
+/***/ 943:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45842,7 +46434,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 943:
+/***/ 944:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46152,7 +46744,752 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 944:
+/***/ 945:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(845);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var socket = void 0;
+	
+	var Decklink = function (_React$Component) {
+	  _inherits(Decklink, _React$Component);
+	
+	  function Decklink(props, context) {
+	    _classCallCheck(this, Decklink);
+	
+	    var _this = _possibleConstructorReturn(this, (Decklink.__proto__ || Object.getPrototypeOf(Decklink)).call(this, props, context));
+	
+	    _this.state = {
+	      deck1_response: '',
+	      deck2_response: '',
+	      deck3_response: ''
+	    };
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Decklink, [{
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      switch (event.target.value) {
+	
+	        case 'deck1_rec':
+	          this.setState({ deck1_response: "Starting to Record..." });
+	          socket.emit('deck1', "rec");
+	          break;
+	        case 'deck1_stop':
+	          this.setState({ deck1_response: "Stopping..." });
+	          socket.emit('deck1', "stop");
+	          break;
+	        case 'deck2_rec':
+	          this.setState({ deck2_response: "Starting to Record..." });
+	          socket.emit('deck2', "rec");
+	          break;
+	        case 'deck2_stop':
+	          this.setState({ deck2_response: "Stopping..." });
+	          socket.emit('deck2', "stop");
+	          break;
+	        case 'deck3_rec':
+	          this.setState({ deck3_response: "Starting to Record..." });
+	          socket.emit('deck3', "rec");
+	          break;
+	        case 'deck3_stop':
+	          this.setState({ deck3_response: "Stopping..." });
+	          socket.emit('deck3', "stop");
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'center',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'DECKLINK VIDEO RECORDERS'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 1'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-danger', width: '50%', value: 'deck1_rec', onClick: this.handleButtons },
+	                'RECORD'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck1_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 1 STATUS: ',
+	                this.state.deck1_response
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 2'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-danger', width: '50%', value: 'deck2_rec', onClick: this.handleButtons },
+	                'RECORD'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck2_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 2 STATUS: ',
+	                this.state.deck2_response
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 3'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-danger', width: '50%', value: 'deck3_rec', onClick: this.handleButtons },
+	                'RECORD'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck3_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 3 STATUS: ',
+	                this.state.deck3_response
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var deck1Response = '';
+	      var deck2Response = '';
+	      var deck3Response = '';
+	      socket = (0, _socket3.default)();
+	      socket.on('deck1_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 RECORDING';
+	        }
+	        console.log("deck1 recording " + Number(mesg.code));
+	        _this2.setState({ deck1_response: "record: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck1_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 STOPPED';
+	        }
+	        console.log("deck1 stop " + Number(mesg.code));
+	        _this2.setState({ deck1_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 RECORDING';
+	        }
+	        console.log("deck2 recording " + Number(mesg.code));
+	        _this2.setState({ deck2_response: "record: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 STOPPED';
+	        }
+	        console.log("deck2 stop " + Number(mesg.code));
+	        _this2.setState({ deck2_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck3_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 RECORDING';
+	        }
+	        console.log("deck3 recording " + Number(mesg.code));
+	        _this2.setState({ deck3_response: "record: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck3_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 STOPPED';
+	        }
+	        console.log("deck3 stop " + Number(mesg.code));
+	        _this2.setState({ deck3_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	      console.log("deck1Response " + deck1Response);
+	      console.log("deck2Response " + deck2Response);
+	      console.log("deck3Response " + deck3Response);
+	      this.setState({ deck1_response: deck1Response });
+	      this.setState({ deck2_response: deck2Response });
+	      this.setState({ deck3_response: deck3Response });
+	    }
+	  }]);
+	
+	  return Decklink;
+	}(_react2.default.Component);
+	
+	exports.default = Decklink;
+
+/***/ }),
+
+/***/ 946:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	__webpack_require__(832);
+	
+	var _reactRouter = __webpack_require__(509);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var KCATHome = function (_React$Component) {
+	  _inherits(KCATHome, _React$Component);
+	
+	  function KCATHome() {
+	    _classCallCheck(this, KCATHome);
+	
+	    return _possibleConstructorReturn(this, (KCATHome.__proto__ || Object.getPrototypeOf(KCATHome)).apply(this, arguments));
+	  }
+	
+	  _createClass(KCATHome, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'center',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'dmx_group1' },
+	                'GROUP 1'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'dmx_group2' },
+	                'GROUP 2'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'dmx_group3' },
+	                'Extras'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return KCATHome;
+	}(_react2.default.Component);
+	
+	exports.default = KCATHome;
+
+/***/ }),
+
+/***/ 947:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(845);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(860);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(861);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var ATEMGroup1 = function (_React$Component) {
+	  _inherits(ATEMGroup1, _React$Component);
+	
+	  function ATEMGroup1(props, context) {
+	    _classCallCheck(this, ATEMGroup1);
+	
+	    var _this = _possibleConstructorReturn(this, (ATEMGroup1.__proto__ || Object.getPrototypeOf(ATEMGroup1)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ATEMGroup1, [{
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '100', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	
+	      switch (event.target.value) {
+	        case 'atem_caspar':
+	          socket.emit('atemTV1_changeProgramInput', '1');
+	          break;
+	        case 'atem_camera':
+	          socket.emit('atemTV1_changeProgramInput', '2');
+	          break;
+	        case 'atem_preview_caspar':
+	          socket.emit('atemTV1_changePreviewInput', '1');
+	          break;
+	        case 'atem_preview_camera':
+	          socket.emit('atemTV1_changePreviewInput', '2');
+	          break;
+	        case 'atem_auto_transition':
+	          socket.emit('atemTV1_autoTransition', '');
+	          break;
+	        case 'atem_transition_mix':
+	          socket.emit('atemTV1_transitionType', '0');
+	          break;
+	        case 'atem_transition_wipe':
+	          socket.emit('atemTV1_transitionType', '2');
+	          break;
+	        case 'atem_50_50':
+	          socket.emit('atem1me_runMacro', '0');
+	          break;
+	
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	      switch (event.target.id) {
+	        case 'atem_transition_position':
+	          socket.emit('atemTV1_transition_position', slider_value * 100);
+	          break;
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Group 1: VIDEO Switcher'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this3.setState({ response: mesg });
+	      });
+	      this.setState({
+	        items: [{
+	          type: 0,
+	          i: "atem_caspar",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Program Media'
+	        }, {
+	          type: 0,
+	          i: "atem_camera",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Program Camera'
+	        }, {
+	          type: 0,
+	          i: "atem_preview_caspar",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Preview Media'
+	        }, {
+	          type: 0,
+	          i: "atem_preview_camera",
+	          x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 1, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Preview Camera'
+	        }, {
+	          type: 1,
+	          i: "atem_transition_position",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 0, //Infinity, 
+	          w: 2,
+	          h: 2,
+	          className: 'btn-block btn',
+	          text: 'ATEM Transition'
+	        }, {
+	          type: 0,
+	          i: "atem_auto_transition",
+	          x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Auto Transition'
+	        }, {
+	          type: 0,
+	          i: "atem_transition_mix",
+	          x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Mix'
+	        }, {
+	          type: 0,
+	          i: "atem_transition_wipe",
+	          x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	          y: 2, //Infinity, 
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn',
+	          text: 'Wipe'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return ATEMGroup1;
+	}(_react2.default.Component);
+	
+	exports.default = ATEMGroup1;
+	
+	ATEMGroup1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 948:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46250,7 +47587,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 945:
+/***/ 949:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46324,7 +47661,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 946:
+/***/ 950:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
