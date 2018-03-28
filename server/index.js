@@ -208,9 +208,11 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
                 break;
               default:
                 console.log('ERROR: HYPERDECK 1 command unknown');
+
             }
           }).catch(function() {
             console.error("Failed to connect to hyperdeck 1.");
+             socket.emit('deck1_stop_status', "Failed to connect to hyperdeck 1.");
           });
         });
         socket.on('deck2', (data) => {
@@ -232,6 +234,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
             }
           }).catch(function() {
             console.error("Failed to connect to hyperdeck 2.");
+            socket.emit('deck2_stop_status', "Failed to connect to hyperdeck 2.");
           });
         });
         socket.on('deck3', (data) => {
@@ -253,6 +256,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
             }
           }).catch(function() {
             console.error("Failed to connect to hyperdeck 3.");
+            socket.emit('deck3_stop_status', "Failed to connect to hyperdeck 3.");
           });
         });
   /*      socket.on('ptz-go', function(data) {

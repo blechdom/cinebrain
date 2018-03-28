@@ -49245,17 +49245,6 @@ webpackJsonp([0],{
 	  }
 	
 	  _createClass(Decklink, [{
-	    key: 'handleOnLock',
-	    value: function handleOnLock() {
-	      if (this.state.lock == true) {
-	        lockIcon = _react2.default.createElement(FaUnlock, null);
-	        this.setState({ lock: false });
-	      } else {
-	        lockIcon = _react2.default.createElement(FaLock, null);
-	        this.setState({ lock: true });
-	      }
-	    }
-	  }, {
 	    key: 'handleButtons',
 	    value: function handleButtons(event) {
 	      console.log(event.target.id + ': ' + event.target.value);
@@ -49326,6 +49315,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'div',
 	                null,
+	                'DECK 1 STATUS: ',
 	                this.state.deck1_response
 	              )
 	            )
@@ -49354,6 +49344,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'div',
 	                null,
+	                'DECK 2 STATUS: ',
 	                this.state.deck2_response
 	              )
 	            )
@@ -49382,6 +49373,7 @@ webpackJsonp([0],{
 	              _react2.default.createElement(
 	                'div',
 	                null,
+	                'DECK 3 STATUS: ',
 	                this.state.deck3_response
 	              )
 	            )
@@ -49397,6 +49389,8 @@ webpackJsonp([0],{
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      var deck1Response = '';
 	      var deck2Response = '';
 	      var deck3Response = '';
@@ -49406,36 +49400,42 @@ webpackJsonp([0],{
 	          deck1Response = 'Deck 1 RECORDING';
 	        }
 	        console.log("deck1 recording " + Number(mesg.code));
+	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
 	      });
 	      socket.on('deck1_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 1 STOPPED';
 	        }
 	        console.log("deck1 stop " + Number(mesg.code));
+	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
 	      });
 	      socket.on('deck2_rec_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 2 RECORDING';
 	        }
 	        console.log("deck2 recording " + Number(mesg.code));
+	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
 	      });
 	      socket.on('deck2_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 2 STOPPED';
 	        }
 	        console.log("deck2 stop " + Number(mesg.code));
+	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
 	      });
 	      socket.on('deck3_rec_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 3 RECORDING';
 	        }
 	        console.log("deck3 recording " + Number(mesg.code));
+	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
 	      });
 	      socket.on('deck3_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 3 STOPPED';
 	        }
 	        console.log("deck3 stop " + Number(mesg.code));
+	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
 	      });
 	      console.log("deck1Response " + deck1Response);
 	      console.log("deck2Response " + deck2Response);
@@ -49498,7 +49498,12 @@ webpackJsonp([0],{
 	
 	    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props, context));
 	
-	    _this.state = {};
+	    _this.state = {
+	      deck1_response: '',
+	      deck2_response: '',
+	      deck3_response: ''
+	
+	    };
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    return _this;
 	  }
@@ -49517,6 +49522,48 @@ webpackJsonp([0],{
 	      socket.on('dmx-load-preset-data', function (data) {
 	        _this2.setState({ dmx_data: data });
 	        console.log("preset retrieved " + _this2.state.dmx_data);
+	      });
+	      socket.on('deck1_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 RECORDING';
+	        }
+	        console.log("deck1 recording " + Number(mesg.code));
+	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
+	      });
+	      socket.on('deck1_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 STOPPED';
+	        }
+	        console.log("deck1 stop " + Number(mesg.code));
+	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 RECORDING';
+	        }
+	        console.log("deck2 recording " + Number(mesg.code));
+	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 STOPPED';
+	        }
+	        console.log("deck2 stop " + Number(mesg.code));
+	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
+	      });
+	      socket.on('deck3_rec_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 RECORDING';
+	        }
+	        console.log("deck3 recording " + Number(mesg.code));
+	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
+	      });
+	      socket.on('deck3_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 3 STOPPED';
+	        }
+	        console.log("deck3 stop " + Number(mesg.code));
+	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
 	      });
 	    }
 	  }, {
@@ -49638,6 +49685,20 @@ webpackJsonp([0],{
 	              'button',
 	              { className: 'btn-block btn btn-warning', width: '50%', value: 'deck_all_stop', onClick: this.handleButtons },
 	              'STOP'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'RECORDER STATUS',
+	              _react2.default.createElement('br', null),
+	              'Deck 1:',
+	              this.state.deck1_response,
+	              _react2.default.createElement('br', null),
+	              'Deck 2:',
+	              this.state.deck2_response,
+	              _react2.default.createElement('br', null),
+	              'Deck 3:',
+	              this.state.deck3_response
 	            )
 	          )
 	        )

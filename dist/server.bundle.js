@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "697708201694729238b3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "43e74ecf7b11343d85ac"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -787,9 +787,11 @@
 	            break;
 	          default:
 	            console.log('ERROR: HYPERDECK 1 command unknown');
+	
 	        }
 	      }).catch(function () {
 	        console.error("Failed to connect to hyperdeck 1.");
+	        socket.emit('deck1_stop_status', "Failed to connect to hyperdeck 1.");
 	      });
 	    });
 	    socket.on('deck2', data => {
@@ -811,6 +813,7 @@
 	        }
 	      }).catch(function () {
 	        console.error("Failed to connect to hyperdeck 2.");
+	        socket.emit('deck2_stop_status', "Failed to connect to hyperdeck 2.");
 	      });
 	    });
 	    socket.on('deck3', data => {
@@ -832,6 +835,7 @@
 	        }
 	      }).catch(function () {
 	        console.error("Failed to connect to hyperdeck 3.");
+	        socket.emit('deck3_stop_status', "Failed to connect to hyperdeck 3.");
 	      });
 	    });
 	    /*      socket.on('ptz-go', function(data) {
@@ -14254,15 +14258,6 @@
 	    };
 	    this.handleButtons = this.handleButtons.bind(this);
 	  }
-	  handleOnLock() {
-	    if (this.state.lock == true) {
-	      lockIcon = _react2.default.createElement(FaUnlock, null);
-	      this.setState({ lock: false });
-	    } else {
-	      lockIcon = _react2.default.createElement(FaLock, null);
-	      this.setState({ lock: true });
-	    }
-	  }
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    switch (event.target.value) {
@@ -14331,6 +14326,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              null,
+	              'DECK 1 STATUS: ',
 	              this.state.deck1_response
 	            )
 	          )
@@ -14359,6 +14355,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              null,
+	              'DECK 2 STATUS: ',
 	              this.state.deck2_response
 	            )
 	          )
@@ -14387,6 +14384,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              null,
+	              'DECK 3 STATUS: ',
 	              this.state.deck3_response
 	            )
 	          )
@@ -14407,36 +14405,42 @@
 	        deck1Response = 'Deck 1 RECORDING';
 	      }
 	      console.log("deck1 recording " + Number(mesg.code));
+	      this.setState({ deck1_response: JSON.stringify(mesg) });
 	    });
 	    socket.on('deck1_stop_status', mesg => {
 	      if (Number(mesg.code) == 200) {
 	        deck1Response = 'Deck 1 STOPPED';
 	      }
 	      console.log("deck1 stop " + Number(mesg.code));
+	      this.setState({ deck1_response: JSON.stringify(mesg) });
 	    });
 	    socket.on('deck2_rec_status', mesg => {
 	      if (Number(mesg.code) == 200) {
 	        deck1Response = 'Deck 2 RECORDING';
 	      }
 	      console.log("deck2 recording " + Number(mesg.code));
+	      this.setState({ deck2_response: JSON.stringify(mesg) });
 	    });
 	    socket.on('deck2_stop_status', mesg => {
 	      if (Number(mesg.code) == 200) {
 	        deck1Response = 'Deck 2 STOPPED';
 	      }
 	      console.log("deck2 stop " + Number(mesg.code));
+	      this.setState({ deck2_response: JSON.stringify(mesg) });
 	    });
 	    socket.on('deck3_rec_status', mesg => {
 	      if (Number(mesg.code) == 200) {
 	        deck1Response = 'Deck 3 RECORDING';
 	      }
 	      console.log("deck3 recording " + Number(mesg.code));
+	      this.setState({ deck3_response: JSON.stringify(mesg) });
 	    });
 	    socket.on('deck3_stop_status', mesg => {
 	      if (Number(mesg.code) == 200) {
 	        deck1Response = 'Deck 3 STOPPED';
 	      }
 	      console.log("deck3 stop " + Number(mesg.code));
+	      this.setState({ deck3_response: JSON.stringify(mesg) });
 	    });
 	    console.log("deck1Response " + deck1Response);
 	    console.log("deck2Response " + deck2Response);
@@ -14482,7 +14486,12 @@
 	
 	  constructor(props, context) {
 	    super(props, context);
-	    this.state = {};
+	    this.state = {
+	      deck1_response: '',
+	      deck2_response: '',
+	      deck3_response: ''
+	
+	    };
 	    this.handleButtons = this.handleButtons.bind(this);
 	  }
 	  componentWillUnmount() {
@@ -14493,6 +14502,48 @@
 	    socket.on('dmx-load-preset-data', data => {
 	      this.setState({ dmx_data: data });
 	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
+	    socket.on('deck1_rec_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 1 RECORDING';
+	      }
+	      console.log("deck1 recording " + Number(mesg.code));
+	      this.setState({ deck1_response: JSON.stringify(mesg) });
+	    });
+	    socket.on('deck1_stop_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 1 STOPPED';
+	      }
+	      console.log("deck1 stop " + Number(mesg.code));
+	      this.setState({ deck1_response: JSON.stringify(mesg) });
+	    });
+	    socket.on('deck2_rec_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 2 RECORDING';
+	      }
+	      console.log("deck2 recording " + Number(mesg.code));
+	      this.setState({ deck2_response: JSON.stringify(mesg) });
+	    });
+	    socket.on('deck2_stop_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 2 STOPPED';
+	      }
+	      console.log("deck2 stop " + Number(mesg.code));
+	      this.setState({ deck2_response: JSON.stringify(mesg) });
+	    });
+	    socket.on('deck3_rec_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 3 RECORDING';
+	      }
+	      console.log("deck3 recording " + Number(mesg.code));
+	      this.setState({ deck3_response: JSON.stringify(mesg) });
+	    });
+	    socket.on('deck3_stop_status', mesg => {
+	      if (Number(mesg.code) == 200) {
+	        deck1Response = 'Deck 3 STOPPED';
+	      }
+	      console.log("deck3 stop " + Number(mesg.code));
+	      this.setState({ deck3_response: JSON.stringify(mesg) });
 	    });
 	  }
 	  handleButtons(event) {
@@ -14611,6 +14662,20 @@
 	            'button',
 	            { className: 'btn-block btn btn-warning', width: '50%', value: 'deck_all_stop', onClick: this.handleButtons },
 	            'STOP'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'RECORDER STATUS',
+	            _react2.default.createElement('br', null),
+	            'Deck 1:',
+	            this.state.deck1_response,
+	            _react2.default.createElement('br', null),
+	            'Deck 2:',
+	            this.state.deck2_response,
+	            _react2.default.createElement('br', null),
+	            'Deck 3:',
+	            this.state.deck3_response
 	          )
 	        )
 	      )

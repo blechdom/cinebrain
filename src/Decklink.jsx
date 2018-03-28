@@ -20,15 +20,6 @@ export default class Decklink extends React.Component {
     };
     this.handleButtons = this.handleButtons.bind(this);
   }
- handleOnLock(){
-   if (this.state.lock == true) {
-  lockIcon = <FaUnlock />;
-    this.setState({lock: false}); 
-   } else { 
-  lockIcon = <FaLock />;
-    this.setState({lock: true});
-   } 
- }
 handleButtons(event) {
   console.log(event.target.id + ': ' + event.target.value);
   switch (event.target.value) {
@@ -66,7 +57,7 @@ render() {
         <div><h4>Deck 1</h4>
           <button className='btn-block btn btn-danger' width="50%" value='deck1_rec' onClick={this.handleButtons}>RECORD</button>
           <button className='btn-block btn btn-warning'  width="50%" value='deck1_stop' onClick={this.handleButtons}>STOP</button>
-           <div>{this.state.deck1_response}</div>
+           <div>DECK 1 STATUS: {this.state.deck1_response}</div>
         </div>
         </div>
 
@@ -74,7 +65,7 @@ render() {
         <div><h4>Deck 2</h4>
           <button className='btn-block btn btn-danger' width="50%" value='deck2_rec' onClick={this.handleButtons}>RECORD</button>
           <button className='btn-block btn btn-warning'  width="50%" value='deck2_stop' onClick={this.handleButtons}>STOP</button>
-           <div>{this.state.deck2_response}</div>
+           <div>DECK 2 STATUS: {this.state.deck2_response}</div>
         </div>
         </div>
 
@@ -82,7 +73,7 @@ render() {
         <div><h4>Deck 3</h4>
           <button className='btn-block btn btn-danger' width="50%" value='deck3_rec' onClick={this.handleButtons}>RECORD</button>
           <button className='btn-block btn btn-warning'  width="50%" value='deck3_stop' onClick={this.handleButtons}>STOP</button>
-           <div>{this.state.deck3_response}</div>
+           <div>DECK 3 STATUS: {this.state.deck3_response}</div>
         </div>
         </div>
        
@@ -103,36 +94,42 @@ render() {
         deck1Response = 'Deck 1 RECORDING';
       }
       console.log("deck1 recording " + Number(mesg.code));
+      this.setState({deck1_response: JSON.stringify(mesg)}); 
     });
     socket.on('deck1_stop_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 1 STOPPED';
       }
       console.log("deck1 stop " + Number(mesg.code));
+      this.setState({deck1_response: JSON.stringify(mesg)}); 
     });
     socket.on('deck2_rec_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 2 RECORDING';
       }
       console.log("deck2 recording " + Number(mesg.code));
+      this.setState({deck2_response: JSON.stringify(mesg)}); 
     });
     socket.on('deck2_stop_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 2 STOPPED';
       }
       console.log("deck2 stop " + Number(mesg.code));
+      this.setState({deck2_response: JSON.stringify(mesg)}); 
     });
     socket.on('deck3_rec_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 3 RECORDING';
       }
       console.log("deck3 recording " + Number(mesg.code));
+      this.setState({deck3_response: JSON.stringify(mesg)}); 
     });
     socket.on('deck3_stop_status', (mesg) => {
       if(Number(mesg.code) == 200) {
         deck1Response = 'Deck 3 STOPPED';
       }
       console.log("deck3 stop " + Number(mesg.code));
+      this.setState({deck3_response: JSON.stringify(mesg)}); 
     });
     console.log("deck1Response " + deck1Response);
     console.log("deck2Response " + deck2Response);
