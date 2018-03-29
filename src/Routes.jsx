@@ -24,12 +24,14 @@ import KCATHome from './KCATHome.jsx';
 import ATEM from './ATEMGroup1.jsx';
 import Home from './Home.jsx';
 import Help from './Help.jsx';
+import RobotArm from './RobotArm.jsx';
 
 const NoMatch = () => <p>Page Not Found</p>;
 
 export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/home" />
+    <Route path="robot_arm" component={RobotArm} />
     <Route path="decklink" component={Decklink} />
     <Route path="atem" component={ATEM} />
     <Route path="dmx_sliders" component={DMXSliders} />

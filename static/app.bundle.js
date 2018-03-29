@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(950);
+	var _ContextWrapper = __webpack_require__(951);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -160,6 +160,10 @@ webpackJsonp([0],{
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
+	var _RobotArm = __webpack_require__(950);
+	
+	var _RobotArm2 = _interopRequireDefault(_RobotArm);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var NoMatch = function NoMatch() {
@@ -174,6 +178,7 @@ webpackJsonp([0],{
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'robot_arm', component: _RobotArm2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'decklink', component: _Decklink2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'atem', component: _ATEMGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_sliders', component: _DMXSliders2.default }),
@@ -321,6 +326,15 @@ webpackJsonp([0],{
 	      _react2.default.createElement(
 	        _reactBootstrap.NavDropdown,
 	        { id: 'user-dropdown', title: 'Misc Tools' },
+	        _react2.default.createElement(
+	          _reactRouterBootstrap.LinkContainer,
+	          { to: '/robot_arm' },
+	          _react2.default.createElement(
+	            _reactBootstrap.NavItem,
+	            null,
+	            'Robot Arm'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          _reactRouterBootstrap.LinkContainer,
 	          { to: '/decklink' },
@@ -47824,6 +47838,672 @@ webpackJsonp([0],{
 /***/ }),
 
 /***/ 950:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(845);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _Toast = __webpack_require__(836);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _lock = __webpack_require__(860);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(861);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	var lockIcon = _react2.default.createElement(_lock2.default, null);
+	var socket = void 0;
+	
+	var RobotArm = function (_React$Component) {
+	  _inherits(RobotArm, _React$Component);
+	
+	  function RobotArm(props, context) {
+	    _classCallCheck(this, RobotArm);
+	
+	    var _this = _possibleConstructorReturn(this, (RobotArm.__proto__ || Object.getPrototypeOf(RobotArm)).call(this, props, context));
+	
+	    _this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      lock: true,
+	      compactType: null,
+	      robot_data: [0, 0, 0, 0]
+	    };
+	    _this.onBreakpointChange = _this.onBreakpointChange.bind(_this);
+	    _this.handleOnLock = _this.handleOnLock.bind(_this);
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    _this.handleSliders = _this.handleSliders.bind(_this);
+	    _this.saveRobotPreset = _this.saveRobotPreset.bind(_this);
+	    _this.loadRobotPreset = _this.loadRobotPreset.bind(_this);
+	    _this.showError = _this.showError.bind(_this);
+	    _this.dismissToast = _this.dismissToast.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(RobotArm, [{
+	    key: 'showError',
+	    value: function showError(message) {
+	      this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	    }
+	  }, {
+	    key: 'dismissToast',
+	    value: function dismissToast() {
+	      this.setState({ toastVisible: false });
+	    }
+	  }, {
+	    key: 'handleOnLock',
+	    value: function handleOnLock() {
+	      if (this.state.lock == true) {
+	        lockIcon = _react2.default.createElement(_unlock2.default, null);
+	        this.setState({ lock: false });
+	      } else {
+	        lockIcon = _react2.default.createElement(_lock2.default, null);
+	        this.setState({ lock: true });
+	      }
+	    }
+	  }, {
+	    key: 'createElement',
+	    value: function createElement(el) {
+	      var lockStyle = {
+	        display: "none"
+	      };
+	      if (this.state.lock == false) {
+	        lockStyle = {
+	          position: "absolute",
+	          right: "2px",
+	          top: 0,
+	          cursor: "pointer",
+	          display: "inline"
+	        };
+	      }
+	      var gridStyle = {
+	        background: "#FFF"
+	      };
+	      var i = el.add ? "+" : el.i;
+	      var controllerCode = _react2.default.createElement(
+	        'button',
+	        { className: el.className, value: el.i, onClick: this.handleButtons },
+	        el.text
+	      );
+	      if (el.type == 1) {
+	        //type is slider
+	        controllerCode = _react2.default.createElement(
+	          'div',
+	          null,
+	          ' ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'text' },
+	            el.text
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'slidecontainer' },
+	            _react2.default.createElement('input', { type: 'range', min: '0', max: '180', 'default': '0', step: '1', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        { key: i, 'data-grid': el, style: gridStyle },
+	        controllerCode,
+	        _react2.default.createElement('span', { style: lockStyle })
+	      );
+	      console.log("does this change? " + el.i + " " + el.sliderValue);
+	    }
+	  }, {
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var robot_data = this.state.robot_data;
+	
+	      switch (event.target.value) {
+	
+	        case 'save_robot_preset_1':
+	          this.saveRobotPreset(1);
+	          break;
+	        case 'save_robot_preset_2':
+	          this.saveRobotPreset(2);
+	          break;
+	        case 'save_robot_preset_3':
+	          this.saveRobotPreset(3);
+	          break;
+	        case 'save_robot_preset_4':
+	          this.saveRobotPreset(4);
+	          break;
+	        case 'save_robot_preset_5':
+	          this.saveRobotPreset(5);
+	          break;
+	        case 'save_robot_preset_6':
+	          this.saveRobotPreset(6);
+	          break;
+	        case 'save_robot_preset_7':
+	          this.saveRobotPreset(7);
+	          break;
+	        case 'save_robot_preset_8':
+	          this.saveRobotPreset(8);
+	          break;
+	        case 'save_robot_preset_9':
+	          this.saveRobotPreset(9);
+	          break;
+	        case 'save_robot_preset_10':
+	          this.saveRobotPreset(10);
+	          break;
+	        case 'save_robot_preset_11':
+	          this.saveRobotPreset(11);
+	          break;
+	        case 'save_robot_preset_12':
+	          this.saveRobotPreset(12);
+	          break;
+	        case 'recall_robot_preset_1':
+	          this.loadRobotPreset(1);
+	          break;
+	        case 'recall_robot_preset_2':
+	          this.loadRobotPreset(2);
+	          break;
+	        case 'recall_robot_preset_3':
+	          this.loadRobotPreset(3);
+	          break;
+	        case 'recall_robot_preset_4':
+	          this.loadRobotPreset(4);
+	          break;
+	        case 'recall_robot_preset_5':
+	          this.loadRobotPreset(5);
+	          break;
+	        case 'recall_robot_preset_6':
+	          this.loadRobotPreset(6);
+	          break;
+	        case 'recall_robot_preset_7':
+	          this.loadRobotPreset(7);
+	          break;
+	        case 'recall_robot_preset_8':
+	          this.loadRobotPreset(8);
+	          break;
+	        case 'recall_robot_preset_9':
+	          this.loadRobotPreset(9);
+	          break;
+	        case 'recall_robot_preset_10':
+	          this.loadRobotPreset(10);
+	          break;
+	        case 'recall_robot_preset_11':
+	          this.loadRobotPreset(11);
+	          break;
+	        case 'recall_robot_preset_12':
+	          this.loadRobotPreset(12);
+	          break;
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	      this.setState({ robot_data: robot_data });
+	    }
+	  }, {
+	    key: 'handleSliders',
+	    value: function handleSliders(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      var slider_value = event.target.value;
+	      var robot_data = this.state.robot_data;
+	
+	      var items = this.state.items;
+	      for (var i = 0; i < items.length; i++) {
+	        if (items[i].i == event.target.id) {
+	          items[i].sliderValue = slider_value;
+	        }
+	      }
+	      this.setState({ items: items });
+	
+	      switch (event.target.id) {
+	        case 'wrist':
+	          robot_data[0] = Number(Math.floor(slider_value));
+	          socket.emit('robot-go-wrist', robot_data[0]);
+	          break;
+	        case 'elbow':
+	          //5-90
+	          robot_data[1] = Number(Math.floor(slider_value / 180 * 85 + 5));
+	          socket.emit('robot-go-elbow', robot_data[1]);
+	          break;
+	        case 'shoulder':
+	          //50-130
+	          robot_data[2] = Number(Math.floor(slider_value / 180 * 80 + 50));
+	          socket.emit('robot-go-shoulder', robot_data[2]);
+	          break;
+	        case 'base':
+	          //10-160
+	          robot_data[3] = Number(Math.floor(slider_value / 180 * 150 + 10));
+	          socket.emit('robot-go-base', robot_data[3]);
+	          break;
+	        default:
+	          console.log('ERROR: Slider does not exist');
+	      }
+	      this.setState({ robot_data: robot_data });
+	      socket.emit('last-known-robot-state', robot_data);
+	    }
+	  }, {
+	    key: 'saveRobotPreset',
+	    value: function saveRobotPreset(preset) {
+	      var newRobotPreset = {
+	        preset_num: preset,
+	        robot_data: this.state.robot_data
+	      };
+	      console.log(JSON.stringify(newRobotPreset));
+	      socket.emit('robot-save-preset', newRobotPreset);
+	    }
+	  }, {
+	    key: 'loadRobotPreset',
+	    value: function loadRobotPreset(preset) {
+	      var loadRobotPreset = {
+	        preset_num: preset, robot_data: this.state.robot_data
+	      };
+	      socket.emit('robot-load-preset', loadRobotPreset);
+	    }
+	  }, {
+	    key: 'onBreakpointChange',
+	    value: function onBreakpointChange(breakpoint, cols) {
+	      this.setState({
+	        breakpoint: breakpoint,
+	        cols: cols
+	      });
+	    }
+	  }, {
+	    key: 'onLayoutChange',
+	    value: function onLayoutChange(layout) {
+	      console.log("layout:", layout);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Row,
+	            null,
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 2, sm: 2, md: 2, lg: 2 },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.handleOnLock },
+	                lockIcon
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Col,
+	              { xs: 10, sm: 10, md: 10, lg: 10 },
+	              _react2.default.createElement(
+	                'h3',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Robot Arm Servo Controllers'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            ResponsiveReactGridLayout,
+	            _extends({
+	              onBreakpointChange: this.onBreakpointChange,
+	              onLayoutChange: this.onLayoutChange,
+	              isDraggable: !this.state.lock,
+	              isResizable: !this.state.lock,
+	              compactType: this.state.compactType
+	            }, this.props),
+	            _lodash2.default.map(this.state.items, function (el) {
+	              return _this2.createElement(el);
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this3 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('robot-arm-load-preset-data', function (data) {
+	        _this3.setState({ robot_data: data });
+	        console.log("preset retrieved " + _this3.state.robot_data);
+	      });
+	      this.setState({
+	        items: [{
+	          type: 1,
+	          i: "wrist",
+	          x: 0,
+	          y: 0,
+	          w: 12,
+	          h: 1,
+	          text: 'wrist'
+	        }, {
+	          type: 1,
+	          i: "elbow",
+	          x: 0,
+	          y: 1,
+	          w: 12,
+	          h: 1,
+	          text: 'elbow'
+	        }, {
+	          type: 1,
+	          i: "shoulder",
+	          x: 0,
+	          y: 2,
+	          w: 12,
+	          h: 1,
+	          text: 'shoulder'
+	        }, {
+	          type: 1,
+	          i: "base",
+	          x: 0,
+	          y: 3,
+	          w: 12,
+	          h: 1,
+	          text: 'base'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_1",
+	          x: 0,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 1'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_2",
+	          x: 1,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 2'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_3",
+	          x: 2,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 3'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_4",
+	          x: 3,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 4'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_5",
+	          x: 4,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 5'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_6",
+	          x: 5,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 6'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_7",
+	          x: 6,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 7'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_8",
+	          x: 7,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 8'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_9",
+	          x: 8,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 9'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_10",
+	          x: 9,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 10'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_11",
+	          x: 10,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 11'
+	        }, {
+	          type: 0,
+	          i: "recall_robot_preset_12",
+	          x: 11,
+	          y: 5,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-success',
+	          text: 'Play 12'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_1",
+	          x: 0,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 1'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_2",
+	          x: 1,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 2'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_3",
+	          x: 2,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 3'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_4",
+	          x: 3,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 4'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_5",
+	          x: 4,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 5'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_6",
+	          x: 5,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 6'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_7",
+	          x: 6,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 7'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_8",
+	          x: 7,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 8'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_9",
+	          x: 8,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 9'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_10",
+	          x: 9,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 10'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_11",
+	          x: 10,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 11'
+	        }, {
+	          type: 0,
+	          i: "save_robot_preset_12",
+	          x: 11,
+	          y: 6,
+	          w: 1,
+	          h: 1,
+	          className: 'btn-block btn btn-danger',
+	          text: 'Rec 12'
+	        }]
+	      });
+	    }
+	  }]);
+	
+	  return RobotArm;
+	}(_react2.default.Component);
+	
+	exports.default = RobotArm;
+	
+	RobotArm.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+
+/***/ 951:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

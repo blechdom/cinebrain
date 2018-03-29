@@ -12,6 +12,7 @@ import ATEM from 'applest-atem/lib/atem.js';
 import easymidi from 'easymidi/index.js';
 import Agenda from 'agenda';
 import HyperdeckLib from 'hyperdeck-js-lib';
+import five from 'johnny-five';
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda'}});
 agenda.on('ready', function() {
@@ -19,6 +20,13 @@ agenda.on('ready', function() {
   agenda.start();
 });
 
+let board = new five.Board();
+/*
+board.on("ready", function() {
+  
+  console.log("arduino board ready");
+  
+});*/
 
 var hyperdeck1 = new HyperdeckLib.Hyperdeck("192.168.1.245");
 var hyperdeck2 = new HyperdeckLib.Hyperdeck("192.168.1.208");
@@ -109,6 +117,24 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   });
 */
   UDPserver.bind(62455);
+board.on("ready", function() {
+  console.log("arduino board ready");
+  var servoWrist = new five.Servo(2);
+  var servoElbow = new five.Servo(3);
+  var servoShoulder = new five.Servo(4);
+  var servoBase = new five.Servo(5);
+
+  db.collection('last_known_robot_state', function (err, collection) {
+    collection.findOne({ _id: "last_known_robot_state" }, { robot_data: 1, _id:0 }, function (err, result) {
+      console.log("last known robot state result " + JSON.stringify(result));
+          servoWrist.to(Number(result.robot_data[0]));
+          servoElbow.to(Number(result.robot_data[1]));
+          servoShoulder.to(Number(result.robot_data[2]));
+          servoBase.to(Number(result.robot_data[3]));
+  
+  });
+  });
+  
 
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
@@ -204,6 +230,46 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
           console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
         });  
 
+        socket.on('robot-go-wrist', (buffer) => {
+             console.log("wrist: " + buffer);
+             servoWrist.to(Number(buffer));
+        });
+        socket.on('robot-go-elbow', (buffer) => {
+             console.log("elbow: " + buffer);
+             servoElbow.to(Number(buffer));
+        });
+        socket.on('robot-go-shoulder', (buffer) => {
+             console.log("shoulder: " + buffer);
+             servoShoulder.to(Number(buffer));
+        });
+        socket.on('robot-go-base', (buffer) => {
+             console.log("base: " + buffer);
+             servoBase.to(Number(buffer));
+        });
+        socket.on('last-known-robot-state', (buffer) => {
+            console.log("robot_data: " + JSON.stringify(buffer));
+            db.collection('last_known_robot_state').save({_id:"last_known_robot_state", robot_data:buffer});
+        
+        });
+           
+        socket.on('robot-save-preset', (data) => {
+          db.collection('robot_presets').update({preset_num: data.preset_num}, data, {upsert: true});
+        }); 
+        socket.on('robot-load-preset', (data) => {
+        
+          db.collection('robot_presets', function (err, collection) {
+            collection.findOne({preset_num: data.preset_num}, function (err, result) {
+                socket.emit('robot-load-preset-data', result.robot_data);
+                servoWrist.to(Number(result.robot_data[0]));
+                servoElbow.to(Number(result.robot_data[1]));
+                servoShoulder.to(Number(result.robot_data[2]));
+                servoBase.to(Number(result.robot_data[3]));
+               
+            });
+          });
+         
+        });  
+
 socket.on('deck1', (data) => {
             hyperdeck1.onConnected().then(function() {
 
@@ -271,7 +337,7 @@ socket.on('deck1', (data) => {
             socket.emit('deck3_stop_status', "Failed to connect to hyperdeck 3.");
           });
         });
-        
+
         socket.on('ptz-go', function(data) {
                 let UDPmessage = Buffer.from(data.buffer, 'hex');
                 UDPclient.send(PTZ_init, data.port, data.host, (err) => {
@@ -356,6 +422,7 @@ socket.on('deck1', (data) => {
           websocket.sockets.emit("telnet-response", res);
         }
   });
+});
  
 }).catch(error => {
   console.log('ERROR:', error);
