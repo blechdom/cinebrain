@@ -11,6 +11,9 @@ const Header = () => (
     </Navbar.Header>
     <Nav>
       <NavDropdown id="user-dropdown" title="Caspar">
+        <LinkContainer to="/agendas">
+        <MenuItem>Agenda List/Edit</MenuItem>
+      </LinkContainer>
        <LinkContainer to="/agenda">
           <NavItem>Caspar Schedule</NavItem>
         </LinkContainer>
@@ -38,6 +41,9 @@ const Header = () => (
        <NavDropdown id="user-dropdown" title="Misc Tools">
         <LinkContainer to="/robot_arm">
           <NavItem>Robot Arm</NavItem>
+        </LinkContainer>
+          <LinkContainer to="/robot_hand">
+          <NavItem>Robot Hand</NavItem>
         </LinkContainer>
          <LinkContainer to="/decklink">
           <NavItem>Decklink Control</NavItem>

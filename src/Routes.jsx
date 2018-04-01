@@ -3,6 +3,8 @@ import { Route, IndexRedirect, withRouter } from 'react-router';
 import App from './App.jsx';
 import IssueList from './IssueList.jsx';
 import IssueEdit from './IssueEdit.jsx';
+import AgendaList from './AgendaList.jsx';
+import AgendaEdit from './AgendaEdit.jsx';
 import IssueAddNavItem from './IssueAddNavItem.jsx';
 import DeviceList from './DeviceList.jsx';
 import DeviceEdit from './DeviceEdit.jsx';
@@ -25,6 +27,7 @@ import ATEM from './ATEMGroup1.jsx';
 import Home from './Home.jsx';
 import Help from './Help.jsx';
 import RobotArm from './RobotArm.jsx';
+import RobotHand from './RobotHand.jsx';
 
 const NoMatch = () => <p>Page Not Found</p>;
 
@@ -32,6 +35,7 @@ export default (
   <Route path="/" component={App} >
     <IndexRedirect to="/home" />
     <Route path="robot_arm" component={RobotArm} />
+    <Route path="robot_hand" component={RobotHand} />
     <Route path="decklink" component={Decklink} />
     <Route path="atem" component={ATEM} />
     <Route path="dmx_sliders" component={DMXSliders} />
@@ -49,6 +53,8 @@ export default (
     <Route path="new_controllers" component={NewControllers} />
     <Route path="issues" component={withRouter(IssueList)} />
     <Route path="issues/:id" component={IssueEdit} />
+    <Route path="agendas" component={withRouter(AgendaList)} />
+    <Route path="agendas/:id" component={AgendaEdit} />
     <Route path="issue_add_item" component={IssueAddNavItem} />
     <Route path="devices" component={withRouter(DeviceList)} />
     <Route path="devices/:id" component={DeviceEdit} />

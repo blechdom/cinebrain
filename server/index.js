@@ -12,7 +12,7 @@ import ATEM from 'applest-atem/lib/atem.js';
 import easymidi from 'easymidi/index.js';
 import Agenda from 'agenda';
 import HyperdeckLib from 'hyperdeck-js-lib';
-import five from 'johnny-five';
+//import five from 'johnny-five';
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda'}});
 agenda.on('ready', function() {
@@ -20,7 +20,8 @@ agenda.on('ready', function() {
   agenda.start();
 });
 
-let board = new five.Board();
+//let boardMega = new five.Board();
+//let boardUno = new five.Board();
 /*
 board.on("ready", function() {
   
@@ -117,13 +118,25 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   });
 */
   UDPserver.bind(62455);
-board.on("ready", function() {
-  console.log("arduino board ready");
-  var servoWrist = new five.Servo(2);
-  var servoElbow = new five.Servo(3);
-  var servoShoulder = new five.Servo(4);
-  var servoBase = new five.Servo(5);
 
+
+//boardMega.on("ready", function() {
+  //console.log("arduino board Mega ready");
+ /* var servoWrist = new five.Servo(8);
+  var servoElbow = new five.Servo(9);
+  var servoShoulder = new five.Servo(12);
+  var servoBase = new five.Servo(11);*/
+
+ 
+
+
+    //var servoThumb = new five.Servo(8);
+    //var servoPointer = new five.Servo(9);
+    //var servoMiddle = new five.Servo(10);
+    //var servoRing = new five.Servo(11);
+    //var servoPinky = new five.Servo(12);
+
+/*
   db.collection('last_known_robot_state', function (err, collection) {
     collection.findOne({ _id: "last_known_robot_state" }, { robot_data: 1, _id:0 }, function (err, result) {
       console.log("last known robot state result " + JSON.stringify(result));
@@ -134,7 +147,7 @@ board.on("ready", function() {
   
   });
   });
-  
+  */
 
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
@@ -229,7 +242,7 @@ board.on("ready", function() {
           });
           console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
         });  
-
+/*
         socket.on('robot-go-wrist', (buffer) => {
              console.log("wrist: " + buffer);
              servoWrist.to(Number(buffer));
@@ -245,6 +258,27 @@ board.on("ready", function() {
         socket.on('robot-go-base', (buffer) => {
              console.log("base: " + buffer);
              servoBase.to(Number(buffer));
+        });
+
+        socket.on('robot-go-thumb', (buffer) => {
+             console.log("thumb: " + buffer);
+             servoThumb.to(Number(buffer));
+        });
+        socket.on('robot-go-pointer', (buffer) => {
+             console.log("pointer: " + buffer);
+             servoPointer.to(Number(buffer));
+        });
+        socket.on('robot-go-middle', (buffer) => {
+             console.log("middle: " + buffer);
+             servoMiddle.to(Number(buffer));
+        });
+        socket.on('robot-go-ring', (buffer) => {
+             console.log("ring: " + buffer);
+             servoRing.to(Number(buffer));
+        });
+        socket.on('robot-go-pinky', (buffer) => {
+             console.log("pinky: " + buffer);
+             servoPinky.to(Number(buffer));
         });
         socket.on('last-known-robot-state', (buffer) => {
             console.log("robot_data: " + JSON.stringify(buffer));
@@ -268,7 +302,7 @@ board.on("ready", function() {
             });
           });
          
-        });  
+        });  */
 
 socket.on('deck1', (data) => {
             hyperdeck1.onConnected().then(function() {
@@ -364,7 +398,12 @@ socket.on('deck1', (data) => {
         });
 */
 
-
+        socket.on('agenda-list-jobs', function(data) {
+               agenda.jobs({}, function(err, jobs) {
+                 console.log("jobs: " + JSON.stringify(jobs));
+                 socket.emit("agenda-list", jobs);
+               });
+         });    
        socket.on('agenda-create-job', function(data) {
                agenda.define('print_every_minute', function(job, done) {
                     console.log('agenda-doing job every minute');
@@ -379,6 +418,7 @@ socket.on('deck1', (data) => {
                 });
               agenda.schedule(new Date('2018-03-28'));
               agenda.every('2 minutes', 'print_starting_March_28');
+              
         });    
 
 
@@ -422,8 +462,8 @@ socket.on('deck1', (data) => {
           websocket.sockets.emit("telnet-response", res);
         }
   });
-});
- 
+//});
+
 }).catch(error => {
   console.log('ERROR:', error);
 });
