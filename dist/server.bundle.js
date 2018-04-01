@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0b82a894db38683f09d0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "85bff0273d5ada4f6577"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -990,24 +990,41 @@
 	    */
 	
 	    socket.on('agenda-list-jobs', function (data) {
+	      console.log("getting jobs list");
 	      agenda.jobs({}, function (err, jobs) {
 	        console.log("jobs: " + JSON.stringify(jobs));
 	        socket.emit("agenda-list", jobs);
 	      });
 	    });
 	    socket.on('agenda-create-job', function (data) {
-	      agenda.define('print_every_minute', function (job, done) {
-	        console.log('agenda-doing job every minute');
+	      console.log("creating new job " + JSON.stringify(data));
+	      agenda.define(data.name, function (job, done) {
+	        console.log("new Job happening");
 	        done();
 	      });
-	      agenda.every('1 minutes', 'print_every_minute');
+	      agenda.schedule(new Date(data.date), data.name);
+	      agenda.jobs({}, function (err, jobs) {
+	        console.log("jobs: " + JSON.stringify(jobs));
+	        socket.emit("agenda-list", jobs);
+	      });
+	    });
+	    socket.on('delete-job', function (data) {
+	      const ObjectID = __webpack_require__(5).ObjectID;
+	      const query = {
+	        _id: ObjectID(data)
+	      };
 	
-	      agenda.define('print_starting_March_28', function (job, done) {
-	        console.log('agenda-doing job every two minutes starting on March 28');
-	        done();
+	      agenda.cancel(query, (err, numRemoved) => {
+	        if (err) {
+	          console.log(err);
+	        } else {
+	          console.log(`removed ${numRemoved} jobs`);
+	          agenda.jobs({}, function (err, jobs) {
+	            console.log("jobs: " + JSON.stringify(jobs));
+	            socket.emit("agenda-list", jobs);
+	          });
+	        }
 	      });
-	      agenda.schedule(new Date('2018-03-28'));
-	      agenda.every('2 minutes', 'print_starting_March_28');
 	    });
 	
 	    const telnetHost = '127.0.0.1';
@@ -12804,15 +12821,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(48);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(49);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
 	__webpack_require__(32);
+	
+	var _reactRouter = __webpack_require__(24);
 	
 	var _reactBootstrap = __webpack_require__(28);
 	
@@ -12822,25 +12833,183 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _Toast = __webpack_require__(35);
+	var _trash = __webpack_require__(33);
 	
-	var _Toast2 = _interopRequireDefault(_Toast);
+	var _trash2 = _interopRequireDefault(_trash);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	let socket;
+	
+	const JobRow = props => {
+	  function onDeleteClick() {
+	    props.deleteJob(props.job._id);
+	  }
+	
+	  return _react2.default.createElement(
+	    'tr',
+	    null,
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.name
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.type
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.data
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.priority
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.repeatInterval
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.nextRunAt
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.lastRunAt
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.lastFinishedAt
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { bsSize: 'xsmall', onClick: onDeleteClick },
+	        _react2.default.createElement(_trash2.default, null)
+	      )
+	    )
+	  );
+	};
+	
+	JobRow.propTypes = {
+	  job: _react2.default.PropTypes.object.isRequired,
+	  deleteJob: _react2.default.PropTypes.func.isRequired
+	};
+	
+	function JobTable(props) {
+	  const jobRows = props.jobs.map(job => _react2.default.createElement(JobRow, { key: job._id, job: job, deleteJob: props.deleteJob }));
+	  return _react2.default.createElement(
+	    _reactBootstrap.Table,
+	    { bordered: true, condensed: true, hover: true, responsive: true },
+	    _react2.default.createElement(
+	      'thead',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Name'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Type'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Data'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Priority'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Repeat Inteval'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Next Run At'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Last Run At'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Last Finished At'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Delete'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'tbody',
+	      null,
+	      jobRows
+	    )
+	  );
+	}
+	
+	JobTable.propTypes = {
+	  jobs: _react2.default.PropTypes.array.isRequired,
+	  deleteJob: _react2.default.PropTypes.func.isRequired
+	};
 	
 	class Agenda extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
 	    this.state = {
-	      agenda_list: []
+	      jobs: [],
+	      showing: false,
+	      toastVisible: false, toastMessage: '', toastType: 'success'
 	    };
 	    this.handleButtons = this.handleButtons.bind(this);
 	    this.handleNumberInput = this.handleNumberInput.bind(this);
+	    this.deleteJob = this.deleteJob.bind(this);
+	    this.showModal = this.showModal.bind(this);
+	    this.hideModal = this.hideModal.bind(this);
+	    this.submit = this.submit.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showModal() {
+	    this.setState({ showing: true });
 	  }
 	
+	  hideModal() {
+	    this.setState({ showing: false });
+	  }
+	
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	
@@ -12853,6 +13022,16 @@
 	        console.log('ERROR: Button does not exist');
 	    }
 	  }
+	  submit(e) {
+	    e.preventDefault();
+	    this.hideModal();
+	    const form = document.forms.jobAdd;
+	    const newJob = {
+	      name: form.name.value, date: form.date.value
+	    };
+	    console.log(JSON.stringify(newJob));
+	    socket.emit('agenda-create-job', newJob);
+	  }
 	  handleNumberInput(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let input_value = event.target.value;
@@ -12864,7 +13043,10 @@
 	        console.log('ERROR: Input does not exist');
 	    }
 	  }
-	
+	  deleteJob(id) {
+	    console.log("deleting job with id: " + id);
+	    socket.emit("delete-job", id);
+	  }
 	  render() {
 	    return _react2.default.createElement(
 	      'div',
@@ -12875,58 +13057,71 @@
 	        'Caspar Scheduler'
 	      ),
 	      _react2.default.createElement(
-	        _reactBootstrap.Table,
-	        { bordered: true, condensed: true, hover: true, responsive: true },
+	        _reactBootstrap.Button,
+	        { onClick: this.showModal },
+	        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
+	        'New Job',
 	        _react2.default.createElement(
-	          'thead',
-	          null,
+	          _reactBootstrap.Modal,
+	          { keyboard: true, show: this.state.showing, onHide: this.hideModal },
 	          _react2.default.createElement(
-	            'tr',
+	            _reactBootstrap.Modal.Header,
+	            { closeButton: true },
+	            _react2.default.createElement(
+	              _reactBootstrap.Modal.Title,
+	              null,
+	              'Create Job'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Body,
 	            null,
 	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Id'
-	            ),
+	              _reactBootstrap.Form,
+	              { name: 'jobAdd' },
+	              _react2.default.createElement(
+	                _reactBootstrap.FormGroup,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.ControlLabel,
+	                  null,
+	                  'Name'
+	                ),
+	                _react2.default.createElement(_reactBootstrap.FormControl, { name: 'name', autoFocus: true })
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.FormGroup,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.ControlLabel,
+	                  null,
+	                  'Date'
+	                ),
+	                _react2.default.createElement(_reactBootstrap.FormControl, { name: 'date' })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Footer,
+	            null,
 	            _react2.default.createElement(
-	              'th',
+	              _reactBootstrap.ButtonToolbar,
 	              null,
-	              'Status'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Owner'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Created'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Effort'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Completion Date'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Title'
-	            ),
-	            _react2.default.createElement('th', null)
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { type: 'button', bsStyle: 'primary', onClick: this.submit },
+	                'Submit'
+	              ),
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { bsStyle: 'link', onClick: this.hideModal },
+	                'Cancel'
+	              )
+	            )
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'tbody',
-	          null,
-	          this.state.agenda_list
 	        )
-	      )
+	      ),
+	      _react2.default.createElement(JobTable, { jobs: this.state.jobs, deleteJob: this.deleteJob })
 	    );
 	  }
 	  componentWillUnmount() {
@@ -12935,8 +13130,8 @@
 	  componentDidMount() {
 	    socket = (0, _socket3.default)();
 	    socket.on('agenda-list', jobs => {
-	      jobs.forEach(job => {});
-	      this.setState({ agenda_list: jobs });
+	      console.log(JSON.stringify(jobs));
+	      this.setState({ jobs: jobs });
 	    });
 	    socket.emit('agenda-list-jobs', {});
 	  }

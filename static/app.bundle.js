@@ -47456,15 +47456,9 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(362);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _lodash = __webpack_require__(862);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
 	__webpack_require__(832);
+	
+	var _reactRouter = __webpack_require__(509);
 	
 	var _reactBootstrap = __webpack_require__(574);
 	
@@ -47474,9 +47468,9 @@ webpackJsonp([0],{
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _Toast = __webpack_require__(836);
+	var _trash = __webpack_require__(834);
 	
-	var _Toast2 = _interopRequireDefault(_Toast);
+	var _trash2 = _interopRequireDefault(_trash);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -47488,6 +47482,144 @@ webpackJsonp([0],{
 	
 	var socket = void 0;
 	
+	var JobRow = function JobRow(props) {
+	  function onDeleteClick() {
+	    props.deleteJob(props.job._id);
+	  }
+	
+	  return _react2.default.createElement(
+	    'tr',
+	    null,
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.name
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.type
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.data
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.priority
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.repeatInterval
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.nextRunAt
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.lastRunAt
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      props.job.lastFinishedAt
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      _react2.default.createElement(
+	        _reactBootstrap.Button,
+	        { bsSize: 'xsmall', onClick: onDeleteClick },
+	        _react2.default.createElement(_trash2.default, null)
+	      )
+	    )
+	  );
+	};
+	
+	JobRow.propTypes = {
+	  job: _react2.default.PropTypes.object.isRequired,
+	  deleteJob: _react2.default.PropTypes.func.isRequired
+	};
+	
+	function JobTable(props) {
+	  var jobRows = props.jobs.map(function (job) {
+	    return _react2.default.createElement(JobRow, { key: job._id, job: job, deleteJob: props.deleteJob });
+	  });
+	  return _react2.default.createElement(
+	    _reactBootstrap.Table,
+	    { bordered: true, condensed: true, hover: true, responsive: true },
+	    _react2.default.createElement(
+	      'thead',
+	      null,
+	      _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Name'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Type'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Data'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Priority'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Repeat Inteval'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Next Run At'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Last Run At'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Last Finished At'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Delete'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'tbody',
+	      null,
+	      jobRows
+	    )
+	  );
+	}
+	
+	JobTable.propTypes = {
+	  jobs: _react2.default.PropTypes.array.isRequired,
+	  deleteJob: _react2.default.PropTypes.func.isRequired
+	};
+	
 	var Agenda = function (_React$Component) {
 	  _inherits(Agenda, _React$Component);
 	
@@ -47497,14 +47629,42 @@ webpackJsonp([0],{
 	    var _this = _possibleConstructorReturn(this, (Agenda.__proto__ || Object.getPrototypeOf(Agenda)).call(this, props, context));
 	
 	    _this.state = {
-	      agenda_list: []
+	      jobs: [],
+	      showing: false,
+	      toastVisible: false, toastMessage: '', toastType: 'success'
 	    };
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    _this.handleNumberInput = _this.handleNumberInput.bind(_this);
+	    _this.deleteJob = _this.deleteJob.bind(_this);
+	    _this.showModal = _this.showModal.bind(_this);
+	    _this.hideModal = _this.hideModal.bind(_this);
+	    _this.submit = _this.submit.bind(_this);
+	    _this.showError = _this.showError.bind(_this);
+	    _this.dismissToast = _this.dismissToast.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Agenda, [{
+	    key: 'showModal',
+	    value: function showModal() {
+	      this.setState({ showing: true });
+	    }
+	  }, {
+	    key: 'hideModal',
+	    value: function hideModal() {
+	      this.setState({ showing: false });
+	    }
+	  }, {
+	    key: 'showError',
+	    value: function showError(message) {
+	      this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	    }
+	  }, {
+	    key: 'dismissToast',
+	    value: function dismissToast() {
+	      this.setState({ toastVisible: false });
+	    }
+	  }, {
 	    key: 'handleButtons',
 	    value: function handleButtons(event) {
 	      console.log(event.target.id + ': ' + event.target.value);
@@ -47517,6 +47677,18 @@ webpackJsonp([0],{
 	        default:
 	          console.log('ERROR: Button does not exist');
 	      }
+	    }
+	  }, {
+	    key: 'submit',
+	    value: function submit(e) {
+	      e.preventDefault();
+	      this.hideModal();
+	      var form = document.forms.jobAdd;
+	      var newJob = {
+	        name: form.name.value, date: form.date.value
+	      };
+	      console.log(JSON.stringify(newJob));
+	      socket.emit('agenda-create-job', newJob);
 	    }
 	  }, {
 	    key: 'handleNumberInput',
@@ -47532,6 +47704,12 @@ webpackJsonp([0],{
 	      }
 	    }
 	  }, {
+	    key: 'deleteJob',
+	    value: function deleteJob(id) {
+	      console.log("deleting job with id: " + id);
+	      socket.emit("delete-job", id);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -47543,58 +47721,71 @@ webpackJsonp([0],{
 	          'Caspar Scheduler'
 	        ),
 	        _react2.default.createElement(
-	          _reactBootstrap.Table,
-	          { bordered: true, condensed: true, hover: true, responsive: true },
+	          _reactBootstrap.Button,
+	          { onClick: this.showModal },
+	          _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
+	          'New Job',
 	          _react2.default.createElement(
-	            'thead',
-	            null,
+	            _reactBootstrap.Modal,
+	            { keyboard: true, show: this.state.showing, onHide: this.hideModal },
 	            _react2.default.createElement(
-	              'tr',
+	              _reactBootstrap.Modal.Header,
+	              { closeButton: true },
+	              _react2.default.createElement(
+	                _reactBootstrap.Modal.Title,
+	                null,
+	                'Create Job'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Modal.Body,
 	              null,
 	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Id'
-	              ),
+	                _reactBootstrap.Form,
+	                { name: 'jobAdd' },
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Name'
+	                  ),
+	                  _react2.default.createElement(_reactBootstrap.FormControl, { name: 'name', autoFocus: true })
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Date'
+	                  ),
+	                  _react2.default.createElement(_reactBootstrap.FormControl, { name: 'date' })
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Modal.Footer,
+	              null,
 	              _react2.default.createElement(
-	                'th',
+	                _reactBootstrap.ButtonToolbar,
 	                null,
-	                'Status'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Owner'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Created'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Effort'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Completion Date'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Title'
-	              ),
-	              _react2.default.createElement('th', null)
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { type: 'button', bsStyle: 'primary', onClick: this.submit },
+	                  'Submit'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'link', onClick: this.hideModal },
+	                  'Cancel'
+	                )
+	              )
 	            )
-	          ),
-	          _react2.default.createElement(
-	            'tbody',
-	            null,
-	            this.state.agenda_list
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(JobTable, { jobs: this.state.jobs, deleteJob: this.deleteJob })
 	      );
 	    }
 	  }, {
@@ -47609,8 +47800,8 @@ webpackJsonp([0],{
 	
 	      socket = (0, _socket3.default)();
 	      socket.on('agenda-list', function (jobs) {
-	        jobs.forEach(function (job) {});
-	        _this2.setState({ agenda_list: jobs });
+	        console.log(JSON.stringify(jobs));
+	        _this2.setState({ jobs: jobs });
 	      });
 	      socket.emit('agenda-list-jobs', {});
 	    }

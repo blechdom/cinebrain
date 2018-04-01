@@ -399,27 +399,42 @@ socket.on('deck1', (data) => {
 */
 
         socket.on('agenda-list-jobs', function(data) {
+                console.log("getting jobs list");
                agenda.jobs({}, function(err, jobs) {
                  console.log("jobs: " + JSON.stringify(jobs));
                  socket.emit("agenda-list", jobs);
                });
          });    
        socket.on('agenda-create-job', function(data) {
-               agenda.define('print_every_minute', function(job, done) {
-                    console.log('agenda-doing job every minute');
+                console.log("creating new job " + JSON.stringify(data));
+               agenda.define(data.name, function(job, done) {
+                    console.log("new Job happening");
                     done();
                 });
-              agenda.every('1 minutes', 'print_every_minute');
+              agenda.schedule(new Date(data.date), data.name);
+              agenda.jobs({}, function(err, jobs) {
+                 console.log("jobs: " + JSON.stringify(jobs));
+                 socket.emit("agenda-list", jobs);
+               });
+        });  
+         socket.on('delete-job', function(data) {
+              const ObjectID = require('mongodb').ObjectID;
+              const query = {
+                _id: ObjectID(data)
+              };
 
-
-                agenda.define('print_starting_March_28', function(job, done) {
-                    console.log('agenda-doing job every two minutes starting on March 28');
-                    done();
-                });
-              agenda.schedule(new Date('2018-03-28'));
-              agenda.every('2 minutes', 'print_starting_March_28');
-              
-        });    
+              agenda.cancel(query, (err, numRemoved) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(`removed ${numRemoved} jobs`);
+                  agenda.jobs({}, function(err, jobs) {
+                 console.log("jobs: " + JSON.stringify(jobs));
+                 socket.emit("agenda-list", jobs);
+               });
+                }
+              });
+         });     
 
 
         const telnetHost = '127.0.0.1';
