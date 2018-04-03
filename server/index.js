@@ -12,9 +12,9 @@ import emptyFunction from 'fbjs/lib/emptyFunction';
 //import easymidi from 'easymidi/index.js';
 import HyperdeckLib from 'hyperdeck-js-lib';
 
-var hyperdeck1 = new HyperdeckLib.Hyperdeck("192.168.1.245");
-var hyperdeck2 = new HyperdeckLib.Hyperdeck("192.168.1.208");
-var hyperdeck3 = new HyperdeckLib.Hyperdeck("192.168.1.57");
+var hyperdeck1 = new HyperdeckLib.Hyperdeck("10.1.10.80");
+var hyperdeck2 = new HyperdeckLib.Hyperdeck("10.1.10.18");
+var hyperdeck3 = new HyperdeckLib.Hyperdeck("10.1.10.146");
 
 
 //let atem1me = new ATEM();
