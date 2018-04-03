@@ -47631,7 +47631,12 @@ webpackJsonp([0],{
 	    _this.state = {
 	      jobs: [],
 	      showing: false,
-	      toastVisible: false, toastMessage: '', toastType: 'success'
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: '',
+	      caspar_cls: ''
 	    };
 	    _this.handleButtons = _this.handleButtons.bind(_this);
 	    _this.handleNumberInput = _this.handleNumberInput.bind(_this);
@@ -47785,7 +47790,12 @@ webpackJsonp([0],{
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(JobTable, { jobs: this.state.jobs, deleteJob: this.deleteJob })
+	        _react2.default.createElement(JobTable, { jobs: this.state.jobs, deleteJob: this.deleteJob }),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
 	      );
 	    }
 	  }, {
@@ -47804,6 +47814,14 @@ webpackJsonp([0],{
 	        _this2.setState({ jobs: jobs });
 	      });
 	      socket.emit('agenda-list-jobs', {});
+	      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'cls' });
+	      socket.on('telnet-response', function (mesg) {
+	        _this2.setState({ response: mesg });
+	      });
+	      socket.emit('caspar-connection-send-command');
+	      socket.on('caspar-connection-receive-command', function (mesg) {
+	        _this2.setState({ response: mesg });
+	      });
 	    }
 	  }]);
 	

@@ -73,6 +73,11 @@ export default class Agenda extends React.Component {
       jobs:  [],
       showing: false,
       toastVisible: false, toastMessage: '', toastType: 'success',
+      host: '127.0.0.1',
+      port: 5250,
+      command: "",
+      response: '',
+      caspar_cls: '',
   };
   this.handleButtons = this.handleButtons.bind(this);
   this.handleNumberInput = this.handleNumberInput.bind(this);
@@ -165,6 +170,7 @@ render() {
         </Modal>
       </Button>
         <JobTable jobs={this.state.jobs} deleteJob={this.deleteJob} />
+        <div>{this.state.response}</div>
       </div>
     );
   }
@@ -178,6 +184,14 @@ render() {
       this.setState({jobs: jobs});
     });
     socket.emit('agenda-list-jobs', {});
+    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'cls'});
+    socket.on('telnet-response', (mesg) => {
+      this.setState({response: mesg});
+    });
+    socket.emit('caspar-connection-send-command');
+    socket.on('caspar-connection-receive-command', (mesg) => {
+      this.setState({response: mesg});
+    });
   }
 }
 

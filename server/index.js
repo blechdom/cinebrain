@@ -12,7 +12,8 @@ import ATEM from 'applest-atem/lib/atem.js';
 import easymidi from 'easymidi/index.js';
 import Agenda from 'agenda';
 import HyperdeckLib from 'hyperdeck-js-lib';
-//import five from 'johnny-five';
+import five from 'johnny-five';
+
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda'}});
 agenda.on('ready', function() {
@@ -20,7 +21,7 @@ agenda.on('ready', function() {
   agenda.start();
 });
 
-//let boardMega = new five.Board();
+let boardMega = new five.Board();
 //let boardUno = new five.Board();
 /*
 board.on("ready", function() {
@@ -121,23 +122,23 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
 
 
 //boardMega.on("ready", function() {
-  //console.log("arduino board Mega ready");
- /* var servoWrist = new five.Servo(8);
-  var servoElbow = new five.Servo(9);
-  var servoShoulder = new five.Servo(12);
-  var servoBase = new five.Servo(11);*/
+//  console.log("arduino board Mega ready");
+ // var servoWrist = new five.Servo(8);
+ // var servoElbow = new five.Servo(9);
+ // var servoShoulder = new five.Servo(12);
+ // var servoBase = new five.Servo(11);
 
  
 
-
-    //var servoThumb = new five.Servo(8);
-    //var servoPointer = new five.Servo(9);
-    //var servoMiddle = new five.Servo(10);
-    //var servoRing = new five.Servo(11);
-    //var servoPinky = new five.Servo(12);
-
 /*
-  db.collection('last_known_robot_state', function (err, collection) {
+    var servoThumb = new five.Servo(8);
+    var servoPointer = new five.Servo(9);
+    var servoMiddle = new five.Servo(10);
+    var servoRing = new five.Servo(11);
+    var servoPinky = new five.Servo(12);
+
+*/
+ /* db.collection('last_known_robot_state', function (err, collection) {
     collection.findOne({ _id: "last_known_robot_state" }, { robot_data: 1, _id:0 }, function (err, result) {
       console.log("last known robot state result " + JSON.stringify(result));
           servoWrist.to(Number(result.robot_data[0]));
@@ -146,8 +147,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
           servoBase.to(Number(result.robot_data[3]));
   
   });
-  });
-  */
+  });*/
+  
 
   websocket = socketio(server);
   websocket.on('connection', (socket) => {
@@ -242,8 +243,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
           });
           console.log("dmx_usb_pro: " + JSON.stringify(dmx_usb_pro.universe));
         });  
-/*
-        socket.on('robot-go-wrist', (buffer) => {
+
+     /*   socket.on('robot-go-wrist', (buffer) => {
              console.log("wrist: " + buffer);
              servoWrist.to(Number(buffer));
         });
@@ -258,9 +259,9 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         socket.on('robot-go-base', (buffer) => {
              console.log("base: " + buffer);
              servoBase.to(Number(buffer));
-        });
+        });*/
 
-        socket.on('robot-go-thumb', (buffer) => {
+     /*   socket.on('robot-go-thumb', (buffer) => {
              console.log("thumb: " + buffer);
              servoThumb.to(Number(buffer));
         });
@@ -302,8 +303,8 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
             });
           });
          
-        });  */
-
+        });  
+*/
 socket.on('deck1', (data) => {
             hyperdeck1.onConnected().then(function() {
 
@@ -408,7 +409,7 @@ socket.on('deck1', (data) => {
        socket.on('agenda-create-job', function(data) {
                 console.log("creating new job " + JSON.stringify(data));
                agenda.define(data.name, function(job, done) {
-                    console.log("new Job happening");
+                    console.log(data.name + " new Job happening");
                     done();
                 });
               agenda.schedule(new Date(data.date), data.name);
