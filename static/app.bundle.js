@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(953);
+	var _ContextWrapper = __webpack_require__(954);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -164,11 +164,15 @@ webpackJsonp([0],{
 	
 	var _Decklink2 = _interopRequireDefault(_Decklink);
 	
-	var _Home = __webpack_require__(951);
+	var _DecklinkTony = __webpack_require__(951);
+	
+	var _DecklinkTony2 = _interopRequireDefault(_DecklinkTony);
+	
+	var _Home = __webpack_require__(952);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(952);
+	var _Help = __webpack_require__(953);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -185,7 +189,8 @@ webpackJsonp([0],{
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
-	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/tony' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'tony', component: _DecklinkTony2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'decklink', component: _Decklink2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group2', component: _AudioGroup4.default }),
@@ -255,50 +260,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(
 	          'a',
 	          { href: '/' },
-	          'KCAT: Cinebrain'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Nav,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Tools' },
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_sliders' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'DMX sliders'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/decklink' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Video Recorders'
-	          )
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Nav,
-	      { pullRight: true },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/help' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Help'
-	          )
+	          'Tony: Cinebrain'
 	        )
 	      )
 	    )
@@ -49251,21 +49213,27 @@ webpackJsonp([0],{
 	      switch (event.target.value) {
 	
 	        case 'deck1_rec':
+	          this.setState({ deck1_response: "Starting to Record..." });
 	          socket.emit('deck1', "rec");
 	          break;
 	        case 'deck1_stop':
+	          this.setState({ deck1_response: "Stopping..." });
 	          socket.emit('deck1', "stop");
 	          break;
 	        case 'deck2_rec':
+	          this.setState({ deck2_response: "Starting to Record..." });
 	          socket.emit('deck2', "rec");
 	          break;
 	        case 'deck2_stop':
+	          this.setState({ deck2_response: "Stopping..." });
 	          socket.emit('deck2', "stop");
 	          break;
 	        case 'deck3_rec':
+	          this.setState({ deck3_response: "Starting to Record..." });
 	          socket.emit('deck3', "rec");
 	          break;
 	        case 'deck3_stop':
+	          this.setState({ deck3_response: "Stopping..." });
 	          socket.emit('deck3', "stop");
 	          break;
 	
@@ -49400,42 +49368,42 @@ webpackJsonp([0],{
 	          deck1Response = 'Deck 1 RECORDING';
 	        }
 	        console.log("deck1 recording " + Number(mesg.code));
-	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck1_response: "record: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck1_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 1 STOPPED';
 	        }
 	        console.log("deck1 stop " + Number(mesg.code));
-	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck1_response: "stop: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck2_rec_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 2 RECORDING';
 	        }
 	        console.log("deck2 recording " + Number(mesg.code));
-	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck2_response: "record: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck2_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 2 STOPPED';
 	        }
 	        console.log("deck2 stop " + Number(mesg.code));
-	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck2_response: "stop: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck3_rec_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 3 RECORDING';
 	        }
 	        console.log("deck3 recording " + Number(mesg.code));
-	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck3_response: "record: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck3_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 3 STOPPED';
 	        }
 	        console.log("deck3 stop " + Number(mesg.code));
-	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck3_response: "stop: " + JSON.stringify(mesg) });
 	      });
 	      console.log("deck1Response " + deck1Response);
 	      console.log("deck2Response " + deck2Response);
@@ -49454,6 +49422,276 @@ webpackJsonp([0],{
 /***/ }),
 
 /***/ 951:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(845);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var socket = void 0;
+	
+	var Decklink = function (_React$Component) {
+	  _inherits(Decklink, _React$Component);
+	
+	  function Decklink(props, context) {
+	    _classCallCheck(this, Decklink);
+	
+	    var _this = _possibleConstructorReturn(this, (Decklink.__proto__ || Object.getPrototypeOf(Decklink)).call(this, props, context));
+	
+	    _this.state = {
+	      deck1_response: '',
+	      deck2_response: ''
+	    };
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Decklink, [{
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      switch (event.target.value) {
+	
+	        case 'decks_play':
+	          this.setState({ deck1_response: "Starting to Play..." });
+	          socket.emit('deck1', "play");
+	          this.setState({ deck2_response: "Starting to Play..." });
+	          socket.emit('deck2', "play");
+	          break;
+	        case 'decks_stop':
+	          this.setState({ deck1_response: "Stopping..." });
+	          socket.emit('deck1', "stop");
+	          this.setState({ deck2_response: "Stopping..." });
+	          socket.emit('deck2', "stop");
+	          break;
+	        case 'deck1_play':
+	          this.setState({ deck1_response: "Starting to Play..." });
+	          socket.emit('deck1', "play");
+	          break;
+	        case 'deck1_stop':
+	          this.setState({ deck1_response: "Stopping..." });
+	          socket.emit('deck1', "stop");
+	          break;
+	        case 'deck2_play':
+	          this.setState({ deck2_response: "Starting to Play..." });
+	          socket.emit('deck2', "play");
+	          break;
+	        case 'deck2_stop':
+	          this.setState({ deck2_response: "Stopping..." });
+	          socket.emit('deck2', "stop");
+	          break;
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'center',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'DECKLINK VIDEO RECORDERS'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'ALL DECKS'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-success', width: '50%', value: 'decks_play', onClick: this.handleButtons },
+	                'PLAY ALL'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'decks_stop', onClick: this.handleButtons },
+	                'STOP ALL'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 1 STATUS: ',
+	                this.state.deck1_response
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 2 STATUS: ',
+	                this.state.deck2_response
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 1'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-success', width: '50%', value: 'deck1_play', onClick: this.handleButtons },
+	                'PLAY'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck1_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 1 STATUS: ',
+	                this.state.deck1_response
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h4',
+	                null,
+	                'Deck 2'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-success', width: '50%', value: 'deck2_play', onClick: this.handleButtons },
+	                'PLAY'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn-block btn btn-warning', width: '50%', value: 'deck2_stop', onClick: this.handleButtons },
+	                'STOP'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                'DECK 2 STATUS: ',
+	                this.state.deck2_response
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      var deck1Response = '';
+	      var deck2Response = '';
+	      socket = (0, _socket3.default)();
+	      socket.on('deck1_play_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 PLAYING';
+	        }
+	        console.log("deck1 playing" + Number(mesg.code));
+	        _this2.setState({ deck1_response: "play: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck1_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 1 STOPPED';
+	        }
+	        console.log("deck1 stop " + Number(mesg.code));
+	        _this2.setState({ deck1_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_play_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 RECORDING';
+	        }
+	        console.log("deck2 playing " + Number(mesg.code));
+	        _this2.setState({ deck2_response: "play: " + JSON.stringify(mesg) });
+	      });
+	      socket.on('deck2_stop_status', function (mesg) {
+	        if (Number(mesg.code) == 200) {
+	          deck1Response = 'Deck 2 STOPPED';
+	        }
+	        console.log("deck2 stop " + Number(mesg.code));
+	        _this2.setState({ deck2_response: "stop: " + JSON.stringify(mesg) });
+	      });
+	
+	      console.log("deck1Response " + deck1Response);
+	      console.log("deck2Response " + deck2Response);
+	
+	      this.setState({ deck1_response: deck1Response });
+	      this.setState({ deck2_response: deck2Response });
+	    }
+	  }]);
+	
+	  return Decklink;
+	}(_react2.default.Component);
+	
+	exports.default = Decklink;
+
+/***/ }),
+
+/***/ 952:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49518,6 +49756,9 @@ webpackJsonp([0],{
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
+	      var deck1Response = '';
+	      var deck2Response = '';
+	      var deck3Response = '';
 	      socket = (0, _socket3.default)();
 	      socket.on('dmx-load-preset-data', function (data) {
 	        _this2.setState({ dmx_data: data });
@@ -49528,42 +49769,42 @@ webpackJsonp([0],{
 	          deck1Response = 'Deck 1 RECORDING';
 	        }
 	        console.log("deck1 recording " + Number(mesg.code));
-	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck1_response: "record: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck1_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 1 STOPPED';
 	        }
 	        console.log("deck1 stop " + Number(mesg.code));
-	        _this2.setState({ deck1_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck1_response: "stop: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck2_rec_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 2 RECORDING';
 	        }
 	        console.log("deck2 recording " + Number(mesg.code));
-	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck2_response: "record: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck2_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 2 STOPPED';
 	        }
 	        console.log("deck2 stop " + Number(mesg.code));
-	        _this2.setState({ deck2_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck2_response: "stop: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck3_rec_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 3 RECORDING';
 	        }
 	        console.log("deck3 recording " + Number(mesg.code));
-	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck3_response: "record: " + JSON.stringify(mesg) });
 	      });
 	      socket.on('deck3_stop_status', function (mesg) {
 	        if (Number(mesg.code) == 200) {
 	          deck1Response = 'Deck 3 STOPPED';
 	        }
 	        console.log("deck3 stop " + Number(mesg.code));
-	        _this2.setState({ deck3_response: JSON.stringify(mesg) });
+	        _this2.setState({ deck3_response: "stop: " + JSON.stringify(mesg) });
 	      });
 	    }
 	  }, {
@@ -49597,12 +49838,18 @@ webpackJsonp([0],{
 	          break;
 	        case 'deck_all_rec':
 	          console.log("RECORD ALL");
+	          this.setState({ deck1_response: "Starting to Record..." });
+	          this.setState({ deck2_response: "Starting to Record..." });
+	          this.setState({ deck3_response: "Starting to Record..." });
 	          socket.emit('deck1', "rec");
 	          socket.emit('deck2', "rec");
 	          socket.emit('deck3', "rec");
 	          break;
 	        case 'deck_all_stop':
 	          console.log("STOP ALL");
+	          this.setState({ deck1_response: "Stopping..." });
+	          this.setState({ deck2_response: "Stopping..." });
+	          this.setState({ deck3_response: "Stopping..." });
 	          socket.emit('deck1', "stop");
 	          socket.emit('deck2', "stop");
 	          socket.emit('deck3', "stop");
@@ -49713,7 +49960,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 952:
+/***/ 953:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49787,7 +50034,7 @@ webpackJsonp([0],{
 
 /***/ }),
 
-/***/ 953:
+/***/ 954:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

@@ -25,6 +25,7 @@ import ATEMGroup3 from './ATEMGroup3.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import MidiLooper from './MidiLooper.jsx';
 import Decklink from './Decklink.jsx';
+import Tony from './Decklink-Tony.jsx';
 import Home from './Home.jsx';
 import Help from './Help.jsx';
 
@@ -32,7 +33,8 @@ const NoMatch = () => <p>Page Not Found</p>;
 
 export default (
   <Route path="/" component={App} >
-    <IndexRedirect to="/home" />
+    <IndexRedirect to="/tony" />
+    <Route path="tony" component={Tony} />
     <Route path="decklink" component={Decklink} />
     <Route path="audio_group1" component={AudioGroup1} />
     <Route path="audio_group2" component={AudioGroup2} />

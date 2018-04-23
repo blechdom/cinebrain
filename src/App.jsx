@@ -7,26 +7,8 @@ import MdMoreVert from 'react-icons/lib/md/more-vert';
 const Header = () => (
   <Navbar fluid>
     <Navbar.Header>
-      <Navbar.Brand><a href="/">KCAT: Cinebrain</a></Navbar.Brand>
+      <Navbar.Brand><a href="/">Tony: Cinebrain</a></Navbar.Brand>
     </Navbar.Header>
-    <Nav>
-      <NavDropdown id="user-dropdown" title="Tools">
-        <LinkContainer to="/dmx_sliders">
-          <NavItem>DMX sliders</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/decklink">
-          <NavItem>Video Recorders
-          </NavItem>
-        </LinkContainer>
-	    </NavDropdown>
-    </Nav>
-    <Nav pullRight>
-      <NavDropdown id="user-dropdown" title={<MdMoreVert size={18} />} noCaret>
-		    <LinkContainer to="/help">
-			 <MenuItem>Help</MenuItem>
-      	</LinkContainer>
-	</NavDropdown>
-    </Nav>
   </Navbar>
 );
 
