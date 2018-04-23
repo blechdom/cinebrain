@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "075222d40880b9f507a8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b7cb1cbc7723ea3f9ffb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(82);
+	module.exports = __webpack_require__(83);
 
 
 /***/ }),
@@ -1443,7 +1443,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(81);
+	var _ContextWrapper = __webpack_require__(82);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1661,6 +1661,10 @@
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
+	var _tony = __webpack_require__(81);
+	
+	var _tony2 = _interopRequireDefault(_tony);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	const NoMatch = () => _react2.default.createElement(
@@ -1672,7 +1676,8 @@
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
-	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/tony' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'tony', component: _tony2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group2', component: _AudioGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group1', component: _VideoGroup2.default }),
@@ -1738,190 +1743,8 @@
 	      null,
 	      _react2.default.createElement(
 	        'a',
-	        { href: '/' },
-	        'Cinebrain-Presets-Branch'
-	      )
-	    )
-	  ),
-	  _react2.default.createElement(
-	    _reactBootstrap.Nav,
-	    null,
-	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Group 1' },
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_spot_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Spot Light'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_255_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Spot Light 255'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/ptz_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Camera'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/video_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Video'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/audio_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Audio'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Group 2' },
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_155_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Spot Light 155'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_wash_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Wash Light'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/ptz_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Camera'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/video_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Video'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/audio_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Audio'
-	        )
-	      )
-	    )
-	  ),
-	  _react2.default.createElement(
-	    _reactBootstrap.Nav,
-	    { pullRight: true },
-	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/diagnostics' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Diagnostics'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/control_interface' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Control Interface'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/new_controllers' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'New Controllers'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/devices' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Devices'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/issues' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Issues'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/issue_add_item' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Add Issue'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/midi_looper' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'MIDI Looper'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/help' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Help'
-	        )
+	        { href: '/tony' },
+	        'Cinebrain'
 	      )
 	    )
 	  )
@@ -14477,6 +14300,109 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactDom = __webpack_require__(43);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(44);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(30);
+	
+	var _reactBootstrap = __webpack_require__(26);
+	
+	var _socket = __webpack_require__(57);
+	
+	var _socket2 = __webpack_require__(54);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	let socket;
+	
+	class VideoGroup1 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	
+	    this.handleButtons = this.handleButtons.bind(this);
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 VOLUME 0.0" });
+	    switch (event.target.value) {
+	      case 'vid_stop':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-0' });
+	        break;
+	      case 'vid_start':
+	        socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 amb.mp4 LOOP' });
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-success', value: 'vid_start', onClick: this.handleButtons },
+	          'start'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-danger', value: 'vid_stop', onClick: this.handleButtons },
+	          'stop'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	  }
+	}
+	exports.default = VideoGroup1;
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(20);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	class ContextWrapper extends _react2.default.Component {
@@ -14500,7 +14426,7 @@
 	};
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -14531,7 +14457,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(83)(updatedModules, updatedModules);
+					__webpack_require__(84)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -14544,7 +14470,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	/*

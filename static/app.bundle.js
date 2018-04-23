@@ -21,7 +21,7 @@ webpackJsonp([0],{
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(952);
+	var _ContextWrapper = __webpack_require__(953);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -168,6 +168,10 @@ webpackJsonp([0],{
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
+	var _tony = __webpack_require__(952);
+	
+	var _tony2 = _interopRequireDefault(_tony);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var NoMatch = function NoMatch() {
@@ -181,7 +185,8 @@ webpackJsonp([0],{
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
-	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/tony' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'tony', component: _tony2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group1', component: _AudioGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'audio_group2', component: _AudioGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'video_group1', component: _VideoGroup2.default }),
@@ -249,190 +254,8 @@ webpackJsonp([0],{
 	        null,
 	        _react2.default.createElement(
 	          'a',
-	          { href: '/' },
+	          { href: '/tony' },
 	          'Cinebrain'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Nav,
-	      null,
-	      _react2.default.createElement(
-	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Group 1' },
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_spot_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Spot Light'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_255_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Spot Light 255'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/ptz_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Camera'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/video_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Video'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/audio_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Audio'
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: 'Group 2' },
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_155_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Spot Light 155'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/dmx_wash_group1' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Wash Light'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/ptz_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'Camera'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/video_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Video'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/audio_group2' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Audio'
-	          )
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      _reactBootstrap.Nav,
-	      { pullRight: true },
-	      _react2.default.createElement(
-	        _reactBootstrap.NavDropdown,
-	        { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/diagnostics' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Diagnostics'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/control_interface' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Control Interface'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/new_controllers' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'New Controllers'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/devices' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Devices'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/issues' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Issues'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/issue_add_item' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Add Issue'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/midi_looper' },
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            null,
-	            'MIDI Looper'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouterBootstrap.LinkContainer,
-	          { to: '/help' },
-	          _react2.default.createElement(
-	            _reactBootstrap.MenuItem,
-	            null,
-	            'Help'
-	          )
 	        )
 	      )
 	    )
@@ -49538,6 +49361,140 @@ webpackJsonp([0],{
 /***/ }),
 
 /***/ 952:
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(326);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(362);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(859);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(832);
+	
+	var _reactBootstrap = __webpack_require__(574);
+	
+	var _socket = __webpack_require__(923);
+	
+	var _socket2 = __webpack_require__(869);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var socket = void 0;
+	
+	var VideoGroup1 = function (_React$Component) {
+	  _inherits(VideoGroup1, _React$Component);
+	
+	  function VideoGroup1(props, context) {
+	    _classCallCheck(this, VideoGroup1);
+	
+	    var _this = _possibleConstructorReturn(this, (VideoGroup1.__proto__ || Object.getPrototypeOf(VideoGroup1)).call(this, props, context));
+	
+	    _this.state = {
+	      lock: true,
+	      host: '127.0.0.1',
+	      port: 5250,
+	      command: "",
+	      response: ''
+	    };
+	
+	    _this.handleButtons = _this.handleButtons.bind(_this);
+	
+	    return _this;
+	  }
+	
+	  _createClass(VideoGroup1, [{
+	    key: 'handleButtons',
+	    value: function handleButtons(event) {
+	      console.log(event.target.id + ': ' + event.target.value);
+	      socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: "MIXER 1-0 VOLUME 0.0" });
+	      switch (event.target.value) {
+	        case 'vid_stop':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 1-0' });
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'STOP 2-0' });
+	          break;
+	        case 'vid_start':
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 1-0 CV2_1 LOOP' });
+	          socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'PLAY 2-0 GAZE2_1 LOOP' });
+	
+	          break;
+	        default:
+	          console.log('ERROR: Button does not exist');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-success', value: 'vid_start', onClick: this.handleButtons },
+	            'start'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-danger', value: 'vid_stop', onClick: this.handleButtons },
+	            'stop'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.state.response
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      socket.off(this.props.page);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      socket = (0, _socket3.default)();
+	      socket.on('telnet-response', function (mesg) {
+	        _this2.setState({ response: mesg });
+	      });
+	    }
+	  }]);
+	
+	  return VideoGroup1;
+	}(_react2.default.Component);
+	
+	exports.default = VideoGroup1;
+
+/***/ }),
+
+/***/ 953:
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
