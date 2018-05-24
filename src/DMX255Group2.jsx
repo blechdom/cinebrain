@@ -171,22 +171,22 @@ handleSliders(event) {
 
   switch (event.target.id) {
   case 'spot_pan':
-      slider_value = Math.floor(213-((slider_value/255)*86));
+      //slider_value = Math.floor(213-((slider_value/255)*86));
       dmx_data[0]=slider_value;
       this.sendDMX({1: slider_value});
       break;
   case 'spot_tilt':
-      slider_value = Math.floor((slider_value/255)*72);
+      //slider_value = Math.floor((slider_value/255)*72);
       dmx_data[2]=slider_value;
       this.sendDMX({3: slider_value});
       break;
   case 'spot_fine_pan':
-      dmx_data[1]=slider_value;
-      this.sendDMX({2: slider_value});
+      dmx_data[5]=slider_value;
+      this.sendDMX({6: slider_value});
       break;
   case 'spot_fine_tilt':
-      dmx_data[3]=slider_value;
-      this.sendDMX({4: slider_value});
+      dmx_data[6]=slider_value;
+      this.sendDMX({7: slider_value});
       break;
   case 'spot_speed':
       dmx_data[4]=slider_value;
@@ -195,6 +195,14 @@ handleSliders(event) {
   case 'spot_intensity':
       dmx_data[9]=slider_value;
       this.sendDMX({10: slider_value});
+      break;
+    case 'prism':
+      dmx_data[8]=slider_value;
+      this.sendDMX({9: slider_value});
+      break;
+  case 'automatic':
+      dmx_data[12]=slider_value;
+      this.sendDMX({13: slider_value});
       break;
 
   default:
@@ -290,7 +298,7 @@ render() {
                 x: 0,
                 y: 2,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Intensity',
                 
               },
@@ -298,52 +306,70 @@ render() {
                 type: 1,
                 i: "spot_tilt",
                 x: 0,
-                y: 8,
+                y: 4,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Tilt',
               },
               {
                 type: 1,
                 i: "spot_pan",
                 x: 0,
-                y: 4,
+                y: 3,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Pan',
               },
               {
                 type: 1,
                 i: "spot_speed",
                 x: 0,
-                y: 12,
+                y: 5,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Speed',
               },
               {
                 type: 1,
                 i: "spot_fine_tilt",
                 x: 0,
-                y: 10, 
+                y: 7, 
                 w: 12,
-                h: 2,
-                text: 'Spot Fine Tilt',
+                h: 1,
+                text: 'Gobo',
               },
               {
+                type: 1,
+                i: "prism",
+                x: 0,
+                y: 8,
+                w: 12,
+                h: 1,
+                text: 'Prism',
+              },
+               {
+                type: 1,
+                i: "automatic",
+                x: 0,
+                y: 9,
+                w: 12,
+                h: 1,
+                text: 'Auto Movement',
+              },
+               {
                 type: 1,
                 i: "spot_fine_pan",
                 x: 0,
                 y: 6,
                 w: 12,
-                h: 2,
-                text: 'Spot Fine Pan',
+                h: 1,
+                text: 'Color',
               },
               {
                 type: 0,
                 i: "recall_preset_1",
                 x: 0,
-                y: 14,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -353,7 +379,7 @@ render() {
                 type: 0,
                 i: "recall_preset_2",
                 x: 1,
-                y: 14,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -363,7 +389,7 @@ render() {
                 type: 0,
                 i: "recall_preset_3",
                 x: 2,
-                y: 14,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -373,7 +399,7 @@ render() {
                 type: 0,
                 i: "recall_preset_4",
                 x: 3,
-                y: 14,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -383,7 +409,7 @@ render() {
                 type: 0,
                 i: "recall_preset_5",
                 x: 4,
-                y: 14,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -393,7 +419,7 @@ render() {
                 type: 0,
                 i: "recall_preset_6",
                 x: 5,
-                y: 14,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -403,7 +429,7 @@ render() {
                 type: 0,
                 i: "save_preset_1",
                 x: 0,
-                y: 15,
+                y: 11,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -413,7 +439,7 @@ render() {
                 type: 0,
                 i: "save_preset_2",
                 x: 1,
-                y: 15,
+                y: 11,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -423,7 +449,7 @@ render() {
                 type: 0,
                 i: "save_preset_3",
                 x: 2,
-                y: 15,
+                y: 11,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -433,7 +459,7 @@ render() {
                 type: 0,
                 i: "save_preset_4",
                 x: 3,
-                y: 15,
+                y: 11,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -443,7 +469,7 @@ render() {
                 type: 0,
                 i: "save_preset_5",
                 x: 4,
-                y: 15,
+                y: 11,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -453,7 +479,7 @@ render() {
                 type: 0,
                 i: "save_preset_6",
                 x: 5,
-                y: 15,
+                y: 11,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',

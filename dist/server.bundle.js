@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "61927811c588d12febb5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "991b26ea6bfa285a2ebf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -546,7 +546,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(89);
+	module.exports = __webpack_require__(94);
 
 
 /***/ }),
@@ -603,13 +603,12 @@
 	
 	var _hyperdeckJsLib2 = _interopRequireDefault(_hyperdeckJsLib);
 	
-	var _johnnyFive = __webpack_require__(16);
-	
-	var _johnnyFive2 = _interopRequireDefault(_johnnyFive);
+	var _casparcgConnection = __webpack_require__(16);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_sourceMapSupport2.default.install();
+	//import five from 'johnny-five';
 	
 	
 	var agenda = new _agenda2.default({ db: { address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda' } });
@@ -618,7 +617,7 @@
 	  agenda.start();
 	});
 	
-	let boardMega = new _johnnyFive2.default.Board();
+	//let boardMega = new five.Board();
 	//let boardUno = new five.Board();
 	/*
 	board.on("ready", function() {
@@ -639,7 +638,7 @@
 	atemTV1.connect('192.168.10.240');
 	//atemTV2.connect('192.168.10.242');
 	var midiOutA;
-	//var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
+	var midiOutA = new _index2.default.Output('MIDIPLUS TBOX 2x2 1');
 	
 	let appModule = __webpack_require__(17);
 	let db;
@@ -648,13 +647,11 @@
 	let UDPserver;
 	let UDPclient;
 	
-	var _require = __webpack_require__(88);
+	//const {CasparCG} = require("casparcg-connection");
 	
-	const CasparCG = _require.CasparCG;
+	//var casparConnection = new CasparCG();
+	//casparConnection.play(2, 1, "group2_loop1.mov");
 	
-	
-	var casparConnection = new CasparCG();
-	casparConnection.play(2, 1, "group2_loop1.mov");
 	
 	const PTZ_init = Buffer.from('020000010000000001', 'hex');
 	const PTZ_network_setting = Buffer.from('02045d4b9d2eceff1921680102ff255255255000ffrobocam2ff03', 'hex');
@@ -683,7 +680,7 @@
 	      current_universe = result.dmx_data;
 	      console.log("current_universe is " + JSON.stringify(current_universe.data));
 	      current_universe_buffer = Buffer(current_universe.data);
-	      dmx_usb_pro = new _dmx_usb_pro2.default('COM3', current_universe_buffer);
+	      dmx_usb_pro = new _dmx_usb_pro2.default('COM4', current_universe_buffer);
 	    });
 	  });
 	
@@ -717,15 +714,16 @@
 	  */
 	  UDPserver.bind(62455);
 	
-	  //boardMega.on("ready", function() {
+	  /*boardMega.on("ready", function() {
 	  //  console.log("arduino board Mega ready");
-	  // var servoWrist = new five.Servo(8);
-	  // var servoElbow = new five.Servo(9);
-	  // var servoShoulder = new five.Servo(12);
-	  // var servoBase = new five.Servo(11);
-	
-	
-	  /*
+	   // var servoWrist = new five.Servo(8);
+	   // var servoElbow = new five.Servo(9);
+	   // var servoShoulder = new five.Servo(12);
+	   // var servoBase = new five.Servo(11);
+	  
+	   
+	  
+	  
 	      var servoThumb = new five.Servo(8);
 	      var servoPointer = new five.Servo(9);
 	      var servoMiddle = new five.Servo(10);
@@ -853,9 +851,8 @@
 	       socket.on('robot-go-base', (buffer) => {
 	            console.log("base: " + buffer);
 	            servoBase.to(Number(buffer));
-	       });*/
-	
-	    /*   socket.on('robot-go-thumb', (buffer) => {
+	       });
+	         socket.on('robot-go-thumb', (buffer) => {
 	            console.log("thumb: " + buffer);
 	            servoThumb.to(Number(buffer));
 	       });
@@ -975,22 +972,41 @@
 	        });
 	      });
 	    });
-	    /*    socket.on('midi-cc', function(data) {
-	           console.log("sending midi cc change-cc#: " + data.controller + " cc-value: " + data.value + " on channel: " + data.channel);
-	              
-	              midiOutA.send('cc', {
-	                controller: data.controller,
-	                value: data.value,
-	                channel: data.channel
-	              });
-	        });
-	        socket.on('midi-program', function(data) {
-	              console.log("sending midi program change-program#: " + data.number + " on channel: " + data.channel);
-	              midiOutA.send('program', {
-	                number: data.number,
-	                channel: data.channel
-	              });
-	        });
+	    socket.on('midi-noteon', function (data) {
+	      console.log("sending midi noteon: " + data.note + " velocity: " + data.velocity + " on channel: " + data.channel);
+	
+	      midiOutA.send('noteon', {
+	        note: data.note,
+	        velocity: data.velocity,
+	        channel: data.channel
+	      });
+	    });
+	    socket.on('midi-noteoff', function (data) {
+	      console.log("sending midi noteoff: " + data.note + " velocity: " + data.velocity + " on channel: " + data.channel);
+	
+	      midiOutA.send('noteoff', {
+	        note: data.note,
+	        velocity: data.velocity,
+	        channel: data.channel
+	      });
+	    });
+	    /*
+	    socket.on('midi-cc', function(data) {
+	      console.log("sending midi cc change-cc#: " + data.controller + " cc-value: " + data.value + " on channel: " + data.channel);
+	         
+	         midiOutA.send('cc', {
+	           controller: data.controller,
+	           value: data.value,
+	           channel: data.channel
+	         });
+	    });
+	    socket.on('midi-program', function(data) {
+	         console.log("sending midi program change-program#: " + data.number + " on channel: " + data.channel);
+	         midiOutA.send('program', {
+	           number: data.number,
+	           channel: data.channel
+	         });
+	    });
 	    */
 	
 	    socket.on('agenda-list-jobs', function (data) {
@@ -1000,13 +1016,27 @@
 	        socket.emit("agenda-list", jobs);
 	      });
 	    });
+	
+	    socket.on('get-casparconnection-cls', function (data) {
+	      console.log("getting caspar connection cls");
+	
+	      var ccg = new _casparcgConnection.CasparCG({ onConnected: function onConnected(e) {
+	          ccg.cls().then(response => {
+	            console.log(response);
+	            socket.emit("receive-casparconnection-cls", response);
+	          }).catch(error => {
+	            console.error(error);
+	          });
+	        } });
+	    });
+	
 	    socket.on('agenda-create-job', function (data) {
 	      console.log("creating new job " + JSON.stringify(data));
 	      agenda.define(data.name, function (job, done) {
 	        console.log(data.name + " new Job happening");
 	        done();
 	      });
-	      agenda.schedule(new Date(data.date), data.name);
+	      agenda.schedule(new Date(data.date), data.name, { clip: data.clip, duration: data.duration });
 	      agenda.jobs({}, function (err, jobs) {
 	        console.log("jobs: " + JSON.stringify(jobs));
 	        socket.emit("agenda-list", jobs);
@@ -1242,7 +1272,7 @@
 /* 16 */
 /***/ (function(module, exports) {
 
-	module.exports = require("johnny-five");
+	module.exports = require("casparcg-connection");
 
 /***/ }),
 /* 17 */
@@ -1702,7 +1732,7 @@
 	
 	var _Routes2 = _interopRequireDefault(_Routes);
 	
-	var _ContextWrapper = __webpack_require__(87);
+	var _ContextWrapper = __webpack_require__(93);
 	
 	var _ContextWrapper2 = _interopRequireDefault(_ContextWrapper);
 	
@@ -1876,57 +1906,77 @@
 	
 	var _DMXWashGroup2 = _interopRequireDefault(_DMXWashGroup);
 	
-	var _DMX155Group = __webpack_require__(69);
+	var _DMXWashGroup3 = __webpack_require__(69);
+	
+	var _DMXWashGroup4 = _interopRequireDefault(_DMXWashGroup3);
+	
+	var _DMX155Group = __webpack_require__(70);
 	
 	var _DMX155Group2 = _interopRequireDefault(_DMX155Group);
 	
-	var _DMX255Group = __webpack_require__(70);
+	var _DMX155Group3 = __webpack_require__(71);
 	
-	var _DMX255Group2 = _interopRequireDefault(_DMX255Group);
+	var _DMX155Group4 = _interopRequireDefault(_DMX155Group3);
 	
-	var _PTZGroup = __webpack_require__(71);
+	var _PTZGroup = __webpack_require__(72);
 	
 	var _PTZGroup2 = _interopRequireDefault(_PTZGroup);
 	
-	var _Diagnostics = __webpack_require__(73);
+	var _Diagnostics = __webpack_require__(74);
 	
 	var _Diagnostics2 = _interopRequireDefault(_Diagnostics);
 	
-	var _MidiLooper = __webpack_require__(78);
+	var _MidiLooper = __webpack_require__(79);
 	
 	var _MidiLooper2 = _interopRequireDefault(_MidiLooper);
 	
-	var _Agenda = __webpack_require__(79);
+	var _Agenda = __webpack_require__(80);
 	
 	var _Agenda2 = _interopRequireDefault(_Agenda);
 	
-	var _Decklink = __webpack_require__(80);
+	var _Decklink = __webpack_require__(82);
 	
 	var _Decklink2 = _interopRequireDefault(_Decklink);
 	
-	var _KCATHome = __webpack_require__(81);
+	var _KCATHome = __webpack_require__(83);
 	
 	var _KCATHome2 = _interopRequireDefault(_KCATHome);
 	
-	var _ATEMGroup = __webpack_require__(82);
+	var _ATEMGroup = __webpack_require__(84);
 	
 	var _ATEMGroup2 = _interopRequireDefault(_ATEMGroup);
 	
-	var _Home = __webpack_require__(83);
+	var _Home = __webpack_require__(85);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _Help = __webpack_require__(84);
+	var _Help = __webpack_require__(86);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
-	var _RobotArm = __webpack_require__(85);
+	var _RobotArm = __webpack_require__(87);
 	
 	var _RobotArm2 = _interopRequireDefault(_RobotArm);
 	
-	var _RobotHand = __webpack_require__(86);
+	var _RobotHand = __webpack_require__(88);
 	
 	var _RobotHand2 = _interopRequireDefault(_RobotHand);
+	
+	var _Sniper = __webpack_require__(89);
+	
+	var _Sniper2 = _interopRequireDefault(_Sniper);
+	
+	var _Spots = __webpack_require__(90);
+	
+	var _Spots2 = _interopRequireDefault(_Spots);
+	
+	var _MasterCues = __webpack_require__(91);
+	
+	var _MasterCues2 = _interopRequireDefault(_MasterCues);
+	
+	var _DMXMidiControl = __webpack_require__(92);
+	
+	var _DMXMidiControl2 = _interopRequireDefault(_DMXMidiControl);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1939,7 +1989,11 @@
 	exports.default = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
-	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/home' }),
+	  _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/master_cues' }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'spots', component: _Spots2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'sniper', component: _Sniper2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'master_cues', component: _MasterCues2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_midi', component: _DMXMidiControl2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'robot_arm', component: _RobotArm2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'robot_hand', component: _RobotHand2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'decklink', component: _Decklink2.default }),
@@ -1951,8 +2005,9 @@
 	  _react2.default.createElement(_reactRouter.Route, { path: 'demo', component: _Demo2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'agenda', component: _Agenda2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_wash_group1', component: _DMXWashGroup2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_wash_group2', component: _DMXWashGroup4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_155_group2', component: _DMX155Group2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_255_group2', component: _DMX255Group2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'dmx_155_group1', component: _DMX155Group4.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'ptz_group1', component: _PTZGroup2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'midi_looper', component: _MidiLooper2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'control_interface', component: _ControlInterface2.default }),
@@ -2008,7 +2063,7 @@
 	      _react2.default.createElement(
 	        'a',
 	        { href: '/' },
-	        'Agenda-Caspar: Cinebrain'
+	        'Cinebrain: The New Gaze'
 	      )
 	    )
 	  ),
@@ -2016,221 +2071,48 @@
 	    _reactBootstrap.Nav,
 	    null,
 	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Caspar' },
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/master_cues' },
 	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/agendas' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Agenda List/Edit'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/agenda' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Caspar Schedule'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/video_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Video'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/audio_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Audio'
-	        )
+	        _reactBootstrap.NavItem,
+	        null,
+	        'Master Cues'
 	      )
 	    ),
 	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Lights' },
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/dmx_155_group1' },
 	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_sliders' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'DMX Sliders'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_155_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Spot Light 155'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_255_group2' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Spot Light 255'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/dmx_wash_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Wash Light'
-	        )
+	        _reactBootstrap.NavItem,
+	        null,
+	        'Spot 1'
 	      )
 	    ),
 	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: 'Misc Tools' },
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/dmx_155_group2' },
 	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/robot_arm' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Robot Arm'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/robot_hand' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Robot Hand'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/decklink' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'Decklink Control'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/atem' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'ATEM Control'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/ptz_group1' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'PTZ Camera'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/midi_looper' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'MIDI Looper'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/kcat_home' },
-	        _react2.default.createElement(
-	          _reactBootstrap.NavItem,
-	          null,
-	          'KCAT Home'
-	        )
+	        _reactBootstrap.NavItem,
+	        null,
+	        'Spot 2'
 	      )
-	    )
-	  ),
-	  _react2.default.createElement(
-	    _reactBootstrap.Nav,
-	    { pullRight: true },
+	    ),
 	    _react2.default.createElement(
-	      _reactBootstrap.NavDropdown,
-	      { id: 'user-dropdown', title: _react2.default.createElement(_moreVert2.default, { size: 18 }), noCaret: true },
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/dmx_midi' },
 	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/diagnostics' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Diagnostics'
-	        )
-	      ),
+	        _reactBootstrap.NavItem,
+	        null,
+	        'DMX MIDI Control'
+	      )
+	    ),
+	    _react2.default.createElement(
+	      _reactRouterBootstrap.LinkContainer,
+	      { to: '/ptz_group1' },
 	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/control_interface' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Control Interface'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/new_controllers' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'New Controllers'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/devices' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Devices'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/issues' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Issues'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/issue_add_item' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Add Issue'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        _reactRouterBootstrap.LinkContainer,
-	        { to: '/help' },
-	        _react2.default.createElement(
-	          _reactBootstrap.MenuItem,
-	          null,
-	          'Help'
-	        )
+	        _reactBootstrap.NavItem,
+	        null,
+	        'PTZ Camera'
 	      )
 	    )
 	  )
@@ -8756,7 +8638,7 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 1: Wash LIGHT (',
+	              '(',
 	              this.state.instrument_id,
 	              ') '
 	            ),
@@ -9089,6 +8971,619 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
+	class DMXWashGroup1 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      lock: true,
+	      compactType: null,
+	      instrument_id: "wash_2",
+	      dmx_offset: 57,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
+	
+	    switch (event.target.value) {
+	      case 'wash_on':
+	        dmx_data[0] = 255;
+	        socket.emit('dmx-go', { dmx: { 1: 255 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_off':
+	        dmx_data[0] = 0;
+	        socket.emit('dmx-go', { dmx: { 1: 0 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_white':
+	        dmx_data[1] = 0;
+	        dmx_data[2] = 0;
+	        dmx_data[3] = 0;
+	        dmx_data[4] = 255;
+	        socket.emit('dmx-go', { dmx: { 2: 0, 3: 0, 4: 0, 5: 255 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_red':
+	        dmx_data[1] = 255;
+	        dmx_data[2] = 0;
+	        dmx_data[3] = 0;
+	        dmx_data[4] = 0;
+	        socket.emit('dmx-go', { dmx: { 2: 255, 3: 0, 4: 0, 5: 0 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_green':
+	        dmx_data[1] = 0;
+	        dmx_data[2] = 255;
+	        dmx_data[3] = 0;
+	        dmx_data[4] = 0;
+	        socket.emit('dmx-go', { dmx: { 2: 0, 3: 255, 4: 0, 5: 0 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_blue':
+	        dmx_data[1] = 0;
+	        dmx_data[2] = 0;
+	        dmx_data[3] = 255;
+	        dmx_data[4] = 0;
+	        socket.emit('dmx-go', { dmx: { 2: 0, 3: 0, 4: 255, 5: 0 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_yellow':
+	        dmx_data[1] = 255;
+	        dmx_data[2] = 255;
+	        dmx_data[3] = 0;
+	        dmx_data[4] = 0;
+	        socket.emit('dmx-go', { dmx: { 2: 255, 3: 255, 4: 0, 5: 0 }, offset: this.state.dmx_offset });
+	        break;
+	      case 'save_preset_1':
+	        this.savePreset(1);
+	        break;
+	      case 'save_preset_2':
+	        this.savePreset(2);
+	        break;
+	      case 'save_preset_3':
+	        this.savePreset(3);
+	        break;
+	      case 'save_preset_4':
+	        this.savePreset(4);
+	        break;
+	      case 'save_preset_5':
+	        this.savePreset(5);
+	        break;
+	      case 'save_preset_6':
+	        this.savePreset(6);
+	        break;
+	      case 'recall_preset_1':
+	        this.loadPreset(1);
+	        break;
+	      case 'recall_preset_2':
+	        this.loadPreset(2);
+	        break;
+	      case 'recall_preset_3':
+	        this.loadPreset(3);
+	        break;
+	      case 'recall_preset_4':
+	        this.loadPreset(4);
+	        break;
+	      case 'recall_preset_5':
+	        this.loadPreset(5);
+	        break;
+	      case 'recall_preset_6':
+	        this.loadPreset(6);
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	    //console.log("dmx_data: " + this.state.dmx_data);
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = Number(event.target.value);
+	    let dmx_data = this.state.dmx_data;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
+	    switch (event.target.id) {
+	
+	      case 'wash_intensity':
+	        dmx_data[0] = slider_value;
+	        socket.emit('dmx-go', { dmx: { 1: slider_value }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_pan':
+	        slider_value = Math.floor(slider_value / 255 * 86 + 42);
+	        dmx_data[6] = slider_value;
+	        socket.emit('dmx-go', { dmx: { 7: slider_value }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_tilt':
+	        slider_value = Math.floor(210 - slider_value / 255 * 86);
+	        dmx_data[7] = slider_value;
+	        socket.emit('dmx-go', { dmx: { 8: slider_value }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_fine_pan':
+	        dmx_data[8] = slider_value;
+	        socket.emit('dmx-go', { dmx: { 9: slider_value }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_fine_tilt':
+	        dmx_data[9] = slider_value;
+	        socket.emit('dmx-go', { dmx: { 10: slider_value }, offset: this.state.dmx_offset });
+	        break;
+	      case 'wash_zoom':
+	        dmx_data[11] = slider_value;
+	        socket.emit('dmx-go', { dmx: { 12: slider_value }, offset: this.state.dmx_offset });
+	        break;
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	    //console.log("dmx_data: " + this.state.dmx_data);
+	  }
+	  savePreset(preset) {
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-save-preset', newDMXPreset);
+	  }
+	
+	  loadPreset(preset) {
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              '(',
+	              this.state.instrument_id,
+	              ') '
+	            ),
+	            ' DMX OFFSET: ',
+	            this.state.dmx_offset
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            null,
+	            _react2.default.createElement(_Toast2.default, {
+	              showing: this.state.toastVisible, message: this.state.toastMessage,
+	              onDismiss: this.dismissToast, bsStyle: this.state.toastType
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "wash_on",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Wash On'
+	      }, {
+	        type: 0,
+	        i: "wash_off",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Wash Off'
+	      }, {
+	        type: 1,
+	        i: "wash_intensity",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Wash Intensity'
+	      }, {
+	        type: 1,
+	        i: "wash_pan",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Wash Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_tilt",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, // Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Wash Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_pan",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Wash Fine Pan'
+	      }, {
+	        type: 1,
+	        i: "wash_fine_tilt",
+	        x: 0, // (this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, // Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Wash Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "wash_zoom",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity,
+	        w: 12,
+	        h: 2,
+	        text: 'Wash Zoom'
+	      }, {
+	        type: 0,
+	        i: "wash_white",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-default',
+	        text: 'Wash White'
+	      }, {
+	        type: 0,
+	        i: "wash_red",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Wash Red'
+	      }, {
+	        type: 0,
+	        i: "wash_green",
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Wash Green'
+	      }, {
+	        type: 0,
+	        i: "wash_blue",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-primary',
+	        text: 'Wash Blue'
+	      }, {
+	        type: 0,
+	        i: "wash_yellow",
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'Wash Yellow'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_1",
+	        x: 0,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_2",
+	        x: 1,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_3",
+	        x: 2,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_4",
+	        x: 3,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_5",
+	        x: 4,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_6",
+	        x: 5,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "save_preset_1",
+	        x: 0,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 1'
+	      }, {
+	        type: 0,
+	        i: "save_preset_2",
+	        x: 1,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 2'
+	      }, {
+	        type: 0,
+	        i: "save_preset_3",
+	        x: 2,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 3'
+	      }, {
+	        type: 0,
+	        i: "save_preset_4",
+	        x: 3,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 4'
+	      }, {
+	        type: 0,
+	        i: "save_preset_5",
+	        x: 4,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 5'
+	      }, {
+	        type: 0,
+	        i: "save_preset_6",
+	        x: 5,
+	        y: 16,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 6'
+	      }]
+	    });
+	  }
+	}
+	exports.default = DMXWashGroup1;
+	DMXWashGroup1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(23);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(48);
+	
+	var _reactDom = __webpack_require__(49);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(50);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(33);
+	
+	var _Toast = __webpack_require__(36);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _reactBootstrap = __webpack_require__(29);
+	
+	var _lock = __webpack_require__(51);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(52);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(63);
+	
+	var _socket2 = __webpack_require__(60);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
 	class DMX155Group2 extends _react2.default.Component {
 	
 	  constructor(props, context) {
@@ -9260,12 +9755,12 @@
 	
 	    switch (event.target.id) {
 	      case 'spot_pan':
-	        slider_value = Math.floor(213 - slider_value / 255 * 86);
+	        //slider_value = Math.floor(213-((slider_value/255)*86));
 	        dmx_data[0] = slider_value;
 	        this.sendDMX({ 1: slider_value });
 	        break;
 	      case 'spot_tilt':
-	        slider_value = Math.floor(slider_value / 255 * 136);
+	        // slider_value = Math.floor((slider_value/255)*136);
 	        dmx_data[1] = slider_value;
 	        this.sendDMX({ 2: slider_value });
 	        break;
@@ -9274,16 +9769,20 @@
 	        this.sendDMX({ 5: slider_value });
 	        break;
 	      case 'spot_fine_pan':
-	        dmx_data[2] = slider_value;
-	        this.sendDMX({ 3: slider_value });
+	        dmx_data[5] = slider_value;
+	        this.sendDMX({ 6: slider_value });
 	        break;
 	      case 'spot_fine_tilt':
-	        dmx_data[3] = slider_value;
-	        this.sendDMX({ 4: slider_value });
+	        dmx_data[8] = slider_value;
+	        this.sendDMX({ 9: slider_value });
 	        break;
 	      case 'spot_intensity':
 	        dmx_data[7] = slider_value;
 	        this.sendDMX({ 8: slider_value });
+	        break;
+	      case 'automatic':
+	        dmx_data[10] = slider_value;
+	        this.sendDMX({ 11: slider_value });
 	        break;
 	      default:
 	        console.log('ERROR: Slider does not exist');
@@ -9340,9 +9839,12 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 2: SPOT LIGHT 155'
+	              '(',
+	              this.state.instrument_id,
+	              ') '
 	            ),
-	            ' DMX: 41'
+	            ' DMX OFFSET: ',
+	            this.state.dmx_offset
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -9381,7 +9883,7 @@
 	        y: 0,
 	        w: 2,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-success',
 	        text: 'Spot On'
 	      }, {
 	        type: 0,
@@ -9390,7 +9892,7 @@
 	        y: 0,
 	        w: 2,
 	        h: 1,
-	        className: 'btn-block btn',
+	        className: 'btn-block btn btn-danger',
 	        text: 'Spot Off'
 	      }, {
 	        type: 1,
@@ -9398,53 +9900,61 @@
 	        x: 0,
 	        y: 2,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Intensity'
 	      }, {
 	        type: 1,
 	        i: "spot_tilt",
 	        x: 0,
-	        y: 8,
+	        y: 4,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Tilt'
 	      }, {
 	        type: 1,
 	        i: "spot_pan",
 	        x: 0,
-	        y: 4,
+	        y: 3,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Pan'
 	      }, {
 	        type: 1,
 	        i: "spot_speed",
 	        x: 0,
-	        y: 12,
+	        y: 5,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Speed'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_tilt",
 	        x: 0,
-	        y: 10,
+	        y: 6,
 	        w: 12,
-	        h: 2,
-	        text: 'Spot Fine Tilt'
+	        h: 1,
+	        text: 'Gobo'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_pan",
 	        x: 0,
-	        y: 6,
+	        y: 7,
 	        w: 12,
-	        h: 2,
-	        text: 'Spot Fine Pan'
+	        h: 1,
+	        text: 'Color'
+	      }, {
+	        type: 1,
+	        i: "automatic",
+	        x: 0,
+	        y: 8,
+	        w: 12,
+	        h: 1,
+	        text: 'Auto Movement'
 	      }, {
 	        type: 0,
 	        i: "recall_preset_1",
 	        x: 0,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9453,7 +9963,7 @@
 	        type: 0,
 	        i: "recall_preset_2",
 	        x: 1,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9462,7 +9972,7 @@
 	        type: 0,
 	        i: "recall_preset_3",
 	        x: 2,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9471,7 +9981,7 @@
 	        type: 0,
 	        i: "recall_preset_4",
 	        x: 3,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9480,7 +9990,7 @@
 	        type: 0,
 	        i: "recall_preset_5",
 	        x: 4,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9489,7 +9999,7 @@
 	        type: 0,
 	        i: "recall_preset_6",
 	        x: 5,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9498,7 +10008,7 @@
 	        type: 0,
 	        i: "save_preset_1",
 	        x: 0,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -9507,7 +10017,7 @@
 	        type: 0,
 	        i: "save_preset_2",
 	        x: 1,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -9516,7 +10026,7 @@
 	        type: 0,
 	        i: "save_preset_3",
 	        x: 2,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -9525,7 +10035,7 @@
 	        type: 0,
 	        i: "save_preset_4",
 	        x: 3,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -9534,7 +10044,7 @@
 	        type: 0,
 	        i: "save_preset_5",
 	        x: 4,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -9543,7 +10053,7 @@
 	        type: 0,
 	        i: "save_preset_6",
 	        x: 5,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -9560,7 +10070,7 @@
 	};
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9613,7 +10123,7 @@
 	let lockIcon = _react2.default.createElement(_lock2.default, null);
 	let socket;
 	
-	class DMX255Group2 extends _react2.default.Component {
+	class DMX155Group2 extends _react2.default.Component {
 	
 	  constructor(props, context) {
 	    super(props, context);
@@ -9633,10 +10143,9 @@
 	      toastVisible: false, toastMessage: '', toastType: 'success',
 	      lock: true,
 	      compactType: null,
-	      instrument_id: "spot_3",
-	      dmx_offset: 81,
-	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	
+	      instrument_id: "spot_1",
+	      dmx_offset: 1,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	    };
 	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
 	    this.handleOnLock = this.handleOnLock.bind(this);
@@ -9699,7 +10208,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { id: 'slidecontainer' },
-	          _react2.default.createElement('input', { type: 'range', min: '1', max: '255', step: '1', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
 	        )
 	      );
 	    }
@@ -9709,8 +10218,8 @@
 	      controllerCode,
 	      _react2.default.createElement('span', { style: lockStyle })
 	    );
-	    console.log("does this change? " + el.i + " " + el.sliderValue);
 	  }
+	
 	  handleButtons(event) {
 	    console.log(event.target.id + ': ' + event.target.value);
 	    let dmx_data = this.state.dmx_data;
@@ -9718,16 +10227,15 @@
 	    switch (event.target.value) {
 	
 	      case 'spot_on':
-	        dmx_data[9] = 255;
-	        dmx_data[10] = 216;
 	        dmx_data[5] = 0;
-	        dmx_data[4] = 215;
-	        this.sendDMX({ 10: 255, 11: 216, 6: 0, 5: 215 });
+	        dmx_data[6] = 216;
+	        dmx_data[7] = 255;
+	        this.sendDMX({ 6: 0, 7: 216, 8: 255 });
 	        break;
 	      case 'spot_off':
-	        dmx_data[9] = 0;
-	        dmx_data[10] = 0;
-	        this.sendDMX({ 10: 0, 11: 0 });
+	        dmx_data[6] = 0;
+	        dmx_data[7] = 0;
+	        this.sendDMX({ 7: 0, 8: 0 });
 	        break;
 	      case 'save_preset_1':
 	        this.savePreset(1);
@@ -9765,6 +10273,7 @@
 	      case 'recall_preset_6':
 	        this.loadPreset(6);
 	        break;
+	
 	      default:
 	        console.log('ERROR: Button does not exist');
 	    }
@@ -9785,32 +10294,35 @@
 	
 	    switch (event.target.id) {
 	      case 'spot_pan':
-	        slider_value = Math.floor(213 - slider_value / 255 * 86);
+	        //slider_value = Math.floor(213-((slider_value/255)*86));
 	        dmx_data[0] = slider_value;
 	        this.sendDMX({ 1: slider_value });
 	        break;
 	      case 'spot_tilt':
-	        slider_value = Math.floor(slider_value / 255 * 72);
-	        dmx_data[2] = slider_value;
-	        this.sendDMX({ 3: slider_value });
-	        break;
-	      case 'spot_fine_pan':
+	        // slider_value = Math.floor((slider_value/255)*136);
 	        dmx_data[1] = slider_value;
 	        this.sendDMX({ 2: slider_value });
-	        break;
-	      case 'spot_fine_tilt':
-	        dmx_data[3] = slider_value;
-	        this.sendDMX({ 4: slider_value });
 	        break;
 	      case 'spot_speed':
 	        dmx_data[4] = slider_value;
 	        this.sendDMX({ 5: slider_value });
 	        break;
-	      case 'spot_intensity':
-	        dmx_data[9] = slider_value;
-	        this.sendDMX({ 10: slider_value });
+	      case 'spot_fine_pan':
+	        dmx_data[5] = slider_value;
+	        this.sendDMX({ 6: slider_value });
 	        break;
-	
+	      case 'spot_fine_tilt':
+	        dmx_data[8] = slider_value;
+	        this.sendDMX({ 9: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        dmx_data[7] = slider_value;
+	        this.sendDMX({ 8: slider_value });
+	        break;
+	      case 'automatic':
+	        dmx_data[10] = slider_value;
+	        this.sendDMX({ 11: slider_value });
+	        break;
 	      default:
 	        console.log('ERROR: Slider does not exist');
 	    }
@@ -9866,9 +10378,12 @@
 	            _react2.default.createElement(
 	              'strong',
 	              null,
-	              'Group 2: SPOT LIGHT 255'
+	              '(',
+	              this.state.instrument_id,
+	              ') '
 	            ),
-	            ' DMX: 81'
+	            ' DMX OFFSET: ',
+	            this.state.dmx_offset
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -9924,54 +10439,61 @@
 	        x: 0,
 	        y: 2,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Intensity'
-	
 	      }, {
 	        type: 1,
 	        i: "spot_tilt",
 	        x: 0,
-	        y: 8,
+	        y: 4,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Tilt'
 	      }, {
 	        type: 1,
 	        i: "spot_pan",
 	        x: 0,
-	        y: 4,
+	        y: 3,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Pan'
 	      }, {
 	        type: 1,
 	        i: "spot_speed",
 	        x: 0,
-	        y: 12,
+	        y: 5,
 	        w: 12,
-	        h: 2,
+	        h: 1,
 	        text: 'Spot Speed'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_tilt",
 	        x: 0,
-	        y: 10,
+	        y: 6,
 	        w: 12,
-	        h: 2,
-	        text: 'Spot Fine Tilt'
+	        h: 1,
+	        text: 'Gobo'
 	      }, {
 	        type: 1,
 	        i: "spot_fine_pan",
 	        x: 0,
-	        y: 6,
+	        y: 7,
 	        w: 12,
-	        h: 2,
-	        text: 'Spot Fine Pan'
+	        h: 1,
+	        text: 'Color'
+	      }, {
+	        type: 1,
+	        i: "automatic",
+	        x: 0,
+	        y: 8,
+	        w: 12,
+	        h: 1,
+	        text: 'Auto Movement'
 	      }, {
 	        type: 0,
 	        i: "recall_preset_1",
 	        x: 0,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9980,7 +10502,7 @@
 	        type: 0,
 	        i: "recall_preset_2",
 	        x: 1,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9989,7 +10511,7 @@
 	        type: 0,
 	        i: "recall_preset_3",
 	        x: 2,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -9998,7 +10520,7 @@
 	        type: 0,
 	        i: "recall_preset_4",
 	        x: 3,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -10007,7 +10529,7 @@
 	        type: 0,
 	        i: "recall_preset_5",
 	        x: 4,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -10016,7 +10538,7 @@
 	        type: 0,
 	        i: "recall_preset_6",
 	        x: 5,
-	        y: 14,
+	        y: 9,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -10025,7 +10547,7 @@
 	        type: 0,
 	        i: "save_preset_1",
 	        x: 0,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -10034,7 +10556,7 @@
 	        type: 0,
 	        i: "save_preset_2",
 	        x: 1,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -10043,7 +10565,7 @@
 	        type: 0,
 	        i: "save_preset_3",
 	        x: 2,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -10052,7 +10574,7 @@
 	        type: 0,
 	        i: "save_preset_4",
 	        x: 3,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -10061,7 +10583,7 @@
 	        type: 0,
 	        i: "save_preset_5",
 	        x: 4,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -10070,7 +10592,7 @@
 	        type: 0,
 	        i: "save_preset_6",
 	        x: 5,
-	        y: 15,
+	        y: 10,
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -10079,15 +10601,15 @@
 	    });
 	  }
 	}
-	exports.default = DMX255Group2;
-	DMX255Group2.defaultProps = {
+	exports.default = DMX155Group2;
+	DMX155Group2.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
 	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
 	};
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10130,7 +10652,7 @@
 	
 	var _socket3 = _interopRequireDefault(_socket2);
 	
-	var _reactDeviceDetect = __webpack_require__(72);
+	var _reactDeviceDetect = __webpack_require__(73);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -10158,7 +10680,7 @@
 	      lock: true,
 	      host: '127.0.0.1',
 	      port: 5250,
-	      PTZhost: '192.168.0.100',
+	      PTZhost: '128.114.74.61', //192.168.0.100',
 	      PTZport: 52381,
 	      command: "",
 	      response: '',
@@ -10876,13 +11398,13 @@
 	};
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-device-detect");
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10899,19 +11421,19 @@
 	
 	var _reactBootstrap = __webpack_require__(29);
 	
-	var _TelnetDiagnostics = __webpack_require__(74);
+	var _TelnetDiagnostics = __webpack_require__(75);
 	
 	var _TelnetDiagnostics2 = _interopRequireDefault(_TelnetDiagnostics);
 	
-	var _MIDIDiagnostics = __webpack_require__(75);
+	var _MIDIDiagnostics = __webpack_require__(76);
 	
 	var _MIDIDiagnostics2 = _interopRequireDefault(_MIDIDiagnostics);
 	
-	var _DMXDiagnostics = __webpack_require__(76);
+	var _DMXDiagnostics = __webpack_require__(77);
 	
 	var _DMXDiagnostics2 = _interopRequireDefault(_DMXDiagnostics);
 	
-	var _OSCDiagnostics = __webpack_require__(77);
+	var _OSCDiagnostics = __webpack_require__(78);
 	
 	var _OSCDiagnostics2 = _interopRequireDefault(_OSCDiagnostics);
 	
@@ -10962,7 +11484,7 @@
 	exports.default = Diagnostics;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11118,7 +11640,7 @@
 	exports.default = TelnetDiagnostics;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11309,7 +11831,7 @@
 	exports.default = MIDIDiagnostics;
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11836,7 +12358,7 @@
 	};
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12163,7 +12685,7 @@
 	};
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12818,7 +13340,7 @@
 	};
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12830,6 +13352,10 @@
 	var _react = __webpack_require__(23);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(49);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	__webpack_require__(33);
 	
@@ -12847,7 +13373,13 @@
 	
 	var _trash2 = _interopRequireDefault(_trash);
 	
+	var _reactBootstrapDatetimepicker = __webpack_require__(81);
+	
+	var _reactBootstrapDatetimepicker2 = _interopRequireDefault(_reactBootstrapDatetimepicker);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//import Moment from 'moment';
 	
 	let socket;
 	
@@ -12855,6 +13387,9 @@
 	  function onDeleteClick() {
 	    props.deleteJob(props.job._id);
 	  }
+	
+	  //console.log(props.job.data.clip.duration);
+	  //console.log((new Date(Number(props.job.data.clip.duration) * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0]);
 	
 	  return _react2.default.createElement(
 	    'tr',
@@ -12872,7 +13407,12 @@
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.job.data
+	      props.job.data.clip.name
+	    ),
+	    _react2.default.createElement(
+	      'td',
+	      null,
+	      new Date(Number(props.job.data.clip.duration) * 1000).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0]
 	    ),
 	    _react2.default.createElement(
 	      'td',
@@ -12887,17 +13427,17 @@
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.job.nextRunAt
+	      new Date(props.job.nextRunAt).toString()
 	    ),
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.job.lastRunAt
+	      new Date(props.job.lastRunAt).toString()
 	    ),
 	    _react2.default.createElement(
 	      'td',
 	      null,
-	      props.job.lastFinishedAt
+	      new Date(props.job.lastFinishedAt).toString()
 	    ),
 	    _react2.default.createElement(
 	      'td',
@@ -12940,7 +13480,12 @@
 	        _react2.default.createElement(
 	          'th',
 	          null,
-	          'Data'
+	          'Clip'
+	        ),
+	        _react2.default.createElement(
+	          'th',
+	          null,
+	          'Duration'
 	        ),
 	        _react2.default.createElement(
 	          'th',
@@ -12999,7 +13544,15 @@
 	      port: 5250,
 	      command: "",
 	      response: '',
-	      caspar_cls: ''
+	      clips: [],
+	      clipsList: _react2.default.createElement(
+	        'option',
+	        null,
+	        'empty set'
+	      ),
+	      datetime: '',
+	      repeat_interval: '',
+	      priority: ''
 	    };
 	    this.handleButtons = this.handleButtons.bind(this);
 	    this.handleNumberInput = this.handleNumberInput.bind(this);
@@ -13009,6 +13562,10 @@
 	    this.submit = this.submit.bind(this);
 	    this.showError = this.showError.bind(this);
 	    this.dismissToast = this.dismissToast.bind(this);
+	    this.createCasparSelectClips = this.createCasparSelectClips.bind(this);
+	    this.storeDate = this.storeDate.bind(this);
+	    this.prioritySelected = this.prioritySelected.bind(this);
+	    this.repeatSelected = this.repeatSelected.bind(this);
 	  }
 	  showModal() {
 	    this.setState({ showing: true });
@@ -13041,10 +13598,12 @@
 	    e.preventDefault();
 	    this.hideModal();
 	    const form = document.forms.jobAdd;
+	    let clip_number = form.caspar_select.value;
+	    let clip_info = this.state.clips[clip_number];
 	    const newJob = {
-	      name: form.name.value, date: form.date.value
+	      name: form.name.value, date: this.state.datetime, clip: clip_info
 	    };
-	    console.log(JSON.stringify(newJob));
+	    console.log("new job: " + JSON.stringify(newJob));
 	    socket.emit('agenda-create-job', newJob);
 	  }
 	  handleNumberInput(event) {
@@ -13058,10 +13617,39 @@
 	        console.log('ERROR: Input does not exist');
 	    }
 	  }
+	  storeDate(newDate) {
+	    console.log("save date and time: ", newDate);
+	    this.setState({ datetime: newDate });
+	  }
+	  prioritySelected(priority) {
+	    console.log("priority: ", priority);
+	    this.setState({ priority: priority });
+	  }
+	  repeatSelected(repeat) {
+	    console.log("repeat interval: ", repeat);
+	    this.setState({ repeat_interval: repeat });
+	  }
 	  deleteJob(id) {
 	    console.log("deleting job with id: " + id);
 	    socket.emit("delete-job", id);
 	  }
+	  createCasparSelectClips() {
+	    let clipsList = [];
+	    let clips = this.state.clips;
+	    if (clips.length > 0) {
+	      for (let i = 0; i < clips.length; i++) {
+	        let clip = clips[i];
+	        clipsList.push(_react2.default.createElement(
+	          'option',
+	          { key: i, value: i },
+	          clip.name
+	        ));
+	      }
+	    }
+	
+	    this.setState({ clipsList: clipsList });
+	  }
+	
 	  render() {
 	    return _react2.default.createElement(
 	      'div',
@@ -13072,75 +13660,181 @@
 	        'Caspar Scheduler'
 	      ),
 	      _react2.default.createElement(
-	        _reactBootstrap.Button,
-	        { onClick: this.showModal },
-	        _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
-	        'New Job',
+	        'div',
+	        null,
 	        _react2.default.createElement(
-	          _reactBootstrap.Modal,
-	          { keyboard: true, show: this.state.showing, onHide: this.hideModal },
+	          _reactBootstrap.Button,
+	          { onClick: this.showModal },
+	          _react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: 'plus' }),
+	          'New Job',
 	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Header,
-	            { closeButton: true },
+	            _reactBootstrap.Modal,
+	            { keyboard: true, show: this.state.showing, onHide: this.hideModal },
 	            _react2.default.createElement(
-	              _reactBootstrap.Modal.Title,
-	              null,
-	              'Create Job'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Body,
-	            null,
-	            _react2.default.createElement(
-	              _reactBootstrap.Form,
-	              { name: 'jobAdd' },
+	              _reactBootstrap.Modal.Header,
+	              { closeButton: true },
 	              _react2.default.createElement(
-	                _reactBootstrap.FormGroup,
+	                _reactBootstrap.Modal.Title,
 	                null,
-	                _react2.default.createElement(
-	                  _reactBootstrap.ControlLabel,
-	                  null,
-	                  'Name'
-	                ),
-	                _react2.default.createElement(_reactBootstrap.FormControl, { name: 'name', autoFocus: true })
-	              ),
-	              _react2.default.createElement(
-	                _reactBootstrap.FormGroup,
-	                null,
-	                _react2.default.createElement(
-	                  _reactBootstrap.ControlLabel,
-	                  null,
-	                  'Date'
-	                ),
-	                _react2.default.createElement(_reactBootstrap.FormControl, { name: 'date' })
+	                'Create Job'
 	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Footer,
-	            null,
+	            ),
 	            _react2.default.createElement(
-	              _reactBootstrap.ButtonToolbar,
+	              _reactBootstrap.Modal.Body,
 	              null,
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { type: 'button', bsStyle: 'primary', onClick: this.submit },
-	                'Submit'
-	              ),
+	                _reactBootstrap.Form,
+	                { name: 'jobAdd' },
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Name'
+	                  ),
+	                  _react2.default.createElement(_reactBootstrap.FormControl, { name: 'name', autoFocus: true })
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Date & Time'
+	                  ),
+	                  _react2.default.createElement(_reactBootstrapDatetimepicker2.default, {
+	                    onChange: this.storeDate
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Repeat Every'
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactBootstrap.FormControl,
+	                    { name: 'repeat_every',
+	                      componentClass: 'select',
+	                      onChange: this.repeatSelected },
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: 'no_repeat' },
+	                      'no repeat'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: 'hour' },
+	                      'hour'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: 'day' },
+	                      'day'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: 'week' },
+	                      'week'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: 'month' },
+	                      'month'
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Scheduling Priority'
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactBootstrap.FormControl,
+	                    { name: 'priority',
+	                      componentClass: 'select',
+	                      defaultValue: '0',
+	                      onChange: this.prioritySelected },
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: '-20' },
+	                      'lowest'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: '-10' },
+	                      'low'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: '0' },
+	                      'normal'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: '10' },
+	                      'high'
+	                    ),
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: '20' },
+	                      'highest'
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.FormGroup,
+	                  null,
+	                  _react2.default.createElement(
+	                    _reactBootstrap.ControlLabel,
+	                    null,
+	                    'Select CasparCG Clip'
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactBootstrap.FormControl,
+	                    { name: 'caspar_select',
+	                      componentClass: 'select', placeholder: 'select', onChange: this.onCasparClipSelected },
+	                    _react2.default.createElement(
+	                      'option',
+	                      { value: '' },
+	                      'select'
+	                    ),
+	                    this.state.clipsList
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactBootstrap.Modal.Footer,
+	              null,
 	              _react2.default.createElement(
-	                _reactBootstrap.Button,
-	                { bsStyle: 'link', onClick: this.hideModal },
-	                'Cancel'
+	                _reactBootstrap.ButtonToolbar,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { type: 'button', bsStyle: 'primary', onClick: this.submit },
+	                  'Submit'
+	                ),
+	                _react2.default.createElement(
+	                  _reactBootstrap.Button,
+	                  { bsStyle: 'link', onClick: this.hideModal },
+	                  'Cancel'
+	                )
 	              )
 	            )
 	          )
 	        )
 	      ),
-	      _react2.default.createElement(JobTable, { jobs: this.state.jobs, deleteJob: this.deleteJob }),
 	      _react2.default.createElement(
 	        'div',
 	        null,
-	        this.state.response
+	        _react2.default.createElement(JobTable, { jobs: this.state.jobs, deleteJob: this.deleteJob })
 	      )
 	    );
 	  }
@@ -13154,20 +13848,39 @@
 	      this.setState({ jobs: jobs });
 	    });
 	    socket.emit('agenda-list-jobs', {});
-	    socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'cls' });
-	    socket.on('telnet-response', mesg => {
-	      this.setState({ response: mesg });
+	    //socket.emit('control-interface-send-telnet', { host: this.state.host, port: this.state.port, command: 'cls'});
+	    socket.emit('get-casparconnection-cls', {});
+	    socket.on('receive-casparconnection-cls', mesg => {
+	      this.setState({ clips: mesg.response.data });
+	      console.log(this.state.clips);
+	      this.createCasparSelectClips();
 	    });
-	    socket.emit('caspar-connection-send-command');
-	    socket.on('caspar-connection-receive-command', mesg => {
-	      this.setState({ response: mesg });
-	    });
+	
+	    //socket.on('telnet-response', (mesg) => {
+	    //this.setState({response: mesg});
+	    //});
+	    //socket.emit('caspar-connection-send-command');
+	    //socket.on('caspar-connection-receive-command', (mesg) => {
+	    // this.setState({response: mesg});
+	    //});
+	
+	    /* <div><Input type="select" onChange={this.onCasparClipSelected} label="Multiple Select" multiple>
+	       {this.createCasparSelectClips()}
+	    </Input></div>
+	    <div>{JSON.stringify(this.state.clips)}</div>
+	    */
 	  }
 	}
 	exports.default = Agenda;
 
 /***/ }),
-/* 80 */
+/* 81 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-bootstrap-datetimepicker");
+
+/***/ }),
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13416,7 +14129,7 @@
 	exports.default = Decklink;
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13657,7 +14370,7 @@
 	exports.default = Home;
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13984,7 +14697,7 @@
 	};
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14059,7 +14772,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14110,7 +14823,7 @@
 	exports.default = Help;
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14724,7 +15437,7 @@
 	};
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15347,7 +16060,2368 @@
 	};
 
 /***/ }),
-/* 87 */
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(23);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(48);
+	
+	var _reactDom = __webpack_require__(49);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(50);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(33);
+	
+	var _Toast = __webpack_require__(36);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _reactBootstrap = __webpack_require__(29);
+	
+	var _lock = __webpack_require__(51);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(52);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(63);
+	
+	var _socket2 = __webpack_require__(60);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class DMXSliders extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      lock: true,
+	      compactType: null,
+	      instrument_id: "kcat_dmx",
+	      dmx_offset: 1,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	    this.sendDMX = this.sendDMX.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '255', 'default': '0', step: '1', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	    console.log("does this change? " + el.i + " " + el.sliderValue);
+	  }
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
+	
+	    switch (event.target.value) {
+	
+	      case 'save_preset_cst':
+	        this.savePreset(1);
+	        break;
+	      case 'save_preset_tott':
+	        this.savePreset(2);
+	        break;
+	      case 'recall_preset_cst':
+	        this.loadPreset(1);
+	        break;
+	      case 'recall_preset_tott':
+	        this.loadPreset(2);
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value;
+	    let dmx_data = this.state.dmx_data;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
+	    switch (event.target.id) {
+	      case 'channel_1':
+	        dmx_data[0] = slider_value;
+	        this.sendDMX({ 1: slider_value });
+	        break;
+	      case 'channel_2':
+	        dmx_data[1] = slider_value;
+	        this.sendDMX({ 2: slider_value });
+	        break;
+	      case 'channel_3':
+	        dmx_data[2] = slider_value;
+	        this.sendDMX({ 3: slider_value });
+	        break;
+	      case 'channel_4':
+	        dmx_data[3] = slider_value;
+	        this.sendDMX({ 4: slider_value });
+	        break;
+	      case 'channel_5':
+	        dmx_data[4] = slider_value;
+	        this.sendDMX({ 5: slider_value });
+	        break;
+	      case 'channel_6':
+	        dmx_data[5] = slider_value;
+	        this.sendDMX({ 6: slider_value });
+	        break;
+	      case 'channel_7':
+	        dmx_data[6] = slider_value;
+	        this.sendDMX({ 7: slider_value });
+	        break;
+	      case 'channel_8':
+	        dmx_data[7] = slider_value;
+	        this.sendDMX({ 8: slider_value });
+	        break;
+	      case 'channel_9':
+	        dmx_data[8] = slider_value;
+	        this.sendDMX({ 9: slider_value });
+	        break;
+	      case 'channel_10':
+	        dmx_data[9] = slider_value;
+	        this.sendDMX({ 10: slider_value });
+	        break;
+	      case 'channel_11':
+	        dmx_data[10] = slider_value;
+	        this.sendDMX({ 11: slider_value });
+	        break;
+	      case 'channel_12':
+	        dmx_data[11] = slider_value;
+	        this.sendDMX({ 12: slider_value });
+	        break;
+	      case 'channel_13':
+	        dmx_data[12] = slider_value;
+	        this.sendDMX({ 13: slider_value });
+	        break;
+	      case 'channel_14':
+	        dmx_data[13] = slider_value;
+	        this.sendDMX({ 14: slider_value });
+	        break;
+	      case 'channel_15':
+	        dmx_data[14] = slider_value;
+	        this.sendDMX({ 15: slider_value });
+	        break;
+	      case 'channel_16':
+	        dmx_data[15] = slider_value;
+	        this.sendDMX({ 16: slider_value });
+	        break;
+	      case 'channel_17':
+	        dmx_data[16] = slider_value;
+	        this.sendDMX({ 17: slider_value });
+	        break;
+	      case 'channel_18':
+	        dmx_data[17] = slider_value;
+	        this.sendDMX({ 18: slider_value });
+	        break;
+	      case 'channel_19':
+	        dmx_data[18] = slider_value;
+	        this.sendDMX({ 19: slider_value });
+	        break;
+	      case 'channel_20':
+	        dmx_data[19] = slider_value;
+	        this.sendDMX({ 20: slider_value });
+	        break;
+	      case 'channel_21':
+	        dmx_data[20] = slider_value;
+	        this.sendDMX({ 21: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	  }
+	  sendDMX(dmx) {
+	    socket.emit('dmx-go', { dmx: dmx, offset: this.state.dmx_offset });
+	  }
+	  savePreset(preset) {
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    console.log(JSON.stringify(newDMXPreset));
+	    socket.emit('dmx-save-preset', newDMXPreset);
+	  }
+	  loadPreset(preset) {
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'DMX sliders'
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
+	    this.setState({
+	      items: [{
+	        type: 1,
+	        i: "channel_1",
+	        x: 0,
+	        y: 0,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 1'
+	      }, {
+	        type: 1,
+	        i: "channel_2",
+	        x: 0,
+	        y: 1,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 2'
+	      }, {
+	        type: 1,
+	        i: "channel_3",
+	        x: 0,
+	        y: 2,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 3'
+	      }, {
+	        type: 1,
+	        i: "channel_4",
+	        x: 0,
+	        y: 3,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 4'
+	      }, {
+	        type: 1,
+	        i: "channel_5",
+	        x: 0,
+	        y: 4,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 5'
+	      }, {
+	        type: 1,
+	        i: "channel_6",
+	        x: 0,
+	        y: 5,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 6'
+	      }, {
+	        type: 1,
+	        i: "channel_7",
+	        x: 0,
+	        y: 6,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 7'
+	      }, {
+	        type: 1,
+	        i: "channel_8",
+	        x: 0,
+	        y: 7,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 8'
+	      }, {
+	        type: 1,
+	        i: "channel_9",
+	        x: 0,
+	        y: 8,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 9'
+	      }, {
+	        type: 1,
+	        i: "channel_10",
+	        x: 0,
+	        y: 9,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 10'
+	      }, {
+	        type: 1,
+	        i: "channel_11",
+	        x: 0,
+	        y: 10,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 11'
+	      }, {
+	        type: 1,
+	        i: "channel_12",
+	        x: 0,
+	        y: 11,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 12'
+	      }, {
+	        type: 1,
+	        i: "channel_13",
+	        x: 0,
+	        y: 12,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 13'
+	      }, {
+	        type: 1,
+	        i: "channel_14",
+	        x: 0,
+	        y: 13,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 14'
+	      }, {
+	        type: 1,
+	        i: "channel_15",
+	        x: 0,
+	        y: 14,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 15'
+	      }, {
+	        type: 1,
+	        i: "channel_16",
+	        x: 0,
+	        y: 15,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 16'
+	      }, {
+	        type: 1,
+	        i: "channel_17",
+	        x: 0,
+	        y: 16,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 17'
+	      }, {
+	        type: 1,
+	        i: "channel_18",
+	        x: 0,
+	        y: 17,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 18'
+	      }, {
+	        type: 1,
+	        i: "channel_19",
+	        x: 0,
+	        y: 18,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 19'
+	      }, {
+	        type: 1,
+	        i: "channel_20",
+	        x: 0,
+	        y: 19,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 20'
+	      }, {
+	        type: 1,
+	        i: "channel_21",
+	        x: 0,
+	        y: 20,
+	        w: 12,
+	        h: 1,
+	        text: 'Channel 21'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_cst",
+	        x: 0,
+	        y: 21,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'LOAD CST PRESET'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_tott",
+	        x: 2,
+	        y: 21,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'LOAD TOTT PRESET'
+	      }, {
+	        type: 0,
+	        i: "save_preset_cst",
+	        x: 0,
+	        y: 22,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'SAVE CST PRESET'
+	      }, {
+	        type: 0,
+	        i: "save_preset_tott",
+	        x: 2,
+	        y: 22,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'SAVE TOTT PRESET'
+	      }]
+	    });
+	  }
+	}
+	exports.default = DMXSliders;
+	DMXSliders.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(23);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(48);
+	
+	var _reactDom = __webpack_require__(49);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(50);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(33);
+	
+	var _Toast = __webpack_require__(36);
+	
+	var _Toast2 = _interopRequireDefault(_Toast);
+	
+	var _reactBootstrap = __webpack_require__(29);
+	
+	var _lock = __webpack_require__(51);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(52);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(63);
+	
+	var _socket2 = __webpack_require__(60);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class DMXSpotGroup1 extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0
+	        };
+	      }),
+	      toastVisible: false, toastMessage: '', toastType: 'success',
+	      lock: true,
+	      compactType: null,
+	      instrument_id: "spot_1",
+	      dmx_offset: 1,
+	      dmx_data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.handleSliders = this.handleSliders.bind(this);
+	    this.sendDMX = this.sendDMX.bind(this);
+	    this.savePreset = this.savePreset.bind(this);
+	    this.loadPreset = this.loadPreset.bind(this);
+	    this.showError = this.showError.bind(this);
+	    this.dismissToast = this.dismissToast.bind(this);
+	  }
+	  showError(message) {
+	    this.setState({ toastVisible: true, toastMessage: message, toastType: 'danger' });
+	  }
+	  dismissToast() {
+	    this.setState({ toastVisible: false });
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '1', max: '255', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let dmx_data = this.state.dmx_data;
+	
+	    switch (event.target.value) {
+	
+	      case 'spot_on':
+	        dmx_data[5] = 0;
+	        dmx_data[6] = 216;
+	        dmx_data[7] = 255;
+	        this.sendDMX({ 6: 0, 7: 216, 8: 255 });
+	        break;
+	      case 'spot_off':
+	        dmx_data[6] = 0;
+	        dmx_data[7] = 0;
+	        this.sendDMX({ 7: 0, 8: 0 });
+	        break;
+	      case 'save_preset_1':
+	        this.savePreset(1);
+	        break;
+	      case 'save_preset_3':
+	        this.savePreset(3);
+	        break;
+	      case 'save_preset_4':
+	        this.savePreset(4);
+	        break;
+	      case 'save_preset_5':
+	        this.savePreset(5);
+	        break;
+	      case 'save_preset_6':
+	        this.savePreset(6);
+	        break;
+	      case 'save_preset_2':
+	        this.savePreset(2);
+	        break;
+	      case 'recall_preset_1':
+	        this.loadPreset(1);
+	        break;
+	      case 'recall_preset_2':
+	        this.loadPreset(2);
+	        break;
+	      case 'recall_preset_3':
+	        this.loadPreset(3);
+	        break;
+	      case 'recall_preset_4':
+	        this.loadPreset(4);
+	        break;
+	      case 'recall_preset_5':
+	        this.loadPreset(5);
+	        break;
+	      case 'recall_preset_6':
+	        this.loadPreset(6);
+	        break;
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	  }
+	  handleSliders(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	    let slider_value = event.target.value;
+	    let dmx_data = this.state.dmx_data;
+	
+	    let items = this.state.items;
+	    for (let i = 0; i < items.length; i++) {
+	      if (items[i].i == event.target.id) {
+	        items[i].sliderValue = slider_value;
+	      }
+	    }
+	    this.setState({ items: items });
+	
+	    switch (event.target.id) {
+	      case 'spot_pan':
+	        slider_value = Math.floor(213 - slider_value / 255 * 86);
+	        dmx_data[0] = slider_value;
+	        this.sendDMX({ 1: slider_value });
+	        break;
+	      case 'spot_tilt':
+	        slider_value = Math.floor(slider_value / 255 * 136);
+	        dmx_data[1] = slider_value;
+	        this.sendDMX({ 2: slider_value });
+	        break;
+	      case 'spot_speed':
+	        dmx_data[4] = slider_value;
+	        this.sendDMX({ 5: slider_value });
+	        break;
+	      case 'spot_fine_pan':
+	        dmx_data[2] = slider_value;
+	        this.sendDMX({ 3: slider_value });
+	        break;
+	      case 'spot_fine_tilt':
+	        dmx_data[3] = slider_value;
+	        this.sendDMX({ 4: slider_value });
+	        break;
+	      case 'spot_intensity':
+	        dmx_data[7] = slider_value;
+	        this.sendDMX({ 8: slider_value });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Slider does not exist');
+	    }
+	    this.setState({ dmx_data: dmx_data });
+	  }
+	  sendDMX(dmx) {
+	    socket.emit('dmx-go', { dmx: dmx, offset: this.state.dmx_offset });
+	  }
+	  savePreset(preset) {
+	    const newDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset,
+	      dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-save-preset', newDMXPreset);
+	  }
+	  loadPreset(preset) {
+	    const loadDMXPreset = {
+	      instrument_id: this.state.instrument_id, dmx_offset: this.state.dmx_offset, preset_num: preset, dmx_data: this.state.dmx_data
+	    };
+	    socket.emit('dmx-load-preset', loadDMXPreset);
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Group 1: Spot LIGHT'
+	            ),
+	            ' DMX: 1'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "spot_on",
+	        x: 0,
+	        y: 0,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Spot On'
+	      }, {
+	        type: 0,
+	        i: "spot_off",
+	        x: 2,
+	        y: 0,
+	        w: 2,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Spot Off'
+	      }, {
+	        type: 1,
+	        i: "spot_intensity",
+	        x: 0,
+	        y: 2,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Intensity'
+	      }, {
+	        type: 1,
+	        i: "spot_tilt",
+	        x: 0,
+	        y: 8,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_pan",
+	        x: 0,
+	        y: 4,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Pan'
+	      }, {
+	        type: 1,
+	        i: "spot_speed",
+	        x: 0,
+	        y: 12,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Speed'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_tilt",
+	        x: 0,
+	        y: 10,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Fine Tilt'
+	      }, {
+	        type: 1,
+	        i: "spot_fine_pan",
+	        x: 0,
+	        y: 6,
+	        w: 12,
+	        h: 2,
+	        text: 'Spot Fine Pan'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_1",
+	        x: 0,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 1'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_2",
+	        x: 1,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 2'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_3",
+	        x: 2,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 3'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_4",
+	        x: 3,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 4'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_5",
+	        x: 4,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 5'
+	      }, {
+	        type: 0,
+	        i: "recall_preset_6",
+	        x: 5,
+	        y: 14,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'Preset 6'
+	      }, {
+	        type: 0,
+	        i: "save_preset_1",
+	        x: 0,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 1'
+	      }, {
+	        type: 0,
+	        i: "save_preset_2",
+	        x: 1,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 2'
+	      }, {
+	        type: 0,
+	        i: "save_preset_3",
+	        x: 2,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 3'
+	      }, {
+	        type: 0,
+	        i: "save_preset_4",
+	        x: 3,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 4'
+	      }, {
+	        type: 0,
+	        i: "save_preset_5",
+	        x: 4,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 5'
+	      }, {
+	        type: 0,
+	        i: "save_preset_6",
+	        x: 5,
+	        y: 15,
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'Save Preset 6'
+	      }]
+	    });
+	  }
+	}
+	exports.default = DMXSpotGroup1;
+	DMXSpotGroup1.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(23);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(48);
+	
+	var _reactDom = __webpack_require__(49);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(50);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(33);
+	
+	var _reactBootstrap = __webpack_require__(29);
+	
+	var _lock = __webpack_require__(51);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(52);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(63);
+	
+	var _socket2 = __webpack_require__(60);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class MIDILooper extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0,
+	          inputValue: 0
+	        };
+	      }),
+	      lock: true,
+	      compactType: null,
+	      dmx_data_sr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	      dmx_data_sl: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	    this.loadPresetSR = this.loadPresetSR.bind(this);
+	    this.loadPresetSL = this.loadPresetSL.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '127', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    if (el.type == 2) {
+	      //type is text input
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('input', { type: 'number', min: '0', max: '99', value: el.inputValue, id: i, onChange: this.handleNumberInput })
+	        )
+	      );
+	    }
+	    if (el.type == 3) {
+	      //type is text
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        ' '
+	      );
+	    }
+	    if (el.type == 4) {
+	      //type is space
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' '
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'trigger1':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger2':
+	        this.loadPresetSR(1);
+	        this.loadPresetSL(1);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger3':
+	        this.loadPresetSR(1);
+	        this.loadPresetSL(2);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger4':
+	        this.loadPresetSR(1);
+	        this.loadPresetSL(1);
+	        socket.emit('midi-noteon', { note: 12, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger5':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger6':
+	        this.loadPresetSR(2);
+	        this.loadPresetSL(2);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger7':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 13, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger8':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger9':
+	        this.loadPresetSR(3);
+	        this.loadPresetSL(3);
+	        socket.emit('midi-noteon', { note: 14, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger10':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger11':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 15, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger12':
+	        this.loadPresetSR(4);
+	        this.loadPresetSL(4);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger13':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger14':
+	        this.loadPresetSR(0);
+	        this.loadPresetSL(0);
+	        socket.emit('midi-noteon', { note: 16, velocity: 127, channel: 0 });
+	        break;
+	      case 'bank1':
+	        socket.emit('midi-noteon', { note: 20, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene1':
+	        socket.emit('midi-noteon', { note: 12, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene2':
+	        socket.emit('midi-noteon', { note: 13, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene3':
+	        socket.emit('midi-noteon', { note: 14, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene4':
+	        socket.emit('midi-noteon', { note: 15, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene5':
+	        socket.emit('midi-noteon', { note: 16, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene6':
+	        socket.emit('midi-noteon', { note: 17, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene7':
+	        socket.emit('midi-noteon', { note: 18, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene8':
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	      case 'spot_right_blackout':
+	        this.loadPresetSR(0);
+	        break;
+	      case 'spot_right_recall_preset_1':
+	        this.loadPresetSR(1);
+	        break;
+	      case 'spot_right_recall_preset_2':
+	        this.loadPresetSR(2);
+	        break;
+	      case 'spot_right_recall_preset_3':
+	        this.loadPresetSR(3);
+	        break;
+	      case 'spot_right_recall_preset_4':
+	        this.loadPresetSR(4);
+	        break;
+	      case 'spot_right_recall_preset_5':
+	        this.loadPresetSR(5);
+	        break;
+	      case 'spot_right_recall_preset_6':
+	        this.loadPresetSR(6);
+	        break;
+	      case 'spot_left_blackout':
+	        this.loadPresetSL(0);
+	        break;
+	      case 'spot_left_recall_preset_1':
+	        this.loadPresetSL(1);
+	        break;
+	      case 'spot_left_recall_preset_2':
+	        this.loadPresetSL(2);
+	        break;
+	      case 'spot_left_recall_preset_3':
+	        this.loadPresetSL(3);
+	        break;
+	      case 'spot_left_recall_preset_4':
+	        this.loadPresetSL(4);
+	        break;
+	      case 'spot_left_recall_preset_5':
+	        this.loadPresetSL(5);
+	        break;
+	      case 'spot_left_recall_preset_6':
+	        this.loadPresetSL(6);
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  loadPresetSR(preset) {
+	    if (preset == 0) {
+	      socket.emit('dmx-go', { dmx: { 7: 0, 8: 0 }, offset: 1 });
+	    } else {
+	      const loadDMXPreset = {
+	        instrument_id: "spot_1", dmx_offset: 1, preset_num: preset, dmx_data: this.state.dmx_data_sr
+	      };
+	      socket.emit('dmx-load-preset', loadDMXPreset);
+	    }
+	  }
+	  loadPresetSL(preset) {
+	    if (preset == 0) {
+	      socket.emit('dmx-go', { dmx: { 7: 0, 8: 0 }, offset: 41 });
+	    } else {
+	      const loadDMXPreset = {
+	        instrument_id: "spot_2", dmx_offset: 41, preset_num: preset, dmx_data: this.state.dmx_data_sr
+	      };
+	      socket.emit('dmx-load-preset', loadDMXPreset);
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'DMX MIDI Control'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    socket.on('dmx-load-preset-data', data => {
+	      this.setState({ dmx_data: data });
+	      console.log("preset retrieved " + this.state.dmx_data);
+	    });
+	    this.setState({
+	      items: [{
+	        type: 3,
+	        i: "label1",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'TRIGGERS'
+	      }, {
+	        type: 3,
+	        i: "label2",
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        text: 'CUES'
+	      }, {
+	        type: 0,
+	        i: "trigger1",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "trigger2",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'CHAIR CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger3",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'CURTAIN CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger4",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'MAIN CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger5",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "trigger6",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'BEGINNING CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger7",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'PEDESTAL CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger8",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "trigger9",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'BEGINNING CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger10",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "trigger11",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'BEGINNING CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger12",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'TRANSITION CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger13",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 13, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "trigger14",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'BEGINNING CUE'
+	      }, {
+	        type: 3,
+	        i: "cue1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT I: Sneaky Sneaky'
+	      }, {
+	        type: 3,
+	        i: "cue2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT I: Chair Dance'
+	      }, {
+	        type: 3,
+	        i: "cue3",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT I: Curtain Dance'
+	      }, {
+	        type: 3,
+	        i: "cue4",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT I: Main Dance'
+	      }, {
+	        type: 3,
+	        i: "cue5",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT II: Robot'
+	      }, {
+	        type: 3,
+	        i: "cue6",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT II: Beginning'
+	      }, {
+	        type: 3,
+	        i: "cue7",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT II: Walking-2-Pedestal'
+	      }, {
+	        type: 3,
+	        i: "cue8",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT III: Human'
+	      }, {
+	        type: 3,
+	        i: "cue9",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT III: Beginning'
+	      }, {
+	        type: 3,
+	        i: "cue10",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 10, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT IV: Fashion Show'
+	      }, {
+	        type: 3,
+	        i: "cue11",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 11, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT IV: Beginning'
+	      }, {
+	        type: 3,
+	        i: "cue12",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 12, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT IV: Transition'
+	      }, {
+	        type: 3,
+	        i: "cue13",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 13, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT V'
+	      }, {
+	        type: 3,
+	        i: "cue14",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 14, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT V: Beginning'
+	      }, {
+	        type: 3,
+	        i: "label6",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        text: 'DMX BOARD'
+	      }, {
+	        type: 0,
+	        i: "bank1",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'BANK 1'
+	      }, {
+	        type: 0,
+	        i: "scene1",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 1'
+	      }, {
+	        type: 0,
+	        i: "scene2",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 2'
+	      }, {
+	        type: 0,
+	        i: "scene3",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 3'
+	      }, {
+	        type: 0,
+	        i: "scene4",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 4'
+	      }, {
+	        type: 0,
+	        i: "scene5",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 5'
+	      }, {
+	        type: 0,
+	        i: "scene6",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 6'
+	      }, {
+	        type: 0,
+	        i: "scene7",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 8, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 7'
+	      }, {
+	        type: 0,
+	        i: "scene8",
+	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 9, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'SCENE 8'
+	      }, {
+	        type: 3,
+	        i: "label5",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        text: 'SPOT RIGHT'
+	      }, {
+	        type: 0,
+	        i: "spot_right_blackout",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "spot_right_recall_preset_1",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 1'
+	      }, {
+	        type: 0,
+	        i: "spot_right_recall_preset_2",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 2'
+	      }, {
+	        type: 0,
+	        i: "spot_right_recall_preset_3",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 3'
+	      }, {
+	        type: 0,
+	        i: "spot_right_recall_preset_4",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 4'
+	      }, {
+	        type: 0,
+	        i: "spot_right_recall_preset_5",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 5'
+	      }, {
+	        type: 0,
+	        i: "spot_right_recall_preset_6",
+	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 6'
+	      }, {
+	        type: 3,
+	        i: "label4",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        text: 'SPOT LEFT'
+	      }, {
+	        type: 0,
+	        i: "spot_left_blackout",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-danger',
+	        text: 'BLACKOUT'
+	      }, {
+	        type: 0,
+	        i: "spot_left_recall_preset_1",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 1'
+	      }, {
+	        type: 0,
+	        i: "spot_left_recall_preset_2",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 2'
+	      }, {
+	        type: 0,
+	        i: "spot_left_recall_preset_3",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 3'
+	      }, {
+	        type: 0,
+	        i: "spot_left_recall_preset_4",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 4'
+	      }, {
+	        type: 0,
+	        i: "spot_left_recall_preset_5",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 5'
+	      }, {
+	        type: 0,
+	        i: "spot_left_recall_preset_6",
+	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'PRESET 6'
+	      }]
+	    });
+	  }
+	}
+	exports.default = MIDILooper;
+	MIDILooper.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 8, md: 8, sm: 4, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(23);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactGridLayout = __webpack_require__(48);
+	
+	var _reactDom = __webpack_require__(49);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _lodash = __webpack_require__(50);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	__webpack_require__(33);
+	
+	var _reactBootstrap = __webpack_require__(29);
+	
+	var _lock = __webpack_require__(51);
+	
+	var _lock2 = _interopRequireDefault(_lock);
+	
+	var _unlock = __webpack_require__(52);
+	
+	var _unlock2 = _interopRequireDefault(_unlock);
+	
+	var _socket = __webpack_require__(63);
+	
+	var _socket2 = __webpack_require__(60);
+	
+	var _socket3 = _interopRequireDefault(_socket2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const ResponsiveReactGridLayout = (0, _reactGridLayout.WidthProvider)(_reactGridLayout.Responsive);
+	let lockIcon = _react2.default.createElement(_lock2.default, null);
+	let socket;
+	
+	class MIDILooper extends _react2.default.Component {
+	
+	  constructor(props, context) {
+	    super(props, context);
+	    this.state = {
+	      items: [].map(function (i, key, list) {
+	        return {
+	          type: 0,
+	          i: i.toString(),
+	          x: i * 2,
+	          y: 0,
+	          w: 2,
+	          h: 2,
+	          add: i === (list.length - 1).toString(),
+	          sliderValue: 0,
+	          inputValue: 0
+	        };
+	      }),
+	      lock: true,
+	      compactType: null
+	    };
+	    this.onBreakpointChange = this.onBreakpointChange.bind(this);
+	    this.handleOnLock = this.handleOnLock.bind(this);
+	    this.handleButtons = this.handleButtons.bind(this);
+	  }
+	  handleOnLock() {
+	    if (this.state.lock == true) {
+	      lockIcon = _react2.default.createElement(_unlock2.default, null);
+	      this.setState({ lock: false });
+	    } else {
+	      lockIcon = _react2.default.createElement(_lock2.default, null);
+	      this.setState({ lock: true });
+	    }
+	  }
+	  createElement(el) {
+	    let lockStyle = {
+	      display: "none"
+	    };
+	    if (this.state.lock == false) {
+	      lockStyle = {
+	        position: "absolute",
+	        right: "2px",
+	        top: 0,
+	        cursor: "pointer",
+	        display: "inline"
+	      };
+	    }
+	    const gridStyle = {
+	      background: "#FFF"
+	    };
+	    const i = el.add ? "+" : el.i;
+	    let controllerCode = _react2.default.createElement(
+	      'button',
+	      { className: el.className, value: el.i, onClick: this.handleButtons },
+	      el.text
+	    );
+	    if (el.type == 1) {
+	      //type is slider
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'slidecontainer' },
+	          _react2.default.createElement('input', { type: 'range', min: '0', max: '127', value: el.sliderValue, id: i, className: 'slider', onChange: this.handleSliders })
+	        )
+	      );
+	    }
+	    if (el.type == 2) {
+	      //type is text input
+	      controllerCode = _react2.default.createElement(
+	        'div',
+	        null,
+	        ' ',
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'text' },
+	          el.text
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('input', { type: 'number', min: '0', max: '99', value: el.inputValue, id: i, onChange: this.handleNumberInput })
+	        )
+	      );
+	    }
+	    return _react2.default.createElement(
+	      'div',
+	      { key: i, 'data-grid': el, style: gridStyle },
+	      controllerCode,
+	      _react2.default.createElement('span', { style: lockStyle })
+	    );
+	  }
+	
+	  handleButtons(event) {
+	    console.log(event.target.id + ': ' + event.target.value);
+	
+	    switch (event.target.value) {
+	
+	      case 'bank1':
+	        socket.emit('midi-noteon', { note: 20, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene1':
+	        socket.emit('midi-noteon', { note: 12, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene2':
+	        socket.emit('midi-noteon', { note: 13, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene3':
+	        socket.emit('midi-noteon', { note: 14, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene4':
+	        socket.emit('midi-noteon', { note: 15, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene5':
+	        socket.emit('midi-noteon', { note: 16, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene6':
+	        socket.emit('midi-noteon', { note: 17, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene7':
+	        socket.emit('midi-noteon', { note: 18, velocity: 127, channel: 0 });
+	        break;
+	      case 'scene8':
+	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
+	        break;
+	
+	      default:
+	        console.log('ERROR: Button does not exist');
+	    }
+	  }
+	  onBreakpointChange(breakpoint, cols) {
+	    this.setState({
+	      breakpoint: breakpoint,
+	      cols: cols
+	    });
+	  }
+	  onLayoutChange(layout) {
+	    console.log("layout:", layout);
+	  }
+	  render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 2, sm: 2, md: 2, lg: 2 },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: this.handleOnLock },
+	              lockIcon
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { xs: 10, sm: 10, md: 10, lg: 10 },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'DMX MIDI Control'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          ResponsiveReactGridLayout,
+	          _extends({
+	            onBreakpointChange: this.onBreakpointChange,
+	            onLayoutChange: this.onLayoutChange,
+	            isDraggable: !this.state.lock,
+	            isResizable: !this.state.lock,
+	            compactType: this.state.compactType
+	          }, this.props),
+	          _lodash2.default.map(this.state.items, el => this.createElement(el))
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.response
+	      )
+	    );
+	  }
+	  componentWillUnmount() {
+	    socket.off(this.props.page);
+	  }
+	  componentDidMount() {
+	    socket = (0, _socket3.default)();
+	    socket.on('telnet-response', mesg => {
+	      this.setState({ response: mesg });
+	    });
+	    this.setState({
+	      items: [{
+	        type: 0,
+	        i: "bank1",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'BANK 1'
+	      }, {
+	        type: 0,
+	        i: "scene1",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 0, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 1'
+	      }, {
+	        type: 0,
+	        i: "scene2",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 1, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 2'
+	      }, {
+	        type: 0,
+	        i: "scene3",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 2, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 3'
+	      }, {
+	        type: 0,
+	        i: "scene4",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 3, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 4'
+	      }, {
+	        type: 0,
+	        i: "scene5",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 4, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 5'
+	      }, {
+	        type: 0,
+	        i: "scene6",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 6'
+	      }, {
+	        type: 0,
+	        i: "scene7",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 7'
+	      }, {
+	        type: 0,
+	        i: "scene8",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 7, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-success',
+	        text: 'SCENE 8'
+	      }]
+	    });
+	  }
+	}
+	exports.default = MIDILooper;
+	MIDILooper.defaultProps = {
+	  className: "layout",
+	  rowHeight: 30,
+	  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+	};
+
+/***/ }),
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15383,13 +18457,7 @@
 	};
 
 /***/ }),
-/* 88 */
-/***/ (function(module, exports) {
-
-	module.exports = require("casparcg-connection");
-
-/***/ }),
-/* 89 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/*
@@ -15420,7 +18488,7 @@
 						if(fromUpdate) console.log("[HMR] Update applied.");
 						return;
 					}
-					__webpack_require__(90)(updatedModules, updatedModules);
+					__webpack_require__(95)(updatedModules, updatedModules);
 					checkForUpdate(true);
 				});
 			}
@@ -15433,7 +18501,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, "?1000"))
 
 /***/ }),
-/* 90 */
+/* 95 */
 /***/ (function(module, exports) {
 
 	/*

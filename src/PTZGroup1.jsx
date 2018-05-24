@@ -35,7 +35,7 @@ export default class PTZGroup1 extends React.Component {
       lock: true,
       host: '127.0.0.1',
       port: 5250,
-      PTZhost: '192.168.0.100',
+      PTZhost: '128.114.74.61', //192.168.0.100',
       PTZport: 52381,
       command: "",
       response: '',

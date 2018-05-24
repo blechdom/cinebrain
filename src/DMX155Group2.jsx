@@ -170,12 +170,12 @@ handleSliders(event) {
 
   switch (event.target.id) {
   case 'spot_pan':
-      slider_value = Math.floor(213-((slider_value/255)*86));
+      //slider_value = Math.floor(213-((slider_value/255)*86));
       dmx_data[0]=slider_value;
       this.sendDMX({1: slider_value});
       break;
   case 'spot_tilt':
-      slider_value = Math.floor((slider_value/255)*136);
+     // slider_value = Math.floor((slider_value/255)*136);
        dmx_data[1]=slider_value;
       this.sendDMX({2: slider_value});
       break;
@@ -184,16 +184,20 @@ handleSliders(event) {
       this.sendDMX({5: slider_value});
       break;
   case 'spot_fine_pan':
-      dmx_data[2]=slider_value;
-      this.sendDMX({3: slider_value});
+      dmx_data[5]=slider_value;
+      this.sendDMX({6: slider_value});
       break;
   case 'spot_fine_tilt':
-      dmx_data[3]=slider_value;
-      this.sendDMX({4: slider_value});
+      dmx_data[8]=slider_value;
+      this.sendDMX({9: slider_value});
       break;
   case 'spot_intensity':
       dmx_data[7]=slider_value;
       this.sendDMX({8: slider_value});
+      break;
+      case 'automatic':
+      dmx_data[10]=slider_value;
+      this.sendDMX({11: slider_value});
       break;
   default:
     console.log('ERROR: Slider does not exist');
@@ -233,7 +237,7 @@ render() {
             <button onClick={this.handleOnLock}>{lockIcon}</button>
           </Col>
             <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 2: SPOT LIGHT 155</strong> DMX: 41
+            <strong>({this.state.instrument_id}) </strong> DMX OFFSET: {this.state.dmx_offset}
           </Col>
         </Row>
        <ResponsiveReactGridLayout
@@ -269,7 +273,7 @@ render() {
                 y: 0, 
                 w: 2,
                 h: 1,
-                className: 'btn-block btn',
+                className: 'btn-block btn btn-success',
                 text: 'Spot On',
               },
               {
@@ -279,7 +283,7 @@ render() {
                 y: 0, 
                 w: 2,
                 h: 1,
-                className: 'btn-block btn',
+                className: 'btn-block btn btn-danger',
                 text: 'Spot Off',
               },
                {
@@ -288,59 +292,68 @@ render() {
                 x: 0,
                 y: 2,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Intensity',
               },
               {
                 type: 1,
                 i: "spot_tilt",
                 x: 0,
-                y: 8, 
+                y: 4, 
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Tilt',
               },
               {
                 type: 1,
                 i: "spot_pan",
                 x: 0,
-                y: 4,
+                y: 3,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Pan',
               },
               {
                 type: 1,
                 i: "spot_speed",
                 x: 0,
-                y: 12,
+                y: 5,
                 w: 12,
-                h: 2,
+                h: 1,
                 text: 'Spot Speed',
               },
               {
                 type: 1,
                 i: "spot_fine_tilt",
                 x: 0,
-                y: 10, 
+                y: 6, 
                 w: 12,
-                h: 2,
-                text: 'Spot Fine Tilt',
+                h: 1,
+                text: 'Gobo',
               },
               {
                 type: 1,
                 i: "spot_fine_pan",
                 x: 0,
-                y: 6,
+                y: 7,
                 w: 12,
-                h: 2,
-                text: 'Spot Fine Pan',
+                h: 1,
+                text: 'Color',
+              },
+               {
+                type: 1,
+                i: "automatic",
+                x: 0,
+                y: 8,
+                w: 12,
+                h: 1,
+                text: 'Auto Movement',
               },
               {
                 type: 0,
                 i: "recall_preset_1",
                 x: 0,
-                y: 14,
+                y: 9,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -350,7 +363,7 @@ render() {
                 type: 0,
                 i: "recall_preset_2",
                 x: 1,
-                y: 14,
+                y: 9,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -360,7 +373,7 @@ render() {
                 type: 0,
                 i: "recall_preset_3",
                 x: 2,
-                y: 14,
+                y: 9,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -370,7 +383,7 @@ render() {
                 type: 0,
                 i: "recall_preset_4",
                 x: 3,
-                y: 14,
+                y: 9,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -380,7 +393,7 @@ render() {
                 type: 0,
                 i: "recall_preset_5",
                 x: 4,
-                y: 14,
+                y: 9,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -390,7 +403,7 @@ render() {
                 type: 0,
                 i: "recall_preset_6",
                 x: 5,
-                y: 14,
+                y: 9,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-success',
@@ -400,7 +413,7 @@ render() {
                 type: 0,
                 i: "save_preset_1",
                 x: 0,
-                y: 15,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -410,7 +423,7 @@ render() {
                 type: 0,
                 i: "save_preset_2",
                 x: 1,
-                y: 15,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -420,7 +433,7 @@ render() {
                 type: 0,
                 i: "save_preset_3",
                 x: 2,
-                y: 15,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -430,7 +443,7 @@ render() {
                 type: 0,
                 i: "save_preset_4",
                 x: 3,
-                y: 15,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -440,7 +453,7 @@ render() {
                 type: 0,
                 i: "save_preset_5",
                 x: 4,
-                y: 15,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',
@@ -450,7 +463,7 @@ render() {
                 type: 0,
                 i: "save_preset_6",
                 x: 5,
-                y: 15,
+                y: 10,
                 w: 1,
                 h: 1,
                 className: 'btn-block btn btn-danger',

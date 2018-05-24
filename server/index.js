@@ -12,7 +12,8 @@ import ATEM from 'applest-atem/lib/atem.js';
 import easymidi from 'easymidi/index.js';
 import Agenda from 'agenda';
 import HyperdeckLib from 'hyperdeck-js-lib';
-import five from 'johnny-five';
+//import five from 'johnny-five';
+import {CasparCG} from 'casparcg-connection';
 
 
 var agenda = new Agenda({db: {address: 'mongodb://127.0.0.1/cinebrain', collection: 'agenda'}});
@@ -21,7 +22,7 @@ agenda.on('ready', function() {
   agenda.start();
 });
 
-let boardMega = new five.Board();
+//let boardMega = new five.Board();
 //let boardUno = new five.Board();
 /*
 board.on("ready", function() {
@@ -42,7 +43,7 @@ let atemTV2 = new ATEM();
 atemTV1.connect('192.168.10.240');
 //atemTV2.connect('192.168.10.242');
 var midiOutA;
-//var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
+var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 
 let appModule = require('./server.js');
 let db;
@@ -51,10 +52,10 @@ let websocket;
 let UDPserver;
 let UDPclient;
 
-const {CasparCG} = require("casparcg-connection");
+//const {CasparCG} = require("casparcg-connection");
  
-var casparConnection = new CasparCG();
-casparConnection.play(2, 1, "group2_loop1.mov");
+//var casparConnection = new CasparCG();
+//casparConnection.play(2, 1, "group2_loop1.mov");
 
 
 const PTZ_init = Buffer.from('020000010000000001', 'hex');
@@ -85,7 +86,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
       current_universe = result.dmx_data; 
       console.log("current_universe is " + JSON.stringify(current_universe.data));
       current_universe_buffer = Buffer(current_universe.data);
-      dmx_usb_pro = new DMX('COM3', current_universe_buffer);
+      dmx_usb_pro = new DMX('COM4', current_universe_buffer);
     });
   });
    
@@ -121,7 +122,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
   UDPserver.bind(62455);
 
 
-//boardMega.on("ready", function() {
+/*boardMega.on("ready", function() {
 //  console.log("arduino board Mega ready");
  // var servoWrist = new five.Servo(8);
  // var servoElbow = new five.Servo(9);
@@ -130,7 +131,7 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
 
  
 
-/*
+
     var servoThumb = new five.Servo(8);
     var servoPointer = new five.Servo(9);
     var servoMiddle = new five.Servo(10);
@@ -259,9 +260,9 @@ MongoClient.connect('mongodb://localhost/cinebrain').then(connection => {
         socket.on('robot-go-base', (buffer) => {
              console.log("base: " + buffer);
              servoBase.to(Number(buffer));
-        });*/
+        });
 
-     /*   socket.on('robot-go-thumb', (buffer) => {
+        socket.on('robot-go-thumb', (buffer) => {
              console.log("thumb: " + buffer);
              servoThumb.to(Number(buffer));
         });
@@ -381,7 +382,26 @@ socket.on('deck1', (data) => {
                   });
                 });
         });     
-    /*    socket.on('midi-cc', function(data) {
+         socket.on('midi-noteon', function(data) {
+           console.log("sending midi noteon: " + data.note + " velocity: " + data.velocity + " on channel: " + data.channel);
+              
+              midiOutA.send('noteon', {
+                note: data.note,
+                velocity: data.velocity,
+                channel: data.channel
+              });
+        });
+         socket.on('midi-noteoff', function(data) {
+           console.log("sending midi noteoff: " + data.note + " velocity: " + data.velocity + " on channel: " + data.channel);
+              
+              midiOutA.send('noteoff', {
+                note: data.note,
+                velocity: data.velocity,
+                channel: data.channel
+              });
+        });
+         /*
+        socket.on('midi-cc', function(data) {
            console.log("sending midi cc change-cc#: " + data.controller + " cc-value: " + data.value + " on channel: " + data.channel);
               
               midiOutA.send('cc', {
@@ -406,13 +426,29 @@ socket.on('deck1', (data) => {
                  socket.emit("agenda-list", jobs);
                });
          });    
+
+        socket.on('get-casparconnection-cls', function(data) {
+                console.log("getting caspar connection cls");
+
+
+                var ccg = new CasparCG({onConnected: function(e){
+                  ccg.cls().then((response) => {
+                    console.log(response);
+                    socket.emit("receive-casparconnection-cls", response);
+                  }).catch((error) => {
+                    console.error(error)
+                  })
+                  }});
+
+         });    
+
        socket.on('agenda-create-job', function(data) {
                 console.log("creating new job " + JSON.stringify(data));
                agenda.define(data.name, function(job, done) {
                     console.log(data.name + " new Job happening");
                     done();
                 });
-              agenda.schedule(new Date(data.date), data.name);
+              agenda.schedule(new Date(data.date), data.name, {clip: data.clip, duration: data.duration});
               agenda.jobs({}, function(err, jobs) {
                  console.log("jobs: " + JSON.stringify(jobs));
                  socket.emit("agenda-list", jobs);

@@ -15,8 +15,9 @@ import AudioGroup1 from './AudioGroup1.jsx';
 import VideoGroup1 from './VideoGroup1.jsx';
 import DMXSliders from './DMXSliders.jsx';
 import DMXWashGroup1 from './DMXWashGroup1.jsx';
+import DMXWashGroup2 from './DMXWashGroup2.jsx';
 import DMX155Group2 from './DMX155Group2.jsx';
-import DMX255Group2 from './DMX255Group2.jsx';
+import DMX155Group1 from './DMX155Group1.jsx';
 import PTZGroup1 from './PTZGroup1.jsx';
 import Diagnostics from './Diagnostics.jsx';
 import MidiLooper from './MidiLooper.jsx';
@@ -28,12 +29,20 @@ import Home from './Home.jsx';
 import Help from './Help.jsx';
 import RobotArm from './RobotArm.jsx';
 import RobotHand from './RobotHand.jsx';
+import Sniper from './Sniper.jsx';
+import Spots from './Spots.jsx';
+import MasterCues from './MasterCues.jsx';
+import DMXMIDI from './DMXMidiControl.jsx';
 
 const NoMatch = () => <p>Page Not Found</p>;
 
 export default (
   <Route path="/" component={App} >
-    <IndexRedirect to="/home" />
+    <IndexRedirect to="/master_cues" />
+    <Route path="spots" component={Spots} />
+    <Route path="sniper" component={Sniper} />
+    <Route path="master_cues" component={MasterCues} />
+    <Route path="dmx_midi" component={DMXMIDI} />
     <Route path="robot_arm" component={RobotArm} />
     <Route path="robot_hand" component={RobotHand} />
     <Route path="decklink" component={Decklink} />
@@ -45,8 +54,9 @@ export default (
     <Route path="demo" component={Demo} />
     <Route path="agenda" component={Agenda} />
     <Route path="dmx_wash_group1" component={DMXWashGroup1} />
+    <Route path="dmx_wash_group2" component={DMXWashGroup2} />
     <Route path="dmx_155_group2" component={DMX155Group2} />
-    <Route path="dmx_255_group2" component={DMX255Group2} />
+    <Route path="dmx_155_group1" component={DMX155Group1} />
     <Route path="ptz_group1" component={PTZGroup1} />
     <Route path="midi_looper" component={MidiLooper} />
     <Route path="control_interface" component={ControlInterface} />

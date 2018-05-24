@@ -261,7 +261,7 @@ render() {
       	    <button onClick={this.handleOnLock}>{lockIcon}</button>
           </Col>
           <Col xs={10} sm={10} md={10} lg={10}>
-           <strong>Group 1: Wash LIGHT ({this.state.instrument_id}) </strong> DMX OFFSET: {this.state.dmx_offset}
+           <strong>({this.state.instrument_id}) </strong> DMX OFFSET: {this.state.dmx_offset}
           </Col>
       	</Row>
         <Row>
