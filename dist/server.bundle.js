@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "991b26ea6bfa285a2ebf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "db4743a58bea47eb4efa"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -638,7 +638,7 @@
 	atemTV1.connect('192.168.10.240');
 	//atemTV2.connect('192.168.10.242');
 	var midiOutA;
-	var midiOutA = new _index2.default.Output('MIDIPLUS TBOX 2x2 1');
+	//var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 	
 	let appModule = __webpack_require__(17);
 	let db;
@@ -17356,7 +17356,7 @@
 	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
 	        break;
 	      case 'trigger3':
-	        this.loadPresetSR(1);
+	        this.loadPresetSR(2);
 	        this.loadPresetSL(2);
 	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
 	        break;
@@ -17364,6 +17364,12 @@
 	        this.loadPresetSR(1);
 	        this.loadPresetSL(1);
 	        socket.emit('midi-noteon', { note: 12, velocity: 127, channel: 0 });
+	        break;
+	      case 'trigger4-1':
+	        this.loadPresetSR(5);
+	        this.loadPresetSL(5);
+	        //socket.emit('midi-noteon', {note:12, velocity: 127, channel:0 });
+	        //socket.emit('midi-noteon', {note:12, velocity: 127, channel:0 });
 	        break;
 	      case 'trigger5':
 	        this.loadPresetSR(0);
@@ -17396,8 +17402,8 @@
 	        socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
 	        break;
 	      case 'trigger11':
-	        this.loadPresetSR(0);
-	        this.loadPresetSL(0);
+	        this.loadPresetSR(6);
+	        this.loadPresetSL(6);
 	        socket.emit('midi-noteon', { note: 15, velocity: 127, channel: 0 });
 	        break;
 	      case 'trigger12':
@@ -17491,7 +17497,7 @@
 	  }
 	  loadPresetSR(preset) {
 	    if (preset == 0) {
-	      socket.emit('dmx-go', { dmx: { 7: 0, 8: 0 }, offset: 1 });
+	      socket.emit('dmx-go', { dmx: { 7: 0, 8: 0, 11: 0 }, offset: 1 });
 	    } else {
 	      const loadDMXPreset = {
 	        instrument_id: "spot_1", dmx_offset: 1, preset_num: preset, dmx_data: this.state.dmx_data_sr
@@ -17501,7 +17507,7 @@
 	  }
 	  loadPresetSL(preset) {
 	    if (preset == 0) {
-	      socket.emit('dmx-go', { dmx: { 7: 0, 8: 0 }, offset: 41 });
+	      socket.emit('dmx-go', { dmx: { 7: 0, 8: 0, 11: 0 }, offset: 41 });
 	    } else {
 	      const loadDMXPreset = {
 	        instrument_id: "spot_2", dmx_offset: 41, preset_num: preset, dmx_data: this.state.dmx_data_sr
@@ -17584,15 +17590,15 @@
 	        i: "label1",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 0, //Infinity, 
-	        w: 3,
+	        w: 1,
 	        h: 1,
 	        text: 'TRIGGERS'
 	      }, {
 	        type: 3,
 	        i: "label2",
-	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 0, //Infinity, 
-	        w: 1,
+	        w: 3,
 	        h: 1,
 	        text: 'CUES'
 	      }, {
@@ -17633,9 +17639,18 @@
 	        text: 'MAIN CUE'
 	      }, {
 	        type: 0,
-	        i: "trigger5",
+	        i: "trigger4-1",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 5, //Infinity, 
+	        w: 1,
+	        h: 1,
+	        className: 'btn-block btn btn-warning',
+	        text: 'CENTER CUE'
+	      }, {
+	        type: 0,
+	        i: "trigger5",
+	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -17644,7 +17659,7 @@
 	        type: 0,
 	        i: "trigger6",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity, 
+	        y: 7, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
@@ -17653,7 +17668,7 @@
 	        type: 0,
 	        i: "trigger7",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity, 
+	        y: 8, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
@@ -17662,7 +17677,7 @@
 	        type: 0,
 	        i: "trigger8",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        y: 9, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -17671,7 +17686,7 @@
 	        type: 0,
 	        i: "trigger9",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        y: 10, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
@@ -17680,7 +17695,7 @@
 	        type: 0,
 	        i: "trigger10",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity, 
+	        y: 11, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -17689,7 +17704,7 @@
 	        type: 0,
 	        i: "trigger11",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 11, //Infinity, 
+	        y: 12, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
@@ -17698,7 +17713,7 @@
 	        type: 0,
 	        i: "trigger12",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity, 
+	        y: 13, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
@@ -17707,7 +17722,7 @@
 	        type: 0,
 	        i: "trigger13",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 13, //Infinity, 
+	        y: 14, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -17716,7 +17731,7 @@
 	        type: 0,
 	        i: "trigger14",
 	        x: 0, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 14, //Infinity, 
+	        y: 15, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-warning',
@@ -17755,9 +17770,17 @@
 	        text: 'ACT I: Main Dance'
 	      }, {
 	        type: 3,
-	        i: "cue5",
+	        i: "cue4-1",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
 	        y: 5, //Infinity, 
+	        w: 3,
+	        h: 1,
+	        text: 'ACT I: Center Light'
+	      }, {
+	        type: 3,
+	        i: "cue5",
+	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 6, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT II: Robot'
@@ -17765,7 +17788,7 @@
 	        type: 3,
 	        i: "cue6",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity, 
+	        y: 7, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT II: Beginning'
@@ -17773,7 +17796,7 @@
 	        type: 3,
 	        i: "cue7",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity, 
+	        y: 8, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT II: Walking-2-Pedestal'
@@ -17781,7 +17804,7 @@
 	        type: 3,
 	        i: "cue8",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        y: 9, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT III: Human'
@@ -17789,7 +17812,7 @@
 	        type: 3,
 	        i: "cue9",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        y: 10, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT III: Beginning'
@@ -17797,7 +17820,7 @@
 	        type: 3,
 	        i: "cue10",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 10, //Infinity, 
+	        y: 11, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT IV: Fashion Show'
@@ -17805,7 +17828,7 @@
 	        type: 3,
 	        i: "cue11",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 11, //Infinity, 
+	        y: 12, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT IV: Beginning'
@@ -17813,7 +17836,7 @@
 	        type: 3,
 	        i: "cue12",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 12, //Infinity, 
+	        y: 13, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT IV: Transition'
@@ -17821,7 +17844,7 @@
 	        type: 3,
 	        i: "cue13",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 13, //Infinity, 
+	        y: 14, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT V'
@@ -17829,23 +17852,23 @@
 	        type: 3,
 	        i: "cue14",
 	        x: 1, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 14, //Infinity, 
+	        y: 15, //Infinity, 
 	        w: 3,
 	        h: 1,
 	        text: 'ACT V: Beginning'
 	      }, {
 	        type: 3,
 	        i: "label6",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 17, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        text: 'DMX BOARD'
 	      }, {
 	        type: 0,
 	        i: "bank1",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 18, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17853,8 +17876,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene1",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 19, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17862,8 +17885,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene2",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 20, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17871,8 +17894,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene3",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 21, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17880,8 +17903,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene4",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 5, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 22, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17889,8 +17912,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene5",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 23, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17898,8 +17921,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene6",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 24, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17907,8 +17930,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene7",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 8, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 25, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17916,8 +17939,8 @@
 	      }, {
 	        type: 0,
 	        i: "scene8",
-	        x: 7, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 9, //Infinity, 
+	        x: 4, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 26, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -17925,16 +17948,16 @@
 	      }, {
 	        type: 3,
 	        i: "label5",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 17, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        text: 'SPOT RIGHT'
 	      }, {
 	        type: 0,
 	        i: "spot_right_blackout",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 18, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -17942,8 +17965,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_right_recall_preset_1",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 19, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17951,8 +17974,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_right_recall_preset_2",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 20, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17960,8 +17983,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_right_recall_preset_3",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 21, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17969,8 +17992,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_right_recall_preset_4",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 5, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 22, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17978,8 +18001,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_right_recall_preset_5",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 23, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17987,8 +18010,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_right_recall_preset_6",
-	        x: 6, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity, 
+	        x: 3, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 24, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -17996,16 +18019,16 @@
 	      }, {
 	        type: 3,
 	        i: "label4",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 0, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 17, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        text: 'SPOT LEFT'
 	      }, {
 	        type: 0,
 	        i: "spot_left_blackout",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 1, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 18, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-danger',
@@ -18013,8 +18036,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_left_recall_preset_1",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 2, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 19, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -18022,8 +18045,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_left_recall_preset_2",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 3, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 20, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -18031,8 +18054,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_left_recall_preset_3",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 4, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 21, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -18040,8 +18063,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_left_recall_preset_4",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 5, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 22, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -18049,8 +18072,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_left_recall_preset_5",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 6, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 23, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -18058,8 +18081,8 @@
 	      }, {
 	        type: 0,
 	        i: "spot_left_recall_preset_6",
-	        x: 5, //(this.state.items.length * 2) % (this.state.cols || 12),
-	        y: 7, //Infinity, 
+	        x: 2, //(this.state.items.length * 2) % (this.state.cols || 12),
+	        y: 24, //Infinity, 
 	        w: 1,
 	        h: 1,
 	        className: 'btn-block btn btn-success',
@@ -18072,7 +18095,7 @@
 	MIDILooper.defaultProps = {
 	  className: "layout",
 	  rowHeight: 30,
-	  cols: { lg: 8, md: 8, sm: 4, xs: 4, xxs: 2 }
+	  cols: { lg: 12, md: 8, sm: 6, xs: 4, xxs: 2 }
 	};
 
 /***/ }),

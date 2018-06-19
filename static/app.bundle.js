@@ -72092,8 +72092,8 @@ webpackJsonp([0],[
 	          socket.emit('midi-noteon', { note: 19, velocity: 127, channel: 0 });
 	          break;
 	        case 'trigger11':
-	          this.loadPresetSR(0);
-	          this.loadPresetSL(0);
+	          this.loadPresetSR(6);
+	          this.loadPresetSL(6);
 	          socket.emit('midi-noteon', { note: 15, velocity: 127, channel: 0 });
 	          break;
 	        case 'trigger12':
@@ -72189,7 +72189,7 @@ webpackJsonp([0],[
 	    key: 'loadPresetSR',
 	    value: function loadPresetSR(preset) {
 	      if (preset == 0) {
-	        socket.emit('dmx-go', { dmx: { 7: 0, 8: 0 }, offset: 1 });
+	        socket.emit('dmx-go', { dmx: { 7: 0, 8: 0, 11: 0 }, offset: 1 });
 	      } else {
 	        var loadDMXPreset = {
 	          instrument_id: "spot_1", dmx_offset: 1, preset_num: preset, dmx_data: this.state.dmx_data_sr
@@ -72201,7 +72201,7 @@ webpackJsonp([0],[
 	    key: 'loadPresetSL',
 	    value: function loadPresetSL(preset) {
 	      if (preset == 0) {
-	        socket.emit('dmx-go', { dmx: { 7: 0, 8: 0 }, offset: 41 });
+	        socket.emit('dmx-go', { dmx: { 7: 0, 8: 0, 11: 0 }, offset: 41 });
 	      } else {
 	        var loadDMXPreset = {
 	          instrument_id: "spot_2", dmx_offset: 41, preset_num: preset, dmx_data: this.state.dmx_data_sr

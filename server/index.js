@@ -43,7 +43,7 @@ let atemTV2 = new ATEM();
 atemTV1.connect('192.168.10.240');
 //atemTV2.connect('192.168.10.242');
 var midiOutA;
-var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
+//var midiOutA = new easymidi.Output('MIDIPLUS TBOX 2x2 1');
 
 let appModule = require('./server.js');
 let db;
