@@ -27,7 +27,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "075222d40880b9f507a8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "d54a1efd0e90b49b0ca5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -907,7 +907,7 @@
 		this.universe = current_universe;
 	
 		this.dev = new SerialPort(device_id, {
-			'baudrate': 250000,
+			'baudRate': 250000,
 			'databits': 8,
 			'stopbits': 2,
 			'parity': 'none'
@@ -1739,7 +1739,7 @@
 	      _react2.default.createElement(
 	        'a',
 	        { href: '/' },
-	        'Cinebrain-Presets-Branch'
+	        'Cinebrain'
 	      )
 	    )
 	  ),
